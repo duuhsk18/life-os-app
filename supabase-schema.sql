@@ -127,7 +127,17 @@ alter table lifeos_finance_records enable row level security;
 alter table lifeos_user_products   enable row level security;
 
 -- Profiles
+drop policy if exists "users own profile" on lifeos_profiles;
 create policy "users own profile"       on lifeos_profiles        for all using (auth.uid() = id);
+drop policy if exists "users own habits"       on lifeos_habits;
+drop policy if exists "users own habit_checks" on lifeos_habit_checks;
+drop policy if exists "users own workouts"     on lifeos_workouts;
+drop policy if exists "users own focus"        on lifeos_focus_sessions;
+drop policy if exists "users own goals"        on lifeos_goals;
+drop policy if exists "users own journal"      on lifeos_journal_entries;
+drop policy if exists "users own finance"      on lifeos_finance_records;
+drop policy if exists "users see own products" on lifeos_user_products;
+
 create policy "users own habits"        on lifeos_habits          for all using (auth.uid() = user_id);
 create policy "users own habit_checks"  on lifeos_habit_checks    for all using (auth.uid() = user_id);
 create policy "users own workouts"      on lifeos_workouts        for all using (auth.uid() = user_id);
