@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Foco Total — Life OS</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8B5CF6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ebooks Life OS">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #3B82F6;
+    --accent-dark: #1D4ED8;
+    --gold: #F4C430; --gold-dark: #C9A227;
+    --dark: #0D0D0D; --dark-2: #141414; --dark-3: #1C1C1C; --dark-4: #242424; --dark-5: #2E2E2E;
+    --text: #E8E8E8; --text-muted: #999; --text-faint: #666;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.7; font-size: 16px; }
+
+  .cover { min-height: 100vh; background: linear-gradient(135deg, #0D0D0D 0%, #001020 50%, #0D0D0D 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 24px; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .cover-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); border-radius: 100px; padding: 6px 16px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 40px; }
+  .cover-number { font-family: 'Playfair Display', serif; font-size: 200px; font-weight: 900; color: rgba(59,130,246,0.05); line-height: 1; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); user-select: none; pointer-events: none; }
+  .cover-title { font-family: 'Playfair Display', serif; font-size: clamp(48px, 9vw, 88px); font-weight: 900; line-height: 1.05; color: #fff; margin-bottom: 16px; position: relative; z-index: 1; }
+  .cover-title span { color: var(--accent); }
+  .cover-subtitle { font-size: clamp(14px, 2.5vw, 18px); color: var(--text-muted); max-width: 500px; font-weight: 300; margin-bottom: 60px; position: relative; z-index: 1; }
+  .cover-divider { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: 0 auto 60px; position: relative; z-index: 1; }
+  .cover-meta { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; z-index: 1; }
+  .cover-logo { width: 48px; height: 48px; background: var(--gold); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #000; margin-bottom: 8px; }
+  .cover-brand { font-size: 13px; color: var(--text-faint); letter-spacing: 1px; text-transform: uppercase; }
+  .cover-scroll { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-faint); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; animation: bounce 2s infinite; }
+  .cover-scroll::after { content: '↓'; font-size: 18px; }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .toc-section { background: var(--dark-2); border-bottom: 1px solid var(--dark-5); padding: 60px 0; }
+  .toc-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+  .toc-list { list-style: none; }
+  .toc-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--dark-4); text-decoration: none; color: var(--text-muted); font-size: 15px; transition: color 0.2s; gap: 16px; }
+  .toc-item:hover { color: var(--accent); }
+  .toc-num { font-size: 11px; font-weight: 700; color: var(--accent); opacity: 0.6; min-width: 24px; }
+
+  .intro-section { padding: 80px 0 60px; border-bottom: 1px solid var(--dark-4); }
+  .intro-quote { background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(59,130,246,0.02)); border-left: 3px solid var(--accent); border-radius: 0 16px 16px 0; padding: 32px 40px; margin-bottom: 48px; }
+  .intro-quote p { font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; color: #ddd; line-height: 1.6; margin-bottom: 16px; }
+  .intro-quote cite { font-size: 13px; color: var(--accent); font-style: normal; font-weight: 600; letter-spacing: 1px; }
+
+  .chapter { padding: 80px 0; border-bottom: 1px solid var(--dark-4); }
+  .chapter-header { margin-bottom: 48px; }
+  .chapter-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); opacity: 0.7; display: block; margin-bottom: 12px; }
+  .chapter-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 44px); font-weight: 900; color: #fff; line-height: 1.15; }
+  .chapter-title .highlight { color: var(--accent); }
+  .section-heading { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: #fff; margin: 48px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .section-heading::before { content: ''; width: 3px; height: 22px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
+  p { margin-bottom: 20px; font-size: 16px; line-height: 1.85; color: var(--text-muted); }
+  p strong { color: var(--text); font-weight: 600; }
+  p em { color: #ccc; }
+
+  .callout { border-radius: 16px; padding: 28px 32px; margin: 32px 0; }
+  .callout-blue { background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.2); }
+  .callout-dark { background: var(--dark-3); border: 1px solid var(--dark-5); }
+  .callout-icon { font-size: 24px; margin-bottom: 12px; display: block; }
+  .callout p { margin: 0; font-size: 15px; }
+  .callout strong { color: var(--accent) !important; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0; }
+  @media (max-width: 600px) { .stat-grid { grid-template-columns: 1fr; } }
+  .stat-card { background: var(--dark-3); border: 1px solid var(--dark-5); border-radius: 16px; padding: 28px 20px; text-align: center; }
+  .stat-number { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 900; color: var(--accent); line-height: 1; }
+  .stat-unit { font-size: 14px; color: var(--accent); margin-top: 4px; }
+  .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 10px; line-height: 1.4; }
+
+  .work-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+  @media (max-width: 600px) { .work-comparison { grid-template-columns: 1fr; } }
+  .work-card { border-radius: 14px; padding: 24px; }
+  .work-card.shallow { background: rgba(231,76,60,0.07); border: 1px solid rgba(231,76,60,0.2); }
+  .work-card.deep { background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.2); }
+  .work-card-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .work-card.shallow .work-card-label { color: #e74c3c; }
+  .work-card.deep .work-card-label { color: var(--accent); }
+  .work-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .work-card li { font-size: 14px; color: #ccc; display: flex; gap: 8px; }
+  .work-card.shallow li::before { content: '✗'; color: #e74c3c; flex-shrink: 0; }
+  .work-card.deep li::before { content: '✓'; color: var(--accent); flex-shrink: 0; }
+
+  .pomodoro-box { background: var(--dark-3); border: 1px solid var(--dark-5); border-radius: 20px; padding: 32px; margin: 32px 0; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+  .pomodoro-timer { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+  .pomodoro-time { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: var(--accent); line-height: 1; }
+  .pomodoro-min { font-size: 11px; color: var(--text-faint); letter-spacing: 1px; }
+  .pomodoro-steps { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .pomodoro-step { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: #ccc; }
+  .pomodoro-step-num { width: 24px; height: 24px; background: rgba(59,130,246,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--accent); flex-shrink: 0; }
+
+  .timeblock-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+  .timeblock-table th, .timeblock-table td { padding: 12px 16px; text-align: left; font-size: 14px; border-bottom: 1px solid var(--dark-4); }
+  .timeblock-table thead th { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); background: var(--dark-3); }
+  .timeblock-table tbody td { color: var(--text-muted); }
+  .timeblock-table tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .enemy-list { display: flex; flex-direction: column; gap: 16px; margin: 32px 0; }
+  .enemy-card { background: var(--dark-3); border-radius: 16px; padding: 24px; border-left: 3px solid var(--accent); }
+  .enemy-title { font-weight: 700; color: #fff; margin-bottom: 8px; font-size: 16px; }
+  .enemy-solution { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+  .enemy-solution strong { color: var(--accent); }
+
+  .ritual-chain { display: flex; flex-direction: column; gap: 0; margin: 32px 0; }
+  .ritual-item { display: flex; gap: 16px; align-items: center; padding: 16px 20px; background: var(--dark-3); border-bottom: 1px solid var(--dark-4); font-size: 14px; color: #ccc; }
+  .ritual-item:first-child { border-radius: 16px 16px 0 0; }
+  .ritual-item:last-child { border-bottom: none; border-radius: 0 0 16px 16px; }
+  .ritual-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 8px rgba(59,130,246,0.4); }
+
+  .exercise-block { background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(59,130,246,0.02)); border: 1px solid rgba(59,130,246,0.15); border-radius: 20px; padding: 40px; margin: 48px 0; }
+  .exercise-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid rgba(59,130,246,0.1); }
+  .exercise-icon { width: 48px; height: 48px; background: var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .exercise-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #fff; }
+  .exercise-subtitle { font-size: 13px; color: var(--text-faint); margin-top: 2px; }
+  .exercise-question { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+  .exercise-num { width: 28px; height: 28px; background: rgba(59,130,246,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+  .exercise-q-text { font-size: 15px; color: #ccc; line-height: 1.6; flex: 1; }
+  .exercise-input { background: rgba(255,255,255,0.03); border: 1px solid var(--dark-5); border-radius: 10px; padding: 12px 16px; color: var(--text-muted); font-size: 14px; font-family: 'Inter', sans-serif; width: 100%; margin-top: 8px; resize: none; min-height: 48px; transition: border-color 0.2s; }
+  .exercise-input:focus { outline: none; border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.03); color: var(--text); }
+
+  .conclusion { padding: 80px 0; text-align: center; }
+  .conclusion-icon { font-size: 60px; margin-bottom: 24px; }
+  .conclusion-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: #fff; margin-bottom: 16px; }
+  .conclusion-text { font-size: 17px; color: var(--text-muted); max-width: 520px; margin: 0 auto 48px; line-height: 1.8; }
+  .summary-list { text-align: left; background: var(--dark-2); border-radius: 20px; padding: 40px; margin: 0 auto 48px; max-width: 600px; }
+  .summary-list-title { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+  .summary-item { display: flex; gap: 14px; margin-bottom: 14px; font-size: 15px; color: #ccc; align-items: flex-start; }
+  .summary-item::before { content: '⚡'; flex-shrink: 0; }
+  .cta-block { background: linear-gradient(135deg, var(--accent-dark), var(--accent)); border-radius: 20px; padding: 40px; color: #fff; display: inline-block; width: 100%; max-width: 480px; }
+  .cta-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; margin-bottom: 8px; color: #fff; }
+  .cta-text { font-size: 15px; color: rgba(255,255,255,0.8); margin-bottom: 0; }
+  .footer { background: var(--dark-2); border-top: 1px solid var(--dark-4); padding: 48px 0; text-align: center; }
+  .footer-logo { width: 40px; height: 40px; background: var(--gold); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; color: #000; margin: 0 auto 16px; }
+  .footer-brand { font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .footer-url { font-size: 13px; color: var(--gold); text-decoration: none; }
+  .footer-copy { font-size: 12px; color: var(--text-faint); margin-top: 24px; }
+
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { background: #fff !important; color: #111 !important; font-size: 13px; }
+    .cover-scroll { display: none; }
+    .cover { background: #0D0D0D !important; min-height: auto; padding: 80px 40px; page-break-after: always; }
+    .cover-number { display: none; }
+    .toc-section { page-break-after: always; background: #f9f9f9 !important; }
+    .toc-item { color: #333 !important; border-color: #ddd !important; }
+    .chapter { page-break-before: always; padding: 40px 0; border: none; }
+    .intro-section { padding: 40px 0; border: none; page-break-after: always; }
+    .callout-dark, .stat-card, .work-card.shallow, .work-card.deep,
+    .pomodoro-box, .enemy-card, .ritual-item, .summary-list { background: #f5f5f5 !important; border-color: #ddd !important; }
+    .callout-blue { background: #eff6ff !important; border-color: #3B82F6 !important; }
+    p, .enemy-solution, .pomodoro-step, .ritual-item { color: #333 !important; }
+    .chapter-title, .section-heading, .exercise-title, .conclusion-title { color: #111 !important; }
+    .intro-quote { background: #eff6ff !important; border-color: #3B82F6 !important; }
+    .intro-quote p { color: #333 !important; }
+    .intro-quote cite, .toc-num, .section-heading::before, .callout strong,
+    .exercise-num, .pomodoro-step-num, .stat-number, .stat-unit { color: #3B82F6 !important; }
+    .exercise-block { background: #eff6ff !important; border-color: #3B82F6 !important; break-inside: avoid; }
+    .exercise-input { display: none !important; }
+    .exercise-q-text::after { content: ''; display: block; margin-top: 10px; border-bottom: 1.5px dotted #bbb; padding-bottom: 32px; margin-bottom: 4px; }
+    .exercise-icon { background: #3B82F6 !important; }
+    .exercise-num { background: #eff6ff !important; color: #3B82F6 !important; border: 1px solid #3B82F6; }
+    .cta-block { background: #3B82F6 !important; }
+    .footer { background: #f5f5f5 !important; border-color: #ddd !important; }
+    .footer-brand { color: #111 !important; }
+    .footer-url, .footer-logo { color: #C9A227 !important; }
+    .cover-title { color: #fff !important; }
+    a[href]::after { content: none !important; }
+    @page { margin: 18mm 16mm; size: A4; }
+    @page :first { margin-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-number">03</div>
+  <div class="cover-badge">🎯 Life OS — Coleção de Autoajuda</div>
+  <h1 class="cover-title">Foco <span>Total</span></h1>
+  <p class="cover-subtitle">Elimine a Distração, Proteja sua Atenção e Faça o que Realmente Importa</p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="cover-logo">L</div>
+    <span class="cover-brand">Life OS · agenciacriativa.shop</span>
+  </div>
+  <div class="cover-scroll">Continue lendo</div>
+</div>
+
+<div class="toc-section">
+  <div class="container">
+    <div class="toc-label">Sumário</div>
+    <ul class="toc-list">
+      <li><a class="toc-item" href="#cap1"><span class="toc-num">01</span> A Economia da Atenção</a></li>
+      <li><a class="toc-item" href="#cap2"><span class="toc-num">02</span> Como o Cérebro Processa o Foco</a></li>
+      <li><a class="toc-item" href="#cap3"><span class="toc-num">03</span> Minimalismo Digital</a></li>
+      <li><a class="toc-item" href="#cap4"><span class="toc-num">04</span> A Técnica Pomodoro</a></li>
+      <li><a class="toc-item" href="#cap5"><span class="toc-num">05</span> Time Blocking: Protegendo Seu Tempo</a></li>
+      <li><a class="toc-item" href="#cap6"><span class="toc-num">06</span> Inimigos Internos do Foco</a></li>
+      <li><a class="toc-item" href="#cap7"><span class="toc-num">07</span> Construindo Rituais de Foco</a></li>
+      <li><a class="toc-item" href="#cap8"><span class="toc-num">08</span> Recuperação: O Foco Precisa de Descanso</a></li>
+      <li><a class="toc-item" href="#conclusao"><span class="toc-num">—</span> Conclusão</a></li>
+    </ul>
+  </div>
+</div>
+
+<div id="cap1" class="intro-section chapter" style="border-bottom:1px solid var(--dark-4)">
+  <div class="container">
+    <div class="intro-quote">
+      <p>"O trabalho profundo é a habilidade de focar sem distração em uma tarefa cognitivamente exigente. É uma habilidade que vai se tornar cada vez mais valiosa e cada vez mais rara."</p>
+      <cite>— Cal Newport</cite>
+    </div>
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 01</span>
+      <h2 class="chapter-title">A <span class="highlight">Economia</span> da Atenção</h2>
+    </div>
+    <p>Cada aplicativo de redes sociais foi construído por equipes de especialistas com um único objetivo: <strong>capturar e manter sua atenção pelo maior tempo possível.</strong> Variação aleatória de recompensa, notificações calibradas para criar urgência, rolagem infinita — tudo projetado usando psicologia comportamental para explorar as vulnerabilidades do seu cérebro.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-number">47s</div><div class="stat-label">tempo médio de atenção antes de uma distração (era 2,5 min em 2004)</div></div>
+      <div class="stat-card"><div class="stat-number">23</div><div class="stat-unit">minutos</div><div class="stat-label">para retornar ao mesmo nível de concentração após uma interrupção</div></div>
+      <div class="stat-card"><div class="stat-number">700h</div><div class="stat-label">perdidas por ano com apenas 10 interrupções por dia de trabalho</div></div>
+    </div>
+
+    <h3 class="section-heading">Trabalho Profundo vs. Trabalho Raso</h3>
+    <div class="work-comparison">
+      <div class="work-card shallow">
+        <div class="work-card-label">Trabalho Raso</div>
+        <ul>
+          <li>Feito com atenção fragmentada</li>
+          <li>Baixo valor por hora</li>
+          <li>Responder e-mails</li>
+          <li>Reuniões rotineiras</li>
+          <li>Organizar arquivos</li>
+        </ul>
+      </div>
+      <div class="work-card deep">
+        <div class="work-card-label">✅ Trabalho Profundo</div>
+        <ul>
+          <li>Exige concentração total</li>
+          <li>Alto valor, difícil de replicar</li>
+          <li>Escrever, programar, analisar</li>
+          <li>Criar, planejar, resolver</li>
+          <li>Gera resultados exponenciais</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 1</div><div class="exercise-subtitle">Inventário honesto da sua semana</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Quantas horas por semana você passa em trabalho profundo (concentração total)?<textarea class="exercise-input" rows="1" placeholder="Estimativa: ___ horas/semana"></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Qual seria o impacto na sua carreira/negócio se você dobrasse esse tempo?<textarea class="exercise-input" rows="2" placeholder="Se eu dobrasse meu tempo de foco profundo..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Quais são suas 3 maiores fontes de distração externa atualmente?<textarea class="exercise-input" rows="2" placeholder="1. ___ 2. ___ 3. ___"></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap2" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 02</span><h2 class="chapter-title">Como o Cérebro <span class="highlight">Processa o Foco</span></h2></div>
+    <p>Quando você foca em algo, o córtex pré-frontal libera dopamina e norepinefrina — neurotransmissores que aumentam a clareza mental e a capacidade de resolver problemas. Mas o cérebro não gosta naturalmente de foco — evolutivamente, nossa atenção foi desenvolvida para detectar ameaças. Focar exige esforço ativo, como um músculo.</p>
+
+    <h3 class="section-heading">O Estado de Fluxo</h3>
+    <p>O psicólogo Mihaly Csikszentmihalyi identificou o que acontece quando o foco atinge seu pico: o <strong>estado de fluxo</strong>. No fluxo, o tempo passa de forma diferente, a autoconsciência desaparece, o esforço parece fácil e a produtividade pode ser <strong>5x maior que o normal</strong>.</p>
+    <div class="callout callout-blue"><p>Para entrar em fluxo você precisa de: tarefa com dificuldade adequada, objetivo claro, feedback imediato e <strong>ausência de interrupções por pelo menos 20-25 minutos</strong>. A maioria das pessoas nunca experimenta o fluxo porque nunca fica concentrada por tempo suficiente.</p></div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 2</div><div class="exercise-subtitle">Teste de foco agora</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Programe 25 minutos e trabalhe em uma tarefa sem nenhuma interrupção. Ao terminar: quantas vezes você sentiu vontade de checar o celular?<textarea class="exercise-input" rows="1" placeholder="Número de vezes: ___"></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">O trabalho ficou mais fácil ou mais difícil conforme o tempo passou? Por quê?<textarea class="exercise-input" rows="2" placeholder="Percebi que..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Como você se sentiu ao terminar os 25 minutos?<textarea class="exercise-input" rows="2" placeholder="Me senti..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap3" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 03</span><h2 class="chapter-title"><span class="highlight">Minimalismo</span> Digital</h2></div>
+    <p>B.J. Fogg, pesquisador de Stanford, descobriu que comportamentos são profundamente moldados pelo ambiente. Se o celular está na mesa, você vai verificá-lo. A estratégia inteligente não é ter mais força de vontade — é redesenhar o ambiente para tornar as distrações mais difíceis e o foco mais fácil.</p>
+
+    <div class="enemy-list">
+      <div class="enemy-card"><div class="enemy-title">1. Desativar todas as notificações não essenciais</div><p class="enemy-solution">Mantenha apenas chamadas telefônicas e alarmes. E-mails, mensagens e redes sociais podem esperar horários específicos. Cada notificação é uma interrupção de 23 minutos.</p></div>
+      <div class="enemy-card"><div class="enemy-title">2. Criar zonas livres de celular</div><p class="enemy-solution">Quarto (especialmente), mesa de trabalho durante foco profundo, refeições. O celular deve ir para outro cômodo — não só virado para baixo.</p></div>
+      <div class="enemy-card"><div class="enemy-title">3. Usar modos de foco/não perturbe</div><p class="enemy-solution">Configure períodos automáticos de "Não Perturbe" no iPhone/Android durante suas horas de trabalho profundo.</p></div>
+      <div class="enemy-card"><div class="enemy-title">4. Limpeza semestral de aplicativos</div><p class="enemy-solution">Remova tudo que você não usa com intenção. Se não tiver um motivo claro para manter, delete. Menos apps = menos gatilhos.</p></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 3</div><div class="exercise-subtitle">Desafio de 48 horas</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Delete Instagram, TikTok e redes sociais do celular por 48h. Desative todas notificações exceto chamadas. Ao final: o que você fez com o tempo extra?<textarea class="exercise-input" rows="3" placeholder="Com o tempo extra eu..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Que conclusões você tira sobre sua relação com o celular?<textarea class="exercise-input" rows="2" placeholder="Percebi que..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap4" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 04</span><h2 class="chapter-title">A Técnica <span class="highlight">Pomodoro</span></h2></div>
+
+    <div class="pomodoro-box">
+      <div class="pomodoro-timer"><div class="pomodoro-time">25</div><div class="pomodoro-min">minutos</div></div>
+      <div class="pomodoro-steps">
+        <div class="pomodoro-step"><div class="pomodoro-step-num">1</div>Escolha UMA tarefa</div>
+        <div class="pomodoro-step"><div class="pomodoro-step-num">2</div>Configure o timer para 25 minutos</div>
+        <div class="pomodoro-step"><div class="pomodoro-step-num">3</div>Trabalhe com foco total até o alarme</div>
+        <div class="pomodoro-step"><div class="pomodoro-step-num">4</div>Pausa de 5 minutos</div>
+        <div class="pomodoro-step"><div class="pomodoro-step-num">5</div>A cada 4 pomodoros: pausa longa de 15-30 min</div>
+      </div>
+    </div>
+
+    <p>Com prática, você pode estender para blocos de <strong>50 min + 10 min pausa</strong> ou <strong>90 min + 20 min pausa</strong> (alinhado com ciclos ultradianos do corpo). Friedrich Nietzsche, Charles Darwin e Charles Dickens trabalhavam em blocos de 3-4 horas de profunda concentração por dia — e nada mais.</p>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 4</div><div class="exercise-subtitle">Semana de 4 pomodoros por dia</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Por 5 dias, complete pelo menos 4 pomodoros de trabalho profundo por dia. Qual é a tarefa principal desta semana?<textarea class="exercise-input" rows="1" placeholder="Esta semana vou trabalhar em..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Qual horário do dia você é mais produtivo (manhã/tarde/noite)? Quando vai colocar seus pomodoros?<textarea class="exercise-input" rows="1" placeholder="Meu pico é: ___ — vou fazer pomodoros às: ___h"></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap5" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 05</span><h2 class="chapter-title">Time Blocking: <span class="highlight">Protegendo Seu Tempo</span></h2></div>
+    <p>Time blocking é a prática de agendar explicitamente blocos de tempo no calendário para tarefas específicas. Em vez de uma lista de tarefas sem horário, você decide antecipadamente <strong>quando</strong> cada tipo de trabalho acontecerá.</p>
+    <div class="callout callout-blue"><p><strong>Uma lista de tarefas diz o que fazer, mas não quando.</strong> Sem esse planejamento, o trabalho urgente sempre vence sobre o trabalho importante. Resultado: você fica sempre apagando incêndios, nunca construindo algo grande.</p></div>
+
+    <h3 class="section-heading">Estrutura de Blocos</h3>
+    <div class="timeblock-table">
+      <table>
+        <thead><tr><th>Bloco</th><th>Quando</th><th>O que inclui</th></tr></thead>
+        <tbody>
+          <tr><td>Trabalho Profundo</td><td>Manhã (antes de checar e-mail)</td><td>Trabalho cognitivamente exigente, criação, análise</td></tr>
+          <tr><td>Comunicação</td><td>30-60 min, 1-2x por dia</td><td>E-mails, mensagens, retornos</td></tr>
+          <tr><td>Reuniões</td><td>Agrupadas em 1 período</td><td>Tente ter um "dia sem reuniões"</td></tr>
+          <tr><td>Planejamento</td><td>Final do dia (15 min)</td><td>Revisar o dia, planejar o seguinte</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 5</div><div class="exercise-subtitle">Desenhe seu dia ideal com time blocking</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Qual será seu bloco de trabalho profundo? Horário e duração:<textarea class="exercise-input" rows="1" placeholder="Das ___h às ___h — tarefa: ___"></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Quando você vai checar e-mails e mensagens (máximo 2x por dia)?<textarea class="exercise-input" rows="1" placeholder="1ª vez: ___h — 2ª vez: ___h"></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Qual será seu ritual de encerramento do dia de trabalho?<textarea class="exercise-input" rows="2" placeholder="Todo dia ao terminar, vou..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap6" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 06</span><h2 class="chapter-title">Inimigos <span class="highlight">Internos</span> do Foco</h2></div>
+    <p>Você pode desligar todas as notificações, ir para uma sala silenciosa e ainda assim não conseguir focar — porque os maiores inimigos do foco muitas vezes são internos.</p>
+
+    <div class="enemy-list">
+      <div class="enemy-card"><div class="enemy-title">1. Ansiedade e ruminação</div><p class="enemy-solution"><strong>Técnica da descarga:</strong> antes de começar, escreva por 5 minutos tudo que está na sua cabeça. Preocupações, tarefas pendentes, ideias. Coloque no papel e esqueça temporariamente — seu cérebro vai confiar que você não vai esquecer.</p></div>
+      <div class="enemy-card"><div class="enemy-title">2. A mente vagabunda</div><p class="enemy-solution"><strong>Técnica de retorno gentil:</strong> quando perceber que sua mente vagou, não se critique. Apenas note: "Minha mente foi para X" e gentilmente traga o foco de volta. Com prática, esse retorno fica cada vez mais rápido.</p></div>
+      <div class="enemy-card"><div class="enemy-title">3. Perfeccionismo paralisante</div><p class="enemy-solution"><strong>Técnica da primeira versão feia:</strong> permita-se conscientemente criar uma primeira versão ruim. Escreva o rascunho horrível, faça o plano incompleto. A segunda versão sempre é melhor — mas a primeira precisa existir.</p></div>
+      <div class="enemy-card"><div class="enemy-title">4. Falta de clareza sobre a tarefa</div><p class="enemy-solution"><strong>Regra da próxima ação física:</strong> sempre defina a próxima ação em termos concretos. Não "trabalhar no relatório" — mas "abrir o arquivo X e escrever a introdução com os dados de Y."</p></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 6</div><div class="exercise-subtitle">Identifique seus inimigos internos</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Qual é seu maior inimigo interno do foco? (ansiedade, mente vagante, perfeccionismo, falta de clareza)<textarea class="exercise-input" rows="1" placeholder="Meu maior inimigo é..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Qual estratégia do capítulo você vai usar para lidar com ele?<textarea class="exercise-input" rows="2" placeholder="Vou usar a técnica de... quando perceber que..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap7" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 07</span><h2 class="chapter-title">Construindo <span class="highlight">Rituais de Foco</span></h2></div>
+    <p>Rituais reduzem a resistência mental ao início do trabalho. Quando você tem uma sequência fixa de ações antes de trabalhar, o cérebro aprende a associar esse ritual com o estado de foco — e começa a preparar os neurotransmissores necessários automaticamente.</p>
+
+    <h3 class="section-heading">Exemplo de Ritual de Entrada</h3>
+    <div class="ritual-chain">
+      <div class="ritual-item"><div class="ritual-dot"></div>Mesa limpa — menos de 3 itens visíveis</div>
+      <div class="ritual-item"><div class="ritual-dot"></div>Celular em outro cômodo ou modo avião</div>
+      <div class="ritual-item"><div class="ritual-dot"></div>Fechar todas as abas irrelevantes</div>
+      <div class="ritual-item"><div class="ritual-dot"></div>5 minutos de descarga (escrever pensamentos soltos)</div>
+      <div class="ritual-item"><div class="ritual-dot"></div>Definir claramente o objetivo do bloco</div>
+      <div class="ritual-item"><div class="ritual-dot"></div>Ativar âncora sensorial (música, café, iluminação)</div>
+      <div class="ritual-item"><div class="ritual-dot"></div>Iniciar o timer — foco começa agora</div>
+    </div>
+
+    <div class="callout callout-blue"><p>Maya Angelou escrevia todos os dias das 6h30 às 14h em um quarto de hotel alugado permanentemente. <strong>A consistência no horário criou o ambiente mental para obras que marcaram a literatura.</strong></p></div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 7</div><div class="exercise-subtitle">Projete seu ritual pessoal de foco</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Gatilho inicial (o que sinaliza que começa):<textarea class="exercise-input" rows="1" placeholder="Meu ritual começa quando..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Minha sequência de preparação (3-5 passos):<textarea class="exercise-input" rows="4" placeholder="1. &#10;2. &#10;3. &#10;4."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Âncora sensorial (música, aroma, luz específica):<textarea class="exercise-input" rows="1" placeholder="Minha âncora é..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">4</div><div class="exercise-q-text">Horário fixo que vou proteger:<textarea class="exercise-input" rows="1" placeholder="Das ___h às ___h todos os dias"></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap8" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 08</span><h2 class="chapter-title">Recuperação: O Foco <span class="highlight">Precisa de Descanso</span></h2></div>
+    <p>O sistema nervoso simpático (foco intenso) precisa ser equilibrado com o sistema nervoso parassimpático (descanso, recuperação). Pesquisas mostram que trabalhadores que fazem pausas regulares têm <strong>desempenho cognitivo superior</strong> — mesmo trabalhando menos horas.</p>
+
+    <div class="callout callout-blue"><span class="callout-icon">😴</span><p>Uma noite mal dormida reduz a capacidade cognitiva em <strong>20-40%</strong>. Nenhuma técnica de produtividade compensa isso. Durante o sono: memórias são consolidadas, toxinas cognitivas são eliminadas e habilidades treinadas são "instaladas" em memória de longo prazo.</p></div>
+
+    <div class="callout callout-dark"><p><strong>"Não tenho tempo para descansar"</strong> é uma afirmação contraditória. Você não tem tempo porque não descansa — não o contrário. Qualidade de foco &gt; quantidade de horas.</p></div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 8</div><div class="exercise-subtitle">Avalie sua recuperação atual</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Quantas horas você dorme por noite? A qualidade é boa?<textarea class="exercise-input" rows="1" placeholder="___ horas — qualidade: ___/10"></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Qual é a maior lacuna na sua recuperação atual? (sono, pausas, exercício, lazer sem tela)<textarea class="exercise-input" rows="1" placeholder="Minha maior lacuna é..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Que UMA mudança na recuperação vai implementar esta semana?<textarea class="exercise-input" rows="2" placeholder="Esta semana vou..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="conclusao" class="conclusion">
+  <div class="container">
+    <div class="conclusion-icon">🎯</div>
+    <h2 class="conclusion-title">Sua Atenção é Seu Maior Ativo</h2>
+    <p class="conclusion-text">Em uma economia onde a informação é abundante e a atenção é escassa, quem controla sua atenção controla seu destino. Foco não é sobre fazer mais coisas — é sobre fazer as coisas certas com presença total.</p>
+    <div class="summary-list">
+      <div class="summary-list-title">O que você aprendeu</div>
+      <div class="summary-item">A economia da atenção foi projetada para fragmentar seu foco — é uma batalha consciente</div>
+      <div class="summary-item">Trabalho profundo produz resultados exponencialmente superiores ao trabalho raso</div>
+      <div class="summary-item">O ambiente molda o comportamento — redesenhe-o para facilitar o foco</div>
+      <div class="summary-item">A Técnica Pomodoro e o time blocking protegem seus blocos de concentração</div>
+      <div class="summary-item">Inimigos internos (ansiedade, perfeccionismo, falta de clareza) precisam de estratégias</div>
+      <div class="summary-item">Rituais de foco programam o cérebro para entrar em estado de concentração</div>
+      <div class="summary-item">Recuperação não é opcional — é o que torna o foco sustentável</div>
+    </div>
+    <div class="cta-block">
+      <div class="cta-title">Seu desafio desta semana</div>
+      <p class="cta-text">Escolha um horário fixo para seu bloco de trabalho profundo (1-2h), crie um ritual simples de 3 passos e complete pelo menos 4 pomodoros por dia durante 5 dias.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="container">
+    <div class="footer-logo">L</div>
+    <div class="footer-brand">Life OS</div>
+    <a class="footer-url" href="https://agenciacriativa.shop">agenciacriativa.shop</a>
+    <p class="footer-copy">Este ebook faz parte da Coleção de Autoajuda do Life OS.<br>Acesse sua área de membros para todos os materiais.</p>
+  </div>
+</div>
+
+</body>
+</html>

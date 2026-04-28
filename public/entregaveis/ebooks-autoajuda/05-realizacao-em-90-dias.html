@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Realização em 90 Dias — Life OS</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8B5CF6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ebooks Life OS">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #9B59B6; --accent-light: #C39BD3; --accent-dark: #6C3483;
+    --gold: #F4C430; --gold-dark: #C9A227;
+    --dark: #0D0D0D; --dark-2: #141414; --dark-3: #1C1C1C; --dark-4: #242424; --dark-5: #2E2E2E;
+    --text: #E8E8E8; --text-muted: #999; --text-faint: #666;
+    --green: #2ECC71;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.7; font-size: 16px; }
+
+  .cover { min-height: 100vh; background: linear-gradient(135deg, #0D0D0D 0%, #0d001a 50%, #0D0D0D 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 24px; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(155,89,182,0.08) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .cover-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(155,89,182,0.1); border: 1px solid rgba(155,89,182,0.3); border-radius: 100px; padding: 6px 16px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-light); margin-bottom: 40px; }
+  .cover-number { font-family: 'Playfair Display', serif; font-size: 200px; font-weight: 900; color: rgba(155,89,182,0.05); line-height: 1; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); user-select: none; pointer-events: none; }
+  .cover-title { font-family: 'Playfair Display', serif; font-size: clamp(38px, 7vw, 72px); font-weight: 900; line-height: 1.05; color: #fff; margin-bottom: 16px; position: relative; z-index: 1; }
+  .cover-title span { color: var(--accent-light); }
+  .cover-subtitle { font-size: clamp(14px, 2.5vw, 18px); color: var(--text-muted); max-width: 500px; font-weight: 300; margin-bottom: 60px; position: relative; z-index: 1; }
+  .cover-divider { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: 0 auto 60px; position: relative; z-index: 1; }
+  .cover-meta { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; z-index: 1; }
+  .cover-logo { width: 48px; height: 48px; background: var(--gold); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #000; margin-bottom: 8px; }
+  .cover-brand { font-size: 13px; color: var(--text-faint); letter-spacing: 1px; text-transform: uppercase; }
+  .cover-scroll { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); color: var(--text-faint); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; animation: bounce 2s infinite; }
+  .cover-scroll::after { content: ' ↓'; font-size: 18px; }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .toc-section { background: var(--dark-2); border-bottom: 1px solid var(--dark-5); padding: 60px 0; }
+  .toc-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent-light); margin-bottom: 24px; }
+  .toc-list { list-style: none; }
+  .toc-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--dark-4); text-decoration: none; color: var(--text-muted); font-size: 15px; transition: color 0.2s; gap: 16px; }
+  .toc-item:hover { color: var(--accent-light); }
+  .toc-num { font-size: 11px; font-weight: 700; color: var(--accent-light); opacity: 0.6; min-width: 24px; }
+
+  .chapter { padding: 80px 0; border-bottom: 1px solid var(--dark-4); }
+  .chapter-header { margin-bottom: 48px; }
+  .chapter-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent-light); opacity: 0.7; display: block; margin-bottom: 12px; }
+  .chapter-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 44px); font-weight: 900; color: #fff; line-height: 1.15; }
+  .chapter-title .highlight { color: var(--accent-light); }
+  .intro-quote { background: linear-gradient(135deg, rgba(155,89,182,0.06), rgba(155,89,182,0.02)); border-left: 3px solid var(--accent); border-radius: 0 16px 16px 0; padding: 32px 40px; margin-bottom: 48px; }
+  .intro-quote p { font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; color: #ddd; line-height: 1.6; margin-bottom: 16px; }
+  .intro-quote cite { font-size: 13px; color: var(--accent-light); font-style: normal; font-weight: 600; letter-spacing: 1px; }
+  .section-heading { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: #fff; margin: 48px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .section-heading::before { content: ''; width: 3px; height: 22px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
+  p { margin-bottom: 20px; font-size: 16px; line-height: 1.85; color: var(--text-muted); }
+  p strong { color: var(--text); font-weight: 600; }
+
+  .callout { border-radius: 16px; padding: 28px 32px; margin: 32px 0; }
+  .callout-purple { background: rgba(155,89,182,0.07); border: 1px solid rgba(155,89,182,0.2); }
+  .callout-dark { background: var(--dark-3); border: 1px solid var(--dark-5); }
+  .callout-gold { background: rgba(244,196,48,0.06); border: 1px solid rgba(244,196,48,0.2); }
+  .callout p { margin: 0; font-size: 15px; }
+  .callout-purple strong { color: var(--accent-light) !important; }
+  .callout-gold strong { color: var(--gold) !important; }
+
+  .smart-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px 0; }
+  @media (max-width: 600px) { .smart-grid { grid-template-columns: 1fr; } }
+  .smart-card { background: var(--dark-3); border: 1px solid var(--dark-5); border-radius: 14px; padding: 20px; text-align: center; }
+  .smart-letter { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: var(--accent); line-height: 1; }
+  .smart-word { font-size: 13px; font-weight: 700; color: var(--accent-light); margin-top: 4px; }
+  .smart-desc { font-size: 12px; color: var(--text-muted); margin-top: 8px; line-height: 1.4; }
+
+  .levels-block { display: flex; flex-direction: column; gap: 0; margin: 32px 0; }
+  .level-item { display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--dark-4); }
+  .level-item:last-child { border-bottom: none; }
+  .level-label { background: var(--dark-3); padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-right: 1px solid var(--dark-4); }
+  .level-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--accent-light); line-height: 1; }
+  .level-unit { font-size: 11px; color: var(--text-faint); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+  .level-content { padding: 20px 24px; }
+  .level-title { font-weight: 700; color: #fff; margin-bottom: 6px; font-size: 15px; }
+  .level-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+  .phases { display: flex; flex-direction: column; gap: 0; margin: 32px 0; position: relative; }
+  .phases::before { content: ''; position: absolute; left: 19px; top: 20px; bottom: 20px; width: 2px; background: linear-gradient(to bottom, var(--accent), transparent); opacity: 0.3; }
+  .phase-item { display: flex; gap: 20px; padding: 20px 0; align-items: flex-start; position: relative; z-index: 1; }
+  .phase-dot { width: 40px; height: 40px; border-radius: 50%; background: var(--dark-3); border: 2px solid var(--accent); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+  .phase-range { font-size: 9px; font-weight: 700; color: var(--accent-light); line-height: 1.2; text-align: center; }
+  .phase-content { flex: 1; padding-top: 4px; }
+  .phase-title { font-weight: 700; color: #fff; margin-bottom: 6px; font-size: 15px; }
+  .phase-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+  .weekly-ritual { background: var(--dark-3); border: 1px solid var(--dark-5); border-radius: 20px; overflow: hidden; margin: 32px 0; }
+  .weekly-step { display: flex; gap: 16px; padding: 20px 24px; border-bottom: 1px solid var(--dark-4); align-items: flex-start; }
+  .weekly-step:last-child { border-bottom: none; }
+  .weekly-step-num { width: 32px; height: 32px; background: rgba(155,89,182,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-light); flex-shrink: 0; }
+  .weekly-step-title { font-weight: 700; color: #fff; font-size: 14px; margin-bottom: 4px; }
+  .weekly-step-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  .obstacle-list { display: flex; flex-direction: column; gap: 16px; margin: 32px 0; }
+  .obstacle-card { background: var(--dark-3); border-radius: 16px; overflow: hidden; }
+  .obstacle-header { background: rgba(155,89,182,0.1); padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--dark-4); }
+  .obstacle-num { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; color: var(--accent-light); }
+  .obstacle-title { font-weight: 700; color: #fff; font-size: 15px; }
+  .obstacle-body { padding: 16px 24px; }
+  .obstacle-solution { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+  .obstacle-solution strong { color: var(--accent-light); }
+
+  .review-block { background: linear-gradient(135deg, rgba(155,89,182,0.06), rgba(155,89,182,0.02)); border: 1px solid rgba(155,89,182,0.2); border-radius: 20px; padding: 32px; margin: 32px 0; }
+  .review-section { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid rgba(155,89,182,0.1); }
+  .review-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .review-title { font-weight: 700; color: var(--accent-light); font-size: 14px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+  .review-q { font-size: 14px; color: #ccc; margin-bottom: 8px; line-height: 1.5; padding-left: 16px; border-left: 2px solid rgba(155,89,182,0.3); }
+
+  .exercise-block { background: linear-gradient(135deg, rgba(155,89,182,0.05), rgba(155,89,182,0.02)); border: 1px solid rgba(155,89,182,0.15); border-radius: 20px; padding: 40px; margin: 48px 0; }
+  .exercise-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid rgba(155,89,182,0.1); }
+  .exercise-icon { width: 48px; height: 48px; background: var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .exercise-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #fff; }
+  .exercise-subtitle { font-size: 13px; color: var(--text-faint); margin-top: 2px; }
+  .exercise-question { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+  .exercise-num { width: 28px; height: 28px; background: rgba(155,89,182,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-light); flex-shrink: 0; margin-top: 2px; }
+  .exercise-q-text { font-size: 15px; color: #ccc; line-height: 1.6; flex: 1; }
+  .exercise-input { background: rgba(255,255,255,0.03); border: 1px solid var(--dark-5); border-radius: 10px; padding: 12px 16px; color: var(--text-muted); font-size: 14px; font-family: 'Inter', sans-serif; width: 100%; margin-top: 8px; resize: none; min-height: 48px; transition: border-color 0.2s; }
+  .exercise-input:focus { outline: none; border-color: rgba(155,89,182,0.4); background: rgba(155,89,182,0.03); color: var(--text); }
+
+  .accountability-types { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 32px 0; }
+  @media (max-width: 600px) { .accountability-types { grid-template-columns: 1fr; } }
+  .acc-card { background: var(--dark-3); border: 1px solid var(--dark-5); border-radius: 14px; padding: 20px; }
+  .acc-icon { font-size: 24px; margin-bottom: 8px; }
+  .acc-title { font-weight: 700; color: #fff; margin-bottom: 6px; font-size: 14px; }
+  .acc-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+
+  .contract-block { background: var(--dark-2); border: 2px solid rgba(155,89,182,0.2); border-radius: 20px; padding: 40px; margin: 48px 0; }
+  .contract-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--accent-light); margin-bottom: 32px; text-align: center; }
+  .contract-field { margin-bottom: 20px; }
+  .contract-label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); margin-bottom: 8px; }
+  .contract-input { width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--dark-5); color: var(--text); font-size: 15px; font-family: 'Inter', sans-serif; padding: 10px 0; outline: none; transition: border-color 0.2s; }
+  .contract-input:focus { border-color: var(--accent); }
+  .contract-input::placeholder { color: var(--text-faint); }
+
+  .conclusion { padding: 80px 0; text-align: center; }
+  .conclusion-icon { font-size: 60px; margin-bottom: 24px; }
+  .conclusion-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: #fff; margin-bottom: 16px; }
+  .conclusion-text { font-size: 17px; color: var(--text-muted); max-width: 520px; margin: 0 auto 48px; line-height: 1.8; }
+  .summary-list { text-align: left; background: var(--dark-2); border-radius: 20px; padding: 40px; margin: 0 auto 48px; max-width: 600px; }
+  .summary-list-title { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-light); margin-bottom: 24px; }
+  .summary-item { display: flex; gap: 14px; margin-bottom: 14px; font-size: 15px; color: #ccc; align-items: flex-start; }
+  .summary-item::before { content: '⚡'; flex-shrink: 0; }
+  .action-list { text-align: left; background: linear-gradient(135deg, rgba(155,89,182,0.08), rgba(155,89,182,0.03)); border: 1px solid rgba(155,89,182,0.2); border-radius: 20px; padding: 40px; max-width: 600px; margin: 0 auto 48px; }
+  .action-title { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-light); margin-bottom: 24px; }
+  .action-item { display: flex; gap: 14px; margin-bottom: 14px; font-size: 15px; color: #ccc; align-items: flex-start; }
+  .action-num { width: 28px; height: 28px; background: rgba(155,89,182,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-light); flex-shrink: 0; }
+  .cta-block { background: linear-gradient(135deg, var(--accent-dark), var(--accent)); border-radius: 20px; padding: 40px; color: #fff; display: inline-block; width: 100%; max-width: 480px; }
+  .cta-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; margin-bottom: 8px; color: #fff; }
+  .cta-text { font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 0; }
+  .footer { background: var(--dark-2); border-top: 1px solid var(--dark-4); padding: 48px 0; text-align: center; }
+  .footer-logo { width: 40px; height: 40px; background: var(--gold); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; color: #000; margin: 0 auto 16px; }
+  .footer-brand { font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .footer-url { font-size: 13px; color: var(--gold); text-decoration: none; }
+  .footer-copy { font-size: 12px; color: var(--text-faint); margin-top: 24px; }
+
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { background: #fff !important; color: #111 !important; font-size: 13px; }
+    .cover-scroll { display: none; }
+    .cover { background: #0D0D0D !important; min-height: auto; padding: 80px 40px; page-break-after: always; }
+    .cover-number { display: none; }
+    .toc-section { page-break-after: always; background: #f9f9f9 !important; }
+    .toc-item { color: #333 !important; border-color: #ddd !important; }
+    .chapter { page-break-before: always; padding: 40px 0; border: none; }
+    .smart-card, .level-label, .level-content, .weekly-step,
+    .obstacle-card, .acc-card, .summary-list, .action-list { background: #f5f5f5 !important; border-color: #ddd !important; }
+    .callout-purple { background: #f9f0ff !important; border-color: #9B59B6 !important; }
+    .callout-gold { background: #fffbea !important; border-color: #C9A227 !important; }
+    .review-block { background: #f9f0ff !important; border-color: #9B59B6 !important; }
+    p, .level-desc, .phase-desc, .weekly-step-desc, .obstacle-solution, .acc-desc, .review-q { color: #333 !important; }
+    .chapter-title, .section-heading, .exercise-title, .conclusion-title,
+    .phase-title, .weekly-step-title, .obstacle-title, .level-title { color: #111 !important; }
+    .intro-quote { background: #f9f0ff !important; border-color: #9B59B6 !important; }
+    .intro-quote p { color: #333 !important; }
+    .toc-num, .exercise-num, .chapter-label, .smart-letter, .phase-range,
+    .weekly-step-num, .obstacle-num, .acc-title, .review-title, .action-num { color: #9B59B6 !important; }
+    .obstacle-header { background: #f0e8ff !important; border-color: #ddd !important; }
+    .exercise-block { background: #f9f0ff !important; border-color: #9B59B6 !important; break-inside: avoid; }
+    .exercise-input { display: none !important; }
+    .exercise-q-text::after { content: ''; display: block; margin-top: 10px; border-bottom: 1.5px dotted #bbb; padding-bottom: 32px; margin-bottom: 4px; }
+    .exercise-icon { background: #9B59B6 !important; }
+    .exercise-num { background: #f9f0ff !important; border: 1px solid #9B59B6; }
+    .contract-block { background: #f9f9f9 !important; border-color: #9B59B6 !important; break-inside: avoid; }
+    .contract-input { border-color: #ccc !important; }
+    .contract-input::after { content: ''; display: block; border-bottom: 1.5px dotted #bbb; padding-bottom: 20px; }
+    .cta-block { background: #9B59B6 !important; }
+    .footer { background: #f5f5f5 !important; border-color: #ddd !important; }
+    .footer-brand { color: #111 !important; }
+    .cover-title { color: #fff !important; }
+    a[href]::after { content: none !important; }
+    @page { margin: 18mm 16mm; size: A4; }
+    @page :first { margin-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-number">05</div>
+  <div class="cover-badge">🚀 Life OS — Coleção de Autoajuda</div>
+  <h1 class="cover-title">Realização<br>em <span>90 Dias</span></h1>
+  <p class="cover-subtitle">O Método Prático para Transformar Metas em Conquistas Reais — Sem Procrastinação, Sem Desculpas</p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="cover-logo">L</div>
+    <span class="cover-brand">Life OS · agenciacriativa.shop</span>
+  </div>
+  <div class="cover-scroll">Continue lendo</div>
+</div>
+
+<div class="toc-section">
+  <div class="container">
+    <div class="toc-label">Sumário</div>
+    <ul class="toc-list">
+      <li><a class="toc-item" href="#cap1"><span class="toc-num">01</span> O Problema com a Forma Como Você Define Metas</a></li>
+      <li><a class="toc-item" href="#cap2"><span class="toc-num">02</span> O Método dos 90 Dias: Visão Geral</a></li>
+      <li><a class="toc-item" href="#cap3"><span class="toc-num">03</span> Planejamento Semanal: O Motor do Sistema</a></li>
+      <li><a class="toc-item" href="#cap4"><span class="toc-num">04</span> Execução Diária: Da Intenção à Ação</a></li>
+      <li><a class="toc-item" href="#cap5"><span class="toc-num">05</span> Superando Obstáculos e Mantendo o Momentum</a></li>
+      <li><a class="toc-item" href="#cap6"><span class="toc-num">06</span> O Papel da Responsabilidade</a></li>
+      <li><a class="toc-item" href="#cap7"><span class="toc-num">07</span> A Revisão Final: Aprender e Evoluir</a></li>
+      <li><a class="toc-item" href="#conclusao"><span class="toc-num">—</span> Conclusão</a></li>
+    </ul>
+  </div>
+</div>
+
+<div id="cap1" class="chapter">
+  <div class="container">
+    <div class="intro-quote">
+      <p>"Um objetivo sem um plano é apenas um desejo."</p>
+      <cite>— Antoine de Saint-Exupéry</cite>
+    </div>
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 01</span>
+      <h2 class="chapter-title">O Problema com a <span class="highlight">Forma Como Você Define Metas</span></h2>
+    </div>
+    <p><strong>Um ano é longo demais para manter urgência. 90 dias é diferente.</strong> Três meses é tempo suficiente para criar resultados visíveis em qualquer área da vida — e curto o suficiente para manter o senso de urgência ativo. Grandes empresas como Intel e Google operam em ciclos trimestrais exatamente por esse motivo.</p>
+
+    <div class="callout callout-purple">
+      <p>"Quero emagrecer", "Vou economizar mais dinheiro", "Preciso ser mais organizado" — essas não são metas. São intenções. <strong>Intenções sem especificidade nunca se materializam porque o cérebro não sabe como agendar algo indefinido.</strong></p>
+    </div>
+
+    <h3 class="section-heading">O Framework SMART</h3>
+    <div class="smart-grid">
+      <div class="smart-card"><div class="smart-letter">S</div><div class="smart-word">Específica</div><div class="smart-desc">O quê exatamente? Quanto? Onde? Com quem?</div></div>
+      <div class="smart-card"><div class="smart-letter">M</div><div class="smart-word">Mensurável</div><div class="smart-desc">Como você vai saber que alcançou?</div></div>
+      <div class="smart-card"><div class="smart-letter">A</div><div class="smart-word">Alcançável</div><div class="smart-desc">Desafiadora mas possível em 90 dias</div></div>
+      <div class="smart-card"><div class="smart-letter">R</div><div class="smart-word">Relevante</div><div class="smart-desc">Por que isso importa para você agora?</div></div>
+      <div class="smart-card"><div class="smart-letter">T</div><div class="smart-word">Temporal</div><div class="smart-desc">Quando exatamente?</div></div>
+    </div>
+
+    <div class="callout callout-dark">
+      <p><strong>Vaga:</strong> "Quero me exercitar mais."<br><strong>SMART:</strong> "Vou completar 3 treinos de 45 min por semana (seg, qua, sex, às 7h) durante 90 dias — saindo de 0 para 36 treinos completados."</p>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 1</div><div class="exercise-subtitle">Transforme sua meta</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Escreva sua meta de forma vaga (como você normalmente pensa nela):<textarea class="exercise-input" rows="1" placeholder="Vaga: ..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Transforme em meta SMART:<textarea class="exercise-input" rows="2" placeholder="SMART: ..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Qual é o seu porquê profundo? (escreva 3 camadas de "por quê")<textarea class="exercise-input" rows="4" placeholder="Por quê 1: ...&#10;Por quê 2 (por que isso importa?): ...&#10;Por quê 3 (por que o motivo 2 importa?): ..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap2" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 02</span><h2 class="chapter-title">O Método dos <span class="highlight">90 Dias</span>: Visão Geral</h2></div>
+
+    <h3 class="section-heading">Os Três Níveis do Planejamento</h3>
+    <div class="levels-block">
+      <div class="level-item">
+        <div class="level-label"><div class="level-num">90</div><div class="level-unit">dias</div></div>
+        <div class="level-content"><div class="level-title">Visão de 90 dias</div><p class="level-desc">O que você vai conquistar ao final do trimestre? Qual é o estado final desejado?</p></div>
+      </div>
+      <div class="level-item">
+        <div class="level-label"><div class="level-num">7</div><div class="level-unit">dias</div></div>
+        <div class="level-content"><div class="level-title">Metas semanais</div><p class="level-desc">O que precisa acontecer esta semana para que você esteja no caminho certo para o objetivo de 90 dias?</p></div>
+      </div>
+      <div class="level-item">
+        <div class="level-label"><div class="level-num">1</div><div class="level-unit">dia</div></div>
+        <div class="level-content"><div class="level-title">Ações diárias</div><p class="level-desc">O que você vai fazer hoje que avança o objetivo desta semana?</p></div>
+      </div>
+    </div>
+
+    <h3 class="section-heading">A Estrutura das 13 Semanas</h3>
+    <div class="phases">
+      <div class="phase-item"><div class="phase-dot"><span class="phase-range">Sem.<br>1-2</span></div><div class="phase-content"><div class="phase-title">Fundação</div><p class="phase-desc">Clareza total da meta, construção dos sistemas e rotinas, eliminação de obstáculos previsíveis.</p></div></div>
+      <div class="phase-item"><div class="phase-dot"><span class="phase-range">Sem.<br>3-10</span></div><div class="phase-content"><div class="phase-title">Execução</div><p class="phase-desc">O coração do trabalho. Revisão semanal rígida. Ajustes frequentes. Resistência a adicionar novas prioridades.</p></div></div>
+      <div class="phase-item"><div class="phase-dot"><span class="phase-range">Sem.<br>11-12</span></div><div class="phase-content"><div class="phase-title">Finalização</div><p class="phase-desc">Reta final. Intensidade máxima. Celebração dos marcos. Revisão do que funcionou.</p></div></div>
+      <div class="phase-item"><div class="phase-dot"><span class="phase-range">Sem.<br>13</span></div><div class="phase-content"><div class="phase-title">Revisão e planejamento</div><p class="phase-desc">Análise honesta dos resultados. Documentação dos aprendizados. Planejamento do próximo ciclo.</p></div></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 2</div><div class="exercise-subtitle">Defina sua Estrela Norte</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">⭐</div><div class="exercise-q-text">Minha meta principal para os próximos 90 dias é:<textarea class="exercise-input" rows="2" placeholder="Ao final de 90 dias, vou ter..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">✓</div><div class="exercise-q-text">Vou saber que alcancei quando:<textarea class="exercise-input" rows="1" placeholder="Saberei que cheguei lá quando..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">💪</div><div class="exercise-q-text">Meu nível de comprometimento atual (1-10) — se abaixo de 8, reveja a meta ou o porquê:<textarea class="exercise-input" rows="1" placeholder="Comprometimento: ___/10"></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap3" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 03</span><h2 class="chapter-title">Planejamento Semanal: <span class="highlight">O Motor do Sistema</span></h2></div>
+    <p>A revisão semanal não é opcional dentro do método dos 90 dias. É o que diferencia quem chega ao resultado de quem chega a setembro no mesmo ponto que estava em junho.</p>
+
+    <h3 class="section-heading">O Ritual de Domingo (30-45 min)</h3>
+    <div class="weekly-ritual">
+      <div class="weekly-step"><div class="weekly-step-num">1</div><div><div class="weekly-step-title">Revisão da semana anterior (10 min)</div><div class="weekly-step-desc">O que pretendia fazer? Fez? O que correu bem e por quê? O que não correu e por quê? O que aprendeu?</div></div></div>
+      <div class="weekly-step"><div class="weekly-step-num">2</div><div><div class="weekly-step-title">Verificação do progresso de 90 dias (5 min)</div><div class="weekly-step-desc">Onde você está? Está no ritmo certo, adiantado ou atrasado? O que precisa ajustar?</div></div></div>
+      <div class="weekly-step"><div class="weekly-step-num">3</div><div><div class="weekly-step-title">Definição das 3 prioridades da semana (10 min)</div><div class="weekly-step-desc">Não 10, não 5 — três. Que 3 coisas, se feitas esta semana, avançam mais em direção à meta?</div></div></div>
+      <div class="weekly-step"><div class="weekly-step-num">4</div><div><div class="weekly-step-title">Blocos no calendário (10 min)</div><div class="weekly-step-desc">Quando especificamente cada prioridade vai acontecer? Que conflitos você precisa resolver?</div></div></div>
+      <div class="weekly-step"><div class="weekly-step-num">5</div><div><div class="weekly-step-title">Intenção de bem-estar (5 min)</div><div class="weekly-step-desc">Como vai cuidar da sua energia esta semana? Sono, exercício, descanso — o que está planejado?</div></div></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 3</div><div class="exercise-subtitle">Planejamento desta semana</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Minhas 3 prioridades desta semana:<textarea class="exercise-input" rows="3" placeholder="1. &#10;2. &#10;3."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Para cada prioridade, quando especificamente vai acontecer (dia + horário)?<textarea class="exercise-input" rows="3" placeholder="1. Dia: ___ Horário: ___&#10;2. Dia: ___ Horário: ___&#10;3. Dia: ___ Horário: ___"></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">O que precisa acontecer para você considerar esta semana um sucesso?<textarea class="exercise-input" rows="2" placeholder="Esta semana foi um sucesso se..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap4" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 04</span><h2 class="chapter-title">Execução Diária: Da <span class="highlight">Intenção à Ação</span></h2></div>
+
+    <h3 class="section-heading">O Ritual da Manhã de 10 Minutos</h3>
+    <div class="callout callout-purple">
+      <p><strong>3 perguntas para começar o dia:</strong><br>
+      1. Qual é minha prioridade número 1 hoje?<br>
+      2. Que hora específica vou trabalhar nessa prioridade?<br>
+      3. Que obstáculo pode aparecer e como vou lidar?</p>
+    </div>
+
+    <h3 class="section-heading">A Técnica MIT (Most Important Task)</h3>
+    <p>Cada dia, identifique a MIT — a tarefa mais importante do dia. A regra: <strong>a MIT vai primeiro.</strong> Antes de checar e-mails, antes de responder mensagens — você faz pelo menos 25-45 minutos na sua MIT.</p>
+    <p>Pela manhã, sua força de vontade e capacidade cognitiva estão no pico. Tudo que você faz antes da MIT drena recursos que poderiam ter ido para o que realmente importa.</p>
+
+    <h3 class="section-heading">A Ação Mínima Viável</h3>
+    <div class="callout callout-dark">
+      <p>Nos dias difíceis, use a regra salva-vidas: <strong>faça apenas a ação mínima viável.</strong><br><br>
+      Não quer escrever 1 hora? Abra o documento e escreva 5 minutos.<br>
+      Não quer fazer o treino completo? Faça apenas 10 minutos.<br><br>
+      Começar é o maior obstáculo. Uma vez que você começa, o impulso leva adiante.</p>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 4</div><div class="exercise-subtitle">Configure seu sistema de execução diária</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Horário e local do seu ritual da manhã:<textarea class="exercise-input" rows="1" placeholder="Às ___h, no/na ___"></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Qual será sua MIT de amanhã?<textarea class="exercise-input" rows="1" placeholder="A tarefa mais importante amanhã é..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Defina sua ação mínima viável para sua meta de 90 dias:<textarea class="exercise-input" rows="2" placeholder="Mesmo nos dias mais difíceis, vou pelo menos..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap5" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 05</span><h2 class="chapter-title">Superando Obstáculos e <span class="highlight">Mantendo o Momentum</span></h2></div>
+    <p>O que diferencia quem completa o ciclo de 90 dias de quem abandona não é sorte. É preparo para os obstáculos que vão aparecer. Não "se aparecerem" — <strong>quando aparecerem.</strong></p>
+
+    <div class="obstacle-list">
+      <div class="obstacle-card">
+        <div class="obstacle-header"><div class="obstacle-num">01</div><div class="obstacle-title">Perda de motivação (Semanas 3-5)</div></div>
+        <div class="obstacle-body"><p class="obstacle-solution"><strong>Solução:</strong> Motive-se com o comprometimento, não com os sentimentos. Releia seu porquê profundo. Você não vai treinar quando estiver animado — vai treinar porque é isso que seu "eu de 90 dias" faz.</p></div>
+      </div>
+      <div class="obstacle-card">
+        <div class="obstacle-header"><div class="obstacle-num">02</div><div class="obstacle-title">Surgimento de novas prioridades</div></div>
+        <div class="obstacle-body"><p class="obstacle-solution"><strong>Solução:</strong> Distingua entre emergência real e urgência percebida. Para qualquer nova demanda, pergunte: "Isso realmente não pode esperar 90 dias?" Frequentemente, pode.</p></div>
+      </div>
+      <div class="obstacle-card">
+        <div class="obstacle-header"><div class="obstacle-num">03</div><div class="obstacle-title">Semanas ruins que viram meses ruins</div></div>
+        <div class="obstacle-body"><p class="obstacle-solution"><strong>Solução — Regra dos 2 dias:</strong> nunca deixe passar 2 dias seguidos sem fazer alguma ação em direção à meta. Uma semana ruim não estraga 90 dias. Desistir, sim.</p></div>
+      </div>
+      <div class="obstacle-card">
+        <div class="obstacle-header"><div class="obstacle-num">04</div><div class="obstacle-title">Comparação com o progresso dos outros</div></div>
+        <div class="obstacle-body"><p class="obstacle-solution"><strong>Solução:</strong> Você está competindo consigo mesmo, não com outros. Compare apenas com onde você estava no início do ciclo.</p></div>
+      </div>
+      <div class="obstacle-card">
+        <div class="obstacle-header"><div class="obstacle-num">05</div><div class="obstacle-title">Metas que precisam ser ajustadas</div></div>
+        <div class="obstacle-body"><p class="obstacle-solution"><strong>Solução:</strong> Na revisão semanal, você tem a autoridade de ajustar a meta com base em dados reais. <strong>Ajustar não é fracasso; é inteligência.</strong> O que não é permitido é abandonar silenciosamente.</p></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 5</div><div class="exercise-subtitle">Análise preventiva de obstáculos</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Liste os 3 obstáculos mais prováveis para sua meta + plano de resposta:<textarea class="exercise-input" rows="5" placeholder="1. Obstáculo: ___ → Plano: ___&#10;2. Obstáculo: ___ → Plano: ___&#10;3. Obstáculo: ___ → Plano: ___"></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Sua regra dos 2 dias — se falhar um dia, o próximo passo será:<textarea class="exercise-input" rows="1" placeholder="Se eu falhar, no dia seguinte vou..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap6" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 06</span><h2 class="chapter-title">O Papel da <span class="highlight">Responsabilidade</span></h2></div>
+    <p>Quando você declara um objetivo a alguém, a probabilidade de atingi-lo aumenta drasticamente. O custo emocional de decepcionar alguém que está torcendo por você é maior do que o custo de decepcionar a si mesmo.</p>
+
+    <h3 class="section-heading">Tipos de Sistema de Responsabilidade</h3>
+    <div class="accountability-types">
+      <div class="acc-card"><div class="acc-icon">🤝</div><div class="acc-title">Parceiro de accountability</div><p class="acc-desc">Um amigo ou colega com quem você faz check-in semanal: prioridades da semana + avaliação da anterior.</p></div>
+      <div class="acc-card"><div class="acc-icon">👥</div><div class="acc-title">Comunidade</div><p class="acc-desc">Um grupo com objetivos similares. A pressão positiva de pares pode ser mais poderosa que qualquer motivação individual.</p></div>
+      <div class="acc-card"><div class="acc-icon">📝</div><div class="acc-title">Diário público</div><p class="acc-desc">Documentar o progresso em redes sociais ou blog cria responsabilidade com uma audiência e atrai conexões similares.</p></div>
+      <div class="acc-card"><div class="acc-icon">📋</div><div class="acc-title">Contrato consigo mesmo</div><p class="acc-desc">Um contrato escrito e assinado com datas e compromissos claros — ainda mais eficaz do que apenas "decidir mentalmente".</p></div>
+    </div>
+
+    <div class="contract-block">
+      <div class="contract-title">📋 Meu Contrato de 90 Dias</div>
+      <div class="contract-field"><div class="contract-label">Eu,</div><input type="text" class="contract-input" placeholder="Seu nome"></div>
+      <div class="contract-field"><div class="contract-label">Me comprometo com</div><input type="text" class="contract-input" placeholder="Sua meta SMART..."></div>
+      <div class="contract-field"><div class="contract-label">Meu parceiro de accountability é</div><input type="text" class="contract-input" placeholder="Nome + forma de contato"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="contract-field"><div class="contract-label">Data de início</div><input type="text" class="contract-input" placeholder="___/___/______"></div>
+        <div class="contract-field"><div class="contract-label">Data de conclusão (90 dias)</div><input type="text" class="contract-input" placeholder="___/___/______"></div>
+      </div>
+      <div class="contract-field"><div class="contract-label">Se falhar 2 dias seguidos, farei</div><input type="text" class="contract-input" placeholder="..."></div>
+      <div class="contract-field"><div class="contract-label">Assinatura</div><input type="text" class="contract-input" placeholder="Seu nome aqui"></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap7" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 07</span><h2 class="chapter-title">A Revisão Final: <span class="highlight">Aprender e Evoluir</span></h2></div>
+    <p>A revisão final é onde o aprendizado real acontece — e onde você extrai o máximo de valor do ciclo, independentemente do resultado.</p>
+
+    <div class="review-block">
+      <div class="review-section">
+        <div class="review-title">1. Resultados — o que aconteceu</div>
+        <div class="review-q">Qual era a meta? O que você alcançou?</div>
+        <div class="review-q">Em que porcentagem você cumpriu suas metas semanais?</div>
+        <div class="review-q">Qual foi o maior resultado inesperado (positivo ou negativo)?</div>
+      </div>
+      <div class="review-section">
+        <div class="review-title">2. Aprendizados — o que entendeu</div>
+        <div class="review-q">O que você aprendeu sobre si mesmo que não sabia antes?</div>
+        <div class="review-q">O que foi mais difícil do que esperava? Por quê?</div>
+        <div class="review-q">O que foi mais fácil do que esperava? Por quê?</div>
+      </div>
+      <div class="review-section">
+        <div class="review-title">3. O que funcionou — repetir</div>
+        <div class="review-q">Quais hábitos e práticas contribuíram mais para o progresso?</div>
+        <div class="review-q">Quais estratégias de planejamento funcionaram melhor?</div>
+      </div>
+      <div class="review-section">
+        <div class="review-title">4. O que não funcionou — mudar</div>
+        <div class="review-q">Que práticas drenaram energia sem trazer resultado?</div>
+        <div class="review-q">Que crenças limitantes apareceram e precisam ser trabalhadas?</div>
+      </div>
+    </div>
+
+    <div class="callout callout-gold">
+      <p><strong>Algo poderoso acontece ao final de um ciclo bem executado:</strong> você para de ser "alguém que quer" e começa a ser "alguém que faz". Não é mais "alguém que quer se exercitar" — é alguém que treina 3x por semana. Essa mudança de identidade é o legado mais valioso dos 90 dias.</p>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 7</div><div class="exercise-subtitle">Carta para você mesmo — a ser aberta em 90 dias</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">✉️</div><div class="exercise-q-text">Escreva uma carta para o "você de 90 dias". Descreva: por que essa meta importa, como você espera se sentir ao final, o que espera ter aprendido e quem você espera ser diferente:<textarea class="exercise-input" rows="8" placeholder="Querido eu do futuro,&#10;&#10;Hoje, ___/___/___, me comprometi a...&#10;&#10;Em 90 dias espero...&#10;&#10;O que aprenderei nessa jornada...&#10;&#10;Quem serei ao final..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="conclusao" class="conclusion">
+  <div class="container">
+    <div class="conclusion-icon">🚀</div>
+    <h2 class="conclusion-title">Seus Próximos 90 Dias Começam Agora</h2>
+    <p class="conclusion-text">As condições perfeitas não chegam. O melhor momento para começar sempre foi agora. Não perfeito. Não completo. Não quando tudo estiver pronto. Comece.</p>
+    <div class="summary-list">
+      <div class="summary-list-title">O que você aprendeu</div>
+      <div class="summary-item">Metas vagas produzem resultados vagos — SMART + porquê profundo muda isso</div>
+      <div class="summary-item">90 dias é o horizonte ideal: urgência sem impossibilidade</div>
+      <div class="summary-item">A revisão semanal é o motor que mantém o sistema vivo</div>
+      <div class="summary-item">A execução diária depende de clareza sobre a MIT e rituais simples</div>
+      <div class="summary-item">Obstáculos são certos — o preparo é o diferencial</div>
+      <div class="summary-item">A responsabilidade multiplica a probabilidade de sucesso</div>
+      <div class="summary-item">A revisão final é onde os aprendizados mais profundos acontecem</div>
+    </div>
+    <div class="action-list">
+      <div class="action-title">Seu plano para as próximas 24 horas</div>
+      <div class="action-item"><div class="action-num">1</div>Defina sua meta SMART para os próximos 90 dias</div>
+      <div class="action-item"><div class="action-num">2</div>Escreva seu porquê profundo (pelo menos 3 camadas)</div>
+      <div class="action-item"><div class="action-num">3</div>Identifique seu parceiro de accountability</div>
+      <div class="action-item"><div class="action-num">4</div>Planeje sua primeira semana com as 3 prioridades</div>
+      <div class="action-item"><div class="action-num">5</div>Comece — hoje, não amanhã</div>
+    </div>
+    <div class="cta-block">
+      <div class="cta-title">A diferença que define tudo</div>
+      <p class="cta-text">Entre quem constrói algo extraordinário e quem fica preso no ciclo de urgências é, muitas vezes, apenas isso: a capacidade de focar no que importa, por tempo suficiente para que isso importe de verdade.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="container">
+    <div class="footer-logo">L</div>
+    <div class="footer-brand">Life OS</div>
+    <a class="footer-url" href="https://agenciacriativa.shop">agenciacriativa.shop</a>
+    <p class="footer-copy">Este ebook faz parte da Coleção de Autoajuda do Life OS.<br>Acesse sua área de membros para todos os materiais.</p>
+  </div>
+</div>
+
+</body>
+</html>

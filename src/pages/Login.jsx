@@ -18,7 +18,7 @@ export default function Login() {
     setLoading(true)
     const { error } = await signIn(email, password)
     if (error) setError('E-mail ou senha incorretos. Verifique seu e-mail de acesso.')
-    else navigate('/membros')
+    else navigate('/minha-conta')
     setLoading(false)
   }
 

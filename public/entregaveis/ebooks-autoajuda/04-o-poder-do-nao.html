@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>O Poder do Não — Life OS</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8B5CF6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ebooks Life OS">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #E74C3C; --accent-soft: #FF6B6B; --accent-dark: #C0392B;
+    --gold: #F4C430; --gold-dark: #C9A227;
+    --dark: #0D0D0D; --dark-2: #141414; --dark-3: #1C1C1C; --dark-4: #242424; --dark-5: #2E2E2E;
+    --text: #E8E8E8; --text-muted: #999; --text-faint: #666;
+    --green: #2ECC71;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.7; font-size: 16px; }
+
+  .cover { min-height: 100vh; background: linear-gradient(135deg, #0D0D0D 0%, #1a0000 50%, #0D0D0D 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 24px; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(231,76,60,0.08) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .cover-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(231,76,60,0.1); border: 1px solid rgba(231,76,60,0.3); border-radius: 100px; padding: 6px 16px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 40px; }
+  .cover-number { font-family: 'Playfair Display', serif; font-size: 200px; font-weight: 900; color: rgba(231,76,60,0.05); line-height: 1; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); user-select: none; pointer-events: none; }
+  .cover-title { font-family: 'Playfair Display', serif; font-size: clamp(40px, 8vw, 80px); font-weight: 900; line-height: 1.05; color: #fff; margin-bottom: 16px; position: relative; z-index: 1; }
+  .cover-title span { color: var(--accent-soft); }
+  .cover-subtitle { font-size: clamp(14px, 2.5vw, 18px); color: var(--text-muted); max-width: 500px; font-weight: 300; margin-bottom: 60px; position: relative; z-index: 1; }
+  .cover-divider { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: 0 auto 60px; position: relative; z-index: 1; }
+  .cover-meta { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; z-index: 1; }
+  .cover-logo { width: 48px; height: 48px; background: var(--gold); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #000; margin-bottom: 8px; }
+  .cover-brand { font-size: 13px; color: var(--text-faint); letter-spacing: 1px; text-transform: uppercase; }
+  .cover-scroll { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); color: var(--text-faint); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; animation: bounce 2s infinite; }
+  .cover-scroll::after { content: ' ↓'; font-size: 18px; }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .toc-section { background: var(--dark-2); border-bottom: 1px solid var(--dark-5); padding: 60px 0; }
+  .toc-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 24px; }
+  .toc-list { list-style: none; }
+  .toc-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--dark-4); text-decoration: none; color: var(--text-muted); font-size: 15px; transition: color 0.2s; gap: 16px; }
+  .toc-item:hover { color: var(--accent-soft); }
+  .toc-num { font-size: 11px; font-weight: 700; color: var(--accent-soft); opacity: 0.6; min-width: 24px; }
+
+  .intro-section { padding: 80px 0 60px; border-bottom: 1px solid var(--dark-4); }
+  .intro-quote { background: linear-gradient(135deg, rgba(231,76,60,0.06), rgba(231,76,60,0.02)); border-left: 3px solid var(--accent); border-radius: 0 16px 16px 0; padding: 32px 40px; margin-bottom: 48px; }
+  .intro-quote p { font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; color: #ddd; line-height: 1.6; margin-bottom: 16px; }
+  .intro-quote cite { font-size: 13px; color: var(--accent-soft); font-style: normal; font-weight: 600; letter-spacing: 1px; }
+
+  .chapter { padding: 80px 0; border-bottom: 1px solid var(--dark-4); }
+  .chapter-header { margin-bottom: 48px; }
+  .chapter-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent-soft); opacity: 0.7; display: block; margin-bottom: 12px; }
+  .chapter-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 44px); font-weight: 900; color: #fff; line-height: 1.15; }
+  .chapter-title .highlight { color: var(--accent-soft); }
+  .section-heading { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: #fff; margin: 48px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .section-heading::before { content: ''; width: 3px; height: 22px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
+  p { margin-bottom: 20px; font-size: 16px; line-height: 1.85; color: var(--text-muted); }
+  p strong { color: var(--text); font-weight: 600; }
+
+  .callout { border-radius: 16px; padding: 28px 32px; margin: 32px 0; }
+  .callout-red { background: rgba(231,76,60,0.07); border: 1px solid rgba(231,76,60,0.2); }
+  .callout-dark { background: var(--dark-3); border: 1px solid var(--dark-5); }
+  .callout-green { background: rgba(46,204,113,0.07); border: 1px solid rgba(46,204,113,0.2); }
+  .callout-icon { font-size: 24px; margin-bottom: 12px; display: block; }
+  .callout p { margin: 0; font-size: 15px; }
+  .callout-red strong { color: var(--accent-soft) !important; }
+  .callout-green strong { color: var(--green) !important; }
+  .callout-dark strong { color: #fff !important; }
+
+  .cost-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 32px 0; }
+  @media (max-width: 600px) { .cost-grid { grid-template-columns: 1fr; } }
+  .cost-card { background: var(--dark-3); border: 1px solid var(--dark-5); border-radius: 14px; padding: 24px; border-top: 3px solid var(--accent); }
+  .cost-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: var(--accent-soft); margin-bottom: 8px; }
+  .cost-title { font-weight: 700; color: #fff; margin-bottom: 8px; font-size: 15px; }
+  .cost-text { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+  .script-block { display: flex; flex-direction: column; gap: 16px; margin: 32px 0; }
+  .script-item { background: var(--dark-3); border-radius: 14px; padding: 24px; }
+  .script-situation { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 12px; }
+  .script-text { font-size: 14px; color: #ccc; line-height: 1.6; border-left: 2px solid rgba(231,76,60,0.3); padding-left: 16px; margin: 0; font-style: italic; }
+
+  .limit-types { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 32px 0; }
+  @media (max-width: 600px) { .limit-types { grid-template-columns: 1fr; } }
+  .limit-card { background: var(--dark-3); border: 1px solid var(--dark-5); border-radius: 14px; padding: 20px; }
+  .limit-icon { font-size: 24px; margin-bottom: 8px; }
+  .limit-title { font-weight: 700; color: #fff; margin-bottom: 6px; font-size: 14px; }
+  .limit-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+
+  .values-grid { display: flex; flex-direction: column; gap: 0; margin: 32px 0; }
+  .value-row { display: grid; grid-template-columns: 120px 1fr; gap: 0; border-bottom: 1px solid var(--dark-4); }
+  .value-row:last-child { border-bottom: none; }
+  .value-label { padding: 16px 20px; background: var(--dark-3); font-size: 12px; font-weight: 700; color: var(--accent-soft); letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; }
+  .value-content { padding: 16px 20px; font-size: 14px; color: var(--text-muted); display: flex; align-items: center; }
+
+  .essentialism-box { background: linear-gradient(135deg, rgba(231,76,60,0.06), rgba(231,76,60,0.02)); border: 1px solid rgba(231,76,60,0.2); border-radius: 20px; padding: 40px; margin: 32px 0; text-align: center; }
+  .essentialism-num { font-family: 'Playfair Display', serif; font-size: 96px; font-weight: 900; color: var(--accent-soft); line-height: 1; opacity: 0.8; }
+  .essentialism-label { font-size: 18px; font-weight: 700; color: #fff; margin-top: 8px; }
+  .essentialism-desc { font-size: 15px; color: var(--text-muted); margin-top: 12px; max-width: 400px; margin-left: auto; margin-right: auto; }
+
+  .exercise-block { background: linear-gradient(135deg, rgba(231,76,60,0.05), rgba(231,76,60,0.02)); border: 1px solid rgba(231,76,60,0.15); border-radius: 20px; padding: 40px; margin: 48px 0; }
+  .exercise-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid rgba(231,76,60,0.1); }
+  .exercise-icon { width: 48px; height: 48px; background: var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .exercise-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #fff; }
+  .exercise-subtitle { font-size: 13px; color: var(--text-faint); margin-top: 2px; }
+  .exercise-question { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+  .exercise-num { width: 28px; height: 28px; background: rgba(231,76,60,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-soft); flex-shrink: 0; margin-top: 2px; }
+  .exercise-q-text { font-size: 15px; color: #ccc; line-height: 1.6; flex: 1; }
+  .exercise-input { background: rgba(255,255,255,0.03); border: 1px solid var(--dark-5); border-radius: 10px; padding: 12px 16px; color: var(--text-muted); font-size: 14px; font-family: 'Inter', sans-serif; width: 100%; margin-top: 8px; resize: none; min-height: 48px; transition: border-color 0.2s; }
+  .exercise-input:focus { outline: none; border-color: rgba(231,76,60,0.4); background: rgba(231,76,60,0.03); color: var(--text); }
+
+  .conclusion { padding: 80px 0; text-align: center; }
+  .conclusion-icon { font-size: 60px; margin-bottom: 24px; }
+  .conclusion-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: #fff; margin-bottom: 16px; }
+  .conclusion-text { font-size: 17px; color: var(--text-muted); max-width: 520px; margin: 0 auto 48px; line-height: 1.8; }
+  .summary-list { text-align: left; background: var(--dark-2); border-radius: 20px; padding: 40px; margin: 0 auto 48px; max-width: 600px; }
+  .summary-list-title { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 24px; }
+  .summary-item { display: flex; gap: 14px; margin-bottom: 14px; font-size: 15px; color: #ccc; align-items: flex-start; }
+  .summary-item::before { content: '⚡'; flex-shrink: 0; }
+  .cta-block { background: linear-gradient(135deg, var(--accent-dark), var(--accent-soft)); border-radius: 20px; padding: 40px; color: #fff; display: inline-block; width: 100%; max-width: 480px; }
+  .cta-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; margin-bottom: 8px; color: #fff; }
+  .cta-text { font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 0; }
+  .footer { background: var(--dark-2); border-top: 1px solid var(--dark-4); padding: 48px 0; text-align: center; }
+  .footer-logo { width: 40px; height: 40px; background: var(--gold); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; color: #000; margin: 0 auto 16px; }
+  .footer-brand { font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .footer-url { font-size: 13px; color: var(--gold); text-decoration: none; }
+  .footer-copy { font-size: 12px; color: var(--text-faint); margin-top: 24px; }
+
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { background: #fff !important; color: #111 !important; font-size: 13px; }
+    .cover-scroll { display: none; }
+    .cover { background: #0D0D0D !important; min-height: auto; padding: 80px 40px; page-break-after: always; }
+    .cover-number { display: none; }
+    .toc-section { page-break-after: always; background: #f9f9f9 !important; }
+    .toc-item { color: #333 !important; border-color: #ddd !important; }
+    .chapter { page-break-before: always; padding: 40px 0; border: none; }
+    .intro-section { padding: 40px 0; border: none; page-break-after: always; }
+    .callout-dark, .cost-card, .script-item, .limit-card, .value-content, .summary-list { background: #f5f5f5 !important; border-color: #ddd !important; }
+    .callout-red { background: #fff5f5 !important; border-color: #E74C3C !important; }
+    .callout-green { background: #f0fff4 !important; border-color: #2ECC71 !important; }
+    .essentialism-box { background: #fff5f5 !important; border-color: #E74C3C !important; }
+    p, .script-text, .cost-text, .limit-desc { color: #333 !important; }
+    .chapter-title, .section-heading, .exercise-title, .conclusion-title, .cost-title, .limit-title, .value-label { color: #111 !important; }
+    .intro-quote { background: #fff5f5 !important; border-color: #E74C3C !important; }
+    .intro-quote p { color: #333 !important; }
+    .toc-num, .exercise-num, .chapter-label, .script-situation, .cost-num { color: #E74C3C !important; }
+    .exercise-block { background: #fff5f5 !important; border-color: #E74C3C !important; break-inside: avoid; }
+    .exercise-input { display: none !important; }
+    .exercise-q-text::after { content: ''; display: block; margin-top: 10px; border-bottom: 1.5px dotted #bbb; padding-bottom: 32px; margin-bottom: 4px; }
+    .exercise-icon { background: #E74C3C !important; }
+    .exercise-num { background: #fff5f5 !important; border: 1px solid #E74C3C; }
+    .cta-block { background: #E74C3C !important; }
+    .footer { background: #f5f5f5 !important; border-color: #ddd !important; }
+    .footer-brand { color: #111 !important; }
+    .cover-title { color: #fff !important; }
+    a[href]::after { content: none !important; }
+    @page { margin: 18mm 16mm; size: A4; }
+    @page :first { margin-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-number">04</div>
+  <div class="cover-badge">🚫 Life OS — Coleção de Autoajuda</div>
+  <h1 class="cover-title">O Poder<br>do <span>"Não"</span></h1>
+  <p class="cover-subtitle">Limites que Liberam: Como Dizer Não Para o que Não Importa e Sim Para o que Transforma</p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="cover-logo">L</div>
+    <span class="cover-brand">Life OS · agenciacriativa.shop</span>
+  </div>
+  <div class="cover-scroll">Continue lendo</div>
+</div>
+
+<div class="toc-section">
+  <div class="container">
+    <div class="toc-label">Sumário</div>
+    <ul class="toc-list">
+      <li><a class="toc-item" href="#cap1"><span class="toc-num">01</span> Por que Dizer Não é tão Difícil</a></li>
+      <li><a class="toc-item" href="#cap2"><span class="toc-num">02</span> Clareza de Valores: Saber o Seu Sim</a></li>
+      <li><a class="toc-item" href="#cap3"><span class="toc-num">03</span> O Custo do Sim Compulsivo</a></li>
+      <li><a class="toc-item" href="#cap4"><span class="toc-num">04</span> Como Dizer Não Sem Culpa e Sem Drama</a></li>
+      <li><a class="toc-item" href="#cap5"><span class="toc-num">05</span> Limites em Relacionamentos</a></li>
+      <li><a class="toc-item" href="#cap6"><span class="toc-num">06</span> Essentialism: Faça Menos, Melhor</a></li>
+      <li><a class="toc-item" href="#cap7"><span class="toc-num">07</span> Dizer Sim ao que Importa</a></li>
+      <li><a class="toc-item" href="#conclusao"><span class="toc-num">—</span> Conclusão</a></li>
+    </ul>
+  </div>
+</div>
+
+<div id="cap1" class="intro-section chapter" style="border-bottom:1px solid var(--dark-4)">
+  <div class="container">
+    <div class="intro-quote">
+      <p>"A diferença entre pessoas bem-sucedidas e pessoas muito bem-sucedidas é que as muito bem-sucedidas dizem 'não' para quase tudo."</p>
+      <cite>— Warren Buffett</cite>
+    </div>
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 01</span>
+      <h2 class="chapter-title">Por que Dizer <span class="highlight">"Não"</span> é tão Difícil</h2>
+    </div>
+    <p>Desde criança, você foi ensinado que dizer "não" é rude, egoísta, ingrato. Essa programação não é necessariamente errada — cooperação e generosidade são valores genuinamente importantes. O problema é quando eles se tornam compulsivos: você ajuda os outros não porque quer, mas porque <strong>não consegue suportar o desconforto de decepcionar alguém</strong>.</p>
+    <p>Isso não é generosidade. É ansiedade social disfarçada de virtude.</p>
+
+    <div class="callout callout-red">
+      <span class="callout-icon">💡</span>
+      <p><strong>Toda vez que você diz "sim" para algo, você está dizendo "não" para outra coisa.</strong> A questão nunca é se você vai dizer não. É para quê você diz não — conscientemente ou por omissão.</p>
+    </div>
+
+    <h3 class="section-heading">As Três Armadilhas</h3>
+    <div class="cost-grid">
+      <div class="cost-card"><div class="cost-num">01</div><div class="cost-title">Programação social</div><p class="cost-text">Anos de "não seja difícil", "faça sua parte", "ajude os outros" criaram uma equação automática: dizer não = ser egoísta.</p></div>
+      <div class="cost-card"><div class="cost-num">02</div><div class="cost-title">FOMO</div><p class="cost-text">"E se essa fosse minha grande chance?" Mas oportunidades são infinitas — sua energia e tempo, não. Perseguir tudo é garantia de não aproveitar nada.</p></div>
+      <div class="cost-card"><div class="cost-num">03</div><div class="cost-title">Agradar como vício</div><p class="cost-text">Quando sua autoestima depende da aprovação dos outros, você terceiriza o controle da sua vida. Você vira coadjuvante na história de todo mundo.</p></div>
+      <div class="cost-card"><div class="cost-num">04</div><div class="cost-title">Culpa do "não"</div><p class="cost-text">Existe diferença entre culpa que sinaliza violação de um valor real e culpa que é apenas desconforto de não receber aprovação. A segunda deve ser reconhecida e descartada.</p></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 1</div><div class="exercise-subtitle">Mapeie seu padrão de "sim"</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Em quais situações você diz "sim" quando quer dizer "não"?<textarea class="exercise-input" rows="2" placeholder="Sempre digo sim quando..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">O que você teme que aconteça se disser não nessas situações?<textarea class="exercise-input" rows="2" placeholder="Tenho medo de..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Qual o custo real de continuar dizendo sim quando quer dizer não?<textarea class="exercise-input" rows="2" placeholder="O custo real é..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap2" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 02</span><h2 class="chapter-title">Clareza de Valores: <span class="highlight">Saber o Seu Sim</span></h2></div>
+    <p>Antes de aprender a dizer não, você precisa saber para o que está dizendo sim. Valores são os princípios que, quando honrados, fazem você sentir que está vivendo uma vida autêntica. Quando violados — mesmo que ninguém perceba — você sente um desconforto difuso.</p>
+
+    <h3 class="section-heading">Como Identificar seus Valores Reais</h3>
+    <div class="cost-grid">
+      <div class="cost-card"><div class="cost-num">🏔️</div><div class="cost-title">Os picos</div><p class="cost-text">Pense nos momentos mais satisfatórios da sua vida. O que estava presente? Que tipo de contribuição você estava fazendo?</p></div>
+      <div class="cost-card"><div class="cost-num">🔥</div><div class="cost-title">O que te revolta</div><p class="cost-text">O que te irrita genuinamente quando vê nos outros? Frequentemente, o que nos revolta é a violação de valores que carregamos profundamente.</p></div>
+      <div class="cost-card"><div class="cost-num">⏳</div><div class="cost-title">O lecho de morte</div><p class="cost-text">Se você soubesse que vai morrer em 5 anos, o que pararia de fazer imediatamente? O que continuaria? O que começaria?</p></div>
+      <div class="cost-card"><div class="cost-num">90</div><div class="cost-title">Regra do 90/10</div><p class="cost-text">Greg McKeown: dê pontuação de 0-100 para cada oportunidade. Se não for 90+, é não. Na dúvida, a resposta é não.</p></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 2</div><div class="exercise-subtitle">Defina seus 3 valores inegociáveis</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Seus Big 3 valores (os 3 absolutamente inegociáveis para você):<textarea class="exercise-input" rows="2" placeholder="1. ___ 2. ___ 3. ___"></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Para cada valor, o que significa dizer sim para ele na prática?<textarea class="exercise-input" rows="3" placeholder="Valor 1: significa... &#10;Valor 2: significa... &#10;Valor 3: significa..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Um "sim" que você disse recentemente que viola esses valores:<textarea class="exercise-input" rows="2" placeholder="Disse sim para ___ mas deveria ter dito não porque..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap3" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 03</span><h2 class="chapter-title">O Custo do <span class="highlight">Sim Compulsivo</span></h2></div>
+    <p>Dizer sim para tudo parece generoso, mas tem custos concretos e invisíveis:</p>
+
+    <div class="cost-grid">
+      <div class="cost-card"><div class="cost-num">①</div><div class="cost-title">Qualidade do trabalho</div><p class="cost-text">Quando você assume mais do que pode entregar bem, tudo fica medíocre. É melhor fazer 3 coisas excepcionalmente do que 10 coisas mal feitas.</p></div>
+      <div class="cost-card"><div class="cost-num">②</div><div class="cost-title">Confiabilidade</div><p class="cost-text">Paradoxalmente, quem diz sim para tudo entrega menos e se torna menos confiável. Quem diz não conscientemente, quando diz sim, entrega de verdade.</p></div>
+      <div class="cost-card"><div class="cost-num">③</div><div class="cost-title">Resentimento</div><p class="cost-text">Dizer sim quando quer dizer não cria ressentimento. Você começa a se ressentir das pessoas que pedem — mesmo quando elas não fizeram nada de errado.</p></div>
+      <div class="cost-card"><div class="cost-num">④</div><div class="cost-title">Saúde</div><p class="cost-text">Estresse de assumir mais do que se suporta + raiva suprimida = ansiedade, insônia, problemas digestivos, queda de imunidade.</p></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 3</div><div class="exercise-subtitle">Auditoria dos seus "sins" atuais</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Liste 3 compromissos que você está carregando agora e não quer mais:<textarea class="exercise-input" rows="3" placeholder="1. ___ &#10;2. ___ &#10;3. ___"></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">De qual deles você poderia sair ou renegociar esta semana?<textarea class="exercise-input" rows="2" placeholder="Posso sair de ___ porque..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap4" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 04</span><h2 class="chapter-title">Como Dizer <span class="highlight">"Não"</span> Sem Culpa e Sem Drama</h2></div>
+
+    <div class="callout callout-red">
+      <p><strong>Princípios do "não" saudável:</strong><br>
+      1. Você não precisa de desculpa.<br>
+      2. "Não" é uma frase completa.<br>
+      3. Seja direto, não cruel.<br>
+      4. A forma importa tanto quanto o conteúdo.</p>
+    </div>
+
+    <h3 class="section-heading">Scripts para Diferentes Situações</h3>
+    <div class="script-block">
+      <div class="script-item"><div class="script-situation">Pedido de trabalho além da capacidade</div><p class="script-text">"Eu aprecio que você pensou em mim. Minha agenda está cheia agora e não consigo entregar isso com a qualidade que merece. Não vou conseguir assumir."</p></div>
+      <div class="script-item"><div class="script-situation">Convite social que não quer ir</div><p class="script-text">"Obrigado pelo convite! Não vou conseguir ir dessa vez, mas espero que seja ótimo."</p></div>
+      <div class="script-item"><div class="script-situation">Pedido de amigo ou familiar</div><p class="script-text">"Eu te amo e gostaria de ajudar, mas não está no meu momento agora. Espero que entenda."</p></div>
+      <div class="script-item"><div class="script-situation">Insistência após um "não"</div><p class="script-text">"Entendo que você precisava, mas minha resposta continua sendo não."</p></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 4</div><div class="exercise-subtitle">Pratique o não no papel antes de dizer na vida real</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Pense em um pedido recente que disse sim mas queria dizer não. O que você disse:<textarea class="exercise-input" rows="1" placeholder="Disse: ..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Escreva como diria não de forma direta e respeitosa:<textarea class="exercise-input" rows="2" placeholder="Poderia ter dito: ..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">O que você temia que acontecesse? Esse medo era realista?<textarea class="exercise-input" rows="2" placeholder="Temia que... Na realidade provavelmente..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap5" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 05</span><h2 class="chapter-title">Limites em <span class="highlight">Relacionamentos</span></h2></div>
+    <p>Limites não são muros. São a clareza sobre onde você termina e onde o outro começa. Um limite relacional define o que você aceita ou não aceita em uma relação — não como punição, mas como definição de como você pode estar nessa relação de forma saudável.</p>
+
+    <h3 class="section-heading">Tipos de Limites</h3>
+    <div class="limit-types">
+      <div class="limit-card"><div class="limit-icon">🏠</div><div class="limit-title">Físicos</div><p class="limit-desc">Seu espaço, seu corpo, seu tempo — o que você permite que outros façam em relação a esses recursos.</p></div>
+      <div class="limit-card"><div class="limit-icon">💭</div><div class="limit-title">Emocionais</div><p class="limit-desc">Que tipo de tratamento você aceita, quais conversas está disposto a ter, com que profundidade você se abre.</p></div>
+      <div class="limit-card"><div class="limit-icon">⏰</div><div class="limit-title">De tempo</div><p class="limit-desc">Quando você está disponível, quanto tempo reserva para si mesmo, quando "o trabalho termina".</p></div>
+      <div class="limit-card"><div class="limit-icon">📱</div><div class="limit-title">Digitais</div><p class="limit-desc">Quando você responde mensagens, se você responde em qualquer horário, quem tem acesso direto a você.</p></div>
+    </div>
+
+    <div class="callout callout-green"><p>Existe um paradoxo poderoso: <strong>limites claros aprofundam relacionamentos</strong>. Quando você sabe que a outra pessoa diz não quando não pode, você confia completamente no sim dela.</p></div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 5</div><div class="exercise-subtitle">Identifique limites que precisam ser comunicados</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Relacionamento 1: comportamento que aceita mas não deveria + como vai comunicar:<textarea class="exercise-input" rows="2" placeholder="Relacionamento: ___ — Comportamento: ___ — Vou dizer: ..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Relacionamento 2:<textarea class="exercise-input" rows="2" placeholder="Relacionamento: ___ — Comportamento: ___ — Vou dizer: ..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Relacionamento 3:<textarea class="exercise-input" rows="2" placeholder="Relacionamento: ___ — Comportamento: ___ — Vou dizer: ..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap6" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 06</span><h2 class="chapter-title">Essentialism: Faça <span class="highlight">Menos, Melhor</span></h2></div>
+    <p>Greg McKeown define essencialismo como "a busca disciplinada pelo menos". Não menos por preguiça — menos por design, para que o que resta seja feito com excelência e significado.</p>
+
+    <div class="essentialism-box">
+      <div class="essentialism-num">90</div>
+      <div class="essentialism-label">Se não for 90+, é não</div>
+      <p class="essentialism-desc">Para cada oportunidade ou projeto, dê uma nota de 0-100. Um 70 ainda vai consumir 100% do tempo e energia que um 95 consumiria — com muito menos retorno.</p>
+    </div>
+
+    <h3 class="section-heading">Perguntas de Triagem</h3>
+    <div class="script-block">
+      <div class="script-item"><p class="script-text">"Se eu não tivesse assumido isso, assumiria hoje?"</p></div>
+      <div class="script-item"><p class="script-text">"Essa atividade está me levando em direção ao que mais importa?"</p></div>
+      <div class="script-item"><p class="script-text">"Qual seria o impacto real se eu parasse de fazer isso?"</p></div>
+      <div class="script-item"><p class="script-text">"Quem seria mais adequado para fazer isso do que eu?"</p></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 6</div><div class="exercise-subtitle">Aplicando o filtro 90/10</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Liste 5 compromissos ou projetos atuais com uma nota de 0-100 e ação:<textarea class="exercise-input" rows="6" placeholder="1. ___ — nota: ___ — ação: continuar/sair/renegociar&#10;2. ___&#10;3. ___&#10;4. ___&#10;5. ___"></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Para os abaixo de 90, o que seria necessário para sair?<textarea class="exercise-input" rows="2" placeholder="Para sair de ___, precisaria..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap7" class="chapter">
+  <div class="container">
+    <div class="chapter-header"><span class="chapter-label">Capítulo 07</span><h2 class="chapter-title">Dizer <span class="highlight">Sim</span> ao que Importa</h2></div>
+    <p>Cada não que você diz para o que não importa é um sim liberado para o que importa. Depois de praticar o "não" saudável, você começa a perceber algo inesperado: você tem energia. Você tem tempo. Você tem espaço mental para pensar, criar, descansar.</p>
+    <div class="callout callout-green"><p>Quando você diz sim para menos coisas, consegue estar mais presente no que disse sim. Estar de corpo presente mas de mente ausente não é presença — é uma simulação de presença.</p></div>
+    <p>No final, o que você vai olhar para trás não são as centenas de reuniões que assistiu, os favores que fez por obrigação. Vai olhar para os projetos que construiu, os relacionamentos que aprofundou — os momentos em que disse <strong>sim com todo o seu ser</strong>.</p>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><div class="exercise-icon">✍️</div><div><div class="exercise-title">Exercício do Capítulo 7</div><div class="exercise-subtitle">Seus "Nãos estratégicos" e "Sins totais"</div></div></div>
+      <div class="exercise-question"><div class="exercise-num">✗</div><div class="exercise-q-text">Liste 3 coisas para as quais vai dizer NÃO no próximo mês:<textarea class="exercise-input" rows="3" placeholder="1. Vou parar de... &#10;2. Vou recusar... &#10;3. Vou sair de..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">✓</div><div class="exercise-q-text">Liste 3 coisas que vão receber seu SIM com presença total:<textarea class="exercise-input" rows="3" placeholder="1. ___ &#10;2. ___ &#10;3. ___"></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="conclusao" class="conclusion">
+  <div class="container">
+    <div class="conclusion-icon">🚪</div>
+    <h2 class="conclusion-title">Não é Liberdade</h2>
+    <p class="conclusion-text">Aprender a dizer não é um dos atos mais corajosos e mais generosos que você pode fazer. Quando você protege sua energia, o que oferece para o mundo e para quem você ama é genuíno, presente e sustentável — não o restinho que sobrou depois de dar tudo para todo mundo.</p>
+    <div class="summary-list">
+      <div class="summary-list-title">O que você aprendeu</div>
+      <div class="summary-item">Dizer não não é egoísmo — é respeito por si mesmo e clareza com os outros</div>
+      <div class="summary-item">Sem clareza de valores, é impossível dizer não com convicção</div>
+      <div class="summary-item">O sim compulsivo tem custos reais: qualidade, confiabilidade, saúde e identidade</div>
+      <div class="summary-item">Limites saudáveis aprofundam relacionamentos, não os danificam</div>
+      <div class="summary-item">O essencialismo — fazer menos, melhor — aplica-se à vida inteira</div>
+      <div class="summary-item">Cada não para o que não importa é um sim liberado para o que importa</div>
+    </div>
+    <div class="cta-block">
+      <div class="cta-title">Sua tarefa desta semana</div>
+      <p class="cta-text">Diga não para uma coisa que você normalmente diria sim mas não quer. Observe o que acontece — tanto externamente quanto internamente. A liberdade começa com um não bem colocado.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="container">
+    <div class="footer-logo">L</div>
+    <div class="footer-brand">Life OS</div>
+    <a class="footer-url" href="https://agenciacriativa.shop">agenciacriativa.shop</a>
+    <p class="footer-copy">Este ebook faz parte da Coleção de Autoajuda do Life OS.<br>Acesse sua área de membros para todos os materiais.</p>
+  </div>
+</div>
+
+</body>
+</html>

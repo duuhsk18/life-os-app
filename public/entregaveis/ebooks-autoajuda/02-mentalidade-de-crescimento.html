@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mentalidade de Crescimento — Life OS</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8B5CF6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ebooks Life OS">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F4C430;
+    --gold-light: #FFD966;
+    --gold-dark: #C9A227;
+    --dark: #0D0D0D;
+    --dark-2: #141414;
+    --dark-3: #1C1C1C;
+    --dark-4: #242424;
+    --dark-5: #2E2E2E;
+    --text: #E8E8E8;
+    --text-muted: #999;
+    --text-faint: #666;
+    --green: #2ECC71;
+    --red: #E74C3C;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.7; font-size: 16px; }
+
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0D0D0D 0%, #001a0d 50%, #0D0D0D 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 60px 24px; position: relative; overflow: hidden;
+  }
+  .cover::before {
+    content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,204,113,0.07) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+  }
+  .cover-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(46,204,113,0.1); border: 1px solid rgba(46,204,113,0.3);
+    border-radius: 100px; padding: 6px 16px; font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--green); margin-bottom: 40px;
+  }
+  .cover-number {
+    font-family: 'Playfair Display', serif; font-size: 200px; font-weight: 900;
+    color: rgba(46,204,113,0.05); line-height: 1; position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%); user-select: none; pointer-events: none;
+  }
+  .cover-title {
+    font-family: 'Playfair Display', serif; font-size: clamp(38px, 7vw, 72px);
+    font-weight: 900; line-height: 1.05; color: #fff; margin-bottom: 16px; position: relative; z-index: 1;
+  }
+  .cover-title span { color: #2ECC71; }
+  .cover-subtitle { font-size: clamp(14px, 2.5vw, 18px); color: var(--text-muted); max-width: 500px; font-weight: 300; margin-bottom: 60px; position: relative; z-index: 1; }
+  .cover-divider { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #2ECC71, transparent); margin: 0 auto 60px; position: relative; z-index: 1; }
+  .cover-meta { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; z-index: 1; }
+  .cover-logo { width: 48px; height: 48px; background: var(--gold); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #000; margin-bottom: 8px; }
+  .cover-brand { font-size: 13px; color: var(--text-faint); letter-spacing: 1px; text-transform: uppercase; }
+  .cover-scroll { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-faint); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; animation: bounce 2s infinite; }
+  .cover-scroll::after { content: '↓'; font-size: 18px; }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  .toc-section { background: var(--dark-2); border-bottom: 1px solid var(--dark-5); padding: 60px 0; }
+  .toc-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 24px; }
+  .toc-list { list-style: none; }
+  .toc-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--dark-4); text-decoration: none; color: var(--text-muted); font-size: 15px; transition: color 0.2s; gap: 16px; }
+  .toc-item:hover { color: var(--green); }
+  .toc-num { font-size: 11px; font-weight: 700; color: var(--green); opacity: 0.6; min-width: 24px; }
+
+  .intro-section { padding: 80px 0 60px; border-bottom: 1px solid var(--dark-4); }
+  .intro-quote { background: linear-gradient(135deg, rgba(46,204,113,0.06), rgba(46,204,113,0.02)); border-left: 3px solid var(--green); border-radius: 0 16px 16px 0; padding: 32px 40px; margin-bottom: 48px; }
+  .intro-quote p { font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; color: #ddd; line-height: 1.6; margin-bottom: 16px; }
+  .intro-quote cite { font-size: 13px; color: var(--green); font-style: normal; font-weight: 600; letter-spacing: 1px; }
+  .intro-text { font-size: 17px; color: var(--text-muted); line-height: 1.9; margin-bottom: 20px; }
+  .intro-text strong { color: var(--text); font-weight: 600; }
+
+  .chapter { padding: 80px 0; border-bottom: 1px solid var(--dark-4); }
+  .chapter-header { margin-bottom: 48px; }
+  .chapter-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green); opacity: 0.7; display: block; margin-bottom: 12px; }
+  .chapter-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 44px); font-weight: 900; color: #fff; line-height: 1.15; }
+  .chapter-title .highlight { color: var(--green); }
+
+  .section-heading { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: #fff; margin: 48px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .section-heading::before { content: ''; width: 3px; height: 22px; background: var(--green); border-radius: 2px; flex-shrink: 0; }
+
+  p { margin-bottom: 20px; font-size: 16px; line-height: 1.85; color: var(--text-muted); }
+  p strong { color: var(--text); font-weight: 600; }
+  p em { color: #ccc; }
+
+  .callout { border-radius: 16px; padding: 28px 32px; margin: 32px 0; }
+  .callout-green { background: rgba(46,204,113,0.07); border: 1px solid rgba(46,204,113,0.2); }
+  .callout-dark { background: var(--dark-3); border: 1px solid var(--dark-5); }
+  .callout-icon { font-size: 24px; margin-bottom: 12px; display: block; }
+  .callout p { margin: 0; font-size: 15px; }
+  .callout strong { color: var(--green) !important; }
+
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+  .comparison-card { border-radius: 14px; padding: 24px; }
+  .comparison-card.fixed { background: rgba(231,76,60,0.07); border: 1px solid rgba(231,76,60,0.2); }
+  .comparison-card.growth { background: rgba(46,204,113,0.07); border: 1px solid rgba(46,204,113,0.2); }
+  .comparison-card-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .comparison-card.fixed .comparison-card-label { color: #e74c3c; }
+  .comparison-card.growth .comparison-card-label { color: var(--green); }
+  .comparison-card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .comparison-card li { font-size: 14px; color: #ccc; line-height: 1.5; display: flex; gap: 10px; }
+  .comparison-card li::before { flex-shrink: 0; margin-top: 1px; }
+  .comparison-card.fixed li::before { content: '✗'; color: #e74c3c; }
+  .comparison-card.growth li::before { content: '✓'; color: var(--green); }
+
+  .ainda-grid { display: flex; flex-direction: column; gap: 12px; margin: 32px 0; }
+  .ainda-item { display: flex; align-items: center; gap: 16px; background: var(--dark-3); border-radius: 12px; padding: 16px 20px; font-size: 14px; }
+  .ainda-before { color: var(--text-faint); text-decoration: line-through; flex: 1; }
+  .ainda-arrow { color: var(--green); font-size: 18px; flex-shrink: 0; }
+  .ainda-after { color: var(--green); font-weight: 600; flex: 1; }
+
+  .autopsy-block { display: flex; flex-direction: column; gap: 0; margin: 32px 0; }
+  .autopsy-step { display: flex; gap: 20px; align-items: flex-start; padding: 20px; background: var(--dark-3); border-bottom: 1px solid var(--dark-4); }
+  .autopsy-step:first-child { border-radius: 16px 16px 0 0; }
+  .autopsy-step:last-child { border-bottom: none; border-radius: 0 0 16px 16px; }
+  .autopsy-num { width: 32px; height: 32px; background: rgba(46,204,113,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--green); flex-shrink: 0; }
+  .autopsy-text { font-size: 14px; color: #ccc; line-height: 1.6; margin: 0; }
+  .autopsy-text strong { color: #fff; }
+
+  .kaizen-box { background: linear-gradient(135deg, rgba(46,204,113,0.08), rgba(46,204,113,0.03)); border: 1px solid rgba(46,204,113,0.2); border-radius: 16px; padding: 32px; margin: 32px 0; display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
+  .kaizen-stat { text-align: center; flex: 1; min-width: 120px; }
+  .kaizen-number { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: var(--green); line-height: 1; }
+  .kaizen-label { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+
+  .filter-list { display: flex; flex-direction: column; gap: 12px; margin: 24px 0; }
+  .filter-item { display: flex; gap: 14px; align-items: flex-start; padding: 16px 20px; background: var(--dark-3); border-radius: 12px; border-left: 3px solid var(--green); }
+  .filter-num { font-size: 12px; font-weight: 700; color: var(--green); min-width: 20px; margin-top: 2px; }
+  .filter-text { font-size: 14px; color: #ccc; line-height: 1.6; margin: 0; }
+  .filter-text strong { color: #fff; }
+
+  .daily-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0; }
+  @media (max-width: 600px) { .daily-grid { grid-template-columns: 1fr; } }
+  .daily-card { background: var(--dark-3); border: 1px solid var(--dark-5); border-radius: 14px; padding: 24px; }
+  .daily-card-icon { font-size: 28px; margin-bottom: 12px; }
+  .daily-card-title { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green); margin-bottom: 16px; }
+  .daily-card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .daily-card li { font-size: 13px; color: var(--text-muted); line-height: 1.5; display: flex; gap: 8px; }
+  .daily-card li::before { content: '→'; color: var(--green); opacity: 0.5; flex-shrink: 0; }
+
+  .table-wrapper { overflow-x: auto; margin: 32px 0; border-radius: 16px; border: 1px solid var(--dark-5); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead { background: var(--dark-3); }
+  thead th { padding: 16px 20px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green); border-bottom: 1px solid var(--dark-5); }
+  tbody tr { border-bottom: 1px solid var(--dark-4); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--dark-3); }
+  tbody td { padding: 14px 20px; color: var(--text-muted); vertical-align: top; }
+  tbody td:first-child { color: var(--text); font-weight: 500; }
+
+  .exercise-block { background: linear-gradient(135deg, rgba(46,204,113,0.05), rgba(46,204,113,0.02)); border: 1px solid rgba(46,204,113,0.15); border-radius: 20px; padding: 40px; margin: 48px 0; }
+  .exercise-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid rgba(46,204,113,0.1); }
+  .exercise-icon { width: 48px; height: 48px; background: var(--green); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .exercise-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #fff; }
+  .exercise-subtitle { font-size: 13px; color: var(--text-faint); margin-top: 2px; }
+  .exercise-question { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+  .exercise-num { width: 28px; height: 28px; background: rgba(46,204,113,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--green); flex-shrink: 0; margin-top: 2px; }
+  .exercise-q-text { font-size: 15px; color: #ccc; line-height: 1.6; flex: 1; }
+  .exercise-input { background: rgba(255,255,255,0.03); border: 1px solid var(--dark-5); border-radius: 10px; padding: 12px 16px; color: var(--text-muted); font-size: 14px; font-family: 'Inter', sans-serif; width: 100%; margin-top: 8px; resize: none; min-height: 48px; transition: border-color 0.2s; }
+  .exercise-input:focus { outline: none; border-color: rgba(46,204,113,0.4); background: rgba(46,204,113,0.03); color: var(--text); }
+
+  .conclusion { padding: 80px 0; text-align: center; }
+  .conclusion-icon { font-size: 60px; margin-bottom: 24px; }
+  .conclusion-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: #fff; margin-bottom: 16px; }
+  .conclusion-text { font-size: 17px; color: var(--text-muted); max-width: 520px; margin: 0 auto 48px; line-height: 1.8; }
+  .summary-list { text-align: left; background: var(--dark-2); border-radius: 20px; padding: 40px; margin: 0 auto 48px; max-width: 600px; }
+  .summary-list-title { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--green); margin-bottom: 24px; }
+  .summary-item { display: flex; gap: 14px; margin-bottom: 14px; font-size: 15px; color: #ccc; align-items: flex-start; }
+  .summary-item::before { content: '⚡'; flex-shrink: 0; }
+  .cta-block { background: linear-gradient(135deg, #1a7a40, #2ECC71); border-radius: 20px; padding: 40px; color: #000; display: inline-block; width: 100%; max-width: 480px; }
+  .cta-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; margin-bottom: 8px; color: #000; }
+  .cta-text { font-size: 15px; color: rgba(0,0,0,0.7); margin-bottom: 0; }
+
+  .footer { background: var(--dark-2); border-top: 1px solid var(--dark-4); padding: 48px 0; text-align: center; }
+  .footer-logo { width: 40px; height: 40px; background: var(--gold); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; color: #000; margin: 0 auto 16px; }
+  .footer-brand { font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .footer-url { font-size: 13px; color: var(--gold); text-decoration: none; }
+  .footer-copy { font-size: 12px; color: var(--text-faint); margin-top: 24px; }
+
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { background: #fff !important; color: #111 !important; font-size: 13px; }
+    .cover-scroll { display: none; }
+    .cover { background: #0D0D0D !important; min-height: auto; padding: 80px 40px; page-break-after: always; }
+    .cover-number { display: none; }
+    .toc-section { page-break-after: always; background: #f9f9f9 !important; }
+    .toc-item { color: #333 !important; border-color: #ddd !important; }
+    .toc-num { color: #2ECC71 !important; }
+    .chapter { page-break-before: always; padding: 40px 0; border: none; }
+    .intro-section { padding: 40px 0; border: none; page-break-after: always; }
+    .callout-dark, .comparison-card.fixed, .comparison-card.growth,
+    .autopsy-step, .filter-item, .ainda-item, .daily-card, .summary-list { background: #f5f5f5 !important; border-color: #ddd !important; }
+    .callout-green { background: #f0fff4 !important; border-color: #2ECC71 !important; }
+    p, .exercise-q-text, .filter-text, .autopsy-text, .daily-card li { color: #333 !important; }
+    .chapter-title, .section-heading, .exercise-title, .conclusion-title { color: #111 !important; }
+    .chapter-label, .toc-label, .exercise-subtitle, .daily-card-title { color: #888 !important; }
+    .intro-quote { background: #f0fff4 !important; border-color: #2ECC71 !important; }
+    .intro-quote p { color: #333 !important; }
+    .intro-quote cite, .toc-num, .section-heading::before,
+    .callout strong, .filter-num, .exercise-num,
+    .autopsy-num, .ainda-arrow, .ainda-after { color: #2ECC71 !important; }
+    .exercise-block { background: #f0fff4 !important; border-color: #2ECC71 !important; break-inside: avoid; }
+    .exercise-input { display: none !important; }
+    .exercise-q-text::after { content: ''; display: block; margin-top: 10px; border-bottom: 1.5px dotted #bbb; padding-bottom: 32px; margin-bottom: 4px; }
+    .exercise-icon { background: #2ECC71 !important; }
+    .exercise-num { background: #f0fff4 !important; color: #2ECC71 !important; border: 1px solid #2ECC71; }
+    .cta-block { background: #2ECC71 !important; }
+    .cta-title, .cta-text { color: #000 !important; }
+    .footer { background: #f5f5f5 !important; border-color: #ddd !important; }
+    .footer-brand { color: #111 !important; }
+    .footer-url { color: #C9A227 !important; }
+    .footer-copy { color: #666 !important; }
+    .footer-logo { background: #C9A227 !important; color: #000 !important; }
+    .cover-title { color: #fff !important; }
+    .cover-subtitle { color: #aaa !important; }
+    a[href]::after { content: none !important; }
+    @page { margin: 18mm 16mm; size: A4; }
+    @page :first { margin-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-number">02</div>
+  <div class="cover-badge">🌱 Life OS — Coleção de Autoajuda</div>
+  <h1 class="cover-title">Mentalidade de<br><span>Crescimento</span></h1>
+  <p class="cover-subtitle">Pense Como um Vencedor e Transforme Cada Desafio em Oportunidade</p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="cover-logo">L</div>
+    <span class="cover-brand">Life OS · agenciacriativa.shop</span>
+  </div>
+  <div class="cover-scroll">Continue lendo</div>
+</div>
+
+<div class="toc-section">
+  <div class="container">
+    <div class="toc-label">Sumário</div>
+    <ul class="toc-list">
+      <li><a class="toc-item" href="#intro"><span class="toc-num">—</span> Introdução — Dois Tipos de Mente</a></li>
+      <li><a class="toc-item" href="#cap1"><span class="toc-num">01</span> Mentalidade Fixa vs. Mentalidade de Crescimento</a></li>
+      <li><a class="toc-item" href="#cap2"><span class="toc-num">02</span> O Poder do "Ainda"</a></li>
+      <li><a class="toc-item" href="#cap3"><span class="toc-num">03</span> Como Fracassos se Tornam Combustível</a></li>
+      <li><a class="toc-item" href="#cap4"><span class="toc-num">04</span> Processo vs. Resultado</a></li>
+      <li><a class="toc-item" href="#cap5"><span class="toc-num">05</span> Lidando com Críticas e Feedbacks</a></li>
+      <li><a class="toc-item" href="#cap6"><span class="toc-num">06</span> Comparação: O Ladrão de Alegria</a></li>
+      <li><a class="toc-item" href="#cap7"><span class="toc-num">07</span> Cultivando a Mentalidade no Dia a Dia</a></li>
+      <li><a class="toc-item" href="#conclusao"><span class="toc-num">—</span> Conclusão</a></li>
+    </ul>
+  </div>
+</div>
+
+<div id="intro" class="intro-section">
+  <div class="container">
+    <div class="intro-quote">
+      <p>"A paixão pelo aprender, especialmente diante dos contratempos, é a marca registrada da mentalidade de crescimento."</p>
+      <cite>— Carol S. Dweck</cite>
+    </div>
+    <p class="intro-text">Imagine dois alunos recebendo a mesma nota ruim em uma prova.</p>
+    <p class="intro-text"><strong>Aluno A</strong> pensa: <em>"Sou ruim em matemática. Nunca fui bom nisso. Não tem jeito."</em></p>
+    <p class="intro-text"><strong>Aluno B</strong> pensa: <em>"Errei porque não estudei do jeito certo. Vou descobrir onde errei e tentar de novo."</em></p>
+    <p class="intro-text">Vinte anos depois, é muito provável que esses dois alunos estejam em lugares completamente diferentes na vida — não por causa da inteligência, mas por causa da <strong>forma como interpretaram o fracasso</strong>.</p>
+  </div>
+</div>
+
+<div id="cap1" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 01</span>
+      <h2 class="chapter-title">Mentalidade Fixa vs.<br>Mentalidade de <span class="highlight">Crescimento</span></h2>
+    </div>
+
+    <div class="comparison">
+      <div class="comparison-card fixed">
+        <div class="comparison-card-label">❌ Mentalidade Fixa</div>
+        <ul>
+          <li>Evita desafios para não parecer incompetente</li>
+          <li>Desiste facilmente diante de obstáculos</li>
+          <li>Vê o esforço como sinal de fraqueza</li>
+          <li>Ignora feedbacks negativos</li>
+          <li>Se sente ameaçado pelo sucesso dos outros</li>
+          <li>Atinge um patamar e para de crescer</li>
+        </ul>
+      </div>
+      <div class="comparison-card growth">
+        <div class="comparison-card-label">✅ Mentalidade de Crescimento</div>
+        <ul>
+          <li>Abraça desafios como oportunidades</li>
+          <li>Persiste diante de obstáculos</li>
+          <li>Vê o esforço como o caminho para a maestria</li>
+          <li>Aprende com a crítica</li>
+          <li>Encontra inspiração no sucesso dos outros</li>
+          <li>Cresce continuamente ao longo da vida</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="section-heading">O Paradoxo do Talento</h3>
+    <p>Pesquisas de Dweck mostram algo surpreendente: <strong>elogiar o talento cria mentalidade fixa; elogiar o esforço cria mentalidade de crescimento.</strong></p>
+    <p>Crianças elogiadas por serem "inteligentes" tendem a evitar desafios para não arriscar perder esse rótulo. Crianças elogiadas pelo "esforço" tendem a buscar tarefas mais difíceis porque acreditam que podem aprender.</p>
+    <div class="callout callout-green">
+      <p>Isso significa que a <strong>forma como você fala consigo mesmo</strong> importa tanto quanto a forma como os outros falam com você.</p>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div><div class="exercise-title">Exercício do Capítulo 1</div><div class="exercise-subtitle">Em quais áreas da sua vida você tem mentalidade fixa?</div></div>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Área</th><th>Crença fixa que você tem</th><th>Como isso te limita?</th></tr></thead>
+          <tbody>
+            <tr><td>Trabalho/carreira</td><td></td><td></td></tr>
+            <tr><td>Relacionamentos</td><td></td><td></td></tr>
+            <tr><td>Finanças</td><td></td><td></td></tr>
+            <tr><td>Saúde/corpo</td><td></td><td></td></tr>
+            <tr><td>Aprendizado</td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cap2" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 02</span>
+      <h2 class="chapter-title">O Poder do <span class="highlight">"Ainda"</span></h2>
+    </div>
+    <p>Uma única palavra pode transformar a forma como você se vê.</p>
+
+    <div class="ainda-grid">
+      <div class="ainda-item"><span class="ainda-before">"Não sei fazer isso."</span><span class="ainda-arrow">→</span><span class="ainda-after">"Ainda não sei fazer isso."</span></div>
+      <div class="ainda-item"><span class="ainda-before">"Não sou bom em vendas."</span><span class="ainda-arrow">→</span><span class="ainda-after">"Ainda não sou bom em vendas."</span></div>
+      <div class="ainda-item"><span class="ainda-before">"Não consigo economizar dinheiro."</span><span class="ainda-arrow">→</span><span class="ainda-after">"Ainda não consegui criar esse hábito."</span></div>
+    </div>
+
+    <p>A palavra "ainda" muda tudo. Ela transforma uma sentença de fracasso definitivo em um ponto no meio de uma jornada.</p>
+
+    <h3 class="section-heading">Neuroplasticidade — Seu Cérebro Muda</h3>
+    <p>O cérebro é <strong>neuroplástico</strong> — ele continua criando novas conexões neurais ao longo de toda a vida, em resposta ao aprendizado, às experiências e aos desafios.</p>
+    <p>Cada vez que você aprende algo novo, seus neurônios se reconectam. Cada vez que pratica uma habilidade, as conexões ficam mais fortes. Cada vez que enfrenta um desafio difícil, seu cérebro literalmente cresce.</p>
+    <div class="callout callout-green"><p><strong>A inteligência não é um ponto fixo. É um processo contínuo.</strong></p></div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div><div class="exercise-title">Exercício do Capítulo 2</div><div class="exercise-subtitle">Transforme 5 crenças limitantes usando o "ainda"</div></div>
+      </div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Crença atual: _______________ <br><textarea class="exercise-input" rows="1" placeholder='Com "ainda": ...'></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Crença atual: _______________ <br><textarea class="exercise-input" rows="1" placeholder='Com "ainda": ...'></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Crença atual: _______________ <br><textarea class="exercise-input" rows="1" placeholder='Com "ainda": ...'></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">4</div><div class="exercise-q-text">Crença atual: _______________ <br><textarea class="exercise-input" rows="1" placeholder='Com "ainda": ...'></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">5</div><div class="exercise-q-text">Crença atual: _______________ <br><textarea class="exercise-input" rows="1" placeholder='Com "ainda": ...'></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap3" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 03</span>
+      <h2 class="chapter-title">Como Fracassos se Tornam <span class="highlight">Combustível</span></h2>
+    </div>
+    <p>Michael Jordan foi cortado do time de basquete do colégio. J.K. Rowling teve Harry Potter rejeitado por 12 editoras. Walt Disney foi demitido de um jornal por "falta de criatividade". Oprah Winfrey foi demitida do seu primeiro emprego em TV.</p>
+    <p>A diferença entre eles e as milhares de pessoas que desistiram não foi o talento. Foi a <strong>interpretação do fracasso</strong>.</p>
+
+    <h3 class="section-heading">Os Três Tipos de Explicação para o Fracasso</h3>
+    <div class="comparison">
+      <div class="comparison-card fixed">
+        <div class="comparison-card-label">❌ Mentalidade Fixa</div>
+        <ul>
+          <li>Permanente: "Nunca vou conseguir."</li>
+          <li>Pessoal: "Sou um fracasso."</li>
+          <li>Abrangente: "Sou ruim em tudo."</li>
+        </ul>
+      </div>
+      <div class="comparison-card growth">
+        <div class="comparison-card-label">✅ Mentalidade de Crescimento</div>
+        <ul>
+          <li>Temporário: "Não consegui desta vez."</li>
+          <li>Situacional: "Essa abordagem não funcionou."</li>
+          <li>Específico: "Preciso melhorar nessa habilidade."</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="section-heading">O Método da Autopsia sem Culpa</h3>
+    <p>Quando algo dá errado, faça uma "autopsia sem culpa" — analise o fracasso com curiosidade, não com julgamento:</p>
+    <div class="autopsy-block">
+      <div class="autopsy-step"><div class="autopsy-num">1</div><p class="autopsy-text"><strong>O que aconteceu exatamente?</strong> (fatos, sem drama)</p></div>
+      <div class="autopsy-step"><div class="autopsy-num">2</div><p class="autopsy-text"><strong>O que eu controlava?</strong> (foque apenas nisso)</p></div>
+      <div class="autopsy-step"><div class="autopsy-num">3</div><p class="autopsy-text"><strong>O que aprendi que não sabia antes?</strong></p></div>
+      <div class="autopsy-step"><div class="autopsy-num">4</div><p class="autopsy-text"><strong>O que farei diferente na próxima vez?</strong></p></div>
+      <div class="autopsy-step"><div class="autopsy-num">5</div><p class="autopsy-text"><strong>Qual é o próximo passo?</strong></p></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div><div class="exercise-title">Exercício do Capítulo 3</div><div class="exercise-subtitle">Pense em um fracasso recente que ainda te incomoda. Faça a autopsia.</div></div>
+      </div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">O que aconteceu (sem drama):<textarea class="exercise-input" rows="2" placeholder="Descreva os fatos..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">O que estava sob meu controle:<textarea class="exercise-input" rows="2" placeholder="O que dependia de mim..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">O que aprendi:<textarea class="exercise-input" rows="2" placeholder="Aprendizados..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">4</div><div class="exercise-q-text">O que farei diferente:<textarea class="exercise-input" rows="2" placeholder="Na próxima vez..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">5</div><div class="exercise-q-text">Próximo passo concreto:<textarea class="exercise-input" rows="1" placeholder="Vou..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap4" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 04</span>
+      <h2 class="chapter-title"><span class="highlight">Processo</span> vs. Resultado</h2>
+    </div>
+    <p>Uma das distinções mais importantes da mentalidade de crescimento é o foco no <strong>processo</strong>, não no resultado.</p>
+    <p>Pessoas com mentalidade fixa são obcecadas com o resultado: a nota, o salário, a conquista, o reconhecimento. Quando o resultado não vem, elas desistem ou ficam paralisadas.</p>
+
+    <div class="filter-list">
+      <div class="filter-item"><span class="filter-num">1</span><p class="filter-text"><strong>O processo é 100% controlável; o resultado não é.</strong> Você pode controlar o quanto pratica, estuda e se esforça. Você não pode controlar as circunstâncias externas.</p></div>
+      <div class="filter-item"><span class="filter-num">2</span><p class="filter-text"><strong>O processo é sustentável; a pressão por resultado não é.</strong> Quando você foca em ser 1% melhor por dia, pode manter isso indefinidamente.</p></div>
+      <div class="filter-item"><span class="filter-num">3</span><p class="filter-text"><strong>O processo cria identidade; o resultado cria ego.</strong> Quem você é é construído por como você pratica, aprende e persiste — não por prêmios e títulos.</p></div>
+    </div>
+
+    <h3 class="section-heading">A Filosofia do Kaizen</h3>
+    <p>Kaizen é um conceito japonês que significa "melhora contínua". Empresas como Toyota e Sony construíram impérios com essa filosofia.</p>
+    <div class="kaizen-box">
+      <div class="kaizen-stat"><div class="kaizen-number">37x</div><div class="kaizen-label">melhor após 1 ano sendo 1% melhor por dia</div></div>
+      <div class="kaizen-stat"><div class="kaizen-number">≈0</div><div class="kaizen-label">resultado após 1 ano sendo 1% pior por dia</div></div>
+    </div>
+    <div class="callout callout-green"><p><strong>Você não precisa se transformar amanhã. Você precisa melhorar hoje.</strong></p></div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div><div class="exercise-title">Exercício do Capítulo 4</div><div class="exercise-subtitle">Para um objetivo importante da sua vida</div></div>
+      </div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Qual é o resultado que você quer?<textarea class="exercise-input" rows="2" placeholder="Meu objetivo é..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">Qual é o processo necessário para chegar lá?<textarea class="exercise-input" rows="2" placeholder="Para isso preciso fazer..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Como você vai medir o progresso do processo (não do resultado)?<textarea class="exercise-input" rows="2" placeholder="Vou medir..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">4</div><div class="exercise-q-text">O que significa "1% melhor" para você nessa área hoje?<textarea class="exercise-input" rows="2" placeholder="Hoje, 1% melhor significa..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap5" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 05</span>
+      <h2 class="chapter-title">Lidando com <span class="highlight">Críticas e Feedbacks</span></h2>
+    </div>
+    <p>Para a mentalidade fixa, uma crítica é um ataque à identidade. Para a mentalidade de crescimento, é informação gratuita sobre onde melhorar.</p>
+    <div class="callout callout-dark"><span class="callout-icon">🧠</span><p>O cérebro processa rejeição social da mesma forma que dor física — literalmente nas mesmas regiões cerebrais. Isso explica por que uma crítica pode "doer" de verdade. Mas enquanto a dor física sinaliza dano ao corpo, a crítica sinaliza informação sobre como nos relacionamos com o mundo.</p></div>
+
+    <h3 class="section-heading">O Filtro de Feedback</h3>
+    <div class="filter-list">
+      <div class="filter-item"><span class="filter-num">1</span><p class="filter-text">A pessoa tem <strong>experiência relevante</strong> no assunto?</p></div>
+      <div class="filter-item"><span class="filter-num">2</span><p class="filter-text">Ela quer genuinamente que eu <strong>melhore</strong>?</p></div>
+      <div class="filter-item"><span class="filter-num">3</span><p class="filter-text">O feedback é <strong>específico</strong> (comportamento) ou genérico (pessoa)?</p></div>
+      <div class="filter-item"><span class="filter-num">4</span><p class="filter-text">Qual é a <strong>porcentagem de verdade</strong> nessa crítica?</p></div>
+    </div>
+
+    <h3 class="section-heading">Como Receber Feedback de Verdade</h3>
+    <div class="autopsy-block">
+      <div class="autopsy-step"><div class="autopsy-num">1</div><p class="autopsy-text"><strong>Ouça completamente</strong> sem interromper</p></div>
+      <div class="autopsy-step"><div class="autopsy-num">2</div><p class="autopsy-text"><strong>Agradeça</strong> (mesmo que doa)</p></div>
+      <div class="autopsy-step"><div class="autopsy-num">3</div><p class="autopsy-text"><strong>Pergunte:</strong> "O que especificamente eu poderia fazer diferente?"</p></div>
+      <div class="autopsy-step"><div class="autopsy-num">4</div><p class="autopsy-text"><strong>Processe depois</strong> — não reaja na hora</p></div>
+      <div class="autopsy-step"><div class="autopsy-num">5</div><p class="autopsy-text"><strong>Extraia o aprendizado</strong> e descarte o resto</p></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div><div class="exercise-title">Exercício do Capítulo 5</div><div class="exercise-subtitle">Pense em uma crítica que você recebeu e não processou bem</div></div>
+      </div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Quem disse? Qual é a credibilidade dessa pessoa?<textarea class="exercise-input" rows="2" placeholder="A pessoa foi..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">O que exatamente foi dito?<textarea class="exercise-input" rows="2" placeholder="A crítica foi..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Qual é a porcentagem de verdade?<textarea class="exercise-input" rows="1" placeholder="___% de verdade porque..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">4</div><div class="exercise-q-text">Que aprendizado posso extrair?<textarea class="exercise-input" rows="2" placeholder="Aprendi que..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">5</div><div class="exercise-q-text">O que vou fazer diferente?<textarea class="exercise-input" rows="2" placeholder="A partir de agora..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap6" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 06</span>
+      <h2 class="chapter-title">Comparação: O <span class="highlight">Ladrão de Alegria</span></h2>
+    </div>
+    <div class="intro-quote"><p>"A comparação é o ladrão de alegria."</p><cite>— Theodore Roosevelt</cite></div>
+    <p>Quando você se compara com outra pessoa, você está comparando seu <strong>interior</strong> com o <strong>exterior</strong> dela. Você conhece seus medos, dúvidas, dias ruins e fracassos privados. Você vê apenas as conquistas e a versão editada da vida dos outros.</p>
+
+    <div class="comparison">
+      <div class="comparison-card fixed"><div class="comparison-card-label">Para baixo</div><ul><li>Comparar com quem tem menos para se sentir melhor</li><li>Temporariamente confortável</li><li>Não leva a nenhum crescimento</li></ul></div>
+      <div class="comparison-card growth"><div class="comparison-card-label">✅ Com você ontem</div><ul><li>Você melhorou?</li><li>Aprendeu algo novo?</li><li>Tomou uma decisão melhor?</li><li>Esse é o único critério que importa</li></ul></div>
+    </div>
+
+    <div class="callout callout-green"><p>Pessoas bem-sucedidas usam o sucesso dos outros como <strong>evidência do possível</strong>, não como medida do seu valor. Em vez de "fulano conseguiu e eu não" → pense <strong>"se fulano conseguiu, é possível. Como eu consigo?"</strong></p></div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div><div class="exercise-title">Exercício do Capítulo 6</div><div class="exercise-subtitle">Transforme comparação em inspiração</div></div>
+      </div>
+      <div class="exercise-question"><div class="exercise-num">1</div><div class="exercise-q-text">Com quem você se compara negativamente com mais frequência?<textarea class="exercise-input" rows="1" placeholder="Essa pessoa..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">2</div><div class="exercise-q-text">O que essa pessoa tem que você genuinamente quer?<textarea class="exercise-input" rows="2" placeholder="Quero..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">3</div><div class="exercise-q-text">Como você pode usar o sucesso dela como prova do possível?<textarea class="exercise-input" rows="2" placeholder="Se ela conseguiu, então..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">4</div><div class="exercise-q-text">Em que aspecto você está melhor hoje do que há 1 ano?<textarea class="exercise-input" rows="2" placeholder="Hoje eu..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="cap7" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 07</span>
+      <h2 class="chapter-title">Cultivando a Mentalidade<br>no <span class="highlight">Dia a Dia</span></h2>
+    </div>
+    <p>Saber sobre mentalidade de crescimento não é suficiente. Você precisa praticá-la ativamente — especialmente nos momentos difíceis, quando a mentalidade fixa tenta voltar.</p>
+
+    <h3 class="section-heading">O Diálogo Interno</h3>
+    <div class="autopsy-block">
+      <div class="autopsy-step"><div class="autopsy-num">→</div><p class="autopsy-text">"Não sou bom o suficiente para isso" → <strong>Responda: "O que preciso aprender para melhorar?"</strong></p></div>
+      <div class="autopsy-step"><div class="autopsy-num">→</div><p class="autopsy-text">"Isso é humilhante" → <strong>Responda: "O que essa situação está me ensinando?"</strong></p></div>
+      <div class="autopsy-step"><div class="autopsy-num">→</div><p class="autopsy-text">"Desiste, você não vai conseguir" → <strong>Responda: "Quantas tentativas ainda não tentei?"</strong></p></div>
+      <div class="autopsy-step"><div class="autopsy-num">→</div><p class="autopsy-text">"Eles são melhores que eu" → <strong>Responda: "O que posso aprender com eles?"</strong></p></div>
+    </div>
+
+    <h3 class="section-heading">Práticas Diárias</h3>
+    <div class="daily-grid">
+      <div class="daily-card">
+        <div class="daily-card-icon">🌅</div>
+        <div class="daily-card-title">Manhã</div>
+        <ul>
+          <li>Pergunte: "O que quero aprender hoje?"</li>
+          <li>Identifique UMA área onde quer melhorar</li>
+        </ul>
+      </div>
+      <div class="daily-card">
+        <div class="daily-card-icon">⚡</div>
+        <div class="daily-card-title">Durante o dia</div>
+        <ul>
+          <li>Use a autopsia sem culpa quando algo der errado</li>
+          <li>Filtre e extraia aprendizado das críticas</li>
+          <li>Ao ver sucesso de outros: "o que aprendo com isso?"</li>
+        </ul>
+      </div>
+      <div class="daily-card">
+        <div class="daily-card-icon">🌙</div>
+        <div class="daily-card-title">Noite</div>
+        <ul>
+          <li>"O que aprendi hoje?"</li>
+          <li>"Onde melhorei, mesmo que pouco?"</li>
+          <li>"O que vou tentar diferente amanhã?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div><div class="exercise-title">Exercício do Capítulo 7</div><div class="exercise-subtitle">Crie sua rotina de mentalidade de crescimento</div></div>
+      </div>
+      <div class="exercise-question"><div class="exercise-num">☀️</div><div class="exercise-q-text">Pergunta que vou fazer a mim mesmo toda manhã:<textarea class="exercise-input" rows="1" placeholder="Toda manhã vou me perguntar..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">🌙</div><div class="exercise-q-text">O que aprendi hoje (escreva agora um exemplo):<textarea class="exercise-input" rows="2" placeholder="Hoje aprendi..."></textarea></div></div>
+      <div class="exercise-question"><div class="exercise-num">→</div><div class="exercise-q-text">O que tentarei diferente amanhã:<textarea class="exercise-input" rows="2" placeholder="Amanhã vou tentar..."></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="conclusao" class="conclusion">
+  <div class="container">
+    <div class="conclusion-icon">🌱</div>
+    <h2 class="conclusion-title">Você Não é Quem Você Era Ontem</h2>
+    <p class="conclusion-text">A mentalidade de crescimento não é um destino. É uma prática diária. Haverá dias em que a voz da mentalidade fixa vai gritar. Isso é normal — é parte do processo. O que vai diferenciar você é o que faz depois desses momentos.</p>
+    <div class="summary-list">
+      <div class="summary-list-title">O que você aprendeu</div>
+      <div class="summary-item">Mentalidade fixa acredita que qualidades são fixas; de crescimento acredita que podem ser desenvolvidas</div>
+      <div class="summary-item">O cérebro é neuroplástico — pode mudar em qualquer idade</div>
+      <div class="summary-item">"Ainda não" transforma fracassos em pontos de passagem</div>
+      <div class="summary-item">Crítica é informação, não ataque</div>
+      <div class="summary-item">Processo importa mais que resultado</div>
+      <div class="summary-item">A única comparação válida é com você mesmo ontem</div>
+      <div class="summary-item">A mentalidade de crescimento se pratica, não se tem</div>
+    </div>
+    <div class="cta-block">
+      <div class="cta-title">Sua única tarefa agora</div>
+      <p class="cta-text">Identifique UMA área onde a mentalidade fixa está te limitando. Escreva a crença. Transforme com "ainda". Defina o próximo passo de aprendizado.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="container">
+    <div class="footer-logo">L</div>
+    <div class="footer-brand">Life OS</div>
+    <a class="footer-url" href="https://agenciacriativa.shop">agenciacriativa.shop</a>
+    <p class="footer-copy">Este ebook faz parte da Coleção de Autoajuda do Life OS.<br>Acesse sua área de membros para todos os materiais.</p>
+  </div>
+</div>
+
+</body>
+</html>

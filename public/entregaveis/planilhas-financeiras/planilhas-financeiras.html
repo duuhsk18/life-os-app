@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Planilhas Financeiras — Life OS</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6366F1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Finanças">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --accent: #6366F1;
+    --accent-dark: #4F46E5;
+    --accent-light: #A5B4FC;
+    --accent-muted: rgba(99, 102, 241, 0.12);
+    --bg: #08080F;
+    --bg-card: #0F0F1A;
+    --bg-card2: #141423;
+    --border: rgba(99,102,241,0.18);
+    --text: #E2E2FF;
+    --text-muted: #7E7EAD;
+    --text-dim: #4A4A7A;
+    --white: #F0F0FF;
+    --mono: 'JetBrains Mono', monospace;
+    --green: #10B981;
+    --red: #EF4444;
+    --yellow: #F59E0B;
+    --blue: #3B82F6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ===== COVER ===== */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 25% 35%, rgba(99,102,241,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 75% 65%, rgba(79,70,229,0.10) 0%, transparent 60%),
+                var(--bg);
+  }
+
+  .cover-badge {
+    background: var(--accent-muted);
+    border: 1px solid var(--border);
+    color: var(--accent-light);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 40px;
+    margin-bottom: 32px;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 6.5vw, 84px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    color: var(--white);
+  }
+
+  .cover-title .accent { color: var(--accent); }
+
+  .cover-subtitle {
+    font-size: clamp(15px, 2vw, 19px);
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .cover-planilhas {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 720px;
+  }
+
+  .cover-plan-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cover-plan-item span {
+    color: var(--accent-light);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ===== SECTION HEADER ===== */
+  .section-header {
+    padding: 80px 0 48px;
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .section-desc {
+    color: var(--text-muted);
+    font-size: 16px;
+    max-width: 640px;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  /* ===== PLANILHA CARD ===== */
+  .planilha-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+
+  .planilha-header {
+    background: linear-gradient(135deg, var(--bg-card2), var(--bg-card));
+    padding: 36px 40px 30px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .planilha-number {
+    background: var(--accent-muted);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent-light);
+    flex-shrink: 0;
+  }
+
+  .planilha-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .planilha-info p {
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  .planilha-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  .planilha-tag {
+    background: var(--accent-muted);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .planilha-tag.green { color: #4ade80; border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.08); }
+  .planilha-tag.yellow { color: #fbbf24; border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.08); }
+  .planilha-tag.red { color: #f87171; border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.08); }
+
+  /* ===== TABLE ===== */
+  .table-section {
+    padding: 32px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .table-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 18px;
+  }
+
+  .fin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .fin-table thead tr {
+    background: var(--bg);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .fin-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .fin-table th:not(:first-child) { text-align: right; }
+
+  .fin-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  .fin-table td:not(:first-child) {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+
+  .fin-table tr:hover td { background: rgba(99,102,241,0.04); }
+
+  .fin-table tr.total-row td {
+    border-top: 2px solid var(--border);
+    border-bottom: none;
+    font-weight: 700;
+    color: var(--white);
+    padding-top: 16px;
+    font-size: 14px;
+  }
+
+  .fin-table tr.category-row td {
+    background: var(--accent-muted);
+    color: var(--accent-light);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .fin-table tr.subtotal-row td {
+    background: rgba(255,255,255,0.03);
+    font-weight: 600;
+    color: var(--text);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .value-positive { color: var(--green) !important; }
+  .value-negative { color: var(--red) !important; }
+  .value-warning  { color: var(--yellow) !important; }
+  .value-accent   { color: var(--accent-light) !important; }
+  .value-formula  { color: var(--accent-light) !important; font-style: italic; }
+
+  .input-field {
+    background: rgba(99,102,241,0.06);
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: 6px;
+    padding: 6px 10px;
+    min-width: 120px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+
+  /* ===== FORMULA BLOCK ===== */
+  .formula-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+
+  .formula-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+
+  .formula-code {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent-light);
+    line-height: 2;
+  }
+
+  .formula-code .fn { color: #60a5fa; }
+  .formula-code .cell { color: #34d399; }
+  .formula-code .op  { color: #f59e0b; }
+  .formula-code .str { color: #f87171; }
+
+  /* ===== INSTRUCTIONS ===== */
+  .instructions {
+    padding: 28px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .instructions h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .step-list {
+    list-style: none;
+    counter-reset: steps;
+    display: grid;
+    gap: 12px;
+  }
+
+  .step-list li {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    font-size: 14px;
+    color: var(--text-muted);
+    align-items: flex-start;
+    line-height: 1.6;
+  }
+
+  .step-list li::before {
+    content: counter(steps);
+    background: var(--accent-muted);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ===== INSIGHT BOX ===== */
+  .insight-box {
+    padding: 28px 40px;
+  }
+
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+
+  .insight-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .insight-value {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .insight-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== TIP ===== */
+  .tip-box {
+    margin: 0 40px 32px;
+    background: var(--accent-muted);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .tip-box strong {
+    color: var(--accent-light);
+    display: block;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    margin-top: 80px;
+    padding: 48px 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  footer a { color: var(--accent); text-decoration: none; }
+  footer .brand { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: #fff; color: #111; }
+    .cover { background: #fff; min-height: auto; padding: 60px 40px 40px; }
+    .cover-title { color: #111; }
+    .cover-title .accent { color: var(--accent-dark); }
+    .cover-subtitle { color: #555; }
+    .cover-badge { background: #eef2ff; color: var(--accent-dark); border-color: #c7d2fe; }
+    .cover-plan-item { background: #f9f9ff; border-color: #e0e7ff; color: #555; }
+    .section-header { border-top-color: #ddd; }
+    .section-label { color: var(--accent-dark); }
+    .section-title { color: #111; }
+    .section-desc { color: #555; }
+    .planilha-card { background: #fff; border-color: #ddd; break-inside: avoid; }
+    .planilha-header { background: #f9f9ff; border-bottom-color: #eee; }
+    .planilha-number { background: #eef2ff; color: var(--accent-dark); border-color: #c7d2fe; }
+    .planilha-info h2 { color: #111; }
+    .planilha-info p { color: #555; }
+    .planilha-tag { background: #eef2ff; color: var(--accent-dark); border-color: #c7d2fe; }
+    .planilha-tag.green { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
+    .planilha-tag.yellow { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+    .planilha-tag.red { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
+    .table-title { color: #888; }
+    .fin-table thead tr { background: #f5f5f5; }
+    .fin-table th { color: #666; }
+    .fin-table td { color: #444; border-bottom-color: #eee; }
+    .fin-table tr.category-row td { background: #eef2ff; color: var(--accent-dark); }
+    .fin-table tr.subtotal-row td { background: #f5f5ff; color: #222; }
+    .fin-table tr.total-row td { color: #111; }
+    .value-positive { color: #166534 !important; }
+    .value-negative { color: #991b1b !important; }
+    .value-warning  { color: #92400e !important; }
+    .value-accent   { color: var(--accent-dark) !important; }
+    .formula-block { background: #f5f5ff; border-color: #c7d2fe; }
+    .formula-label { color: #888; }
+    .formula-code { color: var(--accent-dark); }
+    .formula-code .fn { color: #1d4ed8; }
+    .formula-code .cell { color: #166534; }
+    .formula-code .op  { color: #92400e; }
+    .formula-code .str { color: #991b1b; }
+    .instructions { border-bottom-color: #eee; }
+    .instructions h3 { color: #111; }
+    .step-list li { color: #444; }
+    .step-list li::before { background: #eef2ff; color: var(--accent-dark); border-color: #c7d2fe; }
+    .insight-item { background: #f9f9ff; border-color: #e0e7ff; }
+    .insight-label { color: #888; }
+    .tip-box { background: #eef2ff; border-color: #c7d2fe; border-left-color: var(--accent-dark); color: #555; }
+    .tip-box strong { color: var(--accent-dark); }
+    footer { border-top-color: #eee; color: #888; }
+    footer a { color: var(--accent-dark); }
+    footer .brand { color: var(--accent-dark); }
+
+    /* Print-specific: textareas/inputs to dotted lines */
+    .input-field {
+      border: none;
+      border-bottom: 1.5px dotted #999;
+      border-radius: 0;
+      background: transparent;
+      color: #111;
+      padding: 4px 2px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-badge">Life OS · Finanças Pessoais</div>
+  <h1 class="cover-title">Planilhas<br><span class="accent">Financeiras</span></h1>
+  <p class="cover-subtitle">8 planilhas prontas para uso — do orçamento mensal ao planejamento de liberdade financeira. Copie para o Google Sheets e comece hoje.</p>
+  <div class="cover-planilhas">
+    <div class="cover-plan-item"><span>01</span> Orçamento Mensal 50/30/20</div>
+    <div class="cover-plan-item"><span>02</span> Controle de Gastos Diário</div>
+    <div class="cover-plan-item"><span>03</span> Fundo de Emergência</div>
+    <div class="cover-plan-item"><span>04</span> Planejamento de Dívidas</div>
+    <div class="cover-plan-item"><span>05</span> Metas de Investimento</div>
+    <div class="cover-plan-item"><span>06</span> Patrimônio Líquido</div>
+    <div class="cover-plan-item"><span>07</span> Independência Financeira</div>
+    <div class="cover-plan-item"><span>08</span> Revisão Anual</div>
+  </div>
+</div>
+
+<!-- PLANILHA 01 -->
+<div class="container">
+  <div class="section-header">
+    <div class="section-label">Como usar este material</div>
+    <h2 class="section-title">Copie cada tabela para o Google Sheets</h2>
+    <p class="section-desc">Cada planilha abaixo contém a estrutura completa, as fórmulas indicadas e as explicações de preenchimento. Basta copiar a estrutura para o Google Sheets ou Excel e substituir os valores de exemplo pelos seus.</p>
+  </div>
+
+  <!-- PLANILHA 1 -->
+  <div class="planilha-card">
+    <div class="planilha-header">
+      <div class="planilha-number">01</div>
+      <div class="planilha-info">
+        <h2>Orçamento Mensal — Método 50/30/20</h2>
+        <p>A regra mais simples e eficaz da educação financeira: 50% para necessidades, 30% para desejos, 20% para poupança e investimentos. Esta planilha calcula automaticamente os limites por categoria.</p>
+        <div class="planilha-tags">
+          <span class="planilha-tag green">Mensal</span>
+          <span class="planilha-tag">Iniciante</span>
+          <span class="planilha-tag yellow">Controle de gastos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Estrutura da Planilha — Preencha os valores em amarelo</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Categoria / Descrição</th>
+            <th>Limite Ideal</th>
+            <th>Gasto Real</th>
+            <th>Saldo</th>
+            <th>% do Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="category-row">
+            <td colspan="5">RENDA TOTAL</td>
+          </tr>
+          <tr>
+            <td>Salário líquido</td>
+            <td>—</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Renda extra / freelance</td>
+            <td>—</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Outras rendas</td>
+            <td>—</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td>RENDA TOTAL</td>
+            <td>—</td>
+            <td class="value-accent">= SOMA(C3:C5)</td>
+            <td>—</td>
+            <td class="value-accent">100%</td>
+          </tr>
+
+          <tr class="category-row">
+            <td colspan="5">NECESSIDADES — 50% da renda</td>
+          </tr>
+          <tr>
+            <td>Moradia (aluguel / financiamento)</td>
+            <td class="value-positive">= Renda × 30%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr>
+            <td>Alimentação (mercado + refeições)</td>
+            <td class="value-positive">= Renda × 10%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr>
+            <td>Transporte (combustível / transporte público)</td>
+            <td class="value-positive">= Renda × 5%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr>
+            <td>Saúde (plano, consultas, remédios)</td>
+            <td class="value-positive">= Renda × 3%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr>
+            <td>Contas (energia, água, internet, gás)</td>
+            <td class="value-positive">= Renda × 2%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td>TOTAL NECESSIDADES</td>
+            <td class="value-positive">= Renda × 50%</td>
+            <td class="value-formula">= SOMA gastos</td>
+            <td class="value-formula">= Limite - Total</td>
+            <td class="value-formula">= Total / Renda</td>
+          </tr>
+
+          <tr class="category-row">
+            <td colspan="5">DESEJOS — 30% da renda</td>
+          </tr>
+          <tr>
+            <td>Lazer e entretenimento</td>
+            <td class="value-warning">= Renda × 10%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr>
+            <td>Roupas e acessórios</td>
+            <td class="value-warning">= Renda × 5%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr>
+            <td>Assinaturas (streaming, apps, academia)</td>
+            <td class="value-warning">= Renda × 5%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr>
+            <td>Restaurantes e delivery</td>
+            <td class="value-warning">= Renda × 5%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr>
+            <td>Outros desejos</td>
+            <td class="value-warning">= Renda × 5%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td>TOTAL DESEJOS</td>
+            <td class="value-warning">= Renda × 30%</td>
+            <td class="value-formula">= SOMA gastos</td>
+            <td class="value-formula">= Limite - Total</td>
+            <td class="value-formula">= Total / Renda</td>
+          </tr>
+
+          <tr class="category-row">
+            <td colspan="5">POUPANÇA E INVESTIMENTOS — 20% da renda</td>
+          </tr>
+          <tr>
+            <td>Fundo de emergência (até 6 meses de gastos)</td>
+            <td class="value-accent">= Renda × 10%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr>
+            <td>Investimentos (renda fixa, ações, FIIs)</td>
+            <td class="value-accent">= Renda × 7%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr>
+            <td>Previdência privada</td>
+            <td class="value-accent">= Renda × 3%</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-formula">= Gasto / Renda</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td>TOTAL POUPANÇA</td>
+            <td class="value-accent">= Renda × 20%</td>
+            <td class="value-formula">= SOMA gastos</td>
+            <td class="value-formula">= Limite - Total</td>
+            <td class="value-formula">= Total / Renda</td>
+          </tr>
+
+          <tr class="total-row">
+            <td>SALDO FINAL DO MÊS</td>
+            <td>= Renda</td>
+            <td class="value-formula">= Total gastos</td>
+            <td class="value-positive">= Renda - Gastos</td>
+            <td>100%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-block" style="margin: 0 40px 20px;">
+      <div class="formula-label">Fórmulas Principais (Google Sheets)</div>
+      <div class="formula-code">
+        Renda Total: <span class="fn">=SOMA</span>(<span class="cell">C3:C5</span>)<br>
+        Limite Necessidades: <span class="fn">=</span><span class="cell">C7</span><span class="op">*</span><span class="str">0,5</span> &nbsp;→ 50% da renda<br>
+        Saldo da Categoria: <span class="fn">=</span><span class="cell">B11</span><span class="op">-</span><span class="cell">C11</span> &nbsp;→ positivo = sobra, negativo = estouro<br>
+        Formatação condicional: se Saldo &lt; 0 → vermelho; se &gt; 0 → verde
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>Regra de Ouro</strong>O 20% de poupança é inegociável. Se você ainda não consegue economizar 20%, trabalhe para aumentar renda ou reduzir necessidades — não corte o investimento.
+    </div>
+  </div>
+
+  <!-- PLANILHA 2 -->
+  <div class="planilha-card">
+    <div class="planilha-header">
+      <div class="planilha-number">02</div>
+      <div class="planilha-info">
+        <h2>Controle de Gastos Diário</h2>
+        <p>O lançamento diário é o hábito que separa quem controla o dinheiro de quem é controlado por ele. Esta planilha categoriza automaticamente e gera o resumo mensal em tempo real.</p>
+        <div class="planilha-tags">
+          <span class="planilha-tag green">Diário</span>
+          <span class="planilha-tag yellow">Hábito essencial</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Tabela de Lançamentos — Adicione uma linha por compra</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Descrição</th>
+            <th>Categoria</th>
+            <th>Pagamento</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="category-row">
+            <td colspan="5">SEMANA 1</td>
+          </tr>
+          <tr>
+            <td>01/jan</td>
+            <td>Mercado mensal</td>
+            <td>Alimentação</td>
+            <td>Débito</td>
+            <td class="value-negative">R$ 450,00</td>
+          </tr>
+          <tr>
+            <td>01/jan</td>
+            <td>Gasolina</td>
+            <td>Transporte</td>
+            <td>Crédito</td>
+            <td class="value-negative">R$ 180,00</td>
+          </tr>
+          <tr>
+            <td>02/jan</td>
+            <td>Almoço fora</td>
+            <td>Alimentação fora</td>
+            <td>Débito</td>
+            <td class="value-negative">R$ 45,00</td>
+          </tr>
+          <tr>
+            <td>03/jan</td>
+            <td>Netflix + Spotify</td>
+            <td>Assinaturas</td>
+            <td>Crédito</td>
+            <td class="value-negative">R$ 75,00</td>
+          </tr>
+          <tr>
+            <td>05/jan</td>
+            <td>Freelance design</td>
+            <td>Renda extra</td>
+            <td>PIX</td>
+            <td class="value-positive">+ R$ 800,00</td>
+          </tr>
+          <tr>
+            <td>05/jan</td>
+            <td>Farmácia</td>
+            <td>Saúde</td>
+            <td>Débito</td>
+            <td class="value-negative">R$ 62,00</td>
+          </tr>
+          <tr>
+            <td>07/jan</td>
+            <td>Bar com amigos</td>
+            <td>Lazer</td>
+            <td>PIX</td>
+            <td class="value-negative">R$ 90,00</td>
+          </tr>
+          <tr>
+            <td colspan="4">...</td>
+            <td>...</td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="4">TOTAL DO MÊS</td>
+            <td class="value-formula">= SOMA(E:E)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Resumo Automático por Categoria — Fórmula SOMASE</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Categoria</th>
+            <th>Total Gasto</th>
+            <th>Limite Orçado</th>
+            <th>Saldo</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alimentação</td>
+            <td class="value-formula">= SOMASE(C:C, "Alimentação", E:E)</td>
+            <td class="value-positive">R$ 600,00</td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-positive">✓ OK</td>
+          </tr>
+          <tr>
+            <td>Transporte</td>
+            <td class="value-formula">= SOMASE(C:C, "Transporte", E:E)</td>
+            <td class="value-positive">R$ 300,00</td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-positive">✓ OK</td>
+          </tr>
+          <tr>
+            <td>Lazer</td>
+            <td class="value-formula">= SOMASE(C:C, "Lazer", E:E)</td>
+            <td class="value-warning">R$ 200,00</td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-warning">⚠ Atenção</td>
+          </tr>
+          <tr>
+            <td>Assinaturas</td>
+            <td class="value-formula">= SOMASE(C:C, "Assinaturas", E:E)</td>
+            <td class="value-warning">R$ 150,00</td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-positive">✓ OK</td>
+          </tr>
+          <tr>
+            <td>Saúde</td>
+            <td class="value-formula">= SOMASE(C:C, "Saúde", E:E)</td>
+            <td class="value-positive">R$ 250,00</td>
+            <td class="value-formula">= Limite - Gasto</td>
+            <td class="value-positive">✓ OK</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-block" style="margin: 0 40px 20px;">
+      <div class="formula-label">Fórmulas Chave</div>
+      <div class="formula-code">
+        Total por categoria: <span class="fn">=SOMASE</span>(<span class="cell">C:C</span>, <span class="str">"Alimentação"</span>, <span class="cell">E:E</span>)<br>
+        Status automático: <span class="fn">=SE</span>(<span class="cell">D2</span><span class="op">-</span><span class="cell">C2</span><span class="op">&gt;0</span>, <span class="str">"✓ OK"</span>, <span class="fn">SE</span>(<span class="cell">D2</span><span class="op">-</span><span class="cell">C2</span><span class="op">&gt;-50</span>, <span class="str">"⚠ Atenção"</span>, <span class="str">"✗ Estouro"</span>))<br>
+        Validação de categoria: use lista suspensa para padronizar e facilitar o SOMASE
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>Hábito Crítico</strong>Registre cada gasto na hora que acontece, não no fim do dia. Pequenas compras esquecidas são o maior inimigo do controle financeiro real.
+    </div>
+  </div>
+
+  <!-- PLANILHA 3 -->
+  <div class="planilha-card">
+    <div class="planilha-header">
+      <div class="planilha-number">03</div>
+      <div class="planilha-info">
+        <h2>Fundo de Emergência</h2>
+        <p>O fundo de emergência é a primeira meta financeira — antes de qualquer investimento. Esta planilha calcula sua meta personalizada e acompanha o progresso mês a mês.</p>
+        <div class="planilha-tags">
+          <span class="planilha-tag green">Meta essencial</span>
+          <span class="planilha-tag">Prioridade #1</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Calculadora do Fundo de Emergência</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Valor Mensal</th>
+            <th>Meses de Cobertura</th>
+            <th>Meta Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="category-row">
+            <td colspan="4">GASTOS ESSENCIAIS MENSAIS (base de cálculo)</td>
+          </tr>
+          <tr>
+            <td>Moradia</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td>6 meses</td>
+            <td class="value-formula">= Valor × 6</td>
+          </tr>
+          <tr>
+            <td>Alimentação</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td>6 meses</td>
+            <td class="value-formula">= Valor × 6</td>
+          </tr>
+          <tr>
+            <td>Transporte</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td>6 meses</td>
+            <td class="value-formula">= Valor × 6</td>
+          </tr>
+          <tr>
+            <td>Saúde e remédios</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td>6 meses</td>
+            <td class="value-formula">= Valor × 6</td>
+          </tr>
+          <tr>
+            <td>Contas básicas</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td>6 meses</td>
+            <td class="value-formula">= Valor × 6</td>
+          </tr>
+          <tr class="total-row">
+            <td>META DO FUNDO DE EMERGÊNCIA</td>
+            <td class="value-formula">= SOMA mensal</td>
+            <td>6 meses</td>
+            <td class="value-accent">= Total × 6</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Progresso Mensal do Fundo</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Mês</th>
+            <th>Depósito</th>
+            <th>Rendimento (% a.m.)</th>
+            <th>Saldo Acumulado</th>
+            <th>% da Meta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Janeiro</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-positive">0,9%</td>
+            <td class="value-formula">= Depósito × (1 + taxa)</td>
+            <td class="value-formula">= Saldo / Meta × 100</td>
+          </tr>
+          <tr>
+            <td>Fevereiro</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-positive">0,9%</td>
+            <td class="value-formula">= Saldo anterior + Depósito × (1 + taxa)</td>
+            <td class="value-formula">= Saldo / Meta × 100</td>
+          </tr>
+          <tr>
+            <td>Março</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-positive">0,9%</td>
+            <td class="value-formula">= Saldo anterior + Depósito × (1 + taxa)</td>
+            <td class="value-formula">= Saldo / Meta × 100</td>
+          </tr>
+          <tr>
+            <td colspan="2">... (repita para 12 meses)</td>
+            <td>0,9%</td>
+            <td>...</td>
+            <td>...</td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="2">FUNDO COMPLETO QUANDO % DA META = 100%</td>
+            <td>—</td>
+            <td class="value-accent">Meta atingida ✓</td>
+            <td class="value-accent">100%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip-box">
+      <strong>Onde Guardar</strong>Fundo de emergência = liquidez imediata. Use: Tesouro Selic, CDB com liquidez diária, ou conta remunerada. NUNCA em ações, FIIs ou qualquer ativo de risco. O objetivo é estar disponível quando você mais precisar.
+    </div>
+  </div>
+
+  <!-- PLANILHA 4 -->
+  <div class="planilha-card">
+    <div class="planilha-header">
+      <div class="planilha-number">04</div>
+      <div class="planilha-info">
+        <h2>Planejamento de Quitação de Dívidas</h2>
+        <p>Dois métodos comprovados: Avalanche (economiza mais) e Bola de Neve (mantém motivação). Esta planilha calcula ambos e mostra qual te liberta mais rápido.</p>
+        <div class="planilha-tags">
+          <span class="planilha-tag red">Dívidas</span>
+          <span class="planilha-tag yellow">Estratégia</span>
+          <span class="planilha-tag green">Liberdade</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Inventário de Dívidas — Liste todas sem exceção</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Dívida / Credor</th>
+            <th>Saldo Devedor</th>
+            <th>Taxa de Juros (% a.m.)</th>
+            <th>Parcela Mínima</th>
+            <th>Meses para Quitar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cartão de crédito — Banco X</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-negative"><span class="input-field">0,0%</span></td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= NPER(taxa, parcela, saldo)</td>
+          </tr>
+          <tr>
+            <td>Empréstimo pessoal</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-negative"><span class="input-field">0,0%</span></td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= NPER(taxa, parcela, saldo)</td>
+          </tr>
+          <tr>
+            <td>Financiamento carro</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-negative"><span class="input-field">0,0%</span></td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= NPER(taxa, parcela, saldo)</td>
+          </tr>
+          <tr>
+            <td>Cheque especial</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-negative"><span class="input-field">0,0%</span></td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= NPER(taxa, parcela, saldo)</td>
+          </tr>
+          <tr class="total-row">
+            <td>TOTAL DÍVIDAS</td>
+            <td class="value-negative value-formula">= SOMA saldos</td>
+            <td class="value-negative">Média ponderada</td>
+            <td class="value-negative value-formula">= SOMA parcelas</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Método Avalanche vs Bola de Neve</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Critério</th>
+            <th>Avalanche (Maior Juros Primeiro)</th>
+            <th>Bola de Neve (Menor Saldo Primeiro)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Como funciona</td>
+            <td>Pague mínimo em tudo. Extra vai para a dívida com maior taxa.</td>
+            <td>Pague mínimo em tudo. Extra vai para a dívida com menor saldo.</td>
+          </tr>
+          <tr>
+            <td>Vantagem</td>
+            <td class="value-positive">Economiza mais juros no total</td>
+            <td class="value-positive">Gera vitórias rápidas — motivação alta</td>
+          </tr>
+          <tr>
+            <td>Desvantagem</td>
+            <td class="value-warning">Demora para ver resultados visíveis</td>
+            <td class="value-warning">Paga mais juros no total</td>
+          </tr>
+          <tr>
+            <td>Recomendação</td>
+            <td>Perfil analítico, disciplinado matematicamente</td>
+            <td>Perfil que precisa de motivação frequente</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-block" style="margin: 0 40px 20px;">
+      <div class="formula-label">Fórmula NPER — Calcular Meses para Quitar</div>
+      <div class="formula-code">
+        Meses para quitar: <span class="fn">=NPER</span>(<span class="cell">taxa_mensal</span>, <span class="op">-</span><span class="cell">parcela_mensal</span>, <span class="cell">saldo_devedor</span>)<br>
+        Exemplo: <span class="fn">=NPER</span>(<span class="str">0,015</span>, <span class="op">-</span><span class="str">500</span>, <span class="str">5000</span>) → resultado em meses<br>
+        Total pago: <span class="fn">=</span><span class="cell">meses</span> <span class="op">×</span> <span class="cell">parcela</span><br>
+        Total de juros: <span class="fn">=</span> Total pago <span class="op">-</span> Saldo devedor inicial
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>Regra Absoluta</strong>Nunca use cheque especial ou rotativo do cartão — são as dívidas com as maiores taxas do Brasil (chegam a 20% ao mês). Se estiver usando: pare imediatamente e priorize quitar antes de qualquer outra ação financeira.
+    </div>
+  </div>
+
+  <!-- PLANILHA 5 -->
+  <div class="planilha-card">
+    <div class="planilha-header">
+      <div class="planilha-number">05</div>
+      <div class="planilha-info">
+        <h2>Painel de Investimentos</h2>
+        <p>Visualize toda a sua carteira de investimentos em um lugar — com rentabilidade, alocação por classe de ativo e comparação com o benchmark.</p>
+        <div class="planilha-tags">
+          <span class="planilha-tag green">Investimentos</span>
+          <span class="planilha-tag yellow">Carteira</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Carteira de Investimentos</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Ativo</th>
+            <th>Classe</th>
+            <th>Valor Investido</th>
+            <th>Valor Atual</th>
+            <th>Rentabilidade</th>
+            <th>% da Carteira</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="category-row">
+            <td colspan="6">RENDA FIXA</td>
+          </tr>
+          <tr>
+            <td>Tesouro Selic 2029</td>
+            <td>Renda Fixa</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= (Atual-Invest)/Invest</td>
+            <td class="value-formula">= Atual/Total</td>
+          </tr>
+          <tr>
+            <td>CDB 12% a.a. (Banco X)</td>
+            <td>Renda Fixa</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= (Atual-Invest)/Invest</td>
+            <td class="value-formula">= Atual/Total</td>
+          </tr>
+          <tr class="category-row">
+            <td colspan="6">RENDA VARIÁVEL</td>
+          </tr>
+          <tr>
+            <td>PETR4 — Petrobras</td>
+            <td>Ações</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= (Atual-Invest)/Invest</td>
+            <td class="value-formula">= Atual/Total</td>
+          </tr>
+          <tr>
+            <td>HGLG11 — FII Logística</td>
+            <td>FIIs</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= (Atual-Invest)/Invest</td>
+            <td class="value-formula">= Atual/Total</td>
+          </tr>
+          <tr>
+            <td>ETF IVVB11 (S&P 500)</td>
+            <td>Internacional</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td class="value-formula">= (Atual-Invest)/Invest</td>
+            <td class="value-formula">= Atual/Total</td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="2">TOTAL DA CARTEIRA</td>
+            <td class="value-formula">= SOMA invest.</td>
+            <td class="value-accent value-formula">= SOMA atual</td>
+            <td class="value-formula">= (Total atual - Total invest.) / Total invest.</td>
+            <td class="value-accent">100%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-grid">
+        <div class="insight-item">
+          <div class="insight-value value-accent">= SOMA</div>
+          <div class="insight-label">Patrimônio Total</div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-value value-positive">= %</div>
+          <div class="insight-label">Rentabilidade Total</div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-value value-warning">= %</div>
+          <div class="insight-label">% em Renda Fixa</div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-value value-positive">= %</div>
+          <div class="insight-label">% em Renda Variável</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>Alocação Sugerida por Perfil</strong>Conservador: 80% renda fixa / 20% variável. Moderado: 60/40. Arrojado: 30/70. Revise a alocação a cada 6 meses e rebalanceie se um ativo ultrapassar ±10% do target.
+    </div>
+  </div>
+
+  <!-- PLANILHA 6 -->
+  <div class="planilha-card">
+    <div class="planilha-header">
+      <div class="planilha-number">06</div>
+      <div class="planilha-info">
+        <h2>Patrimônio Líquido</h2>
+        <p>Patrimônio Líquido = Ativos - Passivos. É o número mais honesto sobre sua situação financeira real. Atualize trimestralmente para ver sua evolução.</p>
+        <div class="planilha-tags">
+          <span class="planilha-tag">Trimestral</span>
+          <span class="planilha-tag green">Visão real</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Ativos (o que você possui)</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Ativo</th>
+            <th>Tipo</th>
+            <th>Valor de Mercado Atual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="category-row"><td colspan="3">ATIVOS FINANCEIROS</td></tr>
+          <tr><td>Conta corrente + poupança</td><td>Liquidez</td><td><span class="input-field">R$ 0,00</span></td></tr>
+          <tr><td>Investimentos (carteira total)</td><td>Investimento</td><td><span class="input-field">R$ 0,00</span></td></tr>
+          <tr><td>Previdência privada</td><td>Longo prazo</td><td><span class="input-field">R$ 0,00</span></td></tr>
+          <tr class="category-row"><td colspan="3">ATIVOS REAIS</td></tr>
+          <tr><td>Imóvel próprio (valor de mercado)</td><td>Imóvel</td><td><span class="input-field">R$ 0,00</span></td></tr>
+          <tr><td>Veículo (tabela FIPE)</td><td>Veículo</td><td><span class="input-field">R$ 0,00</span></td></tr>
+          <tr><td>Outros bens</td><td>Outros</td><td><span class="input-field">R$ 0,00</span></td></tr>
+          <tr class="total-row"><td colspan="2">TOTAL DE ATIVOS (A)</td><td class="value-positive value-formula">= SOMA</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Passivos (o que você deve)</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Passivo</th>
+            <th>Tipo</th>
+            <th>Saldo Devedor Atual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Financiamento imóvel</td><td>Longo prazo</td><td><span class="input-field">R$ 0,00</span></td></tr>
+          <tr><td>Financiamento veículo</td><td>Médio prazo</td><td><span class="input-field">R$ 0,00</span></td></tr>
+          <tr><td>Cartão de crédito (fatura atual)</td><td>Curto prazo</td><td><span class="input-field">R$ 0,00</span></td></tr>
+          <tr><td>Empréstimos pessoais</td><td>Curto prazo</td><td><span class="input-field">R$ 0,00</span></td></tr>
+          <tr><td>Outros débitos</td><td>Variado</td><td><span class="input-field">R$ 0,00</span></td></tr>
+          <tr class="total-row"><td colspan="2">TOTAL DE PASSIVOS (B)</td><td class="value-negative value-formula">= SOMA</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Patrimônio Líquido = A - B</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Trimestre</th>
+            <th>Ativos</th>
+            <th>Passivos</th>
+            <th>Patrimônio Líquido</th>
+            <th>Variação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Q1 2025</td><td class="value-formula">= A</td><td class="value-negative value-formula">= B</td><td class="value-accent value-formula">= A - B</td><td>—</td></tr>
+          <tr><td>Q2 2025</td><td class="value-formula">= A</td><td class="value-negative value-formula">= B</td><td class="value-accent value-formula">= A - B</td><td class="value-formula">= (Q2 - Q1) / Q1</td></tr>
+          <tr><td>Q3 2025</td><td class="value-formula">= A</td><td class="value-negative value-formula">= B</td><td class="value-accent value-formula">= A - B</td><td class="value-formula">= (Q3 - Q2) / Q2</td></tr>
+          <tr><td>Q4 2025</td><td class="value-formula">= A</td><td class="value-negative value-formula">= B</td><td class="value-accent value-formula">= A - B</td><td class="value-formula">= (Q4 - Q3) / Q3</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip-box">
+      <strong>Interpretação</strong>Patrimônio negativo é comum no início da vida adulta (financiamento, dívidas). O que importa é a tendência: está crescendo a cada trimestre? Se sim, você está no caminho certo.
+    </div>
+  </div>
+
+  <!-- PLANILHA 7 -->
+  <div class="planilha-card">
+    <div class="planilha-header">
+      <div class="planilha-number">07</div>
+      <div class="planilha-info">
+        <h2>Independência Financeira — Calculadora FIRE</h2>
+        <p>FIRE: Financial Independence, Retire Early. Calcula quanto você precisa acumular para que os rendimentos passivos cubram 100% dos seus gastos — para sempre.</p>
+        <div class="planilha-tags">
+          <span class="planilha-tag green">Longo prazo</span>
+          <span class="planilha-tag">Meta de vida</span>
+          <span class="planilha-tag yellow">FIRE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Calculadora de Independência Financeira</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Parâmetro</th>
+            <th>Seu Valor</th>
+            <th>Fórmula / Referência</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="category-row"><td colspan="3">INPUTS — Preencha com seus dados</td></tr>
+          <tr>
+            <td>Gasto mensal desejado na IF</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td>Quanto você quer gastar por mês quando for livre</td>
+          </tr>
+          <tr>
+            <td>Patrimônio atual investido</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td>Soma de todos os investimentos hoje</td>
+          </tr>
+          <tr>
+            <td>Aporte mensal atual</td>
+            <td><span class="input-field">R$ 0,00</span></td>
+            <td>Quanto você investe por mês</td>
+          </tr>
+          <tr>
+            <td>Rentabilidade real esperada (% a.a.)</td>
+            <td><span class="input-field">6%</span></td>
+            <td>Desconte a inflação. Conservador: 6%. Otimista: 8%.</td>
+          </tr>
+
+          <tr class="category-row"><td colspan="3">RESULTADOS — Calculados automaticamente</td></tr>
+          <tr>
+            <td>Gasto anual desejado</td>
+            <td class="value-formula">= Gasto mensal × 12</td>
+            <td>Base para a regra dos 4%</td>
+          </tr>
+          <tr>
+            <td><strong>Patrimônio necessário (Regra dos 4%)</strong></td>
+            <td class="value-accent value-formula">= Gasto anual ÷ 0,04</td>
+            <td>O número mais importante. Com 4% ao ano, dura para sempre.</td>
+          </tr>
+          <tr>
+            <td>Quanto falta acumular</td>
+            <td class="value-negative value-formula">= Meta - Patrimônio atual</td>
+            <td>O "buraco" que os aportes precisam fechar</td>
+          </tr>
+          <tr>
+            <td>Anos para a Independência Financeira</td>
+            <td class="value-accent value-formula">= NPER(taxa_anual/12, -aporte, -patrimônio, meta) / 12</td>
+            <td>Assumindo aportes constantes e rentabilidade estável</td>
+          </tr>
+          <tr>
+            <td>Ano estimado da Independência Financeira</td>
+            <td class="value-positive value-formula">= ANO(HOJE()) + anos</td>
+            <td>Sua data-alvo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-block" style="margin: 0 40px 20px;">
+      <div class="formula-label">A Regra dos 4% (Safe Withdrawal Rate)</div>
+      <div class="formula-code">
+        Meta IF: <span class="fn">=</span> <span class="cell">Gasto_Anual</span> <span class="op">/</span> <span class="str">0,04</span> &nbsp;→ "Número FIRE"<br>
+        Exemplo: R$ 5.000/mês = R$ 60k/ano → Meta = R$ 60k / 4% = <span class="cell">R$ 1.500.000</span><br>
+        Anos p/ chegar lá: <span class="fn">=NPER</span>(<span class="str">0,06</span><span class="op">/</span><span class="str">12</span>, <span class="op">-</span><span class="cell">aporte_mensal</span>, <span class="op">-</span><span class="cell">patrimônio_atual</span>, <span class="cell">meta_if</span>) <span class="op">/</span> <span class="str">12</span>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>A Regra dos 4%</strong>Baseada no estudo Trinity (EUA, 1998): uma carteira diversificada que retira 4% ao ano tem probabilidade de 96% de durar 30 anos. No Brasil, com taxas de juros reais mais altas, use 4,5-5% para maior segurança.
+    </div>
+  </div>
+
+  <!-- PLANILHA 8 -->
+  <div class="planilha-card">
+    <div class="planilha-header">
+      <div class="planilha-number">08</div>
+      <div class="planilha-info">
+        <h2>Revisão Financeira Anual</h2>
+        <p>O ritual mais importante da sua vida financeira: uma revisão completa ao fim de cada ano para medir o progresso, ajustar a estratégia e definir as metas do próximo ciclo.</p>
+        <div class="planilha-tags">
+          <span class="planilha-tag">Anual</span>
+          <span class="planilha-tag green">Estratégia</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <div class="table-title">Scoreboard Financeiro do Ano</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Indicador</th>
+            <th>Meta do Ano</th>
+            <th>Resultado Real</th>
+            <th>% Atingido</th>
+            <th>Avaliação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Renda total bruta</td><td><span class="input-field">R$ 0,00</span></td><td><span class="input-field">R$ 0,00</span></td><td class="value-formula">= Real/Meta</td><td class="value-formula">= SE(% &gt; 100%, "✓ Superado", "Ajustar")</td></tr>
+          <tr><td>Total economizado/investido</td><td><span class="input-field">R$ 0,00</span></td><td><span class="input-field">R$ 0,00</span></td><td class="value-formula">= Real/Meta</td><td class="value-formula">= SE(% &gt; 100%, "✓ Superado", "Ajustar")</td></tr>
+          <tr><td>Patrimônio líquido final</td><td><span class="input-field">R$ 0,00</span></td><td><span class="input-field">R$ 0,00</span></td><td class="value-formula">= Real/Meta</td><td class="value-formula">= SE(% &gt; 100%, "✓ Superado", "Ajustar")</td></tr>
+          <tr><td>Dívidas quitadas</td><td><span class="input-field">R$ 0,00</span></td><td><span class="input-field">R$ 0,00</span></td><td class="value-formula">= Real/Meta</td><td class="value-formula">= SE(% &gt; 100%, "✓ Superado", "Ajustar")</td></tr>
+          <tr><td>% salvo de renda total</td><td class="value-accent">20%</td><td class="value-formula">= Total invest / Renda</td><td class="value-formula">= Real/Meta</td><td class="value-formula">= SE(% &gt; 100%, "✓ Superado", "Ajustar")</td></tr>
+          <tr><td>Rentabilidade da carteira</td><td class="value-accent">CDI + 2%</td><td><span class="input-field">0%</span></td><td class="value-formula">= Real/Meta</td><td class="value-formula">= SE(% &gt; 100%, "✓ Superado", "Ajustar")</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="instructions">
+      <h3>Roteiro da Revisão Anual (reserve 2-3 horas)</h3>
+      <ol class="step-list">
+        <li>Atualize o patrimônio líquido com os valores reais de 31/dezembro.</li>
+        <li>Calcule a taxa de poupança real do ano: Total investido ÷ Renda total.</li>
+        <li>Revise a carteira de investimentos: o que performou bem? O que arrastou?</li>
+        <li>Analise os gastos por categoria: onde você gastou mais do que planejado?</li>
+        <li>Calcule quantos anos você está mais perto da Independência Financeira vs. ano anterior.</li>
+        <li>Defina 3 metas financeiras específicas para o próximo ano com valores e datas.</li>
+        <li>Atualize os parâmetros da planilha FIRE com o novo patrimônio.</li>
+        <li>Comemore os avanços — mesmo que pequenos, cada passo conta.</li>
+      </ol>
+    </div>
+
+    <div class="tip-box">
+      <strong>O Número que Mais Importa</strong>Taxa de poupança. Não é quanto você ganha — é quanto você retém. Uma taxa de poupança de 10% chega à IF em ~43 anos. 20% → 37 anos. 50% → 17 anos. 70% → 8,5 anos. Foque na taxa, o resto segue.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="brand">Life OS</div>
+  <p>Planilhas Financeiras · Material exclusivo para membros</p>
+  <p style="margin-top: 8px;"><a href="https://agenciacriativa.shop">agenciacriativa.shop</a></p>
+</footer>
+
+<button id="btn-install-pwa" onclick="installPWA()" class="pwa-install-fab" style="display:none">
+  <span style="font-size:16px">📲</span> Instalar app
+</button>
+<style>
+  .pwa-install-fab {
+    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark, var(--accent)));
+    color: #fff; border: none; padding: 12px 20px; border-radius: 50px;
+    font-weight: 700; font-size: 13px; font-family: 'Inter', sans-serif;
+    cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    display: flex; align-items: center; gap: 6px; letter-spacing: 0.3px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .pwa-install-fab:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
+  @media print { .pwa-install-fab { display: none !important; } }
+</style>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
+  let __pwaPrompt = null;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); __pwaPrompt = e;
+    const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
+  });
+  function installPWA() {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    if (isStandalone) { alert('App já instalado!'); return; }
+    if (isIOS) {
+      alert('Para instalar no iPhone:\n\n1. Toque no botão Compartilhar (quadrado com seta para cima)\n2. Role e toque em "Adicionar à Tela de Início"\n3. Toque em "Adicionar"');
+      return;
+    }
+    if (__pwaPrompt) { __pwaPrompt.prompt(); __pwaPrompt.userChoice.then(() => __pwaPrompt = null); }
+    else { alert('Para instalar no Android: menu (3 pontos) → "Instalar app"'); }
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    if (isIOS && !isStandalone) {
+      const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
+    }
+  });
+</script>
+
+</body>
+</html>

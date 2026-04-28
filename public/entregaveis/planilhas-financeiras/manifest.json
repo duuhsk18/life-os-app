@@ -1,0 +1,17 @@
+{
+  "name": "Life OS — Planilhas Financeiras",
+  "short_name": "Finanças",
+  "description": "8 planilhas profissionais — Orçamento 50/30/20, Controle de Gastos, Fundo de Emergência, Dívidas, Investimentos, Patrimônio, FIRE e Revisão Anual.",
+  "start_url": "./planilhas-financeiras.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0A0A1A",
+  "theme_color": "#6366F1",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

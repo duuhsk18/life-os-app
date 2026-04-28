@@ -98,6 +98,21 @@ create table if not exists lifeos_finance_records (
   created_at  timestamptz default now()
 );
 
+-- 9. User Products (Entitlements) — quem tem acesso a qual produto
+create table if not exists lifeos_user_products (
+  id              uuid default gen_random_uuid() primary key,
+  user_id         uuid references lifeos_profiles(id) on delete cascade,
+  product_slug    text not null,
+  granted_at      timestamptz default now(),
+  source          text default 'kiwify',
+  kiwify_order_id text,
+  active          boolean default true,
+  unique(user_id, product_slug)
+);
+
+create index if not exists idx_user_products_user on lifeos_user_products(user_id);
+create index if not exists idx_user_products_active on lifeos_user_products(user_id, active);
+
 -- ============================================================
 -- Row Level Security (cada usuário só vê seus próprios dados)
 -- ============================================================
@@ -109,6 +124,7 @@ alter table lifeos_focus_sessions  enable row level security;
 alter table lifeos_goals           enable row level security;
 alter table lifeos_journal_entries enable row level security;
 alter table lifeos_finance_records enable row level security;
+alter table lifeos_user_products   enable row level security;
 
 -- Profiles
 create policy "users own profile"       on lifeos_profiles        for all using (auth.uid() = id);
@@ -119,6 +135,8 @@ create policy "users own focus"         on lifeos_focus_sessions  for all using 
 create policy "users own goals"         on lifeos_goals           for all using (auth.uid() = user_id);
 create policy "users own journal"       on lifeos_journal_entries for all using (auth.uid() = user_id);
 create policy "users own finance"       on lifeos_finance_records for all using (auth.uid() = user_id);
+-- User products: usuário lê os próprios; INSERTs só pelo webhook (service_role)
+create policy "users see own products"  on lifeos_user_products   for select using (auth.uid() = user_id);
 
 -- ============================================================
 -- Auto-create profile on signup

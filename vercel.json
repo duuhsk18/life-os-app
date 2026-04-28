@@ -1,3 +1,23 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/((?!api/|entregaveis/|assets/|.*\\.(?:js|css|png|jpg|jpeg|svg|webp|gif|ico|json|html|txt|woff|woff2|ttf|eot|map)$).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/entregaveis/(.*)/sw.js",
+      "headers": [
+        { "key": "Service-Worker-Allowed", "value": "/" },
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/entregaveis/(.*)/manifest.json",
+      "headers": [
+        { "key": "Content-Type", "value": "application/manifest+json" }
+      ]
+    }
+  ]
 }

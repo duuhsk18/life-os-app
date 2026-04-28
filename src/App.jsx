@@ -11,6 +11,7 @@ import SalesPage        from '@/pages/SalesPage'
 import Catalogo         from '@/pages/Catalogo'
 import OTOPage          from '@/pages/OTOPage'
 import ThankYou         from '@/pages/ThankYou'
+import MinhaConta       from '@/pages/MinhaConta'
 import LifeOSDashboard  from '@/pages/lifeos/LifeOSDashboard'
 import LifeOSHabits     from '@/pages/lifeos/LifeOSHabits'
 import LifeOSWorkouts   from '@/pages/lifeos/LifeOSWorkouts'
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/catalogo"             element={<Catalogo />} />
           <Route path="/oto/life-os"          element={<OTOPage />} />
           <Route path="/obrigado"             element={<ThankYou />} />
+          <Route path="/minha-conta"          element={<Protected><MinhaConta /></Protected>} />
           <Route path="/membros"              element={<Protected><LifeOSDashboard /></Protected>} />
           <Route path="/membros/habitos"      element={<Protected><LifeOSHabits /></Protected>} />
           <Route path="/membros/treinos"      element={<Protected><LifeOSWorkouts /></Protected>} />

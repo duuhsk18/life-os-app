@@ -28,14 +28,14 @@ export default function ThankYou() {
 
       {/* Access info */}
       <div className="max-w-lg mx-auto px-4 py-8">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-4">
           <h2 className="font-black text-gray-900 mb-3">Como acessar seu produto</h2>
           <ol className="space-y-3">
             {[
-              '📧 Verifique seu e-mail (inclusive spam)',
-              '📥 Clique no link para fazer o download',
-              '📱 Use no celular, tablet ou computador',
-              '♾️ Acesso vitalício — use para sempre',
+              '📧 Verifique seu e-mail (caixa de entrada e spam) — em até 2 minutos chega o link de acesso',
+              '🔗 Clique no link e defina sua senha (primeira vez) ou entre direto',
+              '🛍 Sua área "Minha conta" mostra todos os produtos que você comprou',
+              '📱 Funciona no celular, tablet ou computador — instala como app, funciona offline',
             ].map((step, i) => (
               <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
                 <span className="font-black text-gray-400 flex-shrink-0">{i + 1}.</span>
@@ -44,6 +44,14 @@ export default function ThankYou() {
             ))}
           </ol>
         </div>
+
+        {/* CTA: já tem conta? acessa direto */}
+        <Link
+          to="/minha-conta"
+          className="block w-full bg-gray-900 text-white font-black text-sm py-4 rounded-2xl text-center mb-6 active:scale-95 transition-transform"
+        >
+          Já tenho conta — Acessar agora →
+        </Link>
 
         {/* Upsell to Life OS */}
         <div

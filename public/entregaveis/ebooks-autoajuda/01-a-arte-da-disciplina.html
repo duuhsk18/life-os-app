@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>A Arte da Disciplina — Life OS</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8B5CF6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ebooks Life OS">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F4C430;
+    --gold-light: #FFD966;
+    --gold-dark: #C9A227;
+    --dark: #0D0D0D;
+    --dark-2: #141414;
+    --dark-3: #1C1C1C;
+    --dark-4: #242424;
+    --dark-5: #2E2E2E;
+    --text: #E8E8E8;
+    --text-muted: #999;
+    --text-faint: #666;
+    --accent: #F4C430;
+    --green: #2ECC71;
+    --red: #E74C3C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0D0D0D 0%, #1a1200 50%, #0D0D0D 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(244,196,48,0.08) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(244,196,48,0.1);
+    border: 1px solid rgba(244,196,48,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 40px;
+  }
+
+  .cover-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 180px;
+    font-weight: 900;
+    color: rgba(244,196,48,0.06);
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 8vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-title span {
+    color: var(--gold);
+  }
+
+  .cover-subtitle {
+    font-size: clamp(14px, 2.5vw, 18px);
+    color: var(--text-muted);
+    max-width: 500px;
+    font-weight: 300;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-logo {
+    width: 48px;
+    height: 48px;
+    background: var(--gold);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 22px;
+    color: #000;
+    margin-bottom: 8px;
+  }
+
+  .cover-brand {
+    font-size: 13px;
+    color: var(--text-faint);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .cover-scroll {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-faint);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+
+  .cover-scroll::after {
+    content: '↓';
+    font-size: 18px;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── TOC ── */
+  .toc-section {
+    background: var(--dark-2);
+    border-bottom: 1px solid var(--dark-5);
+    padding: 60px 0;
+  }
+
+  .toc-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--dark-4);
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 15px;
+    transition: color 0.2s;
+    gap: 16px;
+  }
+
+  .toc-item:hover { color: var(--gold); }
+
+  .toc-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    opacity: 0.5;
+    min-width: 24px;
+  }
+
+  /* ── INTRO SECTION ── */
+  .intro-section {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--dark-4);
+  }
+
+  .intro-quote {
+    background: linear-gradient(135deg, rgba(244,196,48,0.06), rgba(244,196,48,0.02));
+    border-left: 3px solid var(--gold);
+    border-radius: 0 16px 16px 0;
+    padding: 32px 40px;
+    margin-bottom: 48px;
+  }
+
+  .intro-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: #ddd;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .intro-quote cite {
+    font-size: 13px;
+    color: var(--gold);
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .intro-text {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.9;
+  }
+
+  .intro-text strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* ── CHAPTERS ── */
+  .chapter {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--dark-4);
+  }
+
+  .chapter-header {
+    margin-bottom: 48px;
+  }
+
+  .chapter-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+  }
+
+  .chapter-title .highlight {
+    color: var(--gold);
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin: 48px 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-heading::before {
+    content: '';
+    width: 3px;
+    height: 22px;
+    background: var(--gold);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--text-muted);
+  }
+
+  p strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  p em {
+    color: #ccc;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .callout-gold {
+    background: rgba(244,196,48,0.07);
+    border: 1px solid rgba(244,196,48,0.2);
+  }
+
+  .callout-dark {
+    background: var(--dark-3);
+    border: 1px solid var(--dark-5);
+  }
+
+  .callout-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .callout p {
+    margin: 0;
+    font-size: 15px;
+  }
+
+  .callout strong {
+    color: var(--gold) !important;
+  }
+
+  /* ── LOOP DIAGRAM ── */
+  .loop-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 40px 0;
+    flex-wrap: wrap;
+  }
+
+  .loop-step {
+    background: var(--dark-3);
+    border: 1px solid var(--dark-5);
+    border-radius: 16px;
+    padding: 20px 28px;
+    text-align: center;
+    min-width: 140px;
+  }
+
+  .loop-step-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .loop-step-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .loop-step-name {
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+  }
+
+  .loop-arrow {
+    font-size: 24px;
+    color: var(--gold);
+    margin: 0 8px;
+    opacity: 0.6;
+  }
+
+  /* ── TABLE ── */
+  .table-wrapper {
+    overflow-x: auto;
+    margin: 32px 0;
+    border-radius: 16px;
+    border: 1px solid var(--dark-5);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  thead {
+    background: var(--dark-3);
+  }
+
+  thead th {
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 1px solid var(--dark-5);
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--dark-4);
+    transition: background 0.2s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--dark-3); }
+
+  tbody td {
+    padding: 14px 20px;
+    color: var(--text-muted);
+    vertical-align: top;
+  }
+
+  tbody td:first-child {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ── EXERCISE BLOCK ── */
+  .exercise-block {
+    background: linear-gradient(135deg, rgba(244,196,48,0.05), rgba(244,196,48,0.02));
+    border: 1px solid rgba(244,196,48,0.15);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 48px 0;
+  }
+
+  .exercise-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(244,196,48,0.1);
+  }
+
+  .exercise-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--gold);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .exercise-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .exercise-subtitle {
+    font-size: 13px;
+    color: var(--text-faint);
+    margin-top: 2px;
+  }
+
+  .exercise-question {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+  }
+
+  .exercise-num {
+    width: 28px;
+    height: 28px;
+    background: rgba(244,196,48,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .exercise-q-text {
+    font-size: 15px;
+    color: #ccc;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .exercise-input {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--dark-5);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    margin-top: 8px;
+    resize: none;
+    min-height: 48px;
+    transition: border-color 0.2s;
+  }
+
+  .exercise-input:focus {
+    outline: none;
+    border-color: rgba(244,196,48,0.4);
+    background: rgba(244,196,48,0.03);
+    color: var(--text);
+  }
+
+  /* ── HABIT TABLE (2 cols) ── */
+  .habit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  @media (max-width: 600px) {
+    .habit-grid { grid-template-columns: 1fr; }
+    .loop-diagram { flex-direction: column; gap: 12px; }
+    .loop-arrow { transform: rotate(90deg); }
+  }
+
+  .habit-card {
+    background: var(--dark-3);
+    border: 1px solid var(--dark-5);
+    border-radius: 14px;
+    padding: 20px;
+  }
+
+  .habit-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .habit-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    align-items: flex-start;
+  }
+
+  .habit-row::before {
+    content: '→';
+    color: var(--gold);
+    opacity: 0.5;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .habit-row-bad::before {
+    content: '→';
+    color: #e74c3c;
+    opacity: 0.5;
+  }
+
+  /* ── IDENTITY COMPARISON ── */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  @media (max-width: 600px) {
+    .comparison { grid-template-columns: 1fr; }
+  }
+
+  .comparison-card {
+    border-radius: 14px;
+    padding: 24px;
+  }
+
+  .comparison-card.bad {
+    background: rgba(231,76,60,0.07);
+    border: 1px solid rgba(231,76,60,0.2);
+  }
+
+  .comparison-card.good {
+    background: rgba(46,204,113,0.07);
+    border: 1px solid rgba(46,204,113,0.2);
+  }
+
+  .comparison-card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .comparison-card.bad .comparison-card-label { color: #e74c3c; }
+  .comparison-card.good .comparison-card-label { color: var(--green); }
+
+  .comparison-card p {
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* ── PROGRESS CHART ── */
+  .progress-chart {
+    background: var(--dark-3);
+    border: 1px solid var(--dark-5);
+    border-radius: 16px;
+    padding: 32px;
+    margin: 32px 0;
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    overflow-x: auto;
+  }
+
+  .progress-chart .highlight-text {
+    color: var(--gold);
+    font-weight: bold;
+  }
+
+  /* ── 2-MIN RULE ── */
+  .mini-rule {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 32px 0;
+  }
+
+  .mini-rule-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--dark-3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 14px;
+  }
+
+  .mini-rule-original {
+    color: var(--text-faint);
+    text-decoration: line-through;
+    flex: 1;
+  }
+
+  .mini-arrow {
+    color: var(--gold);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .mini-rule-new {
+    color: var(--green);
+    font-weight: 600;
+    flex: 1;
+  }
+
+  /* ── STACK CHAIN ── */
+  .stack-chain {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .stack-chain::before {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .stack-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--dark-3);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #ccc;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stack-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(244,196,48,0.4);
+  }
+
+  /* ── 66 DAYS TIMELINE ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .timeline-dot-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .timeline-dot {
+    width: 40px;
+    height: 40px;
+    background: var(--dark-3);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .timeline-line {
+    width: 2px;
+    flex: 1;
+    min-height: 20px;
+    background: var(--dark-5);
+    margin-top: 4px;
+  }
+
+  .timeline-content {
+    padding-bottom: 24px;
+  }
+
+  .timeline-title {
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  .timeline-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── RULES LIST ── */
+  .rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+  }
+
+  .rule-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px 20px;
+    background: var(--dark-3);
+    border-radius: 12px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .rule-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 20px;
+    margin-top: 2px;
+  }
+
+  .rule-text {
+    font-size: 14px;
+    color: #ccc;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .rule-text strong {
+    color: #fff;
+  }
+
+  /* ── COMMITMENT BLOCK ── */
+  .commitment-block {
+    background: var(--dark-2);
+    border: 2px solid rgba(244,196,48,0.2);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 48px 0;
+  }
+
+  .commitment-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .commitment-field {
+    margin-bottom: 20px;
+  }
+
+  .commitment-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+
+  .commitment-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--dark-5);
+    color: var(--text);
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    padding: 10px 0;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .commitment-input:focus {
+    border-color: var(--gold);
+  }
+
+  .commitment-input::placeholder {
+    color: var(--text-faint);
+  }
+
+  /* ── CONCLUSION ── */
+  .conclusion {
+    padding: 80px 0;
+    text-align: center;
+  }
+
+  .conclusion-icon {
+    font-size: 60px;
+    margin-bottom: 24px;
+  }
+
+  .conclusion-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  .conclusion-text {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto 48px;
+    line-height: 1.8;
+  }
+
+  .summary-list {
+    text-align: left;
+    background: var(--dark-2);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 0 auto 48px;
+    max-width: 600px;
+  }
+
+  .summary-list-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .summary-item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    font-size: 15px;
+    color: #ccc;
+    align-items: flex-start;
+  }
+
+  .summary-item::before {
+    content: '⚡';
+    flex-shrink: 0;
+  }
+
+  .cta-block {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border-radius: 20px;
+    padding: 40px;
+    color: #000;
+    display: inline-block;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    color: #000;
+  }
+
+  .cta-text {
+    font-size: 15px;
+    color: rgba(0,0,0,0.7);
+    margin-bottom: 0;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--dark-2);
+    border-top: 1px solid var(--dark-4);
+    padding: 48px 0;
+    text-align: center;
+  }
+
+  .footer-logo {
+    width: 40px;
+    height: 40px;
+    background: var(--gold);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 18px;
+    color: #000;
+    margin: 0 auto 16px;
+  }
+
+  .footer-brand {
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .footer-url {
+    font-size: 13px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-top: 24px;
+  }
+
+  /* ── PRINT / PDF ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    body { background: #fff !important; color: #111 !important; font-size: 13px; }
+
+    /* Hide interactive/screen-only elements */
+    .cover-scroll, .toc-item:hover { display: none; }
+
+    /* Cover: keep dark, gold accent */
+    .cover {
+      background: #0D0D0D !important;
+      min-height: auto;
+      padding: 80px 40px;
+      page-break-after: always;
+    }
+    .cover-number { display: none; }
+
+    /* TOC on its own page */
+    .toc-section { page-break-after: always; background: #f9f9f9 !important; }
+    .toc-item { color: #333 !important; border-color: #ddd !important; }
+    .toc-num { color: #C9A227 !important; }
+
+    /* Chapters */
+    .chapter { page-break-before: always; padding: 40px 0; border: none; }
+    .intro-section { padding: 40px 0; border: none; page-break-after: always; }
+
+    /* Invert dark backgrounds to light for print */
+    .callout-dark, .progress-chart, .habit-card,
+    .comparison-card.bad, .comparison-card.good,
+    .rule-item, .stack-item, .mini-rule-item,
+    .summary-list, .commitment-block {
+      background: #f5f5f5 !important;
+      border-color: #ddd !important;
+    }
+
+    .callout-gold {
+      background: #fffbea !important;
+      border-color: #C9A227 !important;
+    }
+
+    /* Text adjustments */
+    p, .exercise-q-text, .rule-text, .timeline-desc { color: #333 !important; }
+    .chapter-title, .section-heading, .exercise-title,
+    .timeline-title, .conclusion-title, .summary-list-title { color: #111 !important; }
+    .chapter-label, .toc-label, .commitment-label,
+    .exercise-subtitle, .habit-card-title { color: #888 !important; }
+
+    /* Gold stays gold */
+    .cover-badge, .cover-title span, .chapter-title .highlight,
+    .section-heading::before, .callout strong,
+    .rule-num, .exercise-num, .toc-num,
+    .loop-step-label, .timeline-dot, .cover-brand { color: #C9A227 !important; }
+
+    /* Intro quote */
+    .intro-quote { background: #fffbea !important; border-color: #C9A227 !important; }
+    .intro-quote p { color: #333 !important; }
+    .intro-quote cite { color: #C9A227 !important; }
+
+    /* Loop diagram */
+    .loop-step { background: #f5f5f5 !important; border-color: #ddd !important; }
+    .loop-step-name { color: #111 !important; }
+    .loop-arrow { color: #C9A227 !important; }
+
+    /* Tables */
+    thead { background: #f0f0f0 !important; }
+    thead th { color: #C9A227 !important; }
+    tbody td { color: #333 !important; }
+    tbody tr { border-color: #eee !important; }
+
+    /* ── EXERCISE BLOCKS: hide inputs, show write lines ── */
+    .exercise-block {
+      background: #fffbea !important;
+      border-color: #C9A227 !important;
+      break-inside: avoid;
+    }
+
+    .exercise-input, .commitment-input {
+      display: none !important;
+    }
+
+    /* Insert dotted write lines after each question */
+    .exercise-q-text::after,
+    .commitment-field::after {
+      content: '';
+      display: block;
+      margin-top: 10px;
+      border-bottom: 1.5px dotted #bbb;
+      padding-bottom: 24px;
+      margin-bottom: 4px;
+    }
+
+    /* Double line for longer answers */
+    .exercise-question:nth-child(n+2) .exercise-q-text::after {
+      padding-bottom: 40px;
+    }
+
+    .exercise-icon { background: #C9A227 !important; }
+    .exercise-num { background: #fffbea !important; color: #C9A227 !important; border: 1px solid #C9A227; }
+
+    /* Commitment block */
+    .commitment-block { background: #f9f9f9 !important; border-color: #C9A227 !important; break-inside: avoid; }
+    .commitment-title { color: #C9A227 !important; }
+    .commitment-input { border-color: #ccc !important; }
+
+    /* Timeline dots */
+    .timeline-dot { background: #f5f5f5 !important; border-color: #C9A227 !important; color: #C9A227 !important; }
+    .timeline-line { background: #ddd !important; }
+
+    /* CTA / conclusion */
+    .cta-block { background: #C9A227 !important; color: #000 !important; }
+    .cta-title, .cta-text { color: #000 !important; }
+    .conclusion-text { color: #333 !important; }
+
+    /* Footer */
+    .footer { background: #f5f5f5 !important; border-color: #ddd !important; }
+    .footer-brand { color: #111 !important; }
+    .footer-url { color: #C9A227 !important; }
+    .footer-copy { color: #666 !important; }
+    .footer-logo { background: #C9A227 !important; color: #000 !important; }
+
+    /* Cover elements stay dark */
+    .cover, .cover * { color: inherit; }
+    .cover-title { color: #fff !important; }
+    .cover-subtitle { color: #aaa !important; }
+    .cover-logo { background: #F4C430 !important; color: #000 !important; }
+    .cover-brand { color: #888 !important; }
+
+    /* No URLs printed from links */
+    a[href]::after { content: none !important; }
+
+    /* Page margins */
+    @page {
+      margin: 18mm 16mm;
+      size: A4;
+    }
+    @page :first { margin-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-number">01</div>
+
+  <div class="cover-badge">⚡ Life OS — Coleção de Autoajuda</div>
+
+  <h1 class="cover-title">A Arte da<br><span>Disciplina</span></h1>
+  <p class="cover-subtitle">Como Criar Hábitos que Duram para Sempre</p>
+
+  <div class="cover-divider"></div>
+
+  <div class="cover-meta">
+    <div class="cover-logo">L</div>
+    <span class="cover-brand">Life OS · agenciacriativa.shop</span>
+  </div>
+
+  <div class="cover-scroll">Continue lendo</div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc-section">
+  <div class="container">
+    <div class="toc-label">Sumário</div>
+    <ul class="toc-list">
+      <li><a class="toc-item" href="#intro"><span class="toc-num">—</span> Sobre Este Ebook</a></li>
+      <li><a class="toc-item" href="#cap1"><span class="toc-num">01</span> A Grande Mentira sobre Disciplina</a></li>
+      <li><a class="toc-item" href="#cap2"><span class="toc-num">02</span> Por que Você Falha no Terceiro Dia</a></li>
+      <li><a class="toc-item" href="#cap3"><span class="toc-num">03</span> Identidade: O Segredo que Ninguém te Conta</a></li>
+      <li><a class="toc-item" href="#cap4"><span class="toc-num">04</span> O Ambiente é Mais Poderoso que a Mente</a></li>
+      <li><a class="toc-item" href="#cap5"><span class="toc-num">05</span> Consistência Bate Perfeição</a></li>
+      <li><a class="toc-item" href="#cap6"><span class="toc-num">06</span> Empilhamento de Hábitos</a></li>
+      <li><a class="toc-item" href="#cap7"><span class="toc-num">07</span> Recompensas: O Combustível da Disciplina</a></li>
+      <li><a class="toc-item" href="#cap8"><span class="toc-num">08</span> O Plano de 66 Dias</a></li>
+      <li><a class="toc-item" href="#conclusao"><span class="toc-num">—</span> Conclusão</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div id="intro" class="intro-section">
+  <div class="container">
+    <div class="intro-quote">
+      <p>"Disciplina é simplesmente escolher entre o que você quer agora e o que você mais quer."</p>
+      <cite>— Abraham Lincoln</cite>
+    </div>
+
+    <p class="intro-text">Este não é mais um livro sobre força de vontade. Pelo contrário — você vai descobrir que confiar apenas na força de vontade é o erro número um de quem tenta criar hábitos. A ciência moderna prova que disciplina real funciona de forma diferente: ela é construída em <strong>sistemas</strong>, não em emoções.</p>
+    <p class="intro-text">Ao longo dessas páginas, você vai aprender como o cérebro forma hábitos, por que quase todo mundo falha no terceiro dia, e como construir uma rotina que funcione mesmo quando você está cansado, desmotivado e sem tempo.</p>
+    <p class="intro-text"><strong>Leia com caneta na mão. Os exercícios ao final de cada capítulo valem mais do que qualquer teoria.</strong></p>
+  </div>
+</div>
+
+<!-- CHAPTER 1 -->
+<div id="cap1" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 01</span>
+      <h2 class="chapter-title">A Grande Mentira<br>sobre <span class="highlight">Disciplina</span></h2>
+    </div>
+
+    <p>Durante anos nos ensinaram que pessoas disciplinadas são aquelas que "têm força de vontade". Que elas simplesmente acordam motivadas, fazem suas tarefas sem reclamar e nunca cedem às tentações.</p>
+
+    <p><strong>Isso é uma mentira.</strong></p>
+
+    <p>Pesquisadores da Universidade de Florida, liderados por Roy Baumeister, descobriram que a força de vontade é um recurso finito. Ela se esgota ao longo do dia, assim como os músculos se cansam após um treino intenso. Esse fenômeno foi chamado de <strong>ego depletion</strong> (depleção do ego).</p>
+
+    <p>É por isso que você consegue resistir ao chocolate de manhã, mas à noite come três pedaços sem culpa. É por isso que decisões ruins são tomadas quando estamos cansados. É por isso que juízes que julgam casos logo após o almoço concedem liberdade condicional 65% das vezes — contra 0% no final de um longo período de julgamentos seguidos.</p>
+
+    <div class="callout callout-gold">
+      <span class="callout-icon">💡</span>
+      <p><strong>Força de vontade não é um traço de personalidade. É um recurso que acaba.</strong></p>
+    </div>
+
+    <h3 class="section-heading">A Virada: Sistemas vs. Objetivos</h3>
+
+    <p>James Clear, autor de <em>Hábitos Atômicos</em>, diz: <em>"Você não sobe ao nível dos seus objetivos. Você cai ao nível dos seus sistemas."</em></p>
+
+    <p>Pessoas que parecem disciplinadas não dependem de motivação. Elas construíram <strong>sistemas</strong> que fazem o comportamento certo acontecer automaticamente — sem exigir esforço consciente.</p>
+
+    <div class="rules-list">
+      <div class="rule-item">
+        <span class="rule-num">→</span>
+        <p class="rule-text"><strong>Michael Phelps</strong> não nadava toda manhã por força de vontade. Ele dormia com o equipamento de natação ao lado da cama.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-num">→</span>
+        <p class="rule-text"><strong>Warren Buffett</strong> não decide o que vai ler pela manhã. Ele reservou as primeiras horas do dia para leitura há décadas — é automático.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-num">→</span>
+        <p class="rule-text">A <strong>pessoa mais fit</strong> que você conhece provavelmente não pensa em "ir à academia". Ela simplesmente vai, porque virou parte da identidade dela.</p>
+      </div>
+    </div>
+
+    <h3 class="section-heading">O Loop do Hábito</h3>
+
+    <p>O neurocientista Charles Duhigg identificou que todo hábito segue um mesmo padrão de três etapas:</p>
+
+    <div class="loop-diagram">
+      <div class="loop-step">
+        <div class="loop-step-icon">🔔</div>
+        <div class="loop-step-label">Etapa 1</div>
+        <div class="loop-step-name">Gatilho</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step">
+        <div class="loop-step-icon">⚡</div>
+        <div class="loop-step-label">Etapa 2</div>
+        <div class="loop-step-name">Rotina</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step">
+        <div class="loop-step-icon">🎯</div>
+        <div class="loop-step-label">Etapa 3</div>
+        <div class="loop-step-name">Recompensa</div>
+      </div>
+    </div>
+
+    <p>Quando você entende esse loop, para de lutar contra os hábitos ruins e começa a <strong>redesenhar o sistema</strong> ao seu redor.</p>
+
+    <!-- EXERCISE 1 -->
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div>
+          <div class="exercise-title">Exercício do Capítulo 1</div>
+          <div class="exercise-subtitle">Escolha UM hábito ruim que você quer eliminar</div>
+        </div>
+      </div>
+
+      <div class="exercise-question">
+        <div class="exercise-num">1</div>
+        <div class="exercise-q-text">
+          Qual é o <strong>gatilho</strong>? (o que acontece imediatamente antes do hábito ruim?)
+          <textarea class="exercise-input" rows="2" placeholder="Ex: Chegando em casa do trabalho, sinto estresse..."></textarea>
+        </div>
+      </div>
+
+      <div class="exercise-question">
+        <div class="exercise-num">2</div>
+        <div class="exercise-q-text">
+          Qual é a <strong>rotina</strong>? (o comportamento em si)
+          <textarea class="exercise-input" rows="2" placeholder="Ex: Abro o Instagram e fico rolando por 1 hora..."></textarea>
+        </div>
+      </div>
+
+      <div class="exercise-question">
+        <div class="exercise-num">3</div>
+        <div class="exercise-q-text">
+          Qual é a <strong>recompensa real</strong>? (não a óbvia — a emocional)
+          <textarea class="exercise-input" rows="2" placeholder="Ex: Distração do estresse, sensação de descanso mental..."></textarea>
+        </div>
+      </div>
+
+      <div class="exercise-question">
+        <div class="exercise-num">4</div>
+        <div class="exercise-q-text">
+          Como posso <strong>substituir apenas a rotina</strong>, mantendo o gatilho e a recompensa?
+          <textarea class="exercise-input" rows="2" placeholder="Ex: Trocar Instagram por 20 min de caminhada (mesmo descanso mental)..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 2 -->
+<div id="cap2" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 02</span>
+      <h2 class="chapter-title">Por que Você Falha<br>no <span class="highlight">Terceiro Dia</span></h2>
+    </div>
+
+    <p>Existe um padrão devastadoramente comum: segunda-feira cheia de entusiasmo, terça com um pouco menos de energia, quarta sem vontade, e quinta o hábito já foi para o lixo.</p>
+    <p>Isso não é fraqueza de caráter. É neurociência.</p>
+
+    <h3 class="section-heading">A Curva do Entusiasmo</h3>
+
+    <p>Quando decidimos mudar algo, o cérebro libera dopamina — o neurotransmissor da antecipação e do prazer. Você se sente animado, determinado, invencível. Esse pico de entusiasmo dura em média 48 a 72 horas.</p>
+
+    <p>Depois, a dopamina cai. A ação que parecia empolgante agora parece trabalhosa. E como você não construiu nenhum sistema durante o período de entusiasmo, não há nada que te segure quando a motivação vai embora.</p>
+
+    <div class="callout callout-gold">
+      <p><strong>O entusiasmo cria o começo. O sistema cria a continuidade.</strong></p>
+    </div>
+
+    <h3 class="section-heading">O Princípio do Menor Esforço</h3>
+
+    <p>O cérebro é programado para conservar energia. Ele sempre vai preferir o caminho de menor resistência. A estratégia inteligente não é tentar ser mais motivado — é <strong>tornar o comportamento desejado mais fácil</strong> e o comportamento indesejado mais difícil.</p>
+
+    <div class="habit-grid">
+      <div class="habit-card">
+        <div class="habit-card-title">✅ Facilitar bons hábitos</div>
+        <div class="habit-row">Beber água → garrafa visível na mesa</div>
+        <div class="habit-row">Ler → livro no travesseiro</div>
+        <div class="habit-row">Exercício → dormir com roupa de treino</div>
+        <div class="habit-row">Comer saudável → frutas lavadas na geladeira</div>
+        <div class="habit-row">Meditar → app na tela principal</div>
+      </div>
+      <div class="habit-card">
+        <div class="habit-card-title" style="color:#e74c3c">❌ Dificultar maus hábitos</div>
+        <div class="habit-row habit-row-bad">Redes sociais → deletar apps</div>
+        <div class="habit-row habit-row-bad">Doce → não comprar, não ter em casa</div>
+        <div class="habit-row habit-row-bad">Celular → carregar em outro cômodo</div>
+        <div class="habit-row habit-row-bad">Compras → desinstalar apps</div>
+      </div>
+    </div>
+
+    <h3 class="section-heading">Os Dois Minutos Mágicos</h3>
+
+    <p>Se um hábito novo parece muito difícil de começar, use a <strong>Regra dos Dois Minutos</strong>: reduza o hábito até ele durar apenas dois minutos.</p>
+
+    <div class="mini-rule">
+      <div class="mini-rule-item">
+        <span class="mini-rule-original">"Correr 5km"</span>
+        <span class="mini-arrow">→</span>
+        <span class="mini-rule-new">"Calçar os tênis e sair pela porta"</span>
+      </div>
+      <div class="mini-rule-item">
+        <span class="mini-rule-original">"Ler 30 páginas"</span>
+        <span class="mini-arrow">→</span>
+        <span class="mini-rule-new">"Abrir o livro e ler um parágrafo"</span>
+      </div>
+      <div class="mini-rule-item">
+        <span class="mini-rule-original">"Meditar 20 minutos"</span>
+        <span class="mini-arrow">→</span>
+        <span class="mini-rule-new">"Sentar na posição e respirar fundo"</span>
+      </div>
+      <div class="mini-rule-item">
+        <span class="mini-rule-original">"Fazer exercícios"</span>
+        <span class="mini-arrow">→</span>
+        <span class="mini-rule-new">"Fazer uma flexão"</span>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div>
+          <div class="exercise-title">Exercício do Capítulo 2</div>
+          <div class="exercise-subtitle">Pegue o hábito que você quer criar</div>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">1</div>
+        <div class="exercise-q-text">Quão fácil de 0 a 10 é fazer esse hábito hoje?
+          <textarea class="exercise-input" rows="1" placeholder="Nota: ___/10"></textarea>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">2</div>
+        <div class="exercise-q-text">O que posso fazer para torná-lo mais fácil? (liste 3 ações concretas)
+          <textarea class="exercise-input" rows="3" placeholder="1. &#10;2. &#10;3."></textarea>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">3</div>
+        <div class="exercise-q-text">Qual é a versão de 2 minutos desse hábito?
+          <textarea class="exercise-input" rows="2" placeholder="Em vez de ___, vou apenas..."></textarea>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">4</div>
+        <div class="exercise-q-text">Onde vou colocar o gatilho visual?
+          <textarea class="exercise-input" rows="1" placeholder="Ex: tênis na porta da frente..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 3 -->
+<div id="cap3" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 03</span>
+      <h2 class="chapter-title">Identidade: O Segredo<br>que <span class="highlight">Ninguém te Conta</span></h2>
+    </div>
+
+    <p>Há uma diferença fundamental entre duas formas de motivação:</p>
+
+    <div class="comparison">
+      <div class="comparison-card bad">
+        <div class="comparison-card-label">❌ Resultado</div>
+        <p>"Quero perder 10kg"</p>
+      </div>
+      <div class="comparison-card good">
+        <div class="comparison-card-label">✅ Identidade</div>
+        <p>"Eu sou uma pessoa saudável"</p>
+      </div>
+    </div>
+
+    <p>A primeira te motiva temporariamente. A segunda muda quem você é.</p>
+
+    <h3 class="section-heading">Você Age Consistentemente com sua Identidade</h3>
+
+    <p>Quando alguém oferece um cigarro para quem está tentando parar de fumar, existem duas respostas possíveis:</p>
+
+    <div class="comparison">
+      <div class="comparison-card bad">
+        <div class="comparison-card-label">❌ Mentalidade de resistência</div>
+        <p>"Não, obrigado. <em>Estou tentando parar.</em>" — ainda me vejo como fumante</p>
+      </div>
+      <div class="comparison-card good">
+        <div class="comparison-card-label">✅ Identidade mudada</div>
+        <p>"Não, obrigado. <em>Não sou fumante.</em>" — minha identidade mudou</p>
+      </div>
+    </div>
+
+    <p>James Clear chama isso de "mudança de identidade baseada em evidências":</p>
+
+    <div class="stack-chain">
+      <div class="stack-item"><div class="stack-dot"></div>Decida quem você quer ser <em>("Quero ser uma pessoa disciplinada")</em></div>
+      <div class="stack-item"><div class="stack-dot"></div>Prove para si mesmo com pequenas vitórias <em>("Fiz meu exercício hoje")</em></div>
+      <div class="stack-item"><div class="stack-dot"></div>Com o tempo, as evidências acumulam e a identidade se consolida <em>("Sou uma pessoa que se exercita")</em></div>
+    </div>
+
+    <h3 class="section-heading">O Poder das Afirmações (Do Jeito Certo)</h3>
+
+    <div class="comparison">
+      <div class="comparison-card bad">
+        <div class="comparison-card-label">❌ Fantasia</div>
+        <p>"Sou rico e próspero" — quando você está endividado, seu cérebro não acredita</p>
+      </div>
+      <div class="comparison-card good">
+        <div class="comparison-card-label">✅ Ação</div>
+        <p>"Estou construindo minha estabilidade financeira com cada decisão que tomo"</p>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div>
+          <div class="exercise-title">Exercício do Capítulo 3</div>
+          <div class="exercise-subtitle">Reescreva sua identidade</div>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">1</div>
+        <div class="exercise-q-text">Como você se descreve hoje quando o assunto é disciplina?
+          <textarea class="exercise-input" rows="2" placeholder="Ex: Sou desorganizado, começo e não termino..."></textarea>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">2</div>
+        <div class="exercise-q-text">Que identidade você quer ter em 6 meses?
+          <textarea class="exercise-input" rows="2" placeholder="Ex: Sou uma pessoa consistente que honra seus compromissos..."></textarea>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">3</div>
+        <div class="exercise-q-text">Escreva uma frase de identidade no presente que seja crível para você agora:
+          <textarea class="exercise-input" rows="2" placeholder="Estou construindo..."></textarea>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">4</div>
+        <div class="exercise-q-text">Que UMA ação você pode fazer hoje que provaria para si mesmo que é essa pessoa?
+          <textarea class="exercise-input" rows="2" placeholder="Hoje vou..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 4 -->
+<div id="cap4" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 04</span>
+      <h2 class="chapter-title">O Ambiente é Mais<br><span class="highlight">Poderoso que a Mente</span></h2>
+    </div>
+
+    <p>Você não é tão racional quanto pensa. A maioria das suas decisões é influenciada pelo ambiente ao seu redor, não por julgamentos conscientes e racionais.</p>
+
+    <div class="callout callout-dark">
+      <span class="callout-icon">🔬</span>
+      <p>Em um estudo clássico, pesquisadores mudaram apenas a posição das balas em uma vending machine: colocaram opções saudáveis no nível dos olhos. Resultado: as vendas de snacks saudáveis aumentaram <strong>25% sem nenhuma campanha, sem nenhum argumento, sem nenhuma força de vontade.</strong></p>
+    </div>
+
+    <h3 class="section-heading">Redesenhe seu Ambiente</h3>
+
+    <div class="rules-list">
+      <div class="rule-item">
+        <span class="rule-num">1.</span>
+        <p class="rule-text"><strong>Torne os bons comportamentos visíveis.</strong> O que está na sua linha de visão é o que você vai fazer. Quer meditar? Coloque o tapete no meio do quarto. Quer ler? Deixe o livro na mesa.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-num">2.</span>
+        <p class="rule-text"><strong>Elimine a fricção dos bons hábitos.</strong> Prepare as coisas com antecedência. Deixe a academia bag pronta. Tenha a refeição saudável separada. Mantenha seu diário aberto.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-num">3.</span>
+        <p class="rule-text"><strong>Crie fricção para os maus hábitos.</strong> Não tenha doce em casa. Delete os apps do celular. Tire o controle da sala de estar.</p>
+      </div>
+    </div>
+
+    <h3 class="section-heading">Ambientes Diferentes para Comportamentos Diferentes</h3>
+
+    <div class="rules-list">
+      <div class="rule-item"><span class="rule-num">→</span><p class="rule-text">Use a <strong>mesa de trabalho</strong> apenas para trabalhar</p></div>
+      <div class="rule-item"><span class="rule-num">→</span><p class="rule-text">Use a <strong>cama</strong> apenas para dormir</p></div>
+      <div class="rule-item"><span class="rule-num">→</span><p class="rule-text">Tenha um <strong>"canto de leitura"</strong> específico</p></div>
+      <div class="rule-item"><span class="rule-num">→</span><p class="rule-text">Vá a um <strong>café específico</strong> quando precisar de foco profundo</p></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div>
+          <div class="exercise-title">Exercício do Capítulo 4</div>
+          <div class="exercise-subtitle">Auditoria do seu ambiente</div>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">1</div>
+        <div class="exercise-q-text">Liste 3 maus hábitos e o que no seu ambiente facilita cada um:
+          <textarea class="exercise-input" rows="4" placeholder="1. Hábito: ___ — O que facilita: ___&#10;2. Hábito: ___ — O que facilita: ___&#10;3. Hábito: ___ — O que facilita: ___"></textarea>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">2</div>
+        <div class="exercise-q-text">Escolha UMA mudança de ambiente para implementar hoje (não amanhã):
+          <textarea class="exercise-input" rows="2" placeholder="Hoje vou..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 5 -->
+<div id="cap5" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 05</span>
+      <h2 class="chapter-title"><span class="highlight">Consistência</span><br>Bate Perfeição</h2>
+    </div>
+
+    <p>"Tudo ou nada" é o inimigo número um da disciplina a longo prazo. Pessoas que buscam perfeição param completamente quando erram. Pessoas que buscam consistência entendem que uma falha é apenas um ponto fora da curva.</p>
+
+    <div class="callout callout-gold">
+      <span class="callout-icon">🔑</span>
+      <p>A regra mais poderosa da disciplina sustentável: <strong>nunca falhe duas vezes seguidas.</strong></p>
+      <p style="margin-top:12px">Faltou o treino ontem? Vai hoje. Comeu demais no jantar? O café da manhã volta ao normal. Uma falha é um acidente. Duas falhas seguidas é o começo de um novo hábito ruim.</p>
+    </div>
+
+    <h3 class="section-heading">O Método Seinfeld</h3>
+
+    <p>Jerry Seinfeld usava um grande calendário na parede e marcava um X vermelho em cada dia que escrevia. O objetivo era simples: <strong>não quebrar a corrente.</strong></p>
+
+    <p>O hábito não é quebrado pela falha. É quebrado pela resposta à falha.</p>
+
+    <h3 class="section-heading">Progresso Não-Linear</h3>
+
+    <div class="progress-chart">
+<pre>Resultados
+    |                              /
+    |                           /
+    |                        /
+    |                   _ /
+    |           _ _ _ /
+    |_ _ _ _ _/
+    +--------------------------------> Tempo
+
+              ↑
+    <span class="highlight-text">"Vale a pena?" — 90% desiste aqui</span>
+    (mas os resultados estão logo adiante)</pre>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div>
+          <div class="exercise-title">Exercício do Capítulo 5</div>
+          <div class="exercise-subtitle">Construa sua resposta à falha</div>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">1</div>
+        <div class="exercise-q-text">Pense em um hábito que você abandonou no passado. O que aconteceu após a primeira falha?
+          <textarea class="exercise-input" rows="2" placeholder="Quando eu falhei, eu..."></textarea>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">2</div>
+        <div class="exercise-q-text">Crie seu sistema de "nunca duas falhas seguidas": o que você vai fazer no dia seguinte a uma falha?
+          <textarea class="exercise-input" rows="2" placeholder="Se eu falhar, no dia seguinte vou..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 6 -->
+<div id="cap6" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 06</span>
+      <h2 class="chapter-title">Empilhamento<br>de <span class="highlight">Hábitos</span></h2>
+    </div>
+
+    <p>Uma das técnicas mais eficazes para criar novos hábitos é o <strong>habit stacking</strong>: conectar o novo hábito a um que você já faz automaticamente.</p>
+
+    <div class="callout callout-gold">
+      <p>A fórmula: <strong>"Depois de [HÁBITO ATUAL], vou [NOVO HÁBITO]."</strong></p>
+    </div>
+
+    <h3 class="section-heading">Exemplos Práticos</h3>
+
+    <div class="rules-list">
+      <div class="rule-item"><span class="rule-num">→</span><p class="rule-text">"Depois de ligar o computador de manhã, vou escrever 3 tarefas prioritárias do dia."</p></div>
+      <div class="rule-item"><span class="rule-num">→</span><p class="rule-text">"Depois de servir meu café, vou ler 10 páginas."</p></div>
+      <div class="rule-item"><span class="rule-num">→</span><p class="rule-text">"Depois de escovar os dentes à noite, vou escrever no meu diário."</p></div>
+      <div class="rule-item"><span class="rule-num">→</span><p class="rule-text">"Depois do almoço, vou caminhar por 10 minutos."</p></div>
+    </div>
+
+    <h3 class="section-heading">Empilhamento em Cadeia</h3>
+
+    <div class="stack-chain">
+      <div class="stack-item"><div class="stack-dot"></div>Alarme toca</div>
+      <div class="stack-item"><div class="stack-dot"></div>Levanto imediatamente (sem checar celular)</div>
+      <div class="stack-item"><div class="stack-dot"></div>Bebo um copo d'água</div>
+      <div class="stack-item"><div class="stack-dot"></div>Faço 10 minutos de alongamento</div>
+      <div class="stack-item"><div class="stack-dot"></div>Tomo banho</div>
+      <div class="stack-item"><div class="stack-dot"></div>Escrevo 3 prioridades do dia</div>
+      <div class="stack-item"><div class="stack-dot"></div>Preparo o café e leio por 20 minutos</div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div>
+          <div class="exercise-title">Exercício do Capítulo 6</div>
+          <div class="exercise-subtitle">Mapeie seus hábitos automáticos e crie conexões</div>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">1</div>
+        <div class="exercise-q-text">Liste seus hábitos automáticos: acordar, escovar dentes, café, almoço, chegar em casa, jantar, dormir. Para cada um, que novo hábito poderia ser conectado?
+          <textarea class="exercise-input" rows="6" placeholder="Depois de escovar os dentes → &#10;Depois de preparar o café → &#10;Depois de almoçar → &#10;Depois de chegar em casa → "></textarea>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">2</div>
+        <div class="exercise-q-text">Escolha 2 novas conexões para começar esta semana:
+          <textarea class="exercise-input" rows="3" placeholder="1. Depois de ___, vou ___&#10;2. Depois de ___, vou ___"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 7 -->
+<div id="cap7" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 07</span>
+      <h2 class="chapter-title">Recompensas: O<br><span class="highlight">Combustível</span> da Disciplina</h2>
+    </div>
+
+    <p>O cérebro aprende pelo prazer. Se um comportamento não tem recompensa — imediata ou percebida — ele se extingue.</p>
+
+    <p>O problema dos hábitos saudáveis é que suas recompensas são atrasadas (saúde, dinheiro, produtividade) enquanto as recompensas dos maus hábitos são imediatas (prazer, alívio, entorpecimento).</p>
+
+    <h3 class="section-heading">Como Criar Recompensas Imediatas</h3>
+
+    <div class="rules-list">
+      <div class="rule-item"><span class="rule-num">→</span><p class="rule-text">Após o treino: uma <strong>música favorita</strong> que você só ouve durante o exercício</p></div>
+      <div class="rule-item"><span class="rule-num">→</span><p class="rule-text">Após completar uma tarefa difícil: um <strong>café especial</strong> ou episódio de série</p></div>
+      <div class="rule-item"><span class="rule-num">→</span><p class="rule-text">Após uma semana completa: uma <strong>experiência valorizada</strong> (jantar, passeio, compra intencional)</p></div>
+    </div>
+
+    <div class="callout callout-gold">
+      <p><strong>Regra importante:</strong> a recompensa não pode contradizer o hábito. Não celebre o treino com sorvete. Não celebre a dieta com um dia de excessos.</p>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <div class="exercise-icon">✍️</div>
+        <div>
+          <div class="exercise-title">Exercício do Capítulo 7</div>
+          <div class="exercise-subtitle">Projete seu sistema de recompensas</div>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">1</div>
+        <div class="exercise-q-text">Qual será a recompensa imediata (logo após o hábito)?
+          <textarea class="exercise-input" rows="1" placeholder="Ex: ouvir uma playlist especial durante..."></textarea>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">2</div>
+        <div class="exercise-q-text">Qual será a recompensa semanal (se completar 5 de 7 dias)?
+          <textarea class="exercise-input" rows="1" placeholder="Ex: jantar no restaurante favorito..."></textarea>
+        </div>
+      </div>
+      <div class="exercise-question">
+        <div class="exercise-num">3</div>
+        <div class="exercise-q-text">Como você vai rastrear visualmente seu progresso?
+          <textarea class="exercise-input" rows="1" placeholder="Ex: app Habitica, calendário com Xs..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 8 -->
+<div id="cap8" class="chapter">
+  <div class="container">
+    <div class="chapter-header">
+      <span class="chapter-label">Capítulo 08</span>
+      <h2 class="chapter-title">O Plano de<br><span class="highlight">66 Dias</span></h2>
+    </div>
+
+    <p>Você provavelmente já ouviu que leva 21 dias para formar um hábito. Essa informação é falsa — e essa mentira destruiu incontáveis tentativas de mudança.</p>
+
+    <p>A verdade, de acordo com pesquisa de Phillippa Lally da University College London, é que leva <strong>em média 66 dias</strong> para um hábito se tornar automático. E esse número varia entre 18 e 254 dias.</p>
+
+    <div class="callout callout-gold">
+      <p>21 dias é o mínimo para sentir a primeira mudança. <strong>66 dias é o mínimo para a automatização real.</strong></p>
+    </div>
+
+    <h3 class="section-heading">Seu Plano de 66 Dias</h3>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot-wrapper">
+          <div class="timeline-dot">1-7</div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-title">Dias 1-7 — Sobrevivência</div>
+          <p class="timeline-desc">Seu único objetivo é não desistir. Espere sentir que é muito difícil, que não está funcionando, que não vale a pena. É normal. Mantenha o hábito pequeno e simples.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot-wrapper">
+          <div class="timeline-dot">8-21</div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-title">Dias 8-21 — Estabilização</div>
+          <p class="timeline-desc">A resistência começa a diminuir. Você começa a sentir pequenas mudanças. O hábito ainda requer esforço consciente, mas está ficando mais fácil. Não aumente a intensidade ainda.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot-wrapper">
+          <div class="timeline-dot">22-45</div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-title">Dias 22-45 — Consolidação</div>
+          <p class="timeline-desc">O hábito começa a parecer natural. Você nota quando não o faz. Pode começar a aumentar a intensidade ou duração suavemente.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot-wrapper">
+          <div class="timeline-dot">46-66</div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-title">Dias 46-66 — Automatização</div>
+          <p class="timeline-desc">O hábito começa a se tornar parte de quem você é. Fazer parece mais natural do que não fazer. A identidade está se consolidando.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="section-heading">Regras dos 66 Dias</h3>
+
+    <div class="rules-list">
+      <div class="rule-item"><span class="rule-num">1</span><p class="rule-text"><strong>Comece pequeno demais para falhar</strong> — reduza até estar ridiculamente fácil</p></div>
+      <div class="rule-item"><span class="rule-num">2</span><p class="rule-text"><strong>Não adicione novos hábitos</strong> nos primeiros 30 dias (foco em um de cada vez)</p></div>
+      <div class="rule-item"><span class="rule-num">3</span><p class="rule-text"><strong>Registre todos os dias</strong>, mesmo os que você falhou</p></div>
+      <div class="rule-item"><span class="rule-num">4</span><p class="rule-text"><strong>Nunca duas falhas seguidas</strong></p></div>
+      <div class="rule-item"><span class="rule-num">5</span><p class="rule-text"><strong>Não avalie os resultados</strong> antes do dia 45 — você não vai ver a curva exponencial ainda</p></div>
+    </div>
+
+    <!-- COMMITMENT BLOCK -->
+    <div class="commitment-block">
+      <div class="commitment-title">⚡ Meu Compromisso de 66 Dias</div>
+
+      <div class="commitment-field">
+        <div class="commitment-label">Hábito</div>
+        <input type="text" class="commitment-input" placeholder="O que vou praticar todos os dias...">
+      </div>
+
+      <div class="commitment-field">
+        <div class="commitment-label">Por que isso importa para mim</div>
+        <input type="text" class="commitment-input" placeholder="Porque...">
+      </div>
+
+      <div class="commitment-field">
+        <div class="commitment-label">Minha versão de 2 minutos</div>
+        <input type="text" class="commitment-input" placeholder="No mínimo vou...">
+      </div>
+
+      <div class="commitment-field">
+        <div class="commitment-label">Meu gatilho (quando/onde)</div>
+        <input type="text" class="commitment-input" placeholder="Depois de... / Todo dia às...">
+      </div>
+
+      <div class="commitment-field">
+        <div class="commitment-label">Minha recompensa imediata</div>
+        <input type="text" class="commitment-input" placeholder="Logo após o hábito, vou...">
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="commitment-field">
+          <div class="commitment-label">Data de início</div>
+          <input type="text" class="commitment-input" placeholder="___/___/______">
+        </div>
+        <div class="commitment-field">
+          <div class="commitment-label">Data de conclusão (dia 66)</div>
+          <input type="text" class="commitment-input" placeholder="___/___/______">
+        </div>
+      </div>
+
+      <div class="commitment-field">
+        <div class="commitment-label">Assinatura</div>
+        <input type="text" class="commitment-input" placeholder="Seu nome aqui">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCLUSION -->
+<div id="conclusao" class="conclusion">
+  <div class="container">
+    <div class="conclusion-icon">🏆</div>
+    <h2 class="conclusion-title">Você Já Começou</h2>
+    <p class="conclusion-text">Se você chegou até aqui, já está à frente de 90% das pessoas que compram livros de autodesenvolvimento e não terminam. Mas ler não muda nada. A ação muda.</p>
+
+    <div class="summary-list">
+      <div class="summary-list-title">O que você aprendeu</div>
+      <div class="summary-item">Disciplina não depende de força de vontade — depende de sistemas</div>
+      <div class="summary-item">O loop do hábito (gatilho → rotina → recompensa) é a estrutura de todo comportamento</div>
+      <div class="summary-item">A regra dos 2 minutos elimina a resistência do começo</div>
+      <div class="summary-item">Sua identidade é mais poderosa que seus objetivos</div>
+      <div class="summary-item">O ambiente molda o comportamento mais do que a intenção</div>
+      <div class="summary-item">Consistência bate perfeição — nunca duas falhas seguidas</div>
+      <div class="summary-item">Empilhamento de hábitos usa âncoras automáticas a seu favor</div>
+      <div class="summary-item">Recompensas imediatas treinam o cérebro</div>
+      <div class="summary-item">São 66 dias, não 21</div>
+    </div>
+
+    <div class="cta-block">
+      <div class="cta-title">Sua única tarefa agora</div>
+      <p class="cta-text">Escolha UM hábito. Defina o gatilho. Torne-o ridiculamente pequeno. Comece hoje — não amanhã.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="container">
+    <div class="footer-logo">L</div>
+    <div class="footer-brand">Life OS</div>
+    <a class="footer-url" href="#">agenciacriativa.shop</a>
+    <p class="footer-copy">Este ebook faz parte da Coleção de Autoajuda do Life OS.<br>Acesse sua área de membros para todos os materiais.</p>
+  </div>
+</div>
+
+</body>
+</html>

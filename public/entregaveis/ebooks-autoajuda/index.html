@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Coleção 5 Ebooks — Life OS</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8B5CF6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ebooks Life OS">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap');
+  :root {
+    --accent: #8B5CF6;
+    --accent-dark: #5B21B6;
+    --accent-light: #C4B5FD;
+    --accent-muted: rgba(139,92,246,0.12);
+    --bg: #0F0820;
+    --bg-card: #18102A;
+    --bg-card2: #221634;
+    --border: rgba(139,92,246,0.18);
+    --text: #EDE9F8;
+    --text-muted: #9B8BB8;
+    --text-dim: #5C4D75;
+    --white: #F7F4FF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(139,92,246,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(91,33,182,0.08) 0%, transparent 60%),
+      var(--bg);
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+  }
+  .header { text-align: center; margin-bottom: 56px; }
+  .icon-big { font-size: 56px; margin-bottom: 20px; }
+  .badge {
+    display: inline-block;
+    background: var(--accent-muted);
+    border: 1px solid var(--border);
+    color: var(--accent-light);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    padding: 8px 20px; border-radius: 40px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 900; line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  h1 .accent { color: var(--accent); }
+  .sub {
+    font-size: clamp(14px, 2vw, 17px);
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto 32px;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .ebooks {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) {
+    .ebooks { grid-template-columns: 1fr 1fr; }
+  }
+  .ebook-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-decoration: none;
+    color: inherit;
+    display: flex; flex-direction: column;
+    transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .ebook-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    background: var(--bg-card2);
+  }
+  .ebook-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px; font-weight: 900;
+    color: var(--accent);
+    line-height: 1; margin-bottom: 16px;
+    opacity: 0.6;
+  }
+  .ebook-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--white);
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .ebook-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+  .ebook-cta {
+    margin-top: 18px;
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700;
+    color: var(--accent-light);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+  footer a { color: var(--accent-light); text-decoration: none; }
+
+  .pwa-install-fab {
+    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff; border: none; padding: 12px 20px; border-radius: 50px;
+    font-weight: 700; font-size: 13px; font-family: 'Inter', sans-serif;
+    cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    display: flex; align-items: center; gap: 6px; letter-spacing: 0.3px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .pwa-install-fab:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <div class="icon-big">📚</div>
+    <div class="badge">Life OS · Coleção</div>
+    <h1>5 Ebooks de <span class="accent">Autoajuda</span></h1>
+    <p class="sub">Toque em qualquer ebook para começar a leitura. Tudo offline depois de aberto uma vez.</p>
+  </div>
+
+  <div class="ebooks">
+    <a href="01-a-arte-da-disciplina.html" class="ebook-card">
+      <div class="ebook-num">01</div>
+      <div class="ebook-title">A Arte da Disciplina</div>
+      <div class="ebook-desc">Como construir hábitos sólidos e parar de depender de motivação. O sistema que separa quem realiza de quem só planeja.</div>
+      <div class="ebook-cta">Ler agora →</div>
+    </a>
+
+    <a href="02-mentalidade-de-crescimento.html" class="ebook-card">
+      <div class="ebook-num">02</div>
+      <div class="ebook-title">Mentalidade de Crescimento</div>
+      <div class="ebook-desc">A diferença entre quem trava no fracasso e quem usa a falha como combustível. Reprograme sua relação com erros e desafios.</div>
+      <div class="ebook-cta">Ler agora →</div>
+    </a>
+
+    <a href="03-foco-total.html" class="ebook-card">
+      <div class="ebook-num">03</div>
+      <div class="ebook-title">Foco Total</div>
+      <div class="ebook-desc">Como recuperar sua atenção em uma era de distração permanente. Métodos práticos para deep work no mundo real.</div>
+      <div class="ebook-cta">Ler agora →</div>
+    </a>
+
+    <a href="04-o-poder-do-nao.html" class="ebook-card">
+      <div class="ebook-num">04</div>
+      <div class="ebook-title">O Poder do Não</div>
+      <div class="ebook-desc">Por que dizer não é a habilidade mais lucrativa que você pode desenvolver. Liberdade através da subtração.</div>
+      <div class="ebook-cta">Ler agora →</div>
+    </a>
+
+    <a href="05-realizacao-em-90-dias.html" class="ebook-card">
+      <div class="ebook-num">05</div>
+      <div class="ebook-title">Realização em 90 Dias</div>
+      <div class="ebook-desc">O método para tirar projetos do papel em 12 semanas. Sistema completo de execução com revisões e métricas.</div>
+      <div class="ebook-cta">Ler agora →</div>
+    </a>
+  </div>
+
+  <footer>
+    <p>Coleção Life OS — Agência Criativa</p>
+    <p style="margin-top: 6px;"><a href="https://agenciacriativa.shop">agenciacriativa.shop</a></p>
+  </footer>
+</div>
+
+<button id="btn-install-pwa" onclick="installPWA()" class="pwa-install-fab" style="display:none">
+  <span style="font-size:16px">📲</span> Instalar app
+</button>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
+  let __pwaPrompt = null;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); __pwaPrompt = e;
+    const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
+  });
+  function installPWA() {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    if (isStandalone) { alert('App já instalado!'); return; }
+    if (isIOS) {
+      alert('Para instalar no iPhone:\n\n1. Toque no botão Compartilhar (quadrado com seta para cima)\n2. Role e toque em "Adicionar à Tela de Início"\n3. Toque em "Adicionar"');
+      return;
+    }
+    if (__pwaPrompt) { __pwaPrompt.prompt(); __pwaPrompt.userChoice.then(() => __pwaPrompt = null); }
+    else { alert('Para instalar no Android: menu (3 pontos) → "Instalar app"'); }
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    if (isIOS && !isStandalone) {
+      const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
+    }
+  });
+</script>
+</body>
+</html>
