@@ -4,7 +4,20 @@ import CountdownTimer from '@/components/sales/CountdownTimer'
 import SocialProofToast from '@/components/sales/SocialProofToast'
 import CartButton from '@/components/sales/CartButton'
 import CartDrawer from '@/components/sales/CartDrawer'
+import EscassezBanner from '@/components/sales/EscassezBanner'
+import PageMeta from '@/components/PageMeta'
 import { useCart } from '@/contexts/CartContext'
+
+const SITE = 'https://www.agenciacriativa.shop'
+
+const CATALOGO_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Catálogo — Agência Criativa',
+  description: 'Todos os produtos digitais da Agência Criativa: planilhas, ebooks, templates e a assinatura premium do Life OS.',
+  url: `${SITE}/catalogo`,
+  inLanguage: 'pt-BR',
+}
 
 export default function Catalogo() {
   const navigate = useNavigate()
@@ -14,9 +27,16 @@ export default function Catalogo() {
 
   return (
     <div className="min-h-screen bg-gray-950">
+      <PageMeta
+        title="Catálogo — 6 produtos digitais + Kit + Life OS | Agência Criativa"
+        description="Receitas Low Carb, Planilhas de Treino, Templates Notion, Ebooks de Autoajuda, Planilhas Financeiras e Receitas Indígenas. Avulso (R$27,90), Kit (R$47) ou Life OS (R$59,90). Garantia 7 dias."
+        canonical={`${SITE}/catalogo`}
+        schema={CATALOGO_SCHEMA}
+      />
       <SocialProofToast />
       <CartButton />
       <CartDrawer />
+      <EscassezBanner />
       <CountdownTimer minutes={15} />
 
       {/* Header */}

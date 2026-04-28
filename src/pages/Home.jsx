@@ -8,6 +8,7 @@ import CartDrawer from '@/components/sales/CartDrawer'
 import SocialProofToast from '@/components/sales/SocialProofToast'
 import EscassezBanner from '@/components/sales/EscassezBanner'
 import GarantiaBadge from '@/components/sales/GarantiaBadge'
+import LeadMagnetPopup from '@/components/sales/LeadMagnetPopup'
 import PageMeta from '@/components/PageMeta'
 import { useCart } from '@/contexts/CartContext'
 
@@ -116,6 +117,7 @@ export default function Home() {
       <SocialProofToast />
       <CartButton />
       <CartDrawer />
+      <LeadMagnetPopup />
       <EscassezBanner />
 
       {/* Nav */}

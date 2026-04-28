@@ -7,7 +7,11 @@ import OrderBump from '@/components/sales/OrderBump'
 import SocialProofToast from '@/components/sales/SocialProofToast'
 import CartButton from '@/components/sales/CartButton'
 import CartDrawer from '@/components/sales/CartDrawer'
+import EscassezBanner from '@/components/sales/EscassezBanner'
+import PageMeta from '@/components/PageMeta'
 import { useCart } from '@/contexts/CartContext'
+
+const SITE = 'https://www.agenciacriativa.shop'
 
 function Stars({ n = 5 }) {
   return <span className="text-yellow-400">{'★'.repeat(n)}{'☆'.repeat(5 - n)}</span>
@@ -46,12 +50,41 @@ export default function SalesPage() {
     ? `${product.checkoutUrl}&bump=kit`
     : product.checkoutUrl
 
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.title,
+    description: product.subtitle,
+    brand: { '@type': 'Brand', name: 'Agência Criativa' },
+    offers: {
+      '@type': 'Offer',
+      url: `${SITE}/p/${product.slug}`,
+      priceCurrency: 'BRL',
+      price: product.price.toFixed(2),
+      availability: 'https://schema.org/InStock',
+      priceValidUntil: '2026-12-31',
+    },
+    aggregateRating: product.testimonials?.length ? {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: product.testimonials.length,
+    } : undefined,
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
+      <PageMeta
+        title={`${product.title} — R$ ${product.price.toFixed(2).replace('.', ',')} | Agência Criativa`}
+        description={product.subtitle}
+        canonical={`${SITE}/p/${product.slug}`}
+        ogType="product"
+        schema={productSchema}
+      />
       <ExitIntentPopup product={product} />
       <SocialProofToast />
       <CartButton />
       <CartDrawer />
+      <EscassezBanner />
 
       {/* Top countdown */}
       <CountdownTimer minutes={15} />
