@@ -4,6 +4,11 @@ import {
   resolveProductsFromKiwify,
   extractKiwifyProductId,
   extractKiwifyProductName,
+  extractKiwifyEmail,
+  extractKiwifyName,
+  extractKiwifyStatus,
+  extractKiwifyOrderId,
+  unwrapKiwifyBody,
 } from './_kiwify-products.js'
 
 // Desabilita bodyParser do Vercel — precisamos do raw body pra calcular o HMAC
@@ -18,6 +23,7 @@ const supabase = createClient(
 
 const GRANT_EVENTS  = ['paid', 'approved', 'active']
 const REVOKE_EVENTS = ['refunded', 'chargedback', 'cancelled']
+const TEST_EMAILS   = ['test@kiwify.com.br', 'johndoe@example.com']
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -37,12 +43,11 @@ export default async function handler(req, res) {
   // O Kiwify envia: ?signature=hmac_sha1_hex(rawBody, TOKEN)
   // O TOKEN é exibido na página de Webhooks no painel Kiwify
   // Se a URL já tinha ?signature=X, Kiwify anexa &signature=hmac → vira array.
-  // Pega o que parece HMAC válido (40 chars hex) ou o último.
   let signature = req.query.signature
   if (Array.isArray(signature)) {
     signature = signature.find((s) => /^[a-f0-9]{40}$/i.test(s)) || signature[signature.length - 1]
   }
-  const token = process.env.KIWIFY_TOKEN || process.env.KIWIFY_SECRET // fallback
+  const token = process.env.KIWIFY_TOKEN || process.env.KIWIFY_SECRET
 
   if (!token) {
     console.error('[kiwify] KIWIFY_TOKEN não configurado nas env vars')
@@ -53,8 +58,9 @@ export default async function handler(req, res) {
 
   if (signature !== expected) {
     console.warn('[kiwify] HMAC inválido', {
-      received: signature,
+      received:    signature,
       expectedLen: expected.length,
+      bodyLen:     rawBody.length,
     })
     return res.status(401).json({ error: 'Unauthorized' })
   }
@@ -67,21 +73,11 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid JSON' })
   }
 
-  const status   = body?.order_status
-  const email    = body?.Customer?.email?.toLowerCase().trim()
-                  || body?.customer?.email?.toLowerCase().trim()
-  const name     = body?.Customer?.full_name
-                  || body?.Customer?.name
-                  || body?.customer?.name
-                  || 'Membro'
-  const orderId  = body?.order_id || body?.Order?.order_id || null
-
-  // Test webhook do Kiwify usa email "test@kiwify.com.br" — responde 200 sem fazer nada
-  if (!email || email === 'test@kiwify.com.br') {
-    console.log('[kiwify] Test webhook recebido — assinatura OK')
-    return res.status(200).json({ ok: true, action: 'test_received' })
-  }
-
+  // 4. Extrai dados do payload (suporta tanto envelope { order: {...} } quanto root)
+  const status            = extractKiwifyStatus(body)
+  const email             = extractKiwifyEmail(body)?.toLowerCase().trim()
+  const name              = extractKiwifyName(body)
+  const orderId           = extractKiwifyOrderId(body)
   const kiwifyProductId   = extractKiwifyProductId(body)
   const kiwifyProductName = extractKiwifyProductName(body)
   const slugsToGrant      = resolveProductsFromKiwify(kiwifyProductId, kiwifyProductName)
@@ -94,6 +90,12 @@ export default async function handler(req, res) {
     slugs: slugsToGrant,
     orderId,
   })
+
+  // Test webhook do Kiwify usa emails de teste — responde 200 sem fazer nada
+  if (!email || TEST_EMAILS.includes(email)) {
+    console.log('[kiwify] Test webhook ou e-mail ausente — assinatura OK, ignorando')
+    return res.status(200).json({ ok: true, action: 'test_received' })
+  }
 
   if (slugsToGrant.length === 0 && GRANT_EVENTS.includes(status)) {
     console.warn('[kiwify] PAYLOAD NÃO MAPEADO — payload completo:', JSON.stringify(body, null, 2))
