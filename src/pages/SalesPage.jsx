@@ -4,6 +4,10 @@ import { getProduct, getRelatedProducts, KIT_COMPLETO } from '@/lib/sales-data'
 import CountdownTimer from '@/components/sales/CountdownTimer'
 import ExitIntentPopup from '@/components/sales/ExitIntentPopup'
 import OrderBump from '@/components/sales/OrderBump'
+import SocialProofToast from '@/components/sales/SocialProofToast'
+import CartButton from '@/components/sales/CartButton'
+import CartDrawer from '@/components/sales/CartDrawer'
+import { useCart } from '@/contexts/CartContext'
 
 function Stars({ n = 5 }) {
   return <span className="text-yellow-400">{'★'.repeat(n)}{'☆'.repeat(5 - n)}</span>
@@ -15,6 +19,9 @@ export default function SalesPage() {
   const product = getProduct(slug)
   const related = getRelatedProducts(slug)
   const [bumpChecked, setBumpChecked] = useState(false)
+  const { addItem, hasItem, items } = useCart()
+  const inCart = product ? hasItem(product.slug) : false
+  const cartFull = items.length >= 3
 
   useEffect(() => { window.scrollTo(0, 0) }, [slug])
 
@@ -42,6 +49,9 @@ export default function SalesPage() {
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
       <ExitIntentPopup product={product} />
+      <SocialProofToast />
+      <CartButton />
+      <CartDrawer />
 
       {/* Top countdown */}
       <CountdownTimer minutes={15} />
@@ -75,8 +85,17 @@ export default function SalesPage() {
             href={checkoutUrl}
             className="block w-full bg-white text-gray-900 font-black py-4 rounded-2xl text-lg shadow-lg active:scale-95 transition-transform"
           >
-            Quero garantir agora →
+            Comprar agora →
           </a>
+          <button
+            onClick={() => addItem(product)}
+            disabled={inCart || cartFull}
+            className={`mt-3 w-full border-2 border-white/40 text-white font-bold py-3 rounded-2xl text-sm active:scale-95 transition-all ${
+              inCart ? 'opacity-60 cursor-default' : cartFull ? 'opacity-40 cursor-not-allowed' : 'hover:bg-white/10'
+            }`}
+          >
+            {inCart ? '✓ Adicionado ao carrinho' : cartFull ? 'Carrinho cheio (máx. 3)' : '🛒 Adicionar ao carrinho'}
+          </button>
           <p className="text-xs text-white/70 mt-3">🔒 Compra 100% segura · Acesso imediato por e-mail</p>
         </div>
       </section>
@@ -245,20 +264,33 @@ export default function SalesPage() {
 
       {/* Sticky bottom CTA */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 shadow-xl z-40">
-        <div className="max-w-lg mx-auto flex items-center gap-3">
-          <div className="flex-1">
+        <div className="max-w-lg mx-auto flex items-center gap-2">
+          <div className="flex-shrink-0">
             <p className="text-xs text-gray-500 line-through">R$ {product.originalPrice.toFixed(2).replace('.', ',')}</p>
-            <p className="font-black text-gray-900">
+            <p className="font-black text-gray-900 text-sm">
               R$ {bumpChecked
                 ? (product.price + KIT_COMPLETO.bumpPrice).toFixed(2).replace('.', ',')
                 : product.price.toFixed(2).replace('.', ',')}
             </p>
           </div>
+          <button
+            onClick={() => addItem(product)}
+            disabled={inCart || cartFull}
+            className={`flex-1 border-2 font-bold py-3 rounded-xl text-center text-xs transition-all ${
+              inCart
+                ? 'border-green-400 text-green-600 bg-green-50'
+                : cartFull
+                ? 'border-gray-200 text-gray-400'
+                : 'border-gray-300 text-gray-700 active:scale-95'
+            }`}
+          >
+            {inCart ? '✓ No carrinho' : '🛒 Carrinho'}
+          </button>
           <a
             href={checkoutUrl}
             className={`flex-1 bg-gradient-to-r ${product.color} text-white font-black py-3 rounded-xl text-center text-sm active:scale-95 transition-transform`}
           >
-            Comprar Agora →
+            Comprar →
           </a>
         </div>
       </div>

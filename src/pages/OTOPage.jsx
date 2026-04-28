@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { LIFE_OS } from '@/lib/sales-data'
+import SocialProofToast from '@/components/sales/SocialProofToast'
 
 function Stars({ n = 5 }) {
   return <span className="text-yellow-400">{'★'.repeat(n)}</span>
@@ -12,6 +13,7 @@ export default function OTOPage() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
+      <SocialProofToast />
       {/* Urgency bar */}
       <div className="bg-yellow-500 text-gray-900 text-center py-2 px-4">
         <p className="text-sm font-black">⚡ OFERTA ÚNICA — Aparece apenas 1 vez. Não vai aparecer de novo.</p>

@@ -1,13 +1,22 @@
 import { useNavigate } from 'react-router-dom'
 import { PRODUCTS } from '@/lib/sales-data'
 import CountdownTimer from '@/components/sales/CountdownTimer'
+import SocialProofToast from '@/components/sales/SocialProofToast'
+import CartButton from '@/components/sales/CartButton'
+import CartDrawer from '@/components/sales/CartDrawer'
+import { useCart } from '@/contexts/CartContext'
 
 export default function Catalogo() {
   const navigate = useNavigate()
   const products = Object.values(PRODUCTS)
+  const { addItem, hasItem, items } = useCart()
+  const cartFull = items.length >= 3
 
   return (
     <div className="min-h-screen bg-gray-950">
+      <SocialProofToast />
+      <CartButton />
+      <CartDrawer />
       <CountdownTimer minutes={15} />
 
       {/* Header */}
@@ -19,35 +28,61 @@ export default function Catalogo() {
 
       {/* Grid */}
       <div className="px-4 pb-10 max-w-lg mx-auto space-y-4">
-        {products.map(p => (
-          <div
-            key={p.slug}
-            onClick={() => navigate(`/p/${p.slug}`)}
-            className={`bg-gradient-to-br ${p.color} rounded-2xl p-5 cursor-pointer active:scale-95 transition-transform shadow-lg`}
-          >
-            <div className="flex items-start gap-4">
-              <span className="text-5xl">{p.emoji}</span>
-              <div className="flex-1">
-                {p.badge && (
-                  <span className="inline-block bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2 uppercase tracking-wide">
-                    {p.badge}
-                  </span>
-                )}
-                <h2 className="text-white font-black text-base leading-tight mb-1">{p.title}</h2>
-                <p className="text-white/75 text-xs leading-relaxed line-clamp-2">{p.subtitle}</p>
-                <div className="flex items-center justify-between mt-3">
-                  <div>
-                    <span className="text-white/50 text-xs line-through">R$ {p.originalPrice.toFixed(2).replace('.', ',')}</span>
-                    <span className="text-white font-black text-lg ml-2">R$ {p.price.toFixed(2).replace('.', ',')}</span>
+        {products.map(p => {
+          const inCart = hasItem(p.slug)
+          return (
+            <div
+              key={p.slug}
+              className={`bg-gradient-to-br ${p.color} rounded-2xl p-5 shadow-lg`}
+            >
+              <div
+                className="flex items-start gap-4 cursor-pointer"
+                onClick={() => navigate(`/p/${p.slug}`)}
+              >
+                <span className="text-5xl">{p.emoji}</span>
+                <div className="flex-1">
+                  {p.badge && (
+                    <span className="inline-block bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2 uppercase tracking-wide">
+                      {p.badge}
+                    </span>
+                  )}
+                  <h2 className="text-white font-black text-base leading-tight mb-1">{p.title}</h2>
+                  <p className="text-white/75 text-xs leading-relaxed line-clamp-2">{p.subtitle}</p>
+                  <div className="flex items-center justify-between mt-3">
+                    <div>
+                      <span className="text-white/50 text-xs line-through">R$ {p.originalPrice.toFixed(2).replace('.', ',')}</span>
+                      <span className="text-white font-black text-lg ml-2">R$ {p.price.toFixed(2).replace('.', ',')}</span>
+                    </div>
+                    <span className="bg-white text-gray-900 font-black text-sm px-4 py-1.5 rounded-xl">
+                      Ver →
+                    </span>
                   </div>
-                  <span className="bg-white text-gray-900 font-black text-sm px-4 py-1.5 rounded-xl">
-                    Comprar →
-                  </span>
                 </div>
               </div>
+              <div className="flex gap-2 mt-3">
+                <a
+                  href={p.checkoutUrl}
+                  className="flex-1 bg-white/20 border border-white/40 text-white font-bold py-2.5 rounded-xl text-center text-sm hover:bg-white/30 transition"
+                >
+                  Comprar agora
+                </a>
+                <button
+                  onClick={() => addItem(p)}
+                  disabled={inCart || cartFull}
+                  className={`flex-1 font-bold py-2.5 rounded-xl text-sm transition active:scale-95 ${
+                    inCart
+                      ? 'bg-white/10 text-white/60 cursor-default'
+                      : cartFull
+                      ? 'bg-white/10 text-white/40 cursor-not-allowed'
+                      : 'bg-white text-gray-900 hover:bg-white/90'
+                  }`}
+                >
+                  {inCart ? '✓ No carrinho' : '🛒 Carrinho'}
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
 
       {/* Kit completo CTA */}

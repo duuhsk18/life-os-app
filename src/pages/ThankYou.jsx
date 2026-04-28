@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { getProduct, PRODUCTS } from '@/lib/sales-data'
+import SocialProofToast from '@/components/sales/SocialProofToast'
 
 export default function ThankYou() {
   const navigate = useNavigate()
@@ -10,6 +11,7 @@ export default function ThankYou() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SocialProofToast />
       {/* Header */}
       <div className="bg-gradient-to-br from-green-600 to-emerald-500 text-white px-4 pt-12 pb-10 text-center">
         <div className="text-6xl mb-4">🎉</div>
