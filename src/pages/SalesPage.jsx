@@ -75,10 +75,16 @@ export default function SalesPage() {
             <p className="text-white/70 text-sm line-through mb-1">
               De R$ {product.originalPrice.toFixed(2).replace('.', ',')}
             </p>
+            <p className="text-white/80 text-sm mb-1">ou à vista por</p>
             <p className="text-5xl font-black text-white">
               R$ {product.price.toFixed(2).replace('.', ',')}
             </p>
-            <p className="text-white/80 text-sm mt-1">pagamento único — acesso vitalício</p>
+            {product.installment && (
+              <p className="text-yellow-300 font-black text-lg mt-1">
+                ou {product.installment.times}x de R$ {product.installment.value.toFixed(2).replace('.', ',')}
+              </p>
+            )}
+            <p className="text-white/70 text-xs mt-1">sem juros · acesso vitalício</p>
           </div>
 
           <a
@@ -188,15 +194,26 @@ export default function SalesPage() {
           <p className="text-white/80 text-sm mb-6">
             Mais de 1.200 pessoas já compraram e estão {product.emoji} aproveitando
           </p>
-          <div className="bg-white/15 rounded-xl p-3 mb-5 text-white text-center">
-            <p className="font-black text-2xl">
-              {bumpChecked
-                ? `R$ ${(product.price + KIT_COMPLETO.bumpPrice).toFixed(2).replace('.', ',')}`
-                : `R$ ${product.price.toFixed(2).replace('.', ',')}`}
-            </p>
-            <p className="text-xs text-white/70">
-              {bumpChecked ? `Produto + Kit Completo` : 'pagamento único'}
-            </p>
+          <div className="bg-white/15 rounded-xl p-4 mb-5 text-white text-center">
+            {bumpChecked ? (
+              <>
+                <p className="font-black text-3xl">R$ {(product.price + KIT_COMPLETO.bumpPrice).toFixed(2).replace('.', ',')}</p>
+                <p className="text-yellow-300 font-bold text-base mt-0.5">
+                  ou {KIT_COMPLETO.bumpInstallment.times}x de R$ {((product.installment?.value || 0) + KIT_COMPLETO.bumpInstallment.value).toFixed(2).replace('.', ',')}
+                </p>
+                <p className="text-xs text-white/60 mt-0.5">Produto + Kit Completo · sem juros</p>
+              </>
+            ) : (
+              <>
+                <p className="font-black text-3xl">R$ {product.price.toFixed(2).replace('.', ',')}</p>
+                {product.installment && (
+                  <p className="text-yellow-300 font-bold text-base mt-0.5">
+                    ou {product.installment.times}x de R$ {product.installment.value.toFixed(2).replace('.', ',')}
+                  </p>
+                )}
+                <p className="text-xs text-white/60 mt-0.5">sem juros · acesso vitalício</p>
+              </>
+            )}
           </div>
           <a
             href={checkoutUrl}
@@ -267,11 +284,16 @@ export default function SalesPage() {
         <div className="max-w-lg mx-auto flex items-center gap-2">
           <div className="flex-shrink-0">
             <p className="text-xs text-gray-500 line-through">R$ {product.originalPrice.toFixed(2).replace('.', ',')}</p>
-            <p className="font-black text-gray-900 text-sm">
+            <p className="font-black text-gray-900 text-sm leading-tight">
               R$ {bumpChecked
                 ? (product.price + KIT_COMPLETO.bumpPrice).toFixed(2).replace('.', ',')
                 : product.price.toFixed(2).replace('.', ',')}
             </p>
+            {product.installment && (
+              <p className="text-green-600 text-xs font-bold leading-tight">
+                {product.installment.times}x R$ {product.installment.value.toFixed(2).replace('.', ',')}
+              </p>
+            )}
           </div>
           <button
             onClick={() => addItem(product)}

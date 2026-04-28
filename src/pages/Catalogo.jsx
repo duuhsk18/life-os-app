@@ -50,8 +50,13 @@ export default function Catalogo() {
                   <p className="text-white/75 text-xs leading-relaxed line-clamp-2">{p.subtitle}</p>
                   <div className="flex items-center justify-between mt-3">
                     <div>
-                      <span className="text-white/50 text-xs line-through">R$ {p.originalPrice.toFixed(2).replace('.', ',')}</span>
-                      <span className="text-white font-black text-lg ml-2">R$ {p.price.toFixed(2).replace('.', ',')}</span>
+                      <span className="text-white/50 text-xs line-through block">R$ {p.originalPrice.toFixed(2).replace('.', ',')}</span>
+                      <span className="text-white font-black text-xl">R$ {p.price.toFixed(2).replace('.', ',')}</span>
+                      {p.installment && (
+                        <span className="text-yellow-300 text-xs font-bold block">
+                          {p.installment.times}x R$ {p.installment.value.toFixed(2).replace('.', ',')}
+                        </span>
+                      )}
                     </div>
                     <span className="bg-white text-gray-900 font-black text-sm px-4 py-1.5 rounded-xl">
                       Ver →

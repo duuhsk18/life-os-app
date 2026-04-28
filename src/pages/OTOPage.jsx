@@ -50,10 +50,15 @@ export default function OTOPage() {
         <div className="bg-gradient-to-br from-yellow-600 to-orange-600 rounded-2xl p-6 mb-6 text-center">
           <p className="text-white/80 text-sm mb-1">Oferta exclusiva para quem acabou de comprar</p>
           <p className="text-white/60 line-through text-sm">De R$ {LIFE_OS.originalPrice.toFixed(2).replace('.', ',')}/mês</p>
-          <p className="text-5xl font-black text-white my-2">
+          <p className="text-5xl font-black text-white mt-2">
             R$ {LIFE_OS.price.toFixed(2).replace('.', ',')}
           </p>
-          <p className="text-white/80 text-sm">no 1º mês — depois R$ {LIFE_OS.originalPrice.toFixed(2).replace('.', ',')}/mês</p>
+          {LIFE_OS.installment && (
+            <p className="text-white font-black text-xl mt-1">
+              ou {LIFE_OS.installment.times}x de R$ {LIFE_OS.installment.value.toFixed(2).replace('.', ',')} sem juros
+            </p>
+          )}
+          <p className="text-white/80 text-sm mt-2">no 1º mês — depois R$ {LIFE_OS.monthlyAfter?.toFixed(2).replace('.', ',')}/mês</p>
         </div>
 
         {/* Testimonials */}
@@ -76,11 +81,16 @@ export default function OTOPage() {
         {/* CTA */}
         <a
           href={LIFE_OS.checkoutUrl}
-          className="block w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-gray-900 font-black py-5 rounded-2xl text-xl text-center shadow-2xl active:scale-95 transition-transform mb-4"
+          className="block w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-gray-900 font-black py-5 rounded-2xl text-xl text-center shadow-2xl active:scale-95 transition-transform mb-2"
         >
-          Quero o Life OS por R$ {LIFE_OS.price.toFixed(2).replace('.', ',')} →
+          Quero o Life OS agora →
         </a>
 
+        {LIFE_OS.installment && (
+          <p className="text-center text-gray-400 text-sm mb-3">
+            ou {LIFE_OS.installment.times}x de R$ {LIFE_OS.installment.value.toFixed(2).replace('.', ',')} sem juros
+          </p>
+        )}
         <button
           onClick={() => navigate('/obrigado')}
           className="block w-full text-center text-gray-500 text-sm underline py-2"

@@ -20,12 +20,17 @@ export default function OrderBump({ checked, onChange }) {
             {KIT_COMPLETO.title}
           </p>
           <p className="text-sm text-gray-600 mt-1">{KIT_COMPLETO.description}</p>
-          <div className="flex items-center gap-2 mt-2">
+          <div className="flex items-center gap-2 mt-2 flex-wrap">
             <span className="text-gray-400 line-through text-sm">R$ {KIT_COMPLETO.totalValue.toFixed(2).replace('.', ',')}</span>
             <span className="text-green-600 font-black text-lg">
               + R$ {KIT_COMPLETO.bumpPrice.toFixed(2).replace('.', ',')}
             </span>
           </div>
+          {KIT_COMPLETO.bumpInstallment && (
+            <p className="text-orange-600 font-bold text-sm mt-1">
+              ou {KIT_COMPLETO.bumpInstallment.times}x de R$ {KIT_COMPLETO.bumpInstallment.value.toFixed(2).replace('.', ',')} sem juros
+            </p>
+          )}
           <ul className="mt-2 space-y-1">
             {KIT_COMPLETO.items.slice(0, 4).map((item, i) => (
               <li key={i} className="text-xs text-gray-600 flex items-center gap-1">
