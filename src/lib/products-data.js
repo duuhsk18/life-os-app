@@ -20,7 +20,7 @@ export const PRODUCTS = {
     monthly_after: 79.90,
     first_month_label: 'no 1º mês',
     discount_percent: 53,
-    checkout_url: 'https://pay.kiwify.com.br/TROCAR',
+    checkout_url: 'https://pay.kiwify.com.br/0K0Js0r',
     is_subscription: true,
     billing_period: 'mês',
     problem_title: 'Você começa, desanima e nunca sustenta a rotina',

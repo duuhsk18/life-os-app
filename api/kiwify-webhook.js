@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import {
   resolveProductsFromKiwify,
   extractKiwifyProductId,
+  extractKiwifyProductName,
 } from './_kiwify-products.js'
 
 const supabase = createClient(
@@ -36,16 +37,23 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'E-mail não encontrado no payload' })
   }
 
-  const kiwifyProductId = extractKiwifyProductId(body)
-  const slugsToGrant    = resolveProductsFromKiwify(kiwifyProductId)
+  const kiwifyProductId   = extractKiwifyProductId(body)
+  const kiwifyProductName = extractKiwifyProductName(body)
+  const slugsToGrant      = resolveProductsFromKiwify(kiwifyProductId, kiwifyProductName)
 
   console.log('[kiwify]', {
     status,
     email,
     kiwifyProductId,
+    kiwifyProductName,
     slugs: slugsToGrant,
     orderId,
   })
+
+  // Loga o payload completo se não conseguiu mapear (para debug do primeiro webhook real)
+  if (slugsToGrant.length === 0 && GRANT_EVENTS.includes(status)) {
+    console.warn('[kiwify] PAYLOAD NÃO MAPEADO — copie e me envie:', JSON.stringify(body, null, 2))
+  }
 
   // ===== GRANT (compra aprovada) =====
   if (GRANT_EVENTS.includes(status)) {

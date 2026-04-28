@@ -1,5 +1,5 @@
-// Checkout URLs — troque pelos links reais do Hotmart/Kiwify
-const BASE_CHECKOUT = 'https://pay.hotmart.com/SEULINK'
+// Checkout URLs reais do Kiwify (slugs do final da URL pay.kiwify.com.br/...)
+const KIWIFY = (slug) => `https://pay.kiwify.com.br/${slug}`
 
 export const PRODUCTS = {
   'receitas-low-carb': {
@@ -10,7 +10,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: `${BASE_CHECKOUT}?off=lowcarb`,
+    checkoutUrl: KIWIFY('t6uEnAV'),
     color: 'from-green-600 to-emerald-500',
     badge: 'MAIS VENDIDO',
     category: 'alimentacao',
@@ -48,7 +48,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: `${BASE_CHECKOUT}?off=treino`,
+    checkoutUrl: KIWIFY('SVIdTH1'),
     color: 'from-blue-600 to-indigo-500',
     badge: 'MAIS COMPLETO',
     category: 'treinos',
@@ -86,7 +86,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: `${BASE_CHECKOUT}?off=indigenas`,
+    checkoutUrl: KIWIFY('RQ2dquE'),
     color: 'from-amber-600 to-orange-500',
     badge: 'EXCLUSIVO',
     category: 'indigenas',
@@ -124,7 +124,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: `${BASE_CHECKOUT}?off=notion`,
+    checkoutUrl: KIWIFY('rOhF5tb'),
     color: 'from-purple-600 to-violet-500',
     badge: 'PRODUTIVIDADE',
     category: 'notion',
@@ -162,7 +162,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: `${BASE_CHECKOUT}?off=autoajuda`,
+    checkoutUrl: KIWIFY('BRmsMyl'),
     color: 'from-pink-600 to-rose-500',
     badge: 'TRANSFORMADOR',
     category: 'autoajuda',
@@ -200,7 +200,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: `${BASE_CHECKOUT}?off=financas`,
+    checkoutUrl: KIWIFY('vQr2l3A'),
     color: 'from-yellow-600 to-amber-500',
     badge: 'ESSENCIAL',
     category: 'financas',
@@ -260,7 +260,7 @@ export const LIFE_OS = {
   monthlyAfter: 79.90,
   originalPrice: 127.00,
   description: 'Tudo em um só lugar: o sistema para executar (hábitos, treinos, journal, finanças) + a biblioteca completa com os 6 produtos + materiais novos todo mês. Cancele quando quiser.',
-  checkoutUrl: `${BASE_CHECKOUT}?off=lifeos-oto`,
+  checkoutUrl: KIWIFY('0K0Js0r'),
   features: [
     'Acesso completo à biblioteca dos 6 produtos (Receitas Low Carb, Treinos, Indígenas, Templates, Ebooks, Financeiras)',
     'Novos materiais adicionados todo mês — sempre evoluindo',
