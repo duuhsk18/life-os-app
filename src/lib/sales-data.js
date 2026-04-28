@@ -1,5 +1,16 @@
-// Checkout URLs reais do Kiwify (slugs do final da URL pay.kiwify.com.br/...)
-const KIWIFY = (slug) => `https://pay.kiwify.com.br/${slug}`
+// Stripe Payment Links — gerados via scripts/stripe-bootstrap.js
+// Pra trocar de test→live: rodar bootstrap com live key e atualizar URLs aqui.
+const STRIPE_LINKS = {
+  'receitas-low-carb':     'https://buy.stripe.com/test_dRmeVdccF5QcdAJaRWa7C00',
+  'planilhas-treino':      'https://buy.stripe.com/test_00w28r0tX2E0gMVf8ca7C01',
+  'receitas-indigenas':    'https://buy.stripe.com/test_9B64gz1y1diEgMVd04a7C02',
+  'templates-notion':      'https://buy.stripe.com/test_5kQ4gza4x6Ug2W56BGa7C03',
+  'ebooks-autoajuda':      'https://buy.stripe.com/test_dRmaEXb8B7YkcwF9NSa7C04',
+  'planilhas-financeiras': 'https://buy.stripe.com/test_bJe00jfoRfqMfIR0dia7C05',
+  'kit-completo':          'https://buy.stripe.com/test_fZu5kD90t5QcdAJgcga7C06',
+  'life-os':               'https://buy.stripe.com/test_aFa6oH0tXceAdAJ8JOa7C07',
+}
+const STRIPE = (slug) => STRIPE_LINKS[slug]
 
 export const PRODUCTS = {
   'receitas-low-carb': {
@@ -10,7 +21,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: KIWIFY('t6uEnAV'),
+    checkoutUrl: STRIPE('receitas-low-carb'),
     color: 'from-green-600 to-emerald-500',
     badge: 'MAIS VENDIDO',
     category: 'alimentacao',
@@ -48,7 +59,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: KIWIFY('SVIdTH1'),
+    checkoutUrl: STRIPE('planilhas-treino'),
     color: 'from-blue-600 to-indigo-500',
     badge: 'MAIS COMPLETO',
     category: 'treinos',
@@ -86,7 +97,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: KIWIFY('RQ2dquE'),
+    checkoutUrl: STRIPE('receitas-indigenas'),
     color: 'from-amber-600 to-orange-500',
     badge: 'EXCLUSIVO',
     category: 'indigenas',
@@ -124,7 +135,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: KIWIFY('rOhF5tb'),
+    checkoutUrl: STRIPE('templates-notion'),
     color: 'from-purple-600 to-violet-500',
     badge: 'PRODUTIVIDADE',
     category: 'notion',
@@ -162,7 +173,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: KIWIFY('BRmsMyl'),
+    checkoutUrl: STRIPE('ebooks-autoajuda'),
     color: 'from-pink-600 to-rose-500',
     badge: 'TRANSFORMADOR',
     category: 'autoajuda',
@@ -200,7 +211,7 @@ export const PRODUCTS = {
     price: 27.90,
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
-    checkoutUrl: KIWIFY('vQr2l3A'),
+    checkoutUrl: STRIPE('planilhas-financeiras'),
     color: 'from-yellow-600 to-amber-500',
     badge: 'ESSENCIAL',
     category: 'financas',
@@ -247,6 +258,7 @@ export const KIT_COMPLETO = {
   bumpPrice: 47.00,
   bumpInstallment: { times: 3, value: 15.67 },
   totalValue: 167.40,
+  checkoutUrl: STRIPE('kit-completo'),
   items: ALL_PRODUCT_SLUGS.map(s => PRODUCTS[s].title),
 }
 
@@ -260,7 +272,7 @@ export const LIFE_OS = {
   monthlyAfter: 79.90,
   originalPrice: 127.00,
   description: 'Tudo em um só lugar: o sistema para executar (hábitos, treinos, journal, finanças) + a biblioteca completa com os 6 produtos + materiais novos todo mês. Cancele quando quiser.',
-  checkoutUrl: KIWIFY('0K0Js0r'),
+  checkoutUrl: STRIPE('life-os'),
   features: [
     'Acesso completo à biblioteca dos 6 produtos (Receitas Low Carb, Treinos, Indígenas, Templates, Ebooks, Financeiras)',
     'Novos materiais adicionados todo mês — sempre evoluindo',

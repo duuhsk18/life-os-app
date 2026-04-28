@@ -84,6 +84,7 @@ const PRODUCTS_TO_CREATE = [
       name:        'Primeiro mês com R$20 OFF',
       amountOffBRL: 20,
       duration:    'once',
+      code:        'LANCAMENTO',
     },
   },
 ]
@@ -151,6 +152,7 @@ async function main() {
 
     // Cupom promocional (Life OS first month)
     let promoCoupon = null
+    let promoCode   = null
     if (cfg.promoCoupon) {
       const couponMetaKey = `${cfg.internalSlug}-promo`
       const allCoupons = await stripe.coupons.list({ limit: 100 })
@@ -167,6 +169,20 @@ async function main() {
         })
         console.log(`  ✓ Cupom criado: ${promoCoupon.id}`)
       }
+
+      // Promotion Code (código que o cliente digita no checkout)
+      const desiredCode = cfg.promoCoupon.code || 'LANCAMENTO'
+      const allPromoCodes = await stripe.promotionCodes.list({ coupon: promoCoupon.id, limit: 100 })
+      promoCode = allPromoCodes.data.find((p) => p.code === desiredCode)
+      if (promoCode) {
+        console.log(`  ✓ Promotion Code existe: ${promoCode.code}`)
+      } else {
+        promoCode = await stripe.promotionCodes.create({
+          coupon: promoCoupon.id,
+          code:   desiredCode,
+        })
+        console.log(`  ✓ Promotion Code criado: ${promoCode.code}`)
+      }
     }
 
     // Payment Link
@@ -179,11 +195,14 @@ async function main() {
       },
     }
 
-    if (cfg.type === 'subscription' && promoCoupon) {
+    if (cfg.type === 'subscription') {
       linkParams.subscription_data = {
         metadata: { internal_slug: cfg.internalSlug },
       }
-      linkParams.discounts = [{ coupon: promoCoupon.id }]
+      // Stripe não permite combinar `discounts` com `subscription_data` em Payment Links.
+      // Solução: criar Promotion Code separado (o cupom já foi criado acima) e o cliente
+      // digita o código no checkout. allow_promotion_codes=true habilita esse campo.
+      linkParams.allow_promotion_codes = true
     }
 
     // Lista links existentes pra esse produto
