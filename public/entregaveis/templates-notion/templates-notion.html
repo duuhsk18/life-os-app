@@ -2190,5 +2190,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===== EXPORT / IMPORT =====
+function exportData() {
+  try {
+    const data = JSON.stringify(getStore(), null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `lifeos-tools-backup-${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('✓ Backup baixado');
+  } catch (err) {
+    console.error('Export error:', err);
+    showToast('Erro ao exportar');
+  }
+}
+
+// ===== INIT =====
+// Mostra a section ativa inicial (caso o HTML não tenha pré-aplicado .active)
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof loadAll === 'function') loadAll();
+  const initialActive = document.querySelector('.section.active');
+  if (!initialActive) showSection('cover');
+});
+</script>
 </body>
 </html>

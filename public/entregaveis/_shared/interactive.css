@@ -134,7 +134,41 @@
   color: #34d399;
 }
 
-/* Mobile adjustments */
+/* Tabela com scroll horizontal (resolve corte em mobile) */
+.table-scroll-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+  /* Indicação visual de que tem mais conteúdo */
+  background:
+    linear-gradient(to right, transparent 30%, rgba(0,0,0,0)),
+    linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.3) 70%) right;
+  background-size: 100% 100%, 30px 100%;
+  background-repeat: no-repeat;
+  background-attachment: local, scroll;
+}
+
+.table-scroll-wrap::-webkit-scrollbar {
+  height: 8px;
+}
+.table-scroll-wrap::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.03);
+  border-radius: 4px;
+}
+.table-scroll-wrap::-webkit-scrollbar-thumb {
+  background: rgba(244,196,48,0.3);
+  border-radius: 4px;
+}
+.table-scroll-wrap::-webkit-scrollbar-thumb:hover {
+  background: rgba(244,196,48,0.5);
+}
+
+.table-scroll-wrap > table {
+  min-width: 600px; /* mantém formatação em telas pequenas — ativa scroll */
+}
+
+/* Mobile: dica visual de "deslize pra ver mais" */
 @media (max-width: 640px) {
   .entregavel-topbar-inner {
     padding: 8px 14px;
@@ -142,5 +176,12 @@
   .copy-tsv-btn {
     font-size: 11px;
     padding: 7px 12px;
+  }
+  .table-scroll-wrap {
+    margin: 0 -10px; /* sangra um pouco lateralmente pra usar a tela toda */
+    padding: 0 10px;
+  }
+  .table-scroll-wrap > table {
+    min-width: 520px;
   }
 }

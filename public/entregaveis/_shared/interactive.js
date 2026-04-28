@@ -146,17 +146,26 @@
   function setupCopyButtons() {
     const tables = document.querySelectorAll('table.fin-table, table.treino-table, table.planilha-table, table.exercise-table')
     tables.forEach((table) => {
-      const wrapper = document.createElement('div')
-      wrapper.className = 'copy-tsv-wrapper'
+      // Botão de copiar (antes da tabela)
+      const btnWrapper = document.createElement('div')
+      btnWrapper.className = 'copy-tsv-wrapper'
       const btn = document.createElement('button')
       btn.type = 'button'
       btn.className = 'copy-tsv-btn'
       btn.innerHTML = '📋 Copiar pra Sheets'
       btn.title = 'Copia toda a tabela. Cole (Ctrl+V) no Google Sheets ou Excel.'
       btn.addEventListener('click', () => copyTSV(tableToTSV(table), btn))
-      wrapper.appendChild(btn)
-      // Insere logo antes da tabela
-      table.parentNode.insertBefore(wrapper, table)
+      btnWrapper.appendChild(btn)
+      table.parentNode.insertBefore(btnWrapper, table)
+
+      // Wrapper de scroll horizontal (envolve a tabela pra mobile não cortar)
+      // Só adiciona se o pai NÃO for já um wrapper de scroll (evita duplicar)
+      if (!table.parentNode.classList.contains('table-scroll-wrap')) {
+        const scrollWrap = document.createElement('div')
+        scrollWrap.className = 'table-scroll-wrap'
+        table.parentNode.insertBefore(scrollWrap, table)
+        scrollWrap.appendChild(table)
+      }
     })
   }
 
