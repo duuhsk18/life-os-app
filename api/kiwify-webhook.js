@@ -173,25 +173,70 @@ export default async function handler(req, res) {
   if (REVOKE_EVENTS.includes(status)) {
     try {
       const userId = await findUserByEmail(email)
-      if (userId && slugsToGrant.length > 0) {
-        const { error: updErr } = await supabase
+
+      if (!userId) {
+        console.warn('[kiwify] ⚠ REVOKE: usuário não encontrado pra', email, '— nada a revogar')
+        return res.status(200).json({ ok: true, action: 'noop_user_not_found', email })
+      }
+
+      // Estratégia 1: revogar por product_slug (caminho feliz)
+      let revokedCount = 0
+      if (slugsToGrant.length > 0) {
+        const { data, error: updErr } = await supabase
           .from('lifeos_user_products')
           .update({ active: false })
           .eq('user_id', userId)
           .in('product_slug', slugsToGrant)
+          .eq('active', true)
+          .select()
 
         if (updErr) {
-          console.error('[kiwify] Erro ao revogar:', updErr.message)
-        } else {
-          console.log('[kiwify] ⛔ Acesso revogado:', email, slugsToGrant.join(', '))
+          console.error('[kiwify] Erro ao revogar por slug:', updErr.message)
+          throw updErr
+        }
+        revokedCount = data?.length || 0
+        if (revokedCount > 0) {
+          console.log('[kiwify] ⛔ Revogado por slug:', email, slugsToGrant.join(', '), `(${revokedCount} linhas)`)
         }
       }
 
+      // Estratégia 2: fallback — revogar por kiwify_order_id se a primeira não pegou
+      // (cobre o caso de mapping de produto falhar mas termos o order_id)
+      if (revokedCount === 0 && orderId) {
+        const { data, error: updErr } = await supabase
+          .from('lifeos_user_products')
+          .update({ active: false })
+          .eq('user_id', userId)
+          .eq('kiwify_order_id', orderId)
+          .eq('active', true)
+          .select()
+
+        if (updErr) {
+          console.error('[kiwify] Erro ao revogar por order_id:', updErr.message)
+          throw updErr
+        }
+        revokedCount = data?.length || 0
+        if (revokedCount > 0) {
+          console.log('[kiwify] ⛔ Revogado por order_id (fallback):', email, orderId, `(${revokedCount} linhas)`)
+        }
+      }
+
+      if (revokedCount === 0) {
+        console.warn('[kiwify] ⚠ REVOKE: 0 linhas afetadas pra', email, '| slugs:', slugsToGrant, '| order:', orderId, '| status:', status)
+        return res.status(200).json({
+          ok:     true,
+          action: 'noop_nothing_to_revoke',
+          email,
+          slugs:  slugsToGrant,
+          orderId,
+        })
+      }
+
       return res.status(200).json({
-        ok:      true,
-        action:  'access_revoked',
+        ok:           true,
+        action:       'access_revoked',
         email,
-        revoked: slugsToGrant,
+        revokedCount,
       })
     } catch (err) {
       console.error('[kiwify] Erro ao revogar:', err.message)
