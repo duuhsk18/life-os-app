@@ -23,7 +23,11 @@ const supabase = createClient(
 )
 
 const GRANT_EVENTS  = ['paid', 'approved', 'active']
-const REVOKE_EVENTS = ['refunded', 'chargedback', 'cancelled']
+// Lista expandida pra cobrir variações de status do Kiwify:
+// - chargedback / chargeback (com e sem 'd')
+// - cancelled / canceled (UK vs US spelling)
+// - refused / rejected (compra recusada)
+const REVOKE_EVENTS = ['refunded', 'chargedback', 'chargeback', 'cancelled', 'canceled', 'refused', 'rejected']
 const TEST_EMAILS   = ['test@kiwify.com.br', 'johndoe@example.com']
 
 export default async function handler(req, res) {
