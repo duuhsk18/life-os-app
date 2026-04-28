@@ -1,0 +1,72 @@
+export const PRODUCTS = {
+  'clube-life-os': {
+    slug: 'clube-life-os',
+    name: 'Clube Life OS',
+    hero_image: null,
+    headline: 'O sistema completo para transformar sua rotina — hábitos, treinos, finanças, foco e muito mais por menos de R$1 por dia.',
+    subheadline: 'Acesse a área de membros Life OS com tudo que você precisa para manter a disciplina, acompanhar sua evolução e baixar novos materiais todo mês.',
+    short_list: [
+      'Área de membros Life OS completa',
+      'Rastreador de hábitos com gamificação e XP',
+      'Controle de treinos e evolução física',
+      'Journal, Estado Flow e Metas',
+      'Controle financeiro integrado',
+      'Biblioteca com +120 planilhas, receitas e ebooks',
+      'Novos materiais adicionados todo mês',
+      'Acesso imediato após a compra',
+    ],
+    old_price: 67.00,
+    current_price: 27.90,
+    discount_percent: 58,
+    checkout_url: 'https://pay.kiwify.com.br/TROCAR',
+    is_subscription: true,
+    billing_period: 'mês',
+    problem_title: 'Você começa, desanima e nunca sustenta a rotina',
+    problem_points: [
+      'Você compra cursos, ebooks e planilhas que ficam parados no computador.',
+      'Começa a semana com vontade e no quarto dia já desistiu.',
+      'Não sabe se está evoluindo porque não tem como medir.',
+      'Gasta com personal, apps e assinaturas separadas que não conversam entre si.',
+      'A falta de disciplina atrapalha não só o treino, mas as finanças e a produtividade.',
+    ],
+    solution_title: 'Um sistema único que conecta tudo: corpo, mente e finanças',
+    solution_text: 'O Clube Life OS é uma área de membros gamificada onde você registra seus hábitos, treinos, journal e gastos — e ainda baixa novos materiais todo mês. Com XP, níveis e streaks, você sente a evolução de verdade e fica motivado a continuar.',
+    benefits: [
+      { icon: 'CheckSquare', title: 'Rastreador de Hábitos',    description: 'Crie e marque seus hábitos diários. Ganhe XP a cada dia concluído e mantenha o streak.' },
+      { icon: 'Dumbbell',    title: 'Controle de Treinos',      description: 'Registre séries, cargas e evolução física. Veja seu histórico completo de treinos.' },
+      { icon: 'Zap',         title: 'Estado Flow',              description: 'Timer Pomodoro integrado para sessões de foco profundo com registro automático.' },
+      { icon: 'BookOpen',    title: 'Journal Diário',           description: 'Espaço para reflexão, gratidão e planejamento do próximo dia.' },
+      { icon: 'DollarSign', title: 'Finanças Integradas',      description: 'Registre gastos, receitas e acompanhe sua saúde financeira dentro da plataforma.' },
+      { icon: 'Library',    title: 'Biblioteca de Downloads',  description: 'Planilhas de treino, receitas, templates Notion, ebooks — tudo em um lugar.' },
+    ],
+    bonuses: [
+      { title: '+120 Planilhas de Treino',        description: 'Emagrecimento, hipertrofia, definição, funcional — para casa e academia.', value: 'R$ 97,00' },
+      { title: 'Receitas Low Carb & Indígenas',  description: 'Mais saúde e sabor no dia a dia com receitas práticas e naturais.',         value: 'R$ 47,00' },
+      { title: 'Templates Notion',               description: 'Organize vida, trabalho e estudos com templates prontos para usar.',         value: 'R$ 57,00' },
+      { title: 'Ebooks de Autoajuda',            description: 'Mentalidade, disciplina e produtividade para transformar quem você é.',     value: 'R$ 67,00' },
+      { title: 'Planilhas Financeiras',          description: 'Controle de gastos, reserva de emergência e projeção de investimentos.',    value: 'R$ 77,00' },
+    ],
+    testimonials: [
+      { name: 'Juliana M.', text: 'Em 60 dias de clube já perdi 7 kg e finalmente tenho controle dos meus gastos. Tudo em um app só!', rating: 5 },
+      { name: 'Rafaela S.', text: 'O sistema de XP me vicia. Nunca mantive hábitos por tanto tempo.', rating: 5 },
+      { name: 'Camila P.',  text: 'Melhor R$27 que já gastei. Uso todos os dias: treino, journal e financeiro.', rating: 5 },
+      { name: 'Débora L.',  text: 'A biblioteca de planilhas é incrível. Todo mês vem material novo.', rating: 5 },
+      { name: 'Ana R.',     text: 'Cancelei 3 assinaturas separadas e o Life OS faz tudo isso e mais.', rating: 5 },
+      { name: 'Marcela T.', text: 'O streak me mantém comprometida. 47 dias consecutivos e contando!', rating: 5 },
+    ],
+    faq: [
+      { question: 'Como funciona a assinatura?',          answer: 'Você paga R$27,90 por mês e mantém acesso total enquanto estiver ativo. Pode cancelar quando quiser, sem multa.' },
+      { question: 'O que está incluído?',                 answer: 'Acesso completo ao app Life OS (hábitos, treinos, journal, finanças, metas, foco) e à Biblioteca com todos os materiais disponíveis.' },
+      { question: 'Recebo novos materiais todo mês?',     answer: 'Sim! Adicionamos novas planilhas, receitas, templates e ebooks mensalmente. Tudo fica disponível na Biblioteca.' },
+      { question: 'Funciona no celular?',                 answer: 'Sim. O Life OS foi desenvolvido para funcionar perfeitamente no celular, tablet e computador.' },
+      { question: 'Posso cancelar?',                      answer: 'Sim. Cancela quando quiser diretamente na plataforma, sem burocracia.' },
+      { question: 'E se eu não gostar?',                  answer: 'Você tem 7 dias de garantia incondicional. Devolvemos 100% sem perguntas.' },
+    ],
+    meta_title: 'Clube Life OS — Hábitos, Treinos, Finanças e Downloads por R$27,90/mês',
+    meta_description: 'Área de membros gamificada com rastreador de hábitos, treinos, journal, finanças e biblioteca de +120 materiais. Assine por R$27,90/mês.',
+  },
+}
+
+export function getProductBySlug(slug) {
+  return PRODUCTS[slug] || null
+}
