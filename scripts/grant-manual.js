@@ -16,10 +16,18 @@ const supabase = createClient(
 // ===== EDITAR AQUI =====
 const ORDERS_TO_GRANT = [
   {
-    email:        'magonfotografia@gmail.com',
-    name:         'Eduardo magon',
-    productSlugs: ['planilhas-financeiras'],
-    orderId:      '270f7f5b-4b4f-4216-af7e-54edc06c582d',
+    email:        'mynameisdarke@gmail.com',
+    name:         'Eduardo Magon',
+    productSlugs: [
+      'receitas-low-carb',
+      'planilhas-treino',
+      'receitas-indigenas',
+      'templates-notion',
+      'ebooks-autoajuda',
+      'planilhas-financeiras',
+      'life-os',
+    ],
+    orderId:      'manual-full-access-creator',
   },
 ]
 // ========================
