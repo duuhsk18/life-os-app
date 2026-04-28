@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { getProduct, getRelatedProducts, KIT_COMPLETO } from '@/lib/sales-data'
+import { getProduct, getRelatedProducts, KIT_COMPLETO, LIFE_OS } from '@/lib/sales-data'
 import CountdownTimer from '@/components/sales/CountdownTimer'
 import ExitIntentPopup from '@/components/sales/ExitIntentPopup'
 import OrderBump from '@/components/sales/OrderBump'
@@ -239,6 +239,42 @@ export default function SalesPage() {
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Upsell — Life OS (vem antes dos produtos individuais) */}
+      <section className="bg-gradient-to-br from-yellow-600 via-yellow-700 to-orange-700 px-4 py-10">
+        <div className="max-w-lg mx-auto">
+          <p className="text-white/80 text-xs text-center uppercase tracking-widest mb-2 font-bold">
+            🚀 Quer levar tudo de uma vez?
+          </p>
+          <h2 className="text-white font-black text-2xl text-center mb-4 leading-tight">
+            Assine o Life OS e leve <br/>
+            <span className="text-yellow-200">os 6 produtos + sistema completo</span>
+          </h2>
+          <div className="bg-white/15 backdrop-blur rounded-2xl p-5 mb-5">
+            <ul className="space-y-2 text-white text-sm">
+              <li className="flex items-start gap-2"><span className="text-yellow-200">✓</span> Biblioteca completa com os 6 produtos</li>
+              <li className="flex items-start gap-2"><span className="text-yellow-200">✓</span> App gamificado: hábitos, treinos, journal, finanças</li>
+              <li className="flex items-start gap-2"><span className="text-yellow-200">✓</span> Novos materiais adicionados todo mês</li>
+              <li className="flex items-start gap-2"><span className="text-yellow-200">✓</span> Cancele quando quiser, sem multa</li>
+            </ul>
+          </div>
+          <div className="text-center mb-5">
+            <p className="text-white/70 text-sm line-through">De R$ {LIFE_OS.originalPrice.toFixed(2).replace('.', ',')}/mês</p>
+            <p className="text-5xl font-black text-white mt-1">
+              R$ {LIFE_OS.price.toFixed(2).replace('.', ',')}
+            </p>
+            <p className="text-yellow-200 font-bold text-sm mt-1">
+              no 1º mês — depois R$ {LIFE_OS.monthlyAfter.toFixed(2).replace('.', ',')}/mês
+            </p>
+          </div>
+          <button
+            onClick={() => navigate('/produto/clube-life-os')}
+            className="block w-full bg-white text-gray-900 font-black py-4 rounded-2xl text-base shadow-lg active:scale-95 transition-transform"
+          >
+            Ver oferta completa do Life OS →
+          </button>
         </div>
       </section>
 
