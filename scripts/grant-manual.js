@@ -6,15 +6,11 @@
 // =============================================================================
 
 import { createClient } from '@supabase/supabase-js'
+import { sendMagicLinkEmail } from '../api/_email.js'
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
-)
-
-const supabasePublic = createClient(
-  process.env.SUPABASE_URL,
-  process.env.VITE_SUPABASE_ANON_KEY
 )
 
 // ===== EDITAR AQUI =====
@@ -54,18 +50,9 @@ async function ensureUser({ email, name }) {
 }
 
 async function sendMagicLink({ email, name }) {
-  const { error } = await supabasePublic.auth.signInWithOtp({
-    email,
-    options: {
-      shouldCreateUser: false,
-      emailRedirectTo:  `${process.env.SITE_URL}/minha-conta`,
-      data:             { full_name: name },
-    },
-  })
-  if (error) {
-    console.warn(`  ⚠ signInWithOtp falhou: ${error.message}`)
-  } else {
-    console.log(`  ✓ Magic link ENVIADO de verdade pra ${email}`)
+  const result = await sendMagicLinkEmail({ supabase, email, name, logPrefix: '  ' })
+  if (!result.ok) {
+    console.warn(`  ⚠ Erro: ${result.error}`)
   }
 }
 

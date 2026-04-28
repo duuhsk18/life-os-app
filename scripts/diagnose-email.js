@@ -6,7 +6,12 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
 
-const TARGET_EMAIL = 'magonfotografia@gmail.com'
+const supabasePublic = createClient(
+  process.env.SUPABASE_URL,
+  process.env.VITE_SUPABASE_ANON_KEY
+)
+
+const TARGET_EMAIL = process.argv[2] || 'magonfotografia@gmail.com'
 
 async function main() {
   console.log(`Diagnóstico: ${TARGET_EMAIL}\n`)
@@ -73,7 +78,27 @@ async function main() {
     console.log(`    email_otp: ${linkData?.properties?.email_otp}`)
     console.log()
     console.log('  ⚠ NOTA: generateLink retorna o link, mas NÃO envia email.')
-    console.log('    Você pode mandar esse action_link manualmente pra ela por WhatsApp/email.')
+  }
+  console.log()
+
+  // 4. DISPARA email de verdade via signInWithOtp (passa pela SMTP do Supabase → Resend)
+  console.log('Disparando email via signInWithOtp (passa pela SMTP configurada)...')
+  const { error: otpErr } = await supabasePublic.auth.signInWithOtp({
+    email: TARGET_EMAIL,
+    options: {
+      shouldCreateUser: false,
+      emailRedirectTo:  `${process.env.SITE_URL}/minha-conta`,
+    },
+  })
+
+  if (otpErr) {
+    console.error(`  ✗ Erro: ${otpErr.message}`)
+    if (otpErr.message?.toLowerCase().includes('rate')) {
+      console.error('  ⚠ Rate limit — aguarde 60s entre tentativas pro mesmo email')
+    }
+  } else {
+    console.log(`  ✓ Email disparado pra ${TARGET_EMAIL}`)
+    console.log('  → Cheque a caixa de entrada (Promoções/Spam também). Pode levar 1-2 min.')
   }
 }
 

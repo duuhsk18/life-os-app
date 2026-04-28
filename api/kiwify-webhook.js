@@ -10,6 +10,7 @@ import {
   extractKiwifyOrderId,
   unwrapKiwifyBody,
 } from './_kiwify-products.js'
+import { sendMagicLinkEmail } from './_email.js'
 
 // Desabilita bodyParser do Vercel — precisamos do raw body pra calcular o HMAC
 export const config = {
@@ -19,14 +20,6 @@ export const config = {
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
-)
-
-// Cliente público (anon key) — necessário pra signInWithOtp, que envia
-// magic link email pra usuários já confirmados. O admin SDK não tem método
-// pra enviar magic link, e inviteUserByEmail vira no-op em users confirmados.
-const supabasePublic = createClient(
-  process.env.SUPABASE_URL,
-  process.env.VITE_SUPABASE_ANON_KEY
 )
 
 const GRANT_EVENTS  = ['paid', 'approved', 'active']
@@ -249,20 +242,6 @@ async function findUserByEmail(email) {
 }
 
 async function sendMagicLink({ email, name }) {
-  // signInWithOtp envia magic link mesmo pra usuários já confirmados.
-  // shouldCreateUser=false porque já criamos via admin.createUser acima.
-  const { error } = await supabasePublic.auth.signInWithOtp({
-    email,
-    options: {
-      shouldCreateUser:  false,
-      emailRedirectTo:   `${process.env.SITE_URL}/minha-conta`,
-      data:              { full_name: name },
-    },
-  })
-
-  if (error) {
-    console.warn('[kiwify] signInWithOtp falhou:', error.message)
-  } else {
-    console.log('[kiwify] Magic link enviado pra', email)
-  }
+  // Bypassa SMTP do Supabase (que tem bugs com Resend) — usamos Resend REST API direto
+  await sendMagicLinkEmail({ supabase, email, name, logPrefix: '[kiwify]' })
 }

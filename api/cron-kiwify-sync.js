@@ -19,15 +19,11 @@ import {
   resolveProductsFromKiwify,
   unwrapKiwifyBody,
 } from './_kiwify-products.js'
+import { sendMagicLinkEmail } from './_email.js'
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
-)
-
-const supabasePublic = createClient(
-  process.env.SUPABASE_URL,
-  process.env.VITE_SUPABASE_ANON_KEY
 )
 
 const KIWIFY_API_BASE = 'https://public-api.kiwify.com'
@@ -284,18 +280,5 @@ async function findUserByEmail(email) {
 }
 
 async function sendMagicLinkIfNew({ email, name }) {
-  const { error } = await supabasePublic.auth.signInWithOtp({
-    email,
-    options: {
-      shouldCreateUser: false,
-      emailRedirectTo:  `${process.env.SITE_URL}/minha-conta`,
-      data:             { full_name: name },
-    },
-  })
-
-  if (error) {
-    console.warn('[cron-kiwify] signInWithOtp falhou:', error.message)
-  } else {
-    console.log('[cron-kiwify] Magic link enviado pra', email)
-  }
+  await sendMagicLinkEmail({ supabase, email, name, logPrefix: '[cron-kiwify]' })
 }
