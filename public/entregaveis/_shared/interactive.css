@@ -1,0 +1,146 @@
+/* =============================================================================
+   INTERACTIVE.CSS — estilos pros campos editáveis e botões de copiar
+   ============================================================================= */
+
+/* Topbar */
+.entregavel-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.entregavel-topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.entregavel-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.entregavel-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: background 0.2s;
+}
+
+.entregavel-status-dot.saved {
+  background: #10b981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+
+.entregavel-clear {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.entregavel-clear:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+/* Editable fields */
+.input-field[contenteditable="true"] {
+  cursor: text;
+  position: relative;
+  border-radius: 4px;
+  transition: background 0.15s, box-shadow 0.15s;
+  min-width: 80px;
+  display: inline-block;
+}
+
+.input-field[contenteditable="true"]:hover {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.input-field[contenteditable="true"]:focus {
+  outline: none;
+  background: rgba(244, 196, 48, 0.08);
+  box-shadow: inset 0 0 0 2px rgba(244, 196, 48, 0.4);
+}
+
+.input-field.has-value {
+  color: #F4C430 !important;
+  font-weight: 600;
+}
+
+.input-field[contenteditable="true"].has-value:focus {
+  background: rgba(244, 196, 48, 0.12);
+}
+
+/* Copy TSV button */
+.copy-tsv-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 8px 0 -4px;
+}
+
+.copy-tsv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(244, 196, 48, 0.1);
+  border: 1px solid rgba(244, 196, 48, 0.25);
+  color: #F4C430;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  letter-spacing: 0.2px;
+}
+
+.copy-tsv-btn:hover {
+  background: rgba(244, 196, 48, 0.18);
+  border-color: rgba(244, 196, 48, 0.5);
+  transform: translateY(-1px);
+}
+
+.copy-tsv-btn:active {
+  transform: translateY(0);
+}
+
+.copy-tsv-btn.copied {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .entregavel-topbar-inner {
+    padding: 8px 14px;
+  }
+  .copy-tsv-btn {
+    font-size: 11px;
+    padding: 7px 12px;
+  }
+}
