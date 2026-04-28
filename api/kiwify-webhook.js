@@ -36,8 +36,13 @@ export default async function handler(req, res) {
   // 2. Valida HMAC-SHA1 (signature do Kiwify)
   // O Kiwify envia: ?signature=hmac_sha1_hex(rawBody, TOKEN)
   // O TOKEN é exibido na página de Webhooks no painel Kiwify
-  const signature = req.query.signature
-  const token     = process.env.KIWIFY_TOKEN || process.env.KIWIFY_SECRET // fallback
+  // Se a URL já tinha ?signature=X, Kiwify anexa &signature=hmac → vira array.
+  // Pega o que parece HMAC válido (40 chars hex) ou o último.
+  let signature = req.query.signature
+  if (Array.isArray(signature)) {
+    signature = signature.find((s) => /^[a-f0-9]{40}$/i.test(s)) || signature[signature.length - 1]
+  }
+  const token = process.env.KIWIFY_TOKEN || process.env.KIWIFY_SECRET // fallback
 
   if (!token) {
     console.error('[kiwify] KIWIFY_TOKEN não configurado nas env vars')
