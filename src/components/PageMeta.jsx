@@ -15,7 +15,7 @@ import { useEffect } from 'react'
  */
 
 const SITE = 'https://www.agenciacriativa.shop'
-const DEFAULT_OG = `${SITE}/assets/og-image.png`
+const DEFAULT_OG = `${SITE}/assets/hero-3d.png`
 
 function setMetaTag(attr, value, content) {
   if (!content) return

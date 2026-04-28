@@ -168,6 +168,24 @@ export default function Home() {
         </div>
         <GarantiaBadge className="mb-12" />
 
+        {/* Mockup hero 3D */}
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-12 -mx-2 sm:mx-0">
+          <img
+            src="/assets/hero-3d.png"
+            alt="Life OS — sistema completo de planilhas financeiras editáveis em desktop e mobile"
+            width="2400"
+            height="1400"
+            loading="eager"
+            fetchpriority="high"
+            className="w-full h-auto rounded-2xl"
+            style={{ filter: 'drop-shadow(0 30px 80px rgba(244,196,48,0.15))' }}
+          />
+        </motion.div>
+
         {/* Stats */}
         <motion.div variants={staggerContainer} initial="initial" whileInView="whileInView" viewport={{ once: true }}
           className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto pt-4">
@@ -404,7 +422,7 @@ export default function Home() {
               ))}
             </motion.div>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
               <a href={LIFE_OS.checkoutUrl}
                 className="flex items-center gap-2 px-8 py-4 rounded-2xl font-black text-base active:scale-95 transition"
                 style={{ background: GOLD, color: '#000' }}>
@@ -415,6 +433,20 @@ export default function Home() {
                 <div style={{ color: '#888' }} className="text-xs">com cupom <code className="px-1 py-0.5 rounded text-yellow-300" style={{ background: 'rgba(244,196,48,0.1)' }}>LANCAMENTO</code> · depois R$ 79,90/mês · cancele quando quiser</div>
               </div>
             </div>
+
+            {/* Multi-device showcase */}
+            <motion.img
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              src="/assets/multi-device.png"
+              alt="Life OS funcionando em mobile e desktop — biblioteca, finanças, hábitos integrados"
+              width="1920"
+              height="1080"
+              loading="lazy"
+              className="w-full h-auto rounded-xl mt-2"
+            />
           </div>
         </div>
       </motion.section>
