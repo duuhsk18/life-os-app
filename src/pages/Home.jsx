@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, CheckSquare, Dumbbell, BookOpen, DollarSign, Zap, Library, Trophy, Sparkles, ChevronDown, AlertTriangle, Lightbulb } from 'lucide-react'
+import { ArrowRight, CheckSquare, Dumbbell, BookOpen, DollarSign, Zap, Library, Trophy, Sparkles, ChevronDown, AlertTriangle, Lightbulb, Volume2, VolumeX } from 'lucide-react'
 import { PRODUCTS, KIT_COMPLETO, LIFE_OS } from '@/lib/sales-data'
 import CartButton from '@/components/sales/CartButton'
 import CartDrawer from '@/components/sales/CartDrawer'
@@ -104,6 +104,16 @@ export default function Home() {
   const products = Object.values(PRODUCTS)
   const cartFull = items.length >= 3
   const [openFaq, setOpenFaq] = useState(null)
+  const [muted, setMuted]     = useState(true)
+  const videoRef              = useRef(null)
+
+  function toggleSound() {
+    if (!videoRef.current) return
+    const next = !muted
+    videoRef.current.muted = next
+    if (!next && videoRef.current.paused) videoRef.current.play().catch(() => {})
+    setMuted(next)
+  }
 
   return (
     <div className="min-h-screen" style={{ background: '#000', color: '#fff' }}>
@@ -168,22 +178,33 @@ export default function Home() {
         </div>
         <GarantiaBadge className="mb-12" />
 
-        {/* Mockup hero 3D */}
+        {/* Hero video — autoplay muted loop com poster (mockup 3D) e toggle de som */}
         <motion.div
           initial={{ opacity: 0, y: 30, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-12 -mx-2 sm:mx-0">
-          <img
-            src="/assets/hero-3d.png"
-            alt="Life OS — sistema completo de planilhas financeiras editáveis em desktop e mobile"
-            width="2400"
-            height="1400"
-            loading="eager"
-            fetchpriority="high"
+          className="mb-12 -mx-2 sm:mx-0 relative group">
+          <video
+            ref={videoRef}
+            autoPlay muted loop playsInline preload="metadata"
+            poster="/assets/hero-3d.png"
             className="w-full h-auto rounded-2xl"
-            style={{ filter: 'drop-shadow(0 30px 80px rgba(244,196,48,0.15))' }}
-          />
+            style={{ filter: 'drop-shadow(0 30px 80px rgba(244,196,48,0.15))' }}>
+            <source src="/assets/hero-loop.mp4" type="video/mp4" />
+            Seu navegador não suporta vídeos.
+          </video>
+          {/* Toggle som — fica sutil no canto inferior direito */}
+          <button
+            onClick={toggleSound}
+            aria-label={muted ? 'Ativar som' : 'Silenciar'}
+            className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center backdrop-blur transition active:scale-95"
+            style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(244,196,48,0.3)' }}>
+            {muted ? (
+              <VolumeX className="w-5 h-5" style={{ color: GOLD }} />
+            ) : (
+              <Volume2 className="w-5 h-5" style={{ color: GOLD }} />
+            )}
+          </button>
         </motion.div>
 
         {/* Stats */}
