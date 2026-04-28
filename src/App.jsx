@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { CartProvider } from '@/contexts/CartContext'
+import { ToastProvider } from '@/components/lifeos/Toast'
 import ProtectedRoute from '@/components/lifeos/ProtectedRoute'
 
 import Home             from '@/pages/Home'
@@ -32,6 +33,7 @@ export default function App() {
   return (
     <AuthProvider>
       <CartProvider>
+      <ToastProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/"                     element={<Home />} />
@@ -56,6 +58,7 @@ export default function App() {
           <Route path="*" element={<div style={{ background: '#000', color: '#555', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>Página não encontrada.</div>} />
         </Routes>
       </BrowserRouter>
+      </ToastProvider>
       </CartProvider>
     </AuthProvider>
   )

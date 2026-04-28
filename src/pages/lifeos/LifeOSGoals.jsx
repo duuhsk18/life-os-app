@@ -2,16 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
 import LifeOSLayout from '@/components/lifeos/LifeOSLayout'
+import Confetti from '@/components/lifeos/Confetti'
+import { useToast } from '@/components/lifeos/Toast'
 import { Plus, Target, CheckCircle, Trash2 } from 'lucide-react'
 
 const GOLD = '#F4C430'
 
 export default function LifeOSGoals() {
   const { user } = useAuth()
+  const toast = useToast()
   const [goals, setGoals]   = useState([])
   const [showForm, setShowForm] = useState(false)
   const [form, setForm]     = useState({ title: '', description: '', deadline: '' })
   const [loading, setLoading] = useState(true)
+  const [confetti, setConfetti] = useState(false)
 
   useEffect(() => { if (user) load() }, [user])
 
@@ -37,8 +41,12 @@ export default function LifeOSGoals() {
   }
 
   async function complete(id) {
+    const goal = goals.find(g => g.id === id)
     await supabase.from('lifeos_goals').update({ status: 'completed', progress: 100 }).eq('id', id)
     setGoals(p => p.map(g => g.id === id ? { ...g, status: 'completed', progress: 100 } : g))
+    setConfetti(true)
+    toast.success('Meta concluída!', goal?.title || '')
+    if (navigator.vibrate) navigator.vibrate([20, 40, 20])
   }
 
   async function remove(id) {
@@ -53,6 +61,7 @@ export default function LifeOSGoals() {
 
   return (
     <LifeOSLayout>
+      <Confetti show={confetti} onDone={() => setConfetti(false)} />
       <div className="px-4 md:px-8 py-6 max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <div>

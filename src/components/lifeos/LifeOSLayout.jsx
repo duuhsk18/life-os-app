@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useAuth } from '@/contexts/AuthContext'
 import { calculateLevel, xpToNextLevel } from '@/lib/gamification'
 import {
@@ -151,8 +152,20 @@ export default function LifeOSLayout({ children }) {
         </div>
       )}
 
-      {/* Main */}
-      <main className="md:ml-56 min-h-screen pb-20 md:pb-8">{children}</main>
+      {/* Main com transição suave entre páginas */}
+      <main className="md:ml-56 min-h-screen pb-20 md:pb-8">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
+      </main>
 
       {/* Mobile bottom nav */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex"

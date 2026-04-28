@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
 import LifeOSLayout from '@/components/lifeos/LifeOSLayout'
+import { useToast } from '@/components/lifeos/Toast'
 import { todayStr, DEFAULT_HABITS } from '@/lib/gamification'
 import { Plus, Trash2, Flame } from 'lucide-react'
 
@@ -9,6 +10,7 @@ const GOLD = '#F4C430'
 
 export default function LifeOSHabits() {
   const { user, profile, refreshProfile } = useAuth()
+  const toast = useToast()
   const [habits, setHabits]           = useState([])
   const [todayChecks, setTodayChecks] = useState([])
   const [showForm, setShowForm]       = useState(false)
@@ -41,6 +43,9 @@ export default function LifeOSHabits() {
       if (data) setTodayChecks(p => [...p, data])
       const newXp = (profile?.total_xp || 0) + habit.xp_reward
       await supabase.from('lifeos_profiles').update({ total_xp: newXp }).eq('id', user.id)
+      toast.xp(habit.xp_reward, habit.name)
+      // Vibração leve em mobile
+      if (navigator.vibrate) navigator.vibrate(8)
     }
     refreshProfile()
   }
