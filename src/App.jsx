@@ -6,6 +6,10 @@ import ProtectedRoute from '@/components/lifeos/ProtectedRoute'
 import Home             from '@/pages/Home'
 import Login            from '@/pages/Login'
 import ProductPage      from '@/pages/ProductPage'
+import SalesPage        from '@/pages/SalesPage'
+import Catalogo         from '@/pages/Catalogo'
+import OTOPage          from '@/pages/OTOPage'
+import ThankYou         from '@/pages/ThankYou'
 import LifeOSDashboard  from '@/pages/lifeos/LifeOSDashboard'
 import LifeOSHabits     from '@/pages/lifeos/LifeOSHabits'
 import LifeOSWorkouts   from '@/pages/lifeos/LifeOSWorkouts'
@@ -29,6 +33,10 @@ export default function App() {
           <Route path="/"                     element={<Home />} />
           <Route path="/login"                element={<Login />} />
           <Route path="/produto/:slug"        element={<ProductPage />} />
+          <Route path="/p/:slug"              element={<SalesPage />} />
+          <Route path="/catalogo"             element={<Catalogo />} />
+          <Route path="/oto/life-os"          element={<OTOPage />} />
+          <Route path="/obrigado"             element={<ThankYou />} />
           <Route path="/membros"              element={<Protected><LifeOSDashboard /></Protected>} />
           <Route path="/membros/habitos"      element={<Protected><LifeOSHabits /></Protected>} />
           <Route path="/membros/treinos"      element={<Protected><LifeOSWorkouts /></Protected>} />
