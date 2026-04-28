@@ -25,6 +25,11 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
 
+const supabasePublic = createClient(
+  process.env.SUPABASE_URL,
+  process.env.VITE_SUPABASE_ANON_KEY
+)
+
 const KIWIFY_API_BASE = 'https://public-api.kiwify.com'
 const GRANT_STATUSES  = ['paid', 'approved', 'active']
 const REVOKE_STATUSES = ['refunded', 'chargedback', 'cancelled', 'refused']
@@ -279,13 +284,18 @@ async function findUserByEmail(email) {
 }
 
 async function sendMagicLinkIfNew({ email, name }) {
-  // Tenta enviar invite. Se já foi enviado antes, Supabase ignora silenciosamente.
-  const { error } = await supabase.auth.admin.inviteUserByEmail(email, {
-    data:       { full_name: name },
-    redirectTo: `${process.env.SITE_URL}/minha-conta`,
+  const { error } = await supabasePublic.auth.signInWithOtp({
+    email,
+    options: {
+      shouldCreateUser: false,
+      emailRedirectTo:  `${process.env.SITE_URL}/minha-conta`,
+      data:             { full_name: name },
+    },
   })
 
-  if (error && !error.message?.toLowerCase().includes('already')) {
-    console.warn('[cron-kiwify] inviteUserByEmail:', error.message)
+  if (error) {
+    console.warn('[cron-kiwify] signInWithOtp falhou:', error.message)
+  } else {
+    console.log('[cron-kiwify] Magic link enviado pra', email)
   }
 }

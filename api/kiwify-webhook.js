@@ -21,6 +21,14 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
 
+// Cliente público (anon key) — necessário pra signInWithOtp, que envia
+// magic link email pra usuários já confirmados. O admin SDK não tem método
+// pra enviar magic link, e inviteUserByEmail vira no-op em users confirmados.
+const supabasePublic = createClient(
+  process.env.SUPABASE_URL,
+  process.env.VITE_SUPABASE_ANON_KEY
+)
+
 const GRANT_EVENTS  = ['paid', 'approved', 'active']
 const REVOKE_EVENTS = ['refunded', 'chargedback', 'cancelled']
 const TEST_EMAILS   = ['test@kiwify.com.br', 'johndoe@example.com']
@@ -241,12 +249,20 @@ async function findUserByEmail(email) {
 }
 
 async function sendMagicLink({ email, name }) {
-  const { error: inviteError } = await supabase.auth.admin.inviteUserByEmail(email, {
-    data:       { full_name: name },
-    redirectTo: `${process.env.SITE_URL}/minha-conta`,
+  // signInWithOtp envia magic link mesmo pra usuários já confirmados.
+  // shouldCreateUser=false porque já criamos via admin.createUser acima.
+  const { error } = await supabasePublic.auth.signInWithOtp({
+    email,
+    options: {
+      shouldCreateUser:  false,
+      emailRedirectTo:   `${process.env.SITE_URL}/minha-conta`,
+      data:              { full_name: name },
+    },
   })
 
-  if (inviteError && !inviteError.message?.toLowerCase().includes('already')) {
-    console.warn('[kiwify] inviteUserByEmail:', inviteError.message)
+  if (error) {
+    console.warn('[kiwify] signInWithOtp falhou:', error.message)
+  } else {
+    console.log('[kiwify] Magic link enviado pra', email)
   }
 }

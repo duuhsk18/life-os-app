@@ -12,6 +12,11 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
 
+const supabasePublic = createClient(
+  process.env.SUPABASE_URL,
+  process.env.VITE_SUPABASE_ANON_KEY
+)
+
 // ===== EDITAR AQUI =====
 const ORDERS_TO_GRANT = [
   {
@@ -49,14 +54,18 @@ async function ensureUser({ email, name }) {
 }
 
 async function sendMagicLink({ email, name }) {
-  const { error } = await supabase.auth.admin.inviteUserByEmail(email, {
-    data:       { full_name: name },
-    redirectTo: `${process.env.SITE_URL}/minha-conta`,
+  const { error } = await supabasePublic.auth.signInWithOtp({
+    email,
+    options: {
+      shouldCreateUser: false,
+      emailRedirectTo:  `${process.env.SITE_URL}/minha-conta`,
+      data:             { full_name: name },
+    },
   })
-  if (error && !error.message?.toLowerCase().includes('already')) {
-    console.warn(`  ⚠ inviteUserByEmail: ${error.message}`)
+  if (error) {
+    console.warn(`  ⚠ signInWithOtp falhou: ${error.message}`)
   } else {
-    console.log(`  ✓ Magic link enviado pra ${email}`)
+    console.log(`  ✓ Magic link ENVIADO de verdade pra ${email}`)
   }
 }
 
