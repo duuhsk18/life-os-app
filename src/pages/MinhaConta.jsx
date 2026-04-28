@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { useUserProducts } from '@/lib/entitlements'
-import { ExternalLink, Sparkles, ShoppingBag, LogOut, Loader2 } from 'lucide-react'
+import { ExternalLink, Sparkles, ShoppingBag, LogOut, Loader2, CreditCard } from 'lucide-react'
 
 const GOLD = '#F4C430'
 
@@ -41,14 +41,24 @@ export default function MinhaConta() {
               agência criativa
             </div>
           </div>
-          <button
-            onClick={handleLogout}
-            className="text-xs flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-white/5"
-            style={{ color: '#888' }}
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            Sair
-          </button>
+          <div className="flex items-center gap-1">
+            <Link
+              to="/conta/assinatura"
+              className="text-xs flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-white/5 transition"
+              style={{ color: '#888' }}
+            >
+              <CreditCard className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Assinatura</span>
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="text-xs flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-white/5 transition"
+              style={{ color: '#888' }}
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Sair</span>
+            </button>
+          </div>
         </div>
       </header>
 
