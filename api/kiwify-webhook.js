@@ -54,24 +54,47 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Missing KIWIFY_TOKEN' })
   }
 
-  const expected = crypto.createHmac('sha1', token).update(rawBody).digest('hex')
-
-  if (signature !== expected) {
-    console.warn('[kiwify] HMAC inválido', {
-      received:    signature,
-      expectedLen: expected.length,
-      bodyLen:     rawBody.length,
-    })
-    return res.status(401).json({ error: 'Unauthorized' })
-  }
-
-  // 3. Faz parse do body como JSON
+  // 3. Parse do body ANTES da validação HMAC — Kiwify computa HMAC sobre
+  //    JSON.stringify(parsed), não sobre o raw body. Documentação:
+  //    signature = hmac_sha1(JSON.stringify(request.body), secretKey)
   let body
   try {
     body = JSON.parse(rawBody)
   } catch {
     return res.status(400).json({ error: 'Invalid JSON' })
   }
+
+  // 4. Valida HMAC tentando 3 formas (Kiwify usa diferentes representações
+  //    dependendo do contexto: webhook direto vs reenvio do dashboard)
+  const hmacFromRaw    = crypto.createHmac('sha1', token).update(rawBody).digest('hex')
+  const hmacFromBody   = crypto.createHmac('sha1', token).update(JSON.stringify(body)).digest('hex')
+  const innerOrder     = body?.order || body?.Order
+  const hmacFromInner  = innerOrder
+    ? crypto.createHmac('sha1', token).update(JSON.stringify(innerOrder)).digest('hex')
+    : null
+
+  const valid = signature === hmacFromRaw
+             || signature === hmacFromBody
+             || signature === hmacFromInner
+
+  if (!valid) {
+    console.warn('[kiwify] HMAC inválido', {
+      received: signature,
+      tried: {
+        raw:   hmacFromRaw,
+        body:  hmacFromBody,
+        inner: hmacFromInner,
+      },
+      bodyLen: rawBody.length,
+    })
+    return res.status(401).json({ error: 'Unauthorized' })
+  }
+
+  // Loga qual método validou (útil pra entender qual formato Kiwify usa)
+  const matchedMethod = signature === hmacFromRaw ? 'raw'
+                       : signature === hmacFromBody ? 'body-stringify'
+                       : 'inner-order-stringify'
+  console.log(`[kiwify] HMAC válido via ${matchedMethod}`)
 
   // 4. Extrai dados do payload (suporta tanto envelope { order: {...} } quanto root)
   const status            = extractKiwifyStatus(body)
