@@ -10,9 +10,9 @@ export default function GarantiaBadge({ variant = 'compact', className = '' }) {
       <img
         src="/assets/garantia-7-dias.svg"
         alt="Garantia incondicional de 7 dias"
-        className={className}
-        width="80"
-        height="80"
+        className={`w-24 h-24 sm:w-28 sm:h-28 ${className}`}
+        width="112"
+        height="112"
       />
     )
   }
