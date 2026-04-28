@@ -1,3 +1,4 @@
+import crypto from 'crypto'
 import { createClient } from '@supabase/supabase-js'
 import {
   resolveProductsFromKiwify,
@@ -5,12 +6,16 @@ import {
   extractKiwifyProductName,
 } from './_kiwify-products.js'
 
+// Desabilita bodyParser do Vercel — precisamos do raw body pra calcular o HMAC
+export const config = {
+  api: { bodyParser: false },
+}
+
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
 
-// Eventos Kiwify
 const GRANT_EVENTS  = ['paid', 'approved', 'active']
 const REVOKE_EVENTS = ['refunded', 'chargedback', 'cancelled']
 
@@ -19,22 +24,57 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  // Validação da assinatura (?signature=)
+  // 1. Lê o raw body
+  let rawBody
+  try {
+    rawBody = await readRawBody(req)
+  } catch (err) {
+    console.error('[kiwify] Erro lendo raw body:', err.message)
+    return res.status(400).json({ error: 'Bad request' })
+  }
+
+  // 2. Valida HMAC-SHA1 (signature do Kiwify)
+  // O Kiwify envia: ?signature=hmac_sha1_hex(rawBody, TOKEN)
+  // O TOKEN é exibido na página de Webhooks no painel Kiwify
   const signature = req.query.signature
-  if (!signature || signature !== process.env.KIWIFY_SECRET) {
-    console.warn('[kiwify] Assinatura inválida:', signature)
+  const token     = process.env.KIWIFY_TOKEN || process.env.KIWIFY_SECRET // fallback
+
+  if (!token) {
+    console.error('[kiwify] KIWIFY_TOKEN não configurado nas env vars')
+    return res.status(500).json({ error: 'Missing KIWIFY_TOKEN' })
+  }
+
+  const expected = crypto.createHmac('sha1', token).update(rawBody).digest('hex')
+
+  if (signature !== expected) {
+    console.warn('[kiwify] HMAC inválido', {
+      received: signature,
+      expectedLen: expected.length,
+    })
     return res.status(401).json({ error: 'Unauthorized' })
   }
 
-  const body   = req.body
-  const status = body?.order_status
+  // 3. Faz parse do body como JSON
+  let body
+  try {
+    body = JSON.parse(rawBody)
+  } catch {
+    return res.status(400).json({ error: 'Invalid JSON' })
+  }
 
-  const email = body?.customer?.email?.toLowerCase().trim()
-  const name  = body?.customer?.name || 'Membro'
-  const orderId = body?.order_id || body?.Order?.order_id || null
+  const status   = body?.order_status
+  const email    = body?.Customer?.email?.toLowerCase().trim()
+                  || body?.customer?.email?.toLowerCase().trim()
+  const name     = body?.Customer?.full_name
+                  || body?.Customer?.name
+                  || body?.customer?.name
+                  || 'Membro'
+  const orderId  = body?.order_id || body?.Order?.order_id || null
 
-  if (!email) {
-    return res.status(400).json({ error: 'E-mail não encontrado no payload' })
+  // Test webhook do Kiwify usa email "test@kiwify.com.br" — responde 200 sem fazer nada
+  if (!email || email === 'test@kiwify.com.br') {
+    console.log('[kiwify] Test webhook recebido — assinatura OK')
+    return res.status(200).json({ ok: true, action: 'test_received' })
   }
 
   const kiwifyProductId   = extractKiwifyProductId(body)
@@ -50,24 +90,16 @@ export default async function handler(req, res) {
     orderId,
   })
 
-  // Loga o payload completo se não conseguiu mapear (para debug do primeiro webhook real)
   if (slugsToGrant.length === 0 && GRANT_EVENTS.includes(status)) {
-    console.warn('[kiwify] PAYLOAD NÃO MAPEADO — copie e me envie:', JSON.stringify(body, null, 2))
+    console.warn('[kiwify] PAYLOAD NÃO MAPEADO — payload completo:', JSON.stringify(body, null, 2))
   }
 
-  // ===== GRANT (compra aprovada) =====
+  // ===== GRANT =====
   if (GRANT_EVENTS.includes(status)) {
-    if (slugsToGrant.length === 0) {
-      console.warn('[kiwify] product_id desconhecido — nenhum slug mapeado:', kiwifyProductId)
-      // Continua e cria conta mesmo assim (pra não bloquear), mas sem entitlements
-    }
-
     try {
-      // 1. Garante que o usuário existe
       const userId = await ensureUser({ email, name })
       if (!userId) throw new Error('Não foi possível criar/encontrar usuário')
 
-      // 2. Insere os entitlements (idempotente via UNIQUE)
       if (slugsToGrant.length > 0) {
         const rows = slugsToGrant.map((slug) => ({
           user_id:         userId,
@@ -88,12 +120,11 @@ export default async function handler(req, res) {
         }
       }
 
-      // 3. Envia magic link de acesso
       await sendMagicLink({ email, name })
 
       return res.status(200).json({
-        ok:     true,
-        action: 'access_granted',
+        ok:      true,
+        action:  'access_granted',
         email,
         granted: slugsToGrant,
       })
@@ -103,7 +134,7 @@ export default async function handler(req, res) {
     }
   }
 
-  // ===== REVOKE (reembolso / chargeback / cancelamento) =====
+  // ===== REVOKE =====
   if (REVOKE_EVENTS.includes(status)) {
     try {
       const userId = await findUserByEmail(email)
@@ -115,7 +146,7 @@ export default async function handler(req, res) {
           .in('product_slug', slugsToGrant)
 
         if (updErr) {
-          console.error('[kiwify] Erro ao revogar entitlement:', updErr.message)
+          console.error('[kiwify] Erro ao revogar:', updErr.message)
         } else {
           console.log('[kiwify] ⛔ Acesso revogado:', email, slugsToGrant.join(', '))
         }
@@ -133,7 +164,6 @@ export default async function handler(req, res) {
     }
   }
 
-  // Outros eventos (boleto gerado, carrinho abandonado, etc.) — ignora
   return res.status(200).json({ ok: true, action: 'ignored', status })
 }
 
@@ -141,9 +171,15 @@ export default async function handler(req, res) {
 // Helpers
 // ---------------------------------------------------------------------------
 
-/** Cria o usuário se não existir e retorna o user_id. Idempotente. */
+async function readRawBody(req) {
+  const chunks = []
+  for await (const chunk of req) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
+  }
+  return Buffer.concat(chunks).toString('utf8')
+}
+
 async function ensureUser({ email, name }) {
-  // Primeiro tenta criar
   const { data: created, error: createError } = await supabase.auth.admin.createUser({
     email,
     email_confirm: true,
@@ -152,7 +188,6 @@ async function ensureUser({ email, name }) {
 
   if (created?.user?.id) return created.user.id
 
-  // Se já existe, busca o ID
   if (createError?.message?.toLowerCase().includes('already')) {
     return findUserByEmail(email)
   }
@@ -165,7 +200,6 @@ async function ensureUser({ email, name }) {
   return null
 }
 
-/** Busca o user_id pelo e-mail (auth.users). */
 async function findUserByEmail(email) {
   const { data: list, error } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 })
   if (error) {
@@ -176,7 +210,6 @@ async function findUserByEmail(email) {
   return user?.id || null
 }
 
-/** Envia magic link / convite com redirect para /minha-conta. */
 async function sendMagicLink({ email, name }) {
   const { error: inviteError } = await supabase.auth.admin.inviteUserByEmail(email, {
     data:       { full_name: name },
