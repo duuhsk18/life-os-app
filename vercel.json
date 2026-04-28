@@ -23,7 +23,7 @@
   "crons": [
     {
       "path": "/api/cron-kiwify-sync",
-      "schedule": "0 */1 * * *"
+      "schedule": "0 6 * * *"
     }
   ]
 }

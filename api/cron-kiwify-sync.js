@@ -29,9 +29,11 @@ const KIWIFY_API_BASE = 'https://public-api.kiwify.com'
 const GRANT_STATUSES  = ['paid', 'approved', 'active']
 const REVOKE_STATUSES = ['refunded', 'chargedback', 'cancelled', 'refused']
 
-// Janela de busca: 30 min retroativos. Sobreposição com runs anteriores é OK
-// (UNIQUE constraint deduplica). Window maior dá margem a atrasos de processamento.
-const LOOKBACK_MINUTES = 30
+// Janela de busca: 25h retroativos. Vercel Hobby só permite cron diário, então
+// rodamos 1x por dia (06:00 UTC = 03:00 Brasil) e olhamos 25h pra trás
+// pra garantir que nada caia no buraco entre runs. Sobreposição é OK
+// (UNIQUE constraint deduplica).
+const LOOKBACK_MINUTES = 25 * 60
 
 export default async function handler(req, res) {
   // ===== Auth =====
