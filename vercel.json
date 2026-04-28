@@ -19,5 +19,11 @@
         { "key": "Content-Type", "value": "application/manifest+json" }
       ]
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron-kiwify-sync",
+      "schedule": "0 */1 * * *"
+    }
   ]
 }
