@@ -183,7 +183,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 30, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-12 -mx-2 sm:mx-0 relative group">
+          className="mb-12 -mx-2 sm:mx-0 md:max-w-3xl md:mx-auto relative group">
           <video
             ref={videoRef}
             autoPlay muted loop playsInline preload="metadata"
