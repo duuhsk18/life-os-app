@@ -22,6 +22,7 @@ import {
   extractStripeName,
 } from './_stripe-products.js'
 import { sendMagicLinkEmail } from './_email.js'
+import { sendPurchaseEvent } from './_meta-capi.js'
 
 // Stripe webhook precisa de raw body pra validar assinatura
 export const config = {
@@ -146,6 +147,16 @@ async function handleCheckoutCompleted(session, res) {
   console.log('[stripe] ✅ Entitlements concedidos:', email, slugs.join(', '))
 
   await sendMagicLinkEmail({ supabase, email, name, logPrefix: '[stripe]' })
+
+  // Meta Conversion API — envia Purchase server-side (no-op se env vars faltando)
+  const valueInBRL = (session.amount_total || 0) / 100
+  await sendPurchaseEvent({
+    email,
+    value:      valueInBRL,
+    currency:   (session.currency || 'brl').toUpperCase(),
+    eventId:    session.id,
+    contentIds: slugs,
+  }).catch((e) => console.warn('[stripe→capi]', e.message))
 
   return res.status(200).json({
     ok:      true,

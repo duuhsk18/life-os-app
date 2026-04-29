@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { CartProvider } from '@/contexts/CartContext'
 import { ToastProvider } from '@/components/lifeos/Toast'
+import MetaPixel from '@/components/MetaPixel'
 import ProtectedRoute from '@/components/lifeos/ProtectedRoute'
 
 import Home             from '@/pages/Home'
@@ -35,6 +36,7 @@ export default function App() {
       <CartProvider>
       <ToastProvider>
       <BrowserRouter>
+        <MetaPixel />
         <Routes>
           <Route path="/"                     element={<Home />} />
           <Route path="/login"                element={<Login />} />

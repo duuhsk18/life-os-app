@@ -8,11 +8,12 @@ export default function GarantiaBadge({ variant = 'compact', className = '' }) {
   if (variant === 'stamp') {
     return (
       <img
-        src="/assets/garantia-7-dias.svg"
+        src="/assets/garantia-7-dias-3d.png"
         alt="Garantia incondicional de 7 dias"
-        className={`w-24 h-24 sm:w-28 sm:h-28 ${className}`}
-        width="112"
-        height="112"
+        className={`w-28 h-28 sm:w-32 sm:h-32 ${className}`}
+        width="128"
+        height="128"
+        loading="lazy"
       />
     )
   }
