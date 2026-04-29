@@ -133,11 +133,15 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, action: 'no_slugs' })
     }
 
-    // Email vem do payer ou do external_reference
-    const email = (payment.payer?.email || ref.email || '').toLowerCase().trim()
+    // Email: prioriza o que o cliente digitou no checkout (ref.email).
+    // payer.email do MP às vezes é interno/inválido (test_user_xxx@testuser.com),
+    // o que faz Supabase rejeitar com "Unable to validate email address".
+    const isValidEmail = (e) => typeof e === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) && !e.includes('@testuser.')
+    const candidates = [ref.email, payment.payer?.email].map((e) => (e || '').toLowerCase().trim())
+    const email = candidates.find(isValidEmail) || ''
     if (!email) {
-      console.warn('[mp-webhook] sem email no pagamento')
-      return res.status(200).json({ ok: true, action: 'no_email' })
+      console.warn('[mp-webhook] sem email válido no pagamento. ref.email:', ref.email, 'payer.email:', payment.payer?.email)
+      return res.status(200).json({ ok: true, action: 'no_valid_email' })
     }
 
     const name = payment.payer?.first_name
