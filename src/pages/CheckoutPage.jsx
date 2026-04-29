@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, ShieldCheck, Lock, CreditCard, CheckCircle2, Loader2, Sparkles, Gift } from 'lucide-react'
+import { ArrowLeft, ShieldCheck, Lock, CreditCard, CheckCircle2, Loader2, Sparkles, Gift, QrCode } from 'lucide-react'
 import { getProduct, KIT_COMPLETO } from '@/lib/sales-data'
 import GarantiaBadge from '@/components/sales/GarantiaBadge'
 import PageMeta from '@/components/PageMeta'
@@ -20,8 +20,12 @@ export default function CheckoutPage() {
   // Estado: se cliente marcou bump (upgrade pra Kit)
   const [withBump, setWithBump] = useState(false)
   const [email, setEmail] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState('card') // 'card' (Stripe) | 'pix' (MP)
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+
+  // Pix bloqueado pra Life OS (subscription não funciona com Pix)
+  const isLifeOS = slug === 'life-os'
 
   useEffect(() => { window.scrollTo(0, 0) }, [slug])
 
@@ -54,8 +58,13 @@ export default function CheckoutPage() {
     // Monta items: produto principal (substituído por kit-completo se bump)
     const items = withBump ? ['kit-completo'] : [slug]
 
+    // Endpoint depende do método: cartão = Stripe, Pix = Mercado Pago
+    const endpoint = paymentMethod === 'pix'
+      ? '/api/create-mp-payment'
+      : '/api/create-checkout-session'
+
     try {
-      const res = await fetch('/api/create-checkout-session', {
+      const res = await fetch(endpoint, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ items, email: email.trim() }),
@@ -63,12 +72,12 @@ export default function CheckoutPage() {
       const data = await res.json()
 
       if (!res.ok || !data.url) {
-        setErrorMsg(data.error || 'Não foi possível abrir o pagamento. Tenta de novo.')
+        setErrorMsg(data.message || data.error || 'Não foi possível abrir o pagamento. Tenta de novo.')
         setLoading(false)
         return
       }
 
-      // Redireciona pro Stripe
+      // Redireciona pro Stripe ou Mercado Pago
       window.location.href = data.url
     } catch (err) {
       setErrorMsg('Erro de rede. Tenta de novo daqui a pouco.')
@@ -193,6 +202,49 @@ export default function CheckoutPage() {
           </p>
         </motion.div>
 
+        {/* SELETOR DE FORMA DE PAGAMENTO */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.25 }}
+          className="mb-4">
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: '#888' }}>
+            Como prefere pagar?
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {/* Cartão (Stripe) */}
+            <button type="button" onClick={() => setPaymentMethod('card')}
+              className="rounded-xl p-3 text-left transition-all active:scale-95"
+              style={{
+                background: paymentMethod === 'card' ? 'rgba(244,196,48,0.1)' : '#0f0f0f',
+                border: paymentMethod === 'card' ? `2px solid ${GOLD}` : '2px solid rgba(255,255,255,0.06)',
+              }}>
+              <div className="flex items-center gap-2 mb-1">
+                <CreditCard className="w-4 h-4" style={{ color: paymentMethod === 'card' ? GOLD : '#666' }} />
+                <span className="text-xs font-black">Cartão</span>
+              </div>
+              <p className="text-[10px] leading-tight" style={{ color: '#888' }}>
+                Crédito/débito · até 12x · imediato
+              </p>
+            </button>
+
+            {/* Pix (MP) */}
+            <button type="button" onClick={() => setPaymentMethod('pix')}
+              disabled={isLifeOS}
+              className="rounded-xl p-3 text-left transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{
+                background: paymentMethod === 'pix' ? 'rgba(34,197,94,0.08)' : '#0f0f0f',
+                border: paymentMethod === 'pix' ? '2px solid #22c55e' : '2px solid rgba(255,255,255,0.06)',
+              }}>
+              <div className="flex items-center gap-2 mb-1">
+                <QrCode className="w-4 h-4" style={{ color: paymentMethod === 'pix' ? '#22c55e' : '#666' }} />
+                <span className="text-xs font-black">Pix</span>
+              </div>
+              <p className="text-[10px] leading-tight" style={{ color: '#888' }}>
+                {isLifeOS ? 'Indisp. pra assinatura' : 'Aprovação na hora'}
+              </p>
+            </button>
+          </div>
+        </motion.div>
+
         {/* Email opcional (UX) */}
         <motion.form
           onSubmit={submit}
@@ -221,13 +273,17 @@ export default function CheckoutPage() {
             style={{ background: GOLD, color: '#000', boxShadow: '0 8px 32px rgba(244,196,48,0.3)' }}>
             {loading ? (
               <><Loader2 className="w-5 h-5 animate-spin" /> Abrindo pagamento...</>
+            ) : paymentMethod === 'pix' ? (
+              <><QrCode className="w-5 h-5" /> Pagar R$ {total.toFixed(2).replace('.', ',')} via Pix</>
             ) : (
               <><CreditCard className="w-5 h-5" /> Pagar R$ {total.toFixed(2).replace('.', ',')}</>
             )}
           </button>
 
           <p className="text-[11px] text-center" style={{ color: '#666' }}>
-            Próxima tela: pagamento seguro pela Stripe (cartão / Pix / boleto)
+            {paymentMethod === 'pix'
+              ? 'Próxima tela: pagamento Pix via Mercado Pago (aprovação imediata)'
+              : 'Próxima tela: pagamento seguro pela Stripe (cartão de crédito/débito)'}
           </p>
         </motion.form>
 
