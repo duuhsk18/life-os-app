@@ -1,14 +1,14 @@
-// Stripe Payment Links — gerados via scripts/stripe-bootstrap.js
-// Pra trocar de test→live: rodar bootstrap com live key e atualizar URLs aqui.
+// Stripe Payment Links — LIVE MODE (produção)
+// Gerados via scripts/stripe-bootstrap.js com sk_live_ key
 const STRIPE_LINKS = {
-  'receitas-low-carb':     'https://buy.stripe.com/test_dRmeVdccF5QcdAJaRWa7C00',
-  'planilhas-treino':      'https://buy.stripe.com/test_00w28r0tX2E0gMVf8ca7C01',
-  'receitas-indigenas':    'https://buy.stripe.com/test_9B64gz1y1diEgMVd04a7C02',
-  'templates-notion':      'https://buy.stripe.com/test_5kQ4gza4x6Ug2W56BGa7C03',
-  'ebooks-autoajuda':      'https://buy.stripe.com/test_dRmaEXb8B7YkcwF9NSa7C04',
-  'planilhas-financeiras': 'https://buy.stripe.com/test_bJe00jfoRfqMfIR0dia7C05',
-  'kit-completo':          'https://buy.stripe.com/test_fZu5kD90t5QcdAJgcga7C06',
-  'life-os':               'https://buy.stripe.com/test_aFa6oH0tXceAdAJ8JOa7C07',
+  'receitas-low-carb':     'https://buy.stripe.com/7sY00jeibeBjfCLeG35sA00',
+  'planilhas-treino':      'https://buy.stripe.com/eVqaEXca3ctb4Y77dB5sA01',
+  'receitas-indigenas':    'https://buy.stripe.com/bJe14nfmf64Nair8hF5sA02',
+  'templates-notion':      'https://buy.stripe.com/4gM7sL5LF1OxgGP0Pd5sA03',
+  'ebooks-autoajuda':      'https://buy.stripe.com/14AdR9b5Z8cV8ajbtR5sA04',
+  'planilhas-financeiras': 'https://buy.stripe.com/28E8wPeibbp7duD0Pd5sA05',
+  'kit-completo':          'https://buy.stripe.com/00w8wPca3eBj9en0Pd5sA06',
+  'life-os':               'https://buy.stripe.com/cNidR98XRbp7eyH0Pd5sA07',
 }
 const STRIPE = (slug) => STRIPE_LINKS[slug]
 

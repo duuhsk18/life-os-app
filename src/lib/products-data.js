@@ -20,7 +20,7 @@ export const PRODUCTS = {
     monthly_after: 79.90,
     first_month_label: 'no 1º mês',
     discount_percent: 53,
-    checkout_url: 'https://buy.stripe.com/test_aFa6oH0tXceAdAJ8JOa7C07',
+    checkout_url: 'https://buy.stripe.com/cNidR98XRbp7eyH0Pd5sA07',
     is_subscription: true,
     billing_period: 'mês',
     problem_title: 'Você começa, desanima e nunca sustenta a rotina',
