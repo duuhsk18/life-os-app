@@ -62,7 +62,7 @@ export const PRODUCTS = {
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
     checkoutUrl: STRIPE('planilhas-treino'),
-    color: 'from-blue-600 to-indigo-500',
+    color: 'from-orange-600 to-amber-500',
     badge: 'MAIS COMPLETO',
     category: 'treinos',
     painPoints: [
@@ -140,7 +140,7 @@ export const PRODUCTS = {
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
     checkoutUrl: STRIPE('templates-notion'),
-    color: 'from-purple-600 to-violet-500',
+    color: 'from-pink-600 to-rose-500',
     badge: 'PRODUTIVIDADE',
     category: 'notion',
     painPoints: [
@@ -179,7 +179,7 @@ export const PRODUCTS = {
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
     checkoutUrl: STRIPE('ebooks-autoajuda'),
-    color: 'from-pink-600 to-rose-500',
+    color: 'from-violet-600 to-purple-500',
     badge: 'TRANSFORMADOR',
     category: 'autoajuda',
     painPoints: [
@@ -218,7 +218,7 @@ export const PRODUCTS = {
     installment: { times: 3, value: 9.30 },
     originalPrice: 97.00,
     checkoutUrl: STRIPE('planilhas-financeiras'),
-    color: 'from-yellow-600 to-amber-500',
+    color: 'from-indigo-600 to-blue-500',
     badge: 'ESSENCIAL',
     category: 'financas',
     painPoints: [
