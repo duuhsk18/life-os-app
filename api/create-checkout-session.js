@@ -78,7 +78,7 @@ export default async function handler(req, res) {
       mode,
       line_items,
       allow_promotion_codes,
-      success_url: `${SITE}/minha-conta?stripe_success=1`,
+      success_url: `${SITE}/obrigado?slugs=${encodeURIComponent(validItems.join(','))}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url:  `${SITE}/p/${validItems[0]}`,
       metadata: {
         // Slugs como string CSV pra fácil leitura no webhook

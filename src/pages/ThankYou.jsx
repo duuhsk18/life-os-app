@@ -1,94 +1,222 @@
-import { useNavigate, useSearchParams, Link } from 'react-router-dom'
-import { getProduct, PRODUCTS } from '@/lib/sales-data'
-import SocialProofToast from '@/components/sales/SocialProofToast'
+import { useEffect, useMemo } from 'react'
+import { useSearchParams, Link, useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { CheckCircle2, Mail, Sparkles, ArrowRight, Trophy, Zap, Library } from 'lucide-react'
+import { getProduct, KIT_COMPLETO, LIFE_OS } from '@/lib/sales-data'
+import GarantiaBadge from '@/components/sales/GarantiaBadge'
+
+const GOLD = '#F4C430'
+
+const KIT_COMPLETO_SLUGS = [
+  'receitas-low-carb', 'planilhas-treino', 'receitas-indigenas',
+  'templates-notion', 'ebooks-autoajuda', 'planilhas-financeiras',
+]
 
 export default function ThankYou() {
-  const navigate = useNavigate()
   const [params] = useSearchParams()
-  const slug = params.get('produto')
-  const product = getProduct(slug)
-  const allProducts = Object.values(PRODUCTS).filter(p => p.slug !== slug)
+  const navigate = useNavigate()
+
+  // Slugs comprados (?slugs=slug1,slug2 ou ?produto=slug pra retrocompat)
+  const slugs = useMemo(() => {
+    const raw = params.get('slugs') || params.get('produto') || ''
+    return raw.split(',').map((s) => s.trim()).filter(Boolean)
+  }, [params])
+
+  // Expande kit-completo em 6 produtos
+  const expandedSlugs = useMemo(() => {
+    const out = []
+    for (const s of slugs) {
+      if (s === 'kit-completo' || s === '__KIT_COMPLETO__') {
+        out.push(...KIT_COMPLETO_SLUGS)
+      } else {
+        out.push(s)
+      }
+    }
+    return [...new Set(out)]
+  }, [slugs])
+
+  const products = useMemo(() => expandedSlugs.map(getProduct).filter(Boolean), [expandedSlugs])
+  const hasLifeOS = slugs.includes('life-os')
+  const hasKit = slugs.includes('kit-completo') || expandedSlugs.length >= 6
+  const hasOnlyOneAvulso = slugs.length === 1 && !hasLifeOS && !hasKit
+
+  // Smart upsell strategy:
+  //   - Comprou só avulso → push Kit (mesma jogada do bump pra quem não pegou)
+  //   - Comprou Kit → push Life OS (recurring revenue!)
+  //   - Comprou Life OS → sem upsell (tem tudo)
+  const upsellTarget = hasLifeOS
+    ? null
+    : hasKit
+    ? 'life-os'
+    : 'kit-completo'
+
+  useEffect(() => { window.scrollTo(0, 0) }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <SocialProofToast />
-      {/* Header */}
-      <div className="bg-gradient-to-br from-green-600 to-emerald-500 text-white px-4 pt-12 pb-10 text-center">
-        <div className="text-6xl mb-4">🎉</div>
-        <h1 className="text-2xl font-black mb-2">Compra confirmada!</h1>
-        <p className="text-white/80 text-base">
-          Seu acesso foi liberado. Verifique seu e-mail em instantes.
-        </p>
-        {product && (
-          <div className="mt-5 bg-white/20 rounded-xl p-4 inline-block">
-            <p className="text-lg">{product.emoji} <span className="font-black">{product.title.split('—')[0].trim()}</span></p>
-          </div>
+    <div className="min-h-screen px-4 py-10" style={{ background: '#000', color: '#fff' }}>
+      <div className="max-w-md mx-auto">
+
+        {/* Confirmation hero */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-8">
+          <motion.div
+            initial={{ scale: 0 }} animate={{ scale: 1 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+            className="w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center"
+            style={{ background: 'rgba(34,197,94,0.15)' }}>
+            <CheckCircle2 className="w-10 h-10" style={{ color: '#22c55e' }} />
+          </motion.div>
+          <h1 className="text-3xl md:text-4xl font-black mb-3 leading-tight">Compra confirmada!</h1>
+          <p className="text-base" style={{ color: '#aaa' }}>
+            Seu acesso vai chegar no email em até 2 minutos.
+          </p>
+        </motion.div>
+
+        {/* O que foi comprado */}
+        {products.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.4 }}
+            className="rounded-2xl p-5 mb-4"
+            style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <p className="text-xs uppercase tracking-widest font-bold mb-3" style={{ color: GOLD }}>
+              ✓ Você comprou
+            </p>
+            <div className="space-y-3">
+              {products.map((p) => (
+                <div key={p.slug} className="flex items-center gap-3">
+                  {p.image ? (
+                    <img src={p.image} alt={p.title}
+                      className="w-12 h-15 object-cover rounded-lg flex-shrink-0" style={{ aspectRatio: '4/5' }} />
+                  ) : (
+                    <span className="text-3xl flex-shrink-0">{p.emoji}</span>
+                  )}
+                  <div className="flex-1">
+                    <p className="font-bold text-sm leading-tight">{p.title}</p>
+                  </div>
+                </div>
+              ))}
+              {hasLifeOS && (
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'rgba(244,196,48,0.15)' }}>
+                    <Zap className="w-5 h-5" style={{ color: GOLD }} />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-bold text-sm leading-tight">Life OS — Clube de Membros</p>
+                    <p className="text-xs" style={{ color: '#888' }}>R$ 59,90 · primeira mensalidade</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
         )}
-      </div>
 
-      {/* Access info */}
-      <div className="max-w-lg mx-auto px-4 py-8">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-4">
-          <h2 className="font-black text-gray-900 mb-3">Como acessar seu produto</h2>
-          <ol className="space-y-3">
-            {[
-              '📧 Verifique seu e-mail (caixa de entrada e spam) — em até 2 minutos chega o link de acesso',
-              '🔗 Clique no link e defina sua senha (primeira vez) ou entre direto',
-              '🛍 Sua área "Minha conta" mostra todos os produtos que você comprou',
-              '📱 Funciona no celular, tablet ou computador — instala como app, funciona offline',
-            ].map((step, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
-                <span className="font-black text-gray-400 flex-shrink-0">{i + 1}.</span>
-                {step}
-              </li>
-            ))}
+        {/* Como acessar */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.4 }}
+          className="rounded-2xl p-5 mb-4"
+          style={{ background: 'rgba(244,196,48,0.04)', border: '1px solid rgba(244,196,48,0.2)' }}>
+          <div className="flex items-start gap-3 mb-3">
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ background: 'rgba(244,196,48,0.12)' }}>
+              <Mail className="w-4 h-4" style={{ color: GOLD }} />
+            </div>
+            <div>
+              <h3 className="font-black text-sm">Cheque seu email</h3>
+              <p className="text-xs" style={{ color: '#aaa' }}>
+                Vem do <strong>noreply@agenciacriativa.shop</strong>
+              </p>
+            </div>
+          </div>
+          <ol className="text-xs space-y-1.5 leading-relaxed pl-3" style={{ color: '#ccc' }}>
+            <li><strong>1.</strong> Procura também em Spam e Promoções (Gmail)</li>
+            <li><strong>2.</strong> Clica no botão "Acessar minha área"</li>
+            <li><strong>3.</strong> Você cai logado em /minha-conta</li>
+            <li><strong>4.</strong> Defina uma senha pra próximos logins serem instantâneos</li>
           </ol>
-        </div>
+          <Link to="/minha-conta"
+            className="block mt-4 text-center w-full py-2.5 rounded-xl text-xs font-bold transition active:scale-95"
+            style={{ background: 'rgba(255,255,255,0.06)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}>
+            Já clicou? Acessa direto →
+          </Link>
+        </motion.div>
 
-        {/* CTA: já tem conta? acessa direto */}
-        <Link
-          to="/minha-conta"
-          className="block w-full bg-gray-900 text-white font-black text-sm py-4 rounded-2xl text-center mb-6 active:scale-95 transition-transform"
-        >
-          Já tenho conta — Acessar agora →
-        </Link>
-
-        {/* Upsell to Life OS */}
-        <div
-          onClick={() => navigate('/oto/life-os')}
-          className="bg-gradient-to-br from-yellow-500 to-orange-500 rounded-2xl p-5 mb-6 cursor-pointer active:scale-95 transition-transform text-center shadow-lg"
-        >
-          <p className="text-white font-bold text-xs uppercase tracking-widest mb-1">Recomendamos para você</p>
-          <p className="text-3xl mb-2">⚡</p>
-          <h3 className="text-white font-black text-lg mb-1">Life OS — Sistema Completo de Gestão</h3>
-          <p className="text-white/80 text-xs mb-3">Coloque tudo em prática com gamificação, streak e acompanhamento em tempo real</p>
-          <span className="bg-white text-gray-900 font-black text-sm px-5 py-2 rounded-xl">
-            Ver oferta especial →
-          </span>
-        </div>
-
-        {/* Cross-sell grid */}
-        <h3 className="font-black text-gray-900 text-base mb-4 text-center">Aproveite e leve mais um produto</h3>
-        <div className="space-y-3">
-          {allProducts.slice(0, 4).map(p => (
-            <button
-              key={p.slug}
-              onClick={() => navigate(`/p/${p.slug}`)}
-              className={`w-full bg-gradient-to-r ${p.color} rounded-xl p-4 text-left flex items-center gap-3 active:scale-95 transition-transform`}
-            >
-              <span className="text-3xl">{p.emoji}</span>
-              <div className="flex-1">
-                <p className="text-white font-bold text-sm leading-tight">{p.title.split('—')[0].trim()}</p>
-                <p className="text-white/70 text-xs">R$ {p.price.toFixed(2).replace('.', ',')}</p>
+        {/* SMART UPSELL */}
+        {upsellTarget === 'life-os' && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5 }}
+            className="rounded-2xl overflow-hidden mb-4 relative"
+            style={{ background: 'linear-gradient(135deg, #1a1305, #0a0a0a)', border: '2px solid rgba(244,196,48,0.4)' }}>
+            <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-20 blur-3xl" style={{ background: GOLD }} />
+            <div className="relative p-5">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black mb-3 uppercase tracking-widest"
+                style={{ background: GOLD, color: '#000' }}>
+                <Trophy className="w-3 h-3" /> Oferta especial
               </div>
-              <span className="text-white text-sm">→</span>
-            </button>
-          ))}
-        </div>
+              <h3 className="font-black text-xl mb-2 leading-tight">
+                Quer levar o sistema <span style={{ color: GOLD }}>Life OS</span> também?
+              </h3>
+              <p className="text-sm mb-4" style={{ color: '#bbb' }}>
+                Já que você levou o Kit, completa com o app gamificado: hábitos com XP, treinos, journal, finanças. Materiais novos todo mês.
+              </p>
+              <div className="flex items-baseline gap-2 mb-4">
+                <span className="text-sm line-through" style={{ color: '#666' }}>R$ 79,90/mês</span>
+                <span className="font-black text-2xl" style={{ color: GOLD }}>R$ 59,90</span>
+                <span className="text-xs" style={{ color: '#888' }}>1º mês com cupom <strong>LANCAMENTO</strong></span>
+              </div>
+              <button
+                onClick={() => navigate('/checkout/life-os')}
+                className="w-full py-3.5 rounded-xl font-black text-sm flex items-center justify-center gap-2 active:scale-95 transition"
+                style={{ background: GOLD, color: '#000' }}>
+                Adicionar Life OS <ArrowRight className="w-4 h-4" />
+              </button>
+              <p className="text-[11px] text-center mt-2" style={{ color: '#666' }}>
+                Cancela quando quiser, sem multa
+              </p>
+            </div>
+          </motion.div>
+        )}
 
-        <Link to="/catalogo" className="block text-center text-gray-500 text-sm underline mt-4 py-2">
-          Ver todos os produtos
-        </Link>
+        {upsellTarget === 'kit-completo' && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5 }}
+            className="rounded-2xl overflow-hidden mb-4"
+            style={{ background: 'linear-gradient(135deg, #c2410c, #ea580c)' }}>
+            <div className="p-5">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black mb-3 uppercase tracking-widest bg-white/20 text-white">
+                <Library className="w-3 h-3" /> Aproveita e leve tudo
+              </div>
+              <h3 className="text-white font-black text-xl mb-2 leading-tight">
+                +R$ 19,10 e você leva os <strong>6 produtos</strong>
+              </h3>
+              <p className="text-white/80 text-sm mb-4">
+                Em vez de só este, completa com: Receitas Low Carb + Treinos + Indígenas + Templates + Ebooks + Financeiras. Tudo vitalício.
+              </p>
+              <div className="flex items-baseline gap-2 mb-4">
+                <span className="text-white/60 text-sm line-through">R$ 167,40 (separado)</span>
+                <span className="font-black text-2xl text-white">R$ 47</span>
+              </div>
+              <button
+                onClick={() => navigate('/checkout/kit-completo')}
+                className="w-full py-3.5 rounded-xl font-black text-sm flex items-center justify-center gap-2 active:scale-95 transition bg-white text-gray-900">
+                Quero o Kit Completo <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Garantia (sempre) */}
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
+          className="flex justify-center mt-6">
+          <GarantiaBadge />
+        </motion.div>
+
+        <p className="text-center mt-6 text-xs">
+          <Link to="/" style={{ color: '#666' }}>← Voltar pra página inicial</Link>
+        </p>
       </div>
     </div>
   )
