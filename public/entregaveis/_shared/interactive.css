@@ -64,6 +64,20 @@
   color: #fca5a5;
 }
 
+/* Cálculos automáticos — cores dos resultados */
+.value-positive {
+  color: #10b981 !important;
+  font-weight: 600;
+}
+.value-negative {
+  color: #ef4444 !important;
+  font-weight: 600;
+}
+.value-calculated {
+  color: #a78bfa !important;
+  font-weight: 600;
+}
+
 /* Editable fields */
 .input-field[contenteditable="true"] {
   cursor: text;
