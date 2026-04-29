@@ -128,6 +128,10 @@ async function handleCheckoutCompleted(session, res) {
   const userId = await ensureUser({ email, name })
   if (!userId) throw new Error('Não foi possível criar/encontrar usuário')
 
+  // Garante que profile existe (foreign key requer). Cobre users criados
+  // antes do trigger handle_new_lifeos_user ser instalado.
+  await ensureProfile(userId, email, name)
+
   const rows = slugs.map((slug) => ({
     user_id:           userId,
     product_slug:      slug,
@@ -305,4 +309,24 @@ async function findUserByEmail(email) {
   }
   const user = list?.users?.find((u) => u.email?.toLowerCase() === email.toLowerCase())
   return user?.id || null
+}
+
+/**
+ * Garante que existe linha em lifeos_profiles pra esse user_id.
+ * Necessário porque lifeos_user_products tem FK pra lifeos_profiles.
+ * Idempotente: se já existir, ignora (upsert).
+ */
+async function ensureProfile(userId, email, name) {
+  const { error } = await supabase
+    .from('lifeos_profiles')
+    .upsert({
+      id:        userId,
+      email,
+      full_name: name || email?.split('@')[0] || 'Membro',
+    }, { onConflict: 'id', ignoreDuplicates: true })
+
+  if (error) {
+    console.error('[stripe] ensureProfile:', error.message)
+    throw error
+  }
 }

@@ -135,6 +135,9 @@ export default async function handler(req, res) {
       const userId = await ensureUser({ email, name })
       if (!userId) throw new Error('Não foi possível criar/encontrar usuário')
 
+      // Garante que profile existe (FK requer)
+      await ensureProfile(userId, email, name)
+
       if (slugsToGrant.length > 0) {
         const rows = slugsToGrant.map((slug) => ({
           user_id:         userId,
@@ -288,6 +291,24 @@ async function findUserByEmail(email) {
   }
   const user = list?.users?.find((u) => u.email?.toLowerCase() === email.toLowerCase())
   return user?.id || null
+}
+
+/**
+ * Garante linha em lifeos_profiles (FK constraint do lifeos_user_products).
+ * Idempotente — se já existir, ignora.
+ */
+async function ensureProfile(userId, email, name) {
+  const { error } = await supabase
+    .from('lifeos_profiles')
+    .upsert({
+      id:        userId,
+      email,
+      full_name: name || email?.split('@')[0] || 'Membro',
+    }, { onConflict: 'id', ignoreDuplicates: true })
+  if (error) {
+    console.error('[kiwify] ensureProfile:', error.message)
+    throw error
+  }
 }
 
 async function sendMagicLink({ email, name }) {
