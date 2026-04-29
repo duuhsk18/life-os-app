@@ -90,12 +90,12 @@ export default function Catalogo() {
               <li className="flex items-start gap-2"><span className="text-white/50">✗</span> <span className="text-white/50">Sem sistema gamificado</span></li>
               <li className="flex items-start gap-2"><span className="text-white/50">✗</span> <span className="text-white/50">Sem materiais novos</span></li>
             </ul>
-            <button
-              onClick={() => navigate('/p/kit-completo')}
-              className="w-full bg-white text-gray-900 font-black py-3 rounded-xl text-sm active:scale-95 transition"
+            <a
+              href={KIT_COMPLETO.checkoutUrl}
+              className="w-full bg-white text-gray-900 font-black py-3 rounded-xl text-sm text-center active:scale-95 transition block"
             >
               Quero o Kit →
-            </button>
+            </a>
           </div>
 
           {/* Tier 3: Life OS */}
