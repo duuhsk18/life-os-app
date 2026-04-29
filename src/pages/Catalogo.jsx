@@ -90,12 +90,12 @@ export default function Catalogo() {
               <li className="flex items-start gap-2"><span className="text-white/50">✗</span> <span className="text-white/50">Sem sistema gamificado</span></li>
               <li className="flex items-start gap-2"><span className="text-white/50">✗</span> <span className="text-white/50">Sem materiais novos</span></li>
             </ul>
-            <a
-              href={KIT_COMPLETO.checkoutUrl}
-              className="w-full bg-white text-gray-900 font-black py-3 rounded-xl text-sm text-center active:scale-95 transition block"
+            <button
+              onClick={() => navigate('/checkout/kit-completo')}
+              className="w-full bg-white text-gray-900 font-black py-3 rounded-xl text-sm text-center active:scale-95 transition"
             >
               Quero o Kit →
-            </a>
+            </button>
           </div>
 
           {/* Tier 3: Life OS */}
@@ -187,12 +187,12 @@ export default function Catalogo() {
                 </div>
               </div>
               <div className="flex gap-2 mt-3">
-                <a
-                  href={p.checkoutUrl}
+                <button
+                  onClick={() => navigate(`/checkout/${p.slug}`)}
                   className="flex-1 bg-white/20 border border-white/40 text-white font-bold py-2.5 rounded-xl text-center text-sm hover:bg-white/30 transition"
                 >
                   Comprar agora
-                </a>
+                </button>
                 <button
                   onClick={() => addItem(p)}
                   disabled={inCart || cartFull}

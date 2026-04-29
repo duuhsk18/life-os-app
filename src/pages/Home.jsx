@@ -312,10 +312,10 @@ export default function Home() {
               <li className="flex items-start gap-2"><span className="text-white/40">✗</span> <span className="text-white/40">Sistema gamificado</span></li>
               <li className="flex items-start gap-2"><span className="text-white/40">✗</span> <span className="text-white/40">Novos materiais</span></li>
             </ul>
-            <a href={KIT_COMPLETO.checkoutUrl}
-              className="w-full bg-white text-gray-900 font-black py-3 rounded-xl text-sm text-center active:scale-95 transition">
+            <button onClick={() => navigate('/checkout/kit-completo')}
+              className="w-full bg-white text-gray-900 font-black py-3 rounded-xl text-sm active:scale-95 transition">
               Quero o Kit →
-            </a>
+            </button>
           </motion.div>
 
           {/* Tier 3: Life OS */}
@@ -340,11 +340,11 @@ export default function Home() {
               <li className="flex items-start gap-2"><span className="font-black">✓</span> Hábitos, treinos, journal</li>
               <li className="flex items-start gap-2"><span className="font-black">✓</span> Cancele quando quiser</li>
             </ul>
-            <a href={LIFE_OS.checkoutUrl}
+            <button onClick={() => navigate('/checkout/life-os')}
               className="w-full font-black py-3 rounded-xl text-sm text-center active:scale-95 transition shadow-lg"
               style={{ background: '#000', color: GOLD }}>
               Assinar Life OS →
-            </a>
+            </button>
           </motion.div>
         </motion.div>
 
@@ -403,10 +403,10 @@ export default function Home() {
                   </span>
                 </div>
                 <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
-                  <a href={p.checkoutUrl}
+                  <button onClick={() => navigate(`/checkout/${p.slug}`)}
                     className="flex-1 bg-white text-gray-900 font-black py-2 rounded-lg text-center text-xs hover:opacity-90 transition">
                     Comprar agora →
-                  </a>
+                  </button>
                   <button onClick={() => addItem(p)} disabled={inCart || cartFull}
                     className={`px-3 font-bold py-2 rounded-lg text-xs transition active:scale-95 ${
                       inCart ? 'bg-white/10 text-white/60 cursor-default' :
@@ -457,11 +457,11 @@ export default function Home() {
             </motion.div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
-              <a href={LIFE_OS.checkoutUrl}
+              <button onClick={() => navigate('/checkout/life-os')}
                 className="flex items-center gap-2 px-8 py-4 rounded-2xl font-black text-base active:scale-95 transition"
                 style={{ background: GOLD, color: '#000' }}>
                 Assinar Life OS <ArrowRight className="w-5 h-5" />
-              </a>
+              </button>
               <div className="text-sm">
                 <div style={{ color: GOLD }} className="font-black">R$ 59,90 no 1º mês</div>
                 <div style={{ color: '#888' }} className="text-xs">com cupom <code className="px-1 py-0.5 rounded text-yellow-300" style={{ background: 'rgba(244,196,48,0.1)' }}>LANCAMENTO</code> · depois R$ 79,90/mês · cancele quando quiser</div>

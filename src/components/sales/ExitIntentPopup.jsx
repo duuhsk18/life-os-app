@@ -63,7 +63,7 @@ export default function ExitIntentPopup({ product }) {
         </p>
 
         <a
-          href={product.checkoutUrl}
+          href={`/checkout/${product.slug}`}
           className={`block w-full text-center bg-gradient-to-r ${product.color} text-white font-black py-3 rounded-xl text-base mb-4 shadow-lg`}
         >
           Quero garantir meu acesso agora →

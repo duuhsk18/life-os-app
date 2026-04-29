@@ -12,6 +12,19 @@ const STRIPE_LINKS = {
 }
 const STRIPE = (slug) => STRIPE_LINKS[slug]
 
+// Stripe Price IDs — necessários pra criar Checkout Sessions dinâmicas (com order bump)
+// Match: gerados via scripts/stripe-bootstrap.js (LIVE mode)
+export const STRIPE_PRICES = {
+  'receitas-low-carb':     'price_1TRNu0Fl5Mui7NRgQHCV7etc',
+  'planilhas-treino':      'price_1TRNu2Fl5Mui7NRg10yWSTRj',
+  'receitas-indigenas':    'price_1TRNu3Fl5Mui7NRg6w5SFF3r',
+  'templates-notion':      'price_1TRNu5Fl5Mui7NRgC43w62O2',
+  'ebooks-autoajuda':      'price_1TRNu6Fl5Mui7NRgKgCaTdPj',
+  'planilhas-financeiras': 'price_1TRNu8Fl5Mui7NRga8KDW8m5',
+  'kit-completo':          'price_1TRNu9Fl5Mui7NRgXu4aRPLN',
+  'life-os':               'price_1TRNuBFl5Mui7NRgrz7Z9pNy',
+}
+
 export const PRODUCTS = {
   'receitas-low-carb': {
     slug: 'receitas-low-carb',

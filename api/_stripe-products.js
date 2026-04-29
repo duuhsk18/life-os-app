@@ -6,7 +6,7 @@
 // produto/checkout/payment link, e o webhook lê esse campo direto.
 //
 // Especiais:
-//   - '__KIT_COMPLETO__' expande pra 6 entitlements
+//   - '__KIT_COMPLETO__' (ou 'kit-completo') expande pra 6 entitlements
 //   - 'life-os' é assinatura (recurring)
 // =============================================================================
 
@@ -21,26 +21,43 @@ export const KIT_COMPLETO_SLUGS = [
 
 /**
  * Expande um internal_slug em uma lista de slugs concretos pra inserir em
- * lifeos_user_products. Caso especial: __KIT_COMPLETO__ vira 6 slugs.
+ * lifeos_user_products. Caso especial: kit-completo vira 6 slugs.
  */
 export function expandInternalSlug(internalSlug) {
   if (!internalSlug) return []
-  if (internalSlug === '__KIT_COMPLETO__') return [...KIT_COMPLETO_SLUGS]
+  if (internalSlug === '__KIT_COMPLETO__' || internalSlug === 'kit-completo') {
+    return [...KIT_COMPLETO_SLUGS]
+  }
   return [internalSlug]
 }
 
 /**
- * Lê o internal_slug de um Stripe Checkout Session.
- * Tenta na ordem:
- *   1. session.metadata.internal_slug (Payment Link copia a metadata pra session)
- *   2. session.subscription_data.metadata.internal_slug (raros casos de sub)
+ * Lê os internal_slugs de um Stripe Checkout Session, em ordem de prioridade:
+ *   1. session.metadata.internal_slugs (CSV — usado pelo create-checkout-session
+ *      com order bumps. Ex: 'receitas-low-carb,kit-completo')
+ *   2. session.metadata.internal_slug (singular — usado pelos Payment Links
+ *      diretos do Stripe Dashboard)
+ *   3. session.subscription_data.metadata.internal_slug (assinaturas)
+ *
+ * Retorna array de slugs (sem expandir kit-completo ainda).
  */
+export function extractStripeInternalSlugs(session) {
+  // CSV (multi-item via order bump)
+  const csv = session?.metadata?.internal_slugs
+  if (csv && typeof csv === 'string') {
+    return csv.split(',').map((s) => s.trim()).filter(Boolean)
+  }
+  // Singular (Payment Link tradicional)
+  const single = session?.metadata?.internal_slug
+              || session?.subscription_data?.metadata?.internal_slug
+  if (single) return [single]
+  return []
+}
+
+// Mantém compatibilidade — retorna o primeiro slug ou null
 export function extractStripeInternalSlug(session) {
-  return (
-    session?.metadata?.internal_slug ||
-    session?.subscription_data?.metadata?.internal_slug ||
-    null
-  )
+  const slugs = extractStripeInternalSlugs(session)
+  return slugs[0] || null
 }
 
 /**

@@ -18,6 +18,7 @@ import { createClient } from '@supabase/supabase-js'
 import {
   expandInternalSlug,
   extractStripeInternalSlug,
+  extractStripeInternalSlugs,
   extractStripeEmail,
   extractStripeName,
 } from './_stripe-products.js'
@@ -97,16 +98,18 @@ export default async function handler(req, res) {
 // ---------------------------------------------------------------------------
 
 async function handleCheckoutCompleted(session, res) {
-  const internalSlug = extractStripeInternalSlug(session)
-  const email        = extractStripeEmail(session)?.toLowerCase().trim()
-  const name         = extractStripeName(session)
-  const slugs        = expandInternalSlug(internalSlug)
+  // Suporta múltiplos slugs (order bump via /api/create-checkout-session) +
+  // singular (Payment Links tradicionais). Cada slug é expandido (kit-completo → 6 slugs)
+  const internalSlugs = extractStripeInternalSlugs(session)
+  const email         = extractStripeEmail(session)?.toLowerCase().trim()
+  const name          = extractStripeName(session)
+  const slugs         = [...new Set(internalSlugs.flatMap(expandInternalSlug))] // dedup
 
   console.log('[stripe] checkout.session.completed', {
-    sessionId:    session.id,
+    sessionId:     session.id,
     email,
-    internalSlug,
-    slugs,
+    internalSlugs,
+    expandedSlugs: slugs,
     paymentStatus: session.payment_status,
   })
 

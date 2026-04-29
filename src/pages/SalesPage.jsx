@@ -46,9 +46,9 @@ export default function SalesPage() {
     return sum + (isNaN(num) ? 0 : num)
   }, 0)
 
-  const checkoutUrl = bumpChecked
-    ? `${product.checkoutUrl}&bump=kit`
-    : product.checkoutUrl
+  // Manda pro checkout customizado — bump nativo é tratado lá
+  // (o bump na SalesPage é referencial; o real está em /checkout/:slug)
+  const checkoutUrl = `/checkout/${product.slug}`
 
   const productSchema = {
     '@context': 'https://schema.org',
