@@ -2,7 +2,9 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { useUserProducts } from '@/lib/entitlements'
-import { ExternalLink, Sparkles, ShoppingBag, LogOut, Loader2, CreditCard } from 'lucide-react'
+import { useState } from 'react'
+import { supabase } from '@/lib/supabase'
+import { ExternalLink, Sparkles, ShoppingBag, LogOut, Loader2, CreditCard, KeyRound, Eye, EyeOff, CheckCircle2 } from 'lucide-react'
 
 const GOLD = '#F4C430'
 
@@ -189,6 +191,9 @@ export default function MinhaConta() {
           </>
         )}
 
+        {/* Senha */}
+        <PasswordSection />
+
         {/* Footer note */}
         <div
           className="mt-12 rounded-xl p-4 text-xs"
@@ -202,6 +207,111 @@ export default function MinhaConta() {
           como ícone na tela inicial. Tudo funciona offline depois.
         </div>
       </main>
+    </div>
+  )
+}
+
+function PasswordSection() {
+  const [pwd, setPwd]       = useState('')
+  const [pwd2, setPwd2]     = useState('')
+  const [showPwd, setShow]  = useState(false)
+  const [status, setStatus] = useState('idle') // idle | saving | saved | error
+  const [errMsg, setErrMsg] = useState('')
+
+  async function save(e) {
+    e.preventDefault()
+    setStatus('saving')
+    setErrMsg('')
+
+    if (pwd.length < 6) {
+      setStatus('error')
+      setErrMsg('Senha precisa ter ao menos 6 caracteres.')
+      return
+    }
+    if (pwd !== pwd2) {
+      setStatus('error')
+      setErrMsg('As senhas não coincidem.')
+      return
+    }
+
+    const { error } = await supabase.auth.updateUser({ password: pwd })
+    if (error) {
+      setStatus('error')
+      setErrMsg(error.message || 'Erro ao salvar senha.')
+      return
+    }
+
+    setStatus('saved')
+    setPwd('')
+    setPwd2('')
+    setTimeout(() => setStatus('idle'), 4000)
+  }
+
+  return (
+    <div className="mt-10 rounded-2xl p-6"
+      style={{ background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.06)' }}>
+      <div className="flex items-center gap-3 mb-2">
+        <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+          style={{ background: 'rgba(244,196,48,0.12)', border: '1px solid rgba(244,196,48,0.25)' }}>
+          <KeyRound className="w-4 h-4" style={{ color: GOLD }} />
+        </div>
+        <div>
+          <h3 className="font-bold text-sm">Definir senha de acesso</h3>
+          <p className="text-xs" style={{ color: '#666' }}>
+            Pra entrar mais rápido nas próximas vezes (sem precisar do email)
+          </p>
+        </div>
+      </div>
+
+      <form onSubmit={save} className="space-y-3 mt-4 max-w-md">
+        <div className="relative">
+          <input
+            type={showPwd ? 'text' : 'password'}
+            value={pwd}
+            onChange={(e) => setPwd(e.target.value)}
+            placeholder="Nova senha (mínimo 6 caracteres)"
+            autoComplete="new-password"
+            minLength={6}
+            required
+            className="w-full bg-transparent border rounded-xl px-4 py-3 pr-11 text-sm outline-none transition focus:border-yellow-400"
+            style={{ borderColor: 'rgba(255,255,255,0.1)', color: '#fff' }}
+          />
+          <button type="button" onClick={() => setShow((p) => !p)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 opacity-50 hover:opacity-100 transition" tabIndex={-1}>
+            {showPwd ? <EyeOff className="w-4 h-4" style={{ color: '#888' }} /> : <Eye className="w-4 h-4" style={{ color: '#888' }} />}
+          </button>
+        </div>
+        <input
+          type={showPwd ? 'text' : 'password'}
+          value={pwd2}
+          onChange={(e) => setPwd2(e.target.value)}
+          placeholder="Confirmar senha"
+          autoComplete="new-password"
+          minLength={6}
+          required
+          className="w-full bg-transparent border rounded-xl px-4 py-3 text-sm outline-none transition focus:border-yellow-400"
+          style={{ borderColor: 'rgba(255,255,255,0.1)', color: '#fff' }}
+        />
+
+        {status === 'error' && errMsg && (
+          <p className="text-xs px-3 py-2 rounded-lg" style={{ background: 'rgba(239,68,68,0.08)', color: '#fca5a5', border: '1px solid rgba(239,68,68,0.3)' }}>
+            {errMsg}
+          </p>
+        )}
+
+        {status === 'saved' && (
+          <p className="text-xs px-3 py-2 rounded-lg flex items-center gap-2"
+            style={{ background: 'rgba(34,197,94,0.08)', color: '#86efac', border: '1px solid rgba(34,197,94,0.3)' }}>
+            <CheckCircle2 className="w-4 h-4" /> Senha salva! Use email + senha no próximo login.
+          </p>
+        )}
+
+        <button type="submit" disabled={status === 'saving' || !pwd || !pwd2}
+          className="px-5 py-2.5 rounded-xl font-bold text-sm transition active:scale-95 disabled:opacity-50"
+          style={{ background: GOLD, color: '#000' }}>
+          {status === 'saving' ? 'Salvando...' : 'Salvar senha'}
+        </button>
+      </form>
     </div>
   )
 }

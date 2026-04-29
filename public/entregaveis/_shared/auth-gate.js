@@ -178,6 +178,47 @@
   }
 
   // ---------------------------------------------------------------------------
+  // CACHE DE VALIDAÇÃO — reduz chamadas de API
+  // ---------------------------------------------------------------------------
+  // Após validar uma vez via API, cacheia o resultado por 1h em sessionStorage.
+  // Próximas aberturas do entregável (refresh, navegação) não fazem nova chamada.
+  // Cache se renova automaticamente após expirar.
+  // Cache é invalidado se: token mudar, navegador fechar (sessionStorage),
+  // ou o user clicar "Sair" (limpa storage).
+
+  const CACHE_KEY = 'auth-gate-cache-' + SLUG
+  const CACHE_TTL = 60 * 60 * 1000 // 1 hora
+
+  function readCache(currentToken) {
+    try {
+      const raw = sessionStorage.getItem(CACHE_KEY)
+      if (!raw) return null
+      const cache = JSON.parse(raw)
+      // Cache válido se: não expirou, e o token bate (token diferente = user diferente)
+      if (cache.tokenHash !== hashToken(currentToken)) return null
+      if (Date.now() > cache.expiresAt) return null
+      return cache
+    } catch { return null }
+  }
+
+  function writeCache(currentToken, data) {
+    try {
+      sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+        tokenHash:  hashToken(currentToken),
+        slugs:      data.slugs,
+        expiresAt:  Date.now() + CACHE_TTL,
+      }))
+    } catch {}
+  }
+
+  // Hash simples (não-criptográfico) do token só pra detectar troca
+  function hashToken(t) {
+    let h = 0
+    for (let i = 0; i < t.length; i++) h = ((h << 5) - h + t.charCodeAt(i)) | 0
+    return h.toString(36)
+  }
+
+  // ---------------------------------------------------------------------------
   // Fluxo principal
   // ---------------------------------------------------------------------------
   showLoading()
@@ -188,6 +229,17 @@
     return
   }
 
+  // 1. Tenta cache primeiro (instant unlock se válido)
+  const cached = readCache(session.access_token)
+  if (cached) {
+    if (Array.isArray(cached.slugs) && cached.slugs.includes(SLUG)) {
+      unlock()
+      return
+    }
+    // Cache diz que não tem entitlement — mas pode ter mudado, vamos revalidar
+  }
+
+  // 2. Sem cache válido → chama API
   fetch(SITE + '/api/check-entitlement', {
     headers: { 'Authorization': 'Bearer ' + session.access_token },
   })
@@ -205,13 +257,26 @@
     .then((data) => {
       if (!data) return // already handled (401)
       if (Array.isArray(data.slugs) && data.slugs.includes(SLUG)) {
+        writeCache(session.access_token, data)
         unlock()
       } else {
+        // Não cacheia "negado" pra revalidar sempre — caso entitlement seja concedido depois
         showNotEntitled(data.slugs)
       }
     })
     .catch((err) => {
       console.error('[auth-gate] erro:', err.message)
+      // Em erro de rede, se tiver cache (mesmo expirado), libera otimisticamente
+      // Melhor falso positivo offline que tela de erro pra cliente legítimo
+      try {
+        const fallback = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null')
+        if (fallback && fallback.tokenHash === hashToken(session.access_token) &&
+            Array.isArray(fallback.slugs) && fallback.slugs.includes(SLUG)) {
+          console.log('[auth-gate] usando cache offline')
+          unlock()
+          return
+        }
+      } catch {}
       showError(err.message)
     })
 })()

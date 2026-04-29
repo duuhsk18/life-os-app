@@ -1,4 +1,4 @@
-﻿const CACHE = 'lifeos-ebooks-v3';
+﻿const CACHE = 'lifeos-ebooks-v4';
 const ASSETS = ['./','./index.html','./01-a-arte-da-disciplina.html','./02-mentalidade-de-crescimento.html','./03-foco-total.html','./04-o-poder-do-nao.html','./05-realizacao-em-90-dias.html','./manifest.json','./icon.svg','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install', (e) => {
