@@ -147,19 +147,27 @@ export default function Catalogo() {
           return (
             <div
               key={p.slug}
-              className={`bg-gradient-to-br ${p.color} rounded-2xl p-5 shadow-lg`}
+              className={`bg-gradient-to-br ${p.color} rounded-2xl overflow-hidden shadow-lg`}
             >
+              {p.image && (
+                <div className="relative w-full aspect-[4/5] overflow-hidden bg-black/10 cursor-pointer"
+                  onClick={() => navigate(`/p/${p.slug}`)}>
+                  <img src={p.image} alt={p.title} loading="lazy"
+                    className="w-full h-full object-cover" />
+                  {p.badge && (
+                    <span className="absolute top-3 left-3 bg-white/95 text-gray-900 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wide shadow">
+                      {p.badge}
+                    </span>
+                  )}
+                </div>
+              )}
+              <div className="p-5">
               <div
                 className="flex items-start gap-4 cursor-pointer"
                 onClick={() => navigate(`/p/${p.slug}`)}
               >
-                <span className="text-5xl">{p.emoji}</span>
+                {!p.image && <span className="text-5xl">{p.emoji}</span>}
                 <div className="flex-1">
-                  {p.badge && (
-                    <span className="inline-block bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2 uppercase tracking-wide">
-                      {p.badge}
-                    </span>
-                  )}
                   <h2 className="text-white font-black text-base leading-tight mb-1">{p.title}</h2>
                   <p className="text-white/75 text-xs leading-relaxed line-clamp-2">{p.subtitle}</p>
                   <div className="flex items-center justify-between mt-3">
@@ -198,6 +206,7 @@ export default function Catalogo() {
                 >
                   {inCart ? '✓ No carrinho' : '🛒 Carrinho'}
                 </button>
+              </div>
               </div>
             </div>
           )

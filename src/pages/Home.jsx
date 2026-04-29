@@ -367,20 +367,32 @@ export default function Home() {
             const inCart = hasItem(p.slug)
             return (
               <motion.div key={p.slug} variants={staggerItem} whileHover={{ scale: 1.01 }}
-                className={`bg-gradient-to-br ${p.color} rounded-2xl p-5 shadow-lg cursor-pointer`}
+                className={`bg-gradient-to-br ${p.color} rounded-2xl overflow-hidden shadow-lg cursor-pointer`}
                 onClick={() => navigate(`/p/${p.slug}`)}>
-                <div className="flex items-start gap-3 mb-3">
-                  <span className="text-4xl flex-shrink-0">{p.emoji}</span>
-                  <div className="flex-1 min-w-0">
+                {/* Imagem do produto */}
+                {p.image && (
+                  <div className="relative w-full aspect-[4/5] overflow-hidden bg-black/10">
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
                     {p.badge && (
-                      <span className="inline-block bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full mb-1.5 uppercase tracking-wide">
+                      <span className="absolute top-3 left-3 bg-white/95 text-gray-900 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wide shadow">
                         {p.badge}
                       </span>
                     )}
-                    <h3 className="text-white font-black text-base leading-tight mb-1 line-clamp-2">{p.title}</h3>
                   </div>
-                </div>
-                <p className="text-white/80 text-xs leading-relaxed line-clamp-2 mb-4">{p.subtitle}</p>
+                )}
+                <div className="p-5">
+                  <div className="flex items-start gap-3 mb-3">
+                    {!p.image && <span className="text-4xl flex-shrink-0">{p.emoji}</span>}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-white font-black text-base leading-tight mb-1 line-clamp-2">{p.title}</h3>
+                    </div>
+                  </div>
+                  <p className="text-white/80 text-xs leading-relaxed line-clamp-2 mb-4">{p.subtitle}</p>
                 <div className="flex items-end justify-between mb-3">
                   <div>
                     <span className="text-white/50 text-xs line-through block">R$ {p.originalPrice.toFixed(2).replace('.', ',')}</span>
@@ -403,6 +415,7 @@ export default function Home() {
                     }`}>
                     {inCart ? '✓' : '🛒'}
                   </button>
+                </div>
                 </div>
               </motion.div>
             )

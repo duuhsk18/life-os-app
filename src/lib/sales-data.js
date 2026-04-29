@@ -16,6 +16,7 @@ export const PRODUCTS = {
   'receitas-low-carb': {
     slug: 'receitas-low-carb',
     emoji: '🥗',
+    image: '/assets/products/receitas-low-carb.png',
     title: 'Receitas Low Carb que Funcionam de Verdade',
     subtitle: 'Mais de 80 receitas testadas, práticas e saborosas para você emagrecer sem sofrimento',
     price: 27.90,
@@ -54,6 +55,7 @@ export const PRODUCTS = {
   'planilhas-treino': {
     slug: 'planilhas-treino',
     emoji: '💪',
+    image: '/assets/products/planilhas-treino.png',
     title: 'Planilhas de Treino Prontas para Usar Hoje',
     subtitle: '12 semanas de treino estruturado — do iniciante ao avançado, academia ou casa',
     price: 27.90,
@@ -92,6 +94,7 @@ export const PRODUCTS = {
   'receitas-indigenas': {
     slug: 'receitas-indigenas',
     emoji: '🌿',
+    image: '/assets/products/receitas-indigenas.png',
     title: 'Receitas Indígenas — A Sabedoria da Terra na Sua Mesa',
     subtitle: 'Mais de 60 receitas ancestrais com ingredientes simples, nutritivos e cheios de sabor',
     price: 27.90,
@@ -130,6 +133,7 @@ export const PRODUCTS = {
   'templates-notion': {
     slug: 'templates-notion',
     emoji: '📋',
+    image: '/assets/products/templates-notion.png',
     title: 'Templates Notion que Transformam sua Produtividade',
     subtitle: '20 templates prontos para organizar sua vida, trabalho, estudos e finanças em um só lugar',
     price: 27.90,
@@ -168,6 +172,7 @@ export const PRODUCTS = {
   'ebooks-autoajuda': {
     slug: 'ebooks-autoajuda',
     emoji: '🧠',
+    image: '/assets/products/ebooks-autoajuda.png',
     title: 'Coleção de Ebooks de Autoajuda que Mudam Mentalidades',
     subtitle: '5 ebooks essenciais sobre mentalidade, foco, disciplina e realização pessoal',
     price: 27.90,
@@ -206,6 +211,7 @@ export const PRODUCTS = {
   'planilhas-financeiras': {
     slug: 'planilhas-financeiras',
     emoji: '💰',
+    image: '/assets/products/planilhas-financeiras.png',
     title: 'Planilhas Financeiras para Sair do Vermelho de Vez',
     subtitle: '8 planilhas que organizam suas finanças, eliminam dívidas e fazem seu dinheiro sobrar',
     price: 27.90,

@@ -78,6 +78,7 @@ export default function SalesPage() {
         description={product.subtitle}
         canonical={`${SITE}/p/${product.slug}`}
         ogType="product"
+        ogImage={product.image ? `${SITE}${product.image}` : undefined}
         schema={productSchema}
       />
       <ExitIntentPopup product={product} />
@@ -97,7 +98,13 @@ export default function SalesPage() {
               {product.badge}
             </span>
           )}
-          <div className="text-6xl mb-4">{product.emoji}</div>
+          {product.image ? (
+            <div className="mx-auto mb-5 max-w-xs rounded-2xl overflow-hidden shadow-2xl">
+              <img src={product.image} alt={product.title} className="w-full h-auto block" loading="eager" fetchPriority="high" />
+            </div>
+          ) : (
+            <div className="text-6xl mb-4">{product.emoji}</div>
+          )}
           <h1 className="text-2xl sm:text-3xl font-black leading-tight mb-3">
             {product.title}
           </h1>
