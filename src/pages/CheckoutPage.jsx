@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ShieldCheck, Lock, CreditCard, CheckCircle2, Loader2, Sparkles, Gift, QrCode } from 'lucide-react'
 import { getProduct, KIT_COMPLETO } from '@/lib/sales-data'
 import GarantiaBadge from '@/components/sales/GarantiaBadge'
+import CountdownTimer from '@/components/sales/CountdownTimer'
+import SocialProofToast from '@/components/sales/SocialProofToast'
 import PageMeta from '@/components/PageMeta'
 
 const GOLD = '#F4C430'
@@ -131,10 +133,25 @@ export default function CheckoutPage() {
         noindex
       />
 
+      {/* Toast de social proof recente */}
+      <SocialProofToast />
+
+      {/* Banner de escassez no topo (sticky) */}
+      <div className="max-w-md mx-auto mb-4">
+        <div className="rounded-2xl p-3 flex items-center gap-3"
+          style={{ background: 'linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))', border: '1px solid rgba(239,68,68,0.4)' }}>
+          <span className="text-xl flex-shrink-0">🔥</span>
+          <div className="flex-1">
+            <p className="text-xs font-black uppercase tracking-wider" style={{ color: '#fca5a5' }}>Oferta termina em</p>
+            <CountdownTimer minutes={15} />
+          </div>
+        </div>
+      </div>
+
       <div className="max-w-md mx-auto">
         {/* Voltar */}
         <Link to={`/p/${slug}`}
-          className="inline-flex items-center gap-2 text-sm mb-6 transition"
+          className="inline-flex items-center gap-2 text-sm mb-4 transition"
           style={{ color: '#888' }}>
           <ArrowLeft className="w-4 h-4" /> Voltar pra página do produto
         </Link>
@@ -143,7 +160,7 @@ export default function CheckoutPage() {
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold mb-3"
             style={{ background: 'rgba(244,196,48,0.1)', color: GOLD, border: '1px solid rgba(244,196,48,0.25)' }}>
-            <Lock className="w-3.5 h-3.5" /> Checkout seguro
+            <Lock className="w-3.5 h-3.5" /> Checkout 100% seguro
           </div>
           <h1 className="text-2xl md:text-3xl font-black mb-1">Confirme seu pedido</h1>
           <p className="text-sm" style={{ color: '#888' }}>
@@ -151,29 +168,55 @@ export default function CheckoutPage() {
           </p>
         </div>
 
-        {/* Card produto principal */}
+        {/* Card produto principal — imagem maior + destaques */}
         <motion.div
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
-          className="rounded-2xl p-5 mb-3 flex items-center gap-4"
+          className="rounded-2xl p-4 mb-3"
           style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}>
-          {product?.image ? (
-            <img src={product.image} alt={product.title}
-              className="w-16 h-20 object-cover rounded-lg flex-shrink-0" />
-          ) : (
-            <div className="w-16 h-20 rounded-lg flex items-center justify-center text-3xl flex-shrink-0"
-              style={{ background: 'rgba(255,255,255,0.05)' }}>
-              {product?.emoji || '⚡'}
+          <div className="flex items-start gap-4">
+            {product?.image ? (
+              <img src={product.image} alt={product.title}
+                className="w-24 h-28 object-cover rounded-xl flex-shrink-0 shadow-lg" />
+            ) : (
+              <div className="w-24 h-28 rounded-xl flex items-center justify-center text-5xl flex-shrink-0"
+                style={{ background: 'rgba(255,255,255,0.05)' }}>
+                {product?.emoji || '⚡'}
+              </div>
+            )}
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] uppercase tracking-widest mb-1" style={{ color: GOLD }}>Você está comprando</p>
+              <h2 className="font-black text-base leading-tight mb-2">
+                {product?.title || (slug === 'kit-completo' ? KIT_COMPLETO.title : 'Life OS')}
+              </h2>
+              <div className="flex items-baseline gap-2 flex-wrap">
+                {product?.originalPrice && product.originalPrice > mainPrice && (
+                  <span className="text-xs line-through" style={{ color: '#555' }}>
+                    R$ {product.originalPrice.toFixed(2).replace('.', ',')}
+                  </span>
+                )}
+                <span className="font-black text-xl" style={{ color: GOLD }}>
+                  R$ {mainPrice.toFixed(2).replace('.', ',')}
+                </span>
+                {product?.originalPrice && product.originalPrice > mainPrice && (
+                  <span className="text-[10px] font-black px-1.5 py-0.5 rounded" style={{ background: '#22c55e', color: '#000' }}>
+                    -{Math.round((1 - mainPrice / product.originalPrice) * 100)}%
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Mini features do produto */}
+          {product?.benefits && product.benefits.length > 0 && (
+            <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-white/5">
+              {product.benefits.slice(0, 4).map((b, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: GOLD }} />
+                  <p className="text-[11px] leading-tight" style={{ color: '#bbb' }}>{b.title}</p>
+                </div>
+              ))}
             </div>
           )}
-          <div className="flex-1 min-w-0">
-            <p className="text-xs mb-0.5" style={{ color: '#666' }}>Produto principal</p>
-            <h2 className="font-black text-base leading-tight line-clamp-2 mb-1">
-              {product?.title || (slug === 'kit-completo' ? KIT_COMPLETO.title : 'Life OS')}
-            </h2>
-            <p className="font-black text-lg" style={{ color: GOLD }}>
-              R$ {mainPrice.toFixed(2).replace('.', ',')}
-            </p>
-          </div>
         </motion.div>
 
         {/* ORDER BUMP — só aparece pra produtos individuais */}
@@ -326,25 +369,60 @@ export default function CheckoutPage() {
 
           <p className="text-[11px] text-center" style={{ color: '#666' }}>
             {paymentMethod === 'pix'
-              ? 'Próxima tela: pagamento Pix via Mercado Pago (aprovação imediata)'
-              : 'Próxima tela: pagamento seguro pela Stripe (cartão de crédito/débito)'}
+              ? 'QR Code aparece na próxima tela · acesso liberado em segundos após pagar'
+              : 'Próxima tela: pagamento seguro pela Stripe (cartão crédito/débito)'}
           </p>
         </motion.form>
 
-        {/* Trust signals */}
+        {/* Mini-depoimentos rápidos abaixo do CTA */}
+        {product?.testimonials && product.testimonials.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.35 }}
+            className="rounded-2xl p-4 mt-6"
+            style={{ background: 'rgba(34,197,94,0.04)', border: '1px solid rgba(34,197,94,0.15)' }}>
+            <div className="flex items-center gap-1.5 mb-3">
+              <span className="text-yellow-400 text-sm">★★★★★</span>
+              <span className="text-xs font-bold" style={{ color: '#86efac' }}>
+                4.9/5 · +2.000 clientes
+              </span>
+            </div>
+            <p className="text-xs leading-relaxed mb-2 italic" style={{ color: '#ccc' }}>
+              "{product.testimonials[0].text.length > 120 ? product.testimonials[0].text.slice(0, 117) + '…' : product.testimonials[0].text}"
+            </p>
+            <p className="text-[10px]" style={{ color: '#888' }}>
+              — {product.testimonials[0].name} · {product.testimonials[0].city}
+            </p>
+          </motion.div>
+        )}
+
+        {/* Trust signals expandido */}
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.4 }}
-          className="flex flex-col gap-3 items-center mt-6">
+          className="flex flex-col gap-4 items-center mt-6">
           <GarantiaBadge />
-          <div className="flex items-center gap-4 text-xs" style={{ color: '#666' }}>
-            <span className="inline-flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              Pagamento criptografado
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" />
-              Acesso imediato
-            </span>
+
+          {/* Trust badges row */}
+          <div className="grid grid-cols-3 gap-2 w-full">
+            <div className="rounded-xl p-3 text-center" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <ShieldCheck className="w-4 h-4 mx-auto mb-1" style={{ color: '#22c55e' }} />
+              <p className="text-[10px] font-bold leading-tight" style={{ color: '#aaa' }}>Pagamento<br/>criptografado</p>
+            </div>
+            <div className="rounded-xl p-3 text-center" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <Sparkles className="w-4 h-4 mx-auto mb-1" style={{ color: GOLD }} />
+              <p className="text-[10px] font-bold leading-tight" style={{ color: '#aaa' }}>Acesso<br/>imediato</p>
+            </div>
+            <div className="rounded-xl p-3 text-center" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <CheckCircle2 className="w-4 h-4 mx-auto mb-1" style={{ color: '#22c55e' }} />
+              <p className="text-[10px] font-bold leading-tight" style={{ color: '#aaa' }}>Garantia<br/>7 dias</p>
+            </div>
+          </div>
+
+          {/* Logos de pagamento */}
+          <div className="flex items-center gap-3 opacity-50 mt-2">
+            <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: '#666' }}>Pagamento via</span>
+            <span className="text-xs font-black" style={{ color: '#aaa' }}>Stripe</span>
+            <span className="text-xs" style={{ color: '#444' }}>·</span>
+            <span className="text-xs font-black" style={{ color: '#aaa' }}>Mercado Pago</span>
           </div>
         </motion.div>
       </div>
