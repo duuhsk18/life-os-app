@@ -146,6 +146,26 @@ export default function SalesPage() {
         </div>
       </section>
 
+      {/* 4 Pilares de Benefícios — copy positivo logo após o hero */}
+      {Array.isArray(product.benefits) && product.benefits.length > 0 && (
+        <section className="bg-white px-4 py-10">
+          <div className="max-w-lg mx-auto">
+            <h2 className="text-xl font-black mb-6 text-center text-gray-900">
+              O que você ganha com este guia
+            </h2>
+            <div className="grid grid-cols-2 gap-3">
+              {product.benefits.map((b, i) => (
+                <div key={i} className="rounded-2xl p-4 border-2 border-gray-100 bg-gray-50">
+                  <div className="text-3xl mb-2">{b.icon}</div>
+                  <h3 className="font-black text-sm mb-1 text-gray-900 leading-tight">{b.title}</h3>
+                  <p className="text-xs text-gray-600 leading-snug">{b.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Pain points */}
       <section className="bg-gray-900 text-white px-4 py-10">
         <div className="max-w-lg mx-auto">
