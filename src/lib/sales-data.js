@@ -30,6 +30,12 @@ export const PRODUCTS = {
     slug: 'receitas-low-carb',
     emoji: '🥗',
     image: '/assets/products/receitas-low-carb.png',
+    // Vídeo do "Tudo que você vai receber" (scroll dentro do app/PDF). Auto-play, loop, sem som.
+    // Quando estiver null, mostra a imagem (image) como fallback automático.
+    // Pra ativar: suba o MP4 em public/assets/products/ e troque null por '/assets/products/seu-arquivo.mp4'
+    // Recomendado: MP4 H.264, vertical 9:16 ou 4:5, 8-15s, < 5MB, sem áudio.
+    whatYouGetVideo: null,
+    whatYouGetPoster: '/assets/products/receitas-low-carb.png',
     transformImage: '/assets/products/low-carb-antes-depois.png', // troque pela sua arte real
     title: 'Emagreça comendo o que você ama — sem passar fome',
     subtitle: '80+ receitas low carb que matam a fome, cabem na rotina e a família inteira come junto',

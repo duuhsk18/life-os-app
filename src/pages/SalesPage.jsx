@@ -203,10 +203,23 @@ export default function SalesPage() {
                 </div>
               ))}
             </div>
-            {product.image && (
+            {(product.whatYouGetVideo || product.image) && (
               <div className="order-first md:order-last">
-                <img src={product.image} alt={product.title}
-                  className="w-full max-w-sm mx-auto rounded-2xl shadow-2xl" />
+                {product.whatYouGetVideo ? (
+                  <video
+                    src={product.whatYouGetVideo}
+                    poster={product.whatYouGetPoster || product.image}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="w-full max-w-sm mx-auto rounded-2xl shadow-2xl block"
+                  />
+                ) : (
+                  <img src={product.image} alt={product.title}
+                    className="w-full max-w-sm mx-auto rounded-2xl shadow-2xl" />
+                )}
               </div>
             )}
           </div>
