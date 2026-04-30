@@ -343,3 +343,80 @@ export async function scheduleFollowUpSequence({ email, name, slugs, logPrefix =
   const ok = results.every((r) => r.ok)
   return { ok, results }
 }
+
+// =============================================================================
+// ABANDONED PIX RECOVERY — agenda lembrete em +1h se cliente não pagou
+// =============================================================================
+// Disparado quando Pix é criado. Se o cliente paga antes, o email ainda
+// chega — mas com mensagem "se já pagou, ignore". UX aceitável.
+//
+// Pra cancelar quando pagar, precisaríamos persistir o resend_id e chamar
+// Resend DELETE — overhead que não vale (taxa de no-show alta no Pix BR).
+
+export async function scheduleAbandonedPixReminder({ email, name, slugs, paymentId, amount, qrCode, logPrefix = '[email]' }) {
+  if (!process.env.RESEND_API_KEY) return { ok: false }
+
+  const reminderTime = new Date(Date.now() + 60 * 60 * 1000).toISOString() // +1h
+  const productList = slugs.length > 1 ? `${slugs.length} produtos` : 'seu produto'
+  const firstName = (name || email.split('@')[0]).split(' ')[0]
+
+  const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0a0a0a;padding:40px 20px;">
+  <tr><td align="center">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;background:#111;border-radius:16px;border:1px solid #1f1f1f;overflow:hidden;">
+      <tr><td align="center" style="padding:32px 40px 16px;background:linear-gradient(135deg,#F4C430,#d4a017);">
+        <div style="font-size:24px;font-weight:900;color:#000;letter-spacing:-0.5px;">⏰ Não esquece do Pix!</div>
+      </td></tr>
+      <tr><td style="padding:32px 40px 16px;">
+        <h1 style="margin:0 0 16px;font-size:22px;font-weight:700;color:#fff;line-height:1.3;">Olá, ${firstName}!</h1>
+        <p style="margin:0 0 8px;font-size:15px;color:#d4d4d4;line-height:1.6;">Você gerou um Pix de <strong style="color:#F4C430;">R$ ${Number(amount).toFixed(2).replace('.', ',')}</strong> pra ${productList} mas ainda não recebemos o pagamento.</p>
+        <p style="margin:0 0 8px;font-size:15px;color:#d4d4d4;line-height:1.6;">O QR Code <strong>ainda tá válido</strong>. Acesso liberado em segundos depois que você pagar.</p>
+        <p style="margin:16px 0 0;font-size:13px;color:#888;line-height:1.5;"><strong>Já pagou?</strong> Pode ignorar esse email — provavelmente o acesso já chegou na sua caixa de entrada.</p>
+      </td></tr>
+      <tr><td align="center" style="padding:8px 40px 24px;">
+        <a href="https://www.agenciacriativa.shop/p/${slugs[0] || 'receitas-low-carb'}" style="display:inline-block;padding:14px 32px;font-size:15px;font-weight:700;color:#000;background:#F4C430;text-decoration:none;border-radius:12px;">Voltar pra página do produto</a>
+      </td></tr>
+      <tr><td style="padding:0 40px 24px;">
+        <details style="background:#1a1a1a;border-radius:12px;padding:16px;">
+          <summary style="font-size:13px;color:#aaa;cursor:pointer;font-weight:bold;">Ver código Pix copia-e-cola</summary>
+          <p style="margin:12px 0 0;font-size:11px;color:#888;font-family:monospace;word-break:break-all;line-height:1.5;">${qrCode}</p>
+        </details>
+      </td></tr>
+      <tr><td align="center" style="padding:24px 40px;background:#0a0a0a;border-top:1px solid #1f1f1f;">
+        <p style="margin:0;font-size:12px;color:#555;">© Agência Criativa · Pagamento ID ${paymentId}</p>
+      </td></tr>
+    </table>
+  </td></tr>
+</table>
+</body></html>`
+
+  try {
+    const r = await fetch(RESEND_API_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'Content-Type':  'application/json',
+      },
+      body: JSON.stringify({
+        from:         'Agência Criativa <noreply@agenciacriativa.shop>',
+        to:           [email],
+        subject:      `${firstName}, seu Pix tá esperando ⏰`,
+        html,
+        scheduled_at: reminderTime,
+      }),
+    })
+    const data = await r.json().catch(() => null)
+    if (!r.ok) {
+      console.warn(`${logPrefix} agendar Pix reminder:`, data?.message || r.status)
+      return { ok: false, error: data?.message || r.status }
+    }
+    console.log(`${logPrefix} Pix reminder agendado pra +1h (resend_id=${data?.id})`)
+    return { ok: true, resendId: data?.id }
+  } catch (err) {
+    console.error(`${logPrefix} erro de rede agendando Pix reminder:`, err.message)
+    return { ok: false, error: err.message }
+  }
+}

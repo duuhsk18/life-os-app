@@ -15,6 +15,8 @@
 // }
 // =============================================================================
 
+import { scheduleAbandonedPixReminder } from './_email.js'
+
 const MP_PAYMENTS_API = 'https://api.mercadopago.com/v1/payments'
 
 const PRODUCT_CATALOG = {
@@ -116,6 +118,16 @@ export default async function handler(req, res) {
     }
 
     console.log('[mp-pix] pagamento criado:', data.id, 'pra', email, 'total R$', total)
+
+    // Agenda email de recovery em +1h (não-bloqueante)
+    scheduleAbandonedPixReminder({
+      email,
+      slugs: validSlugs,
+      paymentId: String(data.id),
+      amount: total,
+      qrCode: td.qr_code,
+      logPrefix: '[mp-pix]',
+    }).catch((e) => console.warn('[mp-pix] erro agendando reminder:', e.message))
 
     return res.status(200).json({
       paymentId:    String(data.id),
