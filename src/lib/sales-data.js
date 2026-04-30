@@ -36,7 +36,7 @@ export const PRODUCTS = {
     // Recomendado: MP4 H.264, vertical 9:16 ou 4:5, 8-15s, < 5MB, sem áudio.
     whatYouGetVideo: '/assets/low-carb-preview.mp4',
     whatYouGetPoster: '/assets/products/receitas-low-carb.png',
-    transformImage: null, // suba a arte em public/assets/products/ e troque pelo path. Ex: '/assets/products/low-carb-antes-depois.png'
+    transformImage: '/assets/products/low-carb-antes-depois.png',
     title: 'Emagreça comendo o que você ama — sem passar fome',
     subtitle: '80+ receitas low carb que matam a fome, cabem na rotina e a família inteira come junto',
     price: 27.90,
