@@ -191,15 +191,15 @@ export default function SalesPage() {
       <section className="bg-white px-4 py-10">
         <div className="max-w-5xl mx-auto">
           <p className="text-xs uppercase tracking-widest font-black text-green-600 mb-2 text-center md:text-left">CONTEÚDO DO EBOOK</p>
-          <h2 className="text-2xl md:text-3xl font-black text-center md:text-left mb-6 leading-tight">
+          <h2 className="text-3xl md:text-4xl font-black text-gray-900 text-center md:text-left mb-8 leading-tight">
             Tudo que você vai receber hoje
           </h2>
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-3">
+          <div className="grid md:grid-cols-2 gap-8 md:items-start">
+            <div className="space-y-4 md:pt-2">
               {product.whatYouGet.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-0.5 text-sm font-black">✓</span>
-                  <p className="text-gray-800 font-medium text-sm leading-snug">{item.item}</p>
+                  <span className="w-7 h-7 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-0.5 text-base font-black shadow-sm">✓</span>
+                  <p className="text-gray-900 font-semibold text-base leading-snug">{item.item}</p>
                 </div>
               ))}
             </div>
