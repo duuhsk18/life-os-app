@@ -1,4 +1,4 @@
-﻿const CACHE = 'lifeos-treino-v5';
+﻿const CACHE = 'lifeos-treino-v7';
 const ASSETS = ['./','./planilhas-treino.html','./manifest.json','./icon.svg','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install', (e) => {
