@@ -34,7 +34,7 @@ export const PRODUCTS = {
     // Quando estiver null, mostra a imagem (image) como fallback automático.
     // Pra ativar: suba o MP4 em public/assets/products/ e troque null por '/assets/products/seu-arquivo.mp4'
     // Recomendado: MP4 H.264, vertical 9:16 ou 4:5, 8-15s, < 5MB, sem áudio.
-    whatYouGetVideo: null,
+    whatYouGetVideo: '/assets/low-carb-preview.mp4',
     whatYouGetPoster: '/assets/products/receitas-low-carb.png',
     transformImage: '/assets/products/low-carb-antes-depois.png', // troque pela sua arte real
     title: 'Emagreça comendo o que você ama — sem passar fome',
