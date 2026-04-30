@@ -187,33 +187,59 @@ export default function SalesPage() {
         </div>
       </section>
 
-      {/* What you get + value stack */}
+      {/* What you get + value stack — com imagem do produto lado-a-lado (estilo concorrente validado) */}
       <section className="bg-white px-4 py-10">
-        <div className="max-w-lg mx-auto">
-          <h2 className="text-xl font-black text-center mb-2">O que está incluído</h2>
-          <p className="text-center text-gray-500 text-sm mb-6">
-            Valor total: <span className="line-through">R$ {totalValue.toFixed(2).replace('.', ',')}</span>{' '}
-            <span className="text-green-600 font-black">você paga apenas R$ {product.price.toFixed(2).replace('.', ',')}</span>
-          </p>
-          <div className="space-y-3">
-            {product.whatYouGet.map((item, i) => (
-              <div key={i} className="flex items-center justify-between bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <div className="flex items-start gap-3">
-                  <span className="text-green-500 font-black mt-0.5">✓</span>
-                  <p className="text-gray-800 font-medium text-sm">{item.item}</p>
+        <div className="max-w-5xl mx-auto">
+          <p className="text-xs uppercase tracking-widest font-black text-green-600 mb-2 text-center md:text-left">CONTEÚDO DO EBOOK</p>
+          <h2 className="text-2xl md:text-3xl font-black text-center md:text-left mb-6 leading-tight">
+            Tudo que você vai receber hoje
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-3">
+              {product.whatYouGet.map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 mt-0.5 text-sm font-black">✓</span>
+                  <p className="text-gray-800 font-medium text-sm leading-snug">{item.item}</p>
                 </div>
-                <span className="text-gray-400 line-through text-xs flex-shrink-0 ml-2">{item.value}</span>
+              ))}
+            </div>
+            {product.image && (
+              <div className="order-first md:order-last">
+                <img src={product.image} alt={product.title}
+                  className="w-full max-w-sm mx-auto rounded-2xl shadow-2xl" />
               </div>
-            ))}
+            )}
           </div>
 
-          <div className="mt-6 bg-green-50 border border-green-200 rounded-xl p-4 text-center">
-            <p className="text-sm text-gray-600">Valor total do pacote</p>
-            <p className="text-3xl font-black text-green-700">R$ {product.price.toFixed(2).replace('.', ',')}</p>
-            <p className="text-xs text-gray-500 mt-1">Economize R$ {(totalValue - product.price).toFixed(2).replace('.', ',')} hoje</p>
+          <div className="mt-8 bg-green-50 border-2 border-green-200 rounded-2xl p-5 text-center max-w-md mx-auto">
+            <p className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">Valor total do pacote</p>
+            <p className="text-sm text-gray-400 line-through">R$ {totalValue.toFixed(2).replace('.', ',')}</p>
+            <p className="text-4xl font-black text-green-700 my-1">R$ {product.price.toFixed(2).replace('.', ',')}</p>
+            <p className="text-xs text-green-700 font-bold">Você economiza R$ {(totalValue - product.price).toFixed(2).replace('.', ',')} hoje</p>
           </div>
         </div>
       </section>
+
+      {/* Transformação Real — antes/depois (só aparece se produto tiver transformImage) */}
+      {product.transformImage && (
+        <section className="px-4 py-12" style={{ background: 'linear-gradient(180deg, #f0fdf4, #ffffff)' }}>
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-xs uppercase tracking-widest font-black text-green-600 mb-2">Resultado real</p>
+            <h2 className="text-2xl md:text-4xl font-black mb-3 leading-tight text-gray-900">
+              A transformação que <span className="text-green-600">você merece</span>
+            </h2>
+            <p className="text-gray-600 text-sm md:text-base mb-8 max-w-xl mx-auto">
+              Comendo bem, com receitas práticas e gostosas. <strong>Sem fome, sem dieta restritiva.</strong>
+            </p>
+            <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+              <img src={product.transformImage} alt="Antes e depois — transformação real" className="w-full block" />
+            </div>
+            <p className="text-[11px] text-gray-400 mt-3 italic">
+              Resultados podem variar de pessoa para pessoa.
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* Testimonials */}
       <section className="bg-gray-50 px-4 py-10">

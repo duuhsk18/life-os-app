@@ -30,6 +30,7 @@ export const PRODUCTS = {
     slug: 'receitas-low-carb',
     emoji: '🥗',
     image: '/assets/products/receitas-low-carb.png',
+    transformImage: '/assets/products/low-carb-antes-depois.png', // troque pela sua arte real
     title: 'Emagreça comendo o que você ama — sem passar fome',
     subtitle: '80+ receitas low carb que matam a fome, cabem na rotina e a família inteira come junto',
     price: 27.90,
