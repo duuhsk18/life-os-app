@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Ferramentas de Produtividade — Life OS</title>
+<title>Templates Notion — Galeria Curada</title>
 <script src="../_shared/auth-gate.js"></script>
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#EC4899">
-<meta name="application-name" content="Life OS">
+<meta name="application-name" content="Templates Notion">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Life OS">
+<meta name="apple-mobile-web-app-title" content="Templates Notion">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
@@ -50,13 +50,14 @@
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* ===== TOP NAV ===== */
   .topbar {
     background: var(--bg-card);
     border-bottom: 1px solid var(--border);
-    padding: 0 24px;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     gap: 0;
@@ -66,7 +67,6 @@
     z-index: 100;
     scrollbar-width: none;
   }
-
   .topbar::-webkit-scrollbar { display: none; }
 
   .topbar-brand {
@@ -75,9 +75,9 @@
     font-weight: 700;
     color: var(--accent);
     white-space: nowrap;
-    padding-right: 24px;
+    padding-right: 20px;
     border-right: 1px solid var(--border);
-    margin-right: 8px;
+    margin-right: 6px;
     flex-shrink: 0;
   }
 
@@ -94,2129 +94,1691 @@
     border-bottom: 2px solid transparent;
     transition: color 0.2s, border-color 0.2s;
     flex-shrink: 0;
+    display: flex; align-items: center; gap: 6px;
   }
-
   .nav-btn:hover { color: var(--text-muted); }
   .nav-btn.active { color: var(--accent-light); border-bottom-color: var(--accent); }
-
-  .topbar-data-actions {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding-left: 16px;
-    border-left: 1px solid var(--border);
-    flex-shrink: 0;
-  }
-
-  .btn-export, .btn-import {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.12);
-    color: var(--text-muted);
-    font-size: 11px; font-weight: 600;
-    padding: 7px 12px; border-radius: 6px;
-    cursor: pointer; font-family: 'Inter', sans-serif;
-    transition: background 0.2s, color 0.2s;
-    white-space: nowrap;
-    display: flex; align-items: center; gap: 4px;
-    letter-spacing: 0.3px;
-  }
-
-  .btn-export:hover { background: rgba(236,72,153,0.1); color: var(--accent-light); border-color: var(--border); }
-  .btn-import:hover { background: rgba(255,255,255,0.08); color: var(--text); }
-
-  .btn-install {
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    border: 1px solid var(--accent);
-    color: #fff;
-    font-size: 11px; font-weight: 700;
-    padding: 7px 12px; border-radius: 6px;
-    cursor: pointer; font-family: 'Inter', sans-serif;
-    white-space: nowrap;
-    display: flex; align-items: center; gap: 4px;
-    letter-spacing: 0.3px;
-    box-shadow: 0 2px 8px rgba(236,72,153,0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .btn-install:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(236,72,153,0.45); }
-
-  /* data info banner on cover */
-  .data-notice {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    background: rgba(59,130,246,0.08);
-    border: 1px solid rgba(59,130,246,0.2);
-    border-radius: 12px;
-    padding: 16px 20px;
-    max-width: 600px;
-    width: 100%;
-    margin-top: 32px;
-    text-align: left;
-  }
-  .data-notice-icon { font-size: 20px; flex-shrink: 0; }
-  .data-notice-text { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
-  .data-notice-text strong { color: var(--blue); }
-
-  /* ===== COVER ===== */
-  .cover {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 60px 32px;
-    background: radial-gradient(ellipse at 30% 30%, rgba(236,72,153,0.12) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 70%, rgba(190,24,93,0.08) 0%, transparent 60%),
-                var(--bg);
-  }
-
-  .cover-icon { font-size: 64px; margin-bottom: 24px; }
-  .cover-badge {
+  .nav-btn svg { width: 14px; height: 14px; }
+  .nav-btn .pill {
     background: var(--accent-muted);
-    border: 1px solid var(--border);
     color: var(--accent-light);
+    font-size: 10px; font-weight: 700;
+    padding: 2px 6px; border-radius: 10px;
+    margin-left: 2px;
+  }
+
+  /* ===== MAIN ===== */
+  .main { max-width: 1280px; margin: 0 auto; padding: 28px 20px 80px; }
+
+  .page-head {
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-label {
     font-size: 11px; font-weight: 700;
     letter-spacing: 3px; text-transform: uppercase;
-    padding: 8px 20px; border-radius: 40px; margin-bottom: 32px;
+    color: var(--accent); margin-bottom: 6px;
   }
-
-  .cover-title {
+  .page-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(40px, 7vw, 88px);
-    font-weight: 900; line-height: 1.05; margin-bottom: 20px; color: var(--white);
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 8px;
   }
+  .page-desc { color: var(--text-muted); font-size: 14px; line-height: 1.6; max-width: 640px; }
 
-  .cover-title .accent { color: var(--accent); }
-
-  .cover-sub {
-    font-size: clamp(15px, 2vw, 19px);
-    color: var(--text-muted); max-width: 520px;
-    margin-bottom: 48px; font-weight: 300;
-  }
-
-  .cover-tools {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px; max-width: 720px; width: 100%;
-  }
-
-  .cover-tool {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 16px;
-    cursor: pointer;
-    text-align: left;
-    transition: border-color 0.2s, background 0.2s;
-    display: flex; align-items: center; gap: 10px;
-  }
-
-  .cover-tool:hover { border-color: var(--accent); background: var(--bg-card2); }
-
-  .cover-tool-num {
-    color: var(--accent-light); font-weight: 800; font-size: 15px; flex-shrink: 0;
-  }
-
-  .cover-tool-name { font-size: 13px; color: var(--text-muted); line-height: 1.3; }
-
-  /* ===== SECTION ===== */
+  /* ===== TAB SECTIONS ===== */
   .section { display: none; }
   .section.active { display: block; }
 
-  .section-wrap {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 48px 32px 80px;
-  }
-
-  /* ===== SECTION HEADER ===== */
-  .sh {
-    margin-bottom: 40px;
-    padding-bottom: 28px;
-    border-bottom: 1px solid var(--border);
+  /* ===== FILTERS BAR ===== */
+  .filters {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 24px;
     flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
   }
 
-  .sh-left {}
-  .sh-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-  .sh-title { font-family: 'Playfair Display', serif; font-size: clamp(24px, 4vw, 38px); font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 8px; }
-  .sh-desc { color: var(--text-muted); font-size: 14px; max-width: 520px; line-height: 1.7; }
+  .search-wrap {
+    flex: 1; min-width: 220px;
+    position: relative;
+  }
+  .search-input {
+    width: 100%;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px 10px 38px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { outline: none; border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-dim); }
+  .search-icon {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; color: var(--text-dim);
+  }
 
-  .sh-actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .filter-select {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 32px 10px 14px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239E7A8A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    min-width: 130px;
+  }
+  .filter-select:focus { outline: none; border-color: var(--accent); }
+  .filter-select option { background: #1C1015; }
 
-  .btn-save {
+  .results-count {
+    font-size: 12px; color: var(--text-dim);
+    padding: 6px 10px;
+    background: var(--bg-card2);
+    border-radius: 8px;
+  }
+  .results-count strong { color: var(--accent-light); }
+
+  /* ===== CATEGORY HEADER ===== */
+  .cat-section { margin-bottom: 36px; }
+  .cat-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .cat-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .cat-icon svg { width: 18px; height: 18px; color: #fff; }
+  .cat-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700; color: var(--white);
+  }
+  .cat-count {
+    font-size: 11px; color: var(--text-dim);
+    margin-left: 6px;
+    padding: 3px 9px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  /* ===== TEMPLATE GRID ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .card-template {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .card-template:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 28px rgba(236,72,153,0.18);
+  }
+
+  .card-mockup {
+    aspect-ratio: 16 / 10;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    padding: 18px;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-mockup::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.10), transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.18), transparent 60%);
+    pointer-events: none;
+  }
+  .card-mockup-icon {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+    backdrop-filter: blur(10px);
+    z-index: 1;
+  }
+  .card-mockup-icon svg { width: 22px; height: 22px; }
+  .card-mockup-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
+    line-height: 1.2;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+    z-index: 1;
+  }
+  .card-mockup-sub {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-top: 6px; opacity: 0.85;
+    z-index: 1;
+  }
+
+  .card-body {
+    padding: 14px 16px 16px;
+    display: flex; flex-direction: column; gap: 8px; flex: 1;
+  }
+  .card-meta {
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  }
+  .tag {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.6px; text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 8px;
+  }
+  .tag-cat {
     background: var(--accent-muted);
+    color: var(--accent-light);
+  }
+  .tag-diff-1 { background: rgba(16,185,129,0.12); color: var(--green); }
+  .tag-diff-2 { background: rgba(245,158,11,0.12); color: var(--yellow); }
+  .tag-diff-3 { background: rgba(239,68,68,0.12); color: var(--red); }
+  .tag-dup {
+    background: rgba(16,185,129,0.18);
+    color: var(--green);
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .tag-dup svg { width: 10px; height: 10px; }
+
+  .card-name {
+    font-size: 15px; font-weight: 700; color: var(--white);
+    line-height: 1.3;
+  }
+  .card-desc {
+    font-size: 12px; color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .btn-detail {
+    margin-top: 8px;
+    background: rgba(255,255,255,0.04);
     border: 1px solid var(--border);
     color: var(--accent-light);
     font-size: 12px; font-weight: 700;
-    padding: 10px 18px; border-radius: 8px;
+    padding: 9px 12px; border-radius: 8px;
     cursor: pointer; font-family: 'Inter', sans-serif;
-    transition: background 0.2s;
-    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn-detail:hover { background: var(--accent-muted); color: var(--white); }
+  .btn-detail svg { width: 12px; height: 12px; }
+
+  /* ===== MODAL ===== */
+  .modal-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(8,4,5,0.85);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    align-items: flex-start; justify-content: center;
+    padding: 32px 16px;
+    overflow-y: auto;
+  }
+  .modal-backdrop.show { display: flex; }
+
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    max-width: 720px;
+    width: 100%;
+    overflow: hidden;
+    margin: auto;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    animation: modalIn 0.25s ease;
+  }
+  @keyframes modalIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
   }
 
-  .btn-save:hover { background: rgba(236,72,153,0.2); }
+  .modal-mockup {
+    aspect-ratio: 16 / 8;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    padding: 36px;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .modal-mockup::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.10), transparent 50%);
+  }
+  .modal-mockup-icon {
+    width: 64px; height: 64px;
+    background: rgba(255,255,255,0.20);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+    backdrop-filter: blur(10px);
+    z-index: 1;
+  }
+  .modal-mockup-icon svg { width: 36px; height: 36px; }
+  .modal-mockup-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px; font-weight: 700;
+    line-height: 1.15;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    z-index: 1;
+  }
+  .modal-close {
+    position: absolute; top: 14px; right: 14px;
+    width: 34px; height: 34px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 5;
+    transition: background 0.2s;
+  }
+  .modal-close:hover { background: rgba(0,0,0,0.7); }
 
-  .btn-print {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
+  .modal-body { padding: 24px; }
+  .modal-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .modal-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700; color: var(--white);
+    margin-bottom: 8px; line-height: 1.2;
+  }
+  .modal-desc {
+    color: var(--text-muted); font-size: 14px; line-height: 1.7;
+    margin-bottom: 22px;
+  }
+
+  .modal-section {
+    margin-bottom: 22px;
+  }
+  .modal-section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .modal-section-title svg { width: 14px; height: 14px; }
+
+  .step-list { counter-reset: step; display: flex; flex-direction: column; gap: 8px; }
+  .step-list li {
+    counter-increment: step;
+    list-style: none;
+    padding: 10px 14px 10px 42px;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-muted); font-size: 13px; line-height: 1.6;
+    position: relative;
+  }
+  .step-list li::before {
+    content: counter(step);
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    width: 22px; height: 22px;
+    background: var(--accent-muted);
+    color: var(--accent-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+  }
+
+  .feat-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  @media (max-width: 520px) { .feat-list { grid-template-columns: 1fr; } }
+  .feat-list li {
+    list-style: none;
+    padding: 8px 12px 8px 28px;
+    background: var(--bg-card2);
+    border-radius: 8px;
+    color: var(--text-muted); font-size: 12px; line-height: 1.5;
+    position: relative;
+  }
+  .feat-list li::before {
+    content: '';
+    position: absolute; left: 10px; top: 14px;
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag-related {
+    background: rgba(255,255,255,0.05);
     color: var(--text-muted);
-    font-size: 12px; font-weight: 600;
-    padding: 10px 18px; border-radius: 8px;
-    cursor: pointer; font-family: 'Inter', sans-serif;
-    transition: background 0.2s;
-    white-space: nowrap;
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
   }
 
-  .btn-print:hover { background: rgba(255,255,255,0.08); }
+  .modal-actions {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    padding-top: 18px; border-top: 1px solid var(--border);
+    margin-top: 18px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    border: none;
+    color: #fff;
+    font-size: 13px; font-weight: 700;
+    padding: 12px 18px; border-radius: 10px;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    flex: 1; min-width: 180px;
+    box-shadow: 0 3px 12px rgba(236,72,153,0.32);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    text-decoration: none;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(236,72,153,0.45); }
+  .btn-primary svg { width: 14px; height: 14px; }
 
-  .saved-toast {
+  .btn-secondary {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    color: var(--accent-light);
+    font-size: 13px; font-weight: 700;
+    padding: 12px 18px; border-radius: 10px;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    flex: 1; min-width: 160px;
+    transition: background 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-secondary:hover { background: var(--accent-muted); }
+  .btn-secondary.is-dup { background: rgba(16,185,129,0.12); color: var(--green); border-color: rgba(16,185,129,0.3); }
+  .btn-secondary svg { width: 14px; height: 14px; }
+
+  /* ===== TUTORIAL ===== */
+  .tut-progress {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    display: flex; align-items: center; gap: 14px;
+    flex-wrap: wrap;
+  }
+  .tut-progress-text { flex: 1; min-width: 200px; }
+  .tut-progress-label { font-size: 11px; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; }
+  .tut-progress-num { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--white); font-weight: 700; margin-top: 2px; }
+  .tut-progress-num span { color: var(--accent); }
+  .tut-progress-bar {
+    flex: 2; min-width: 200px;
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 6px; overflow: hidden;
+  }
+  .tut-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    border-radius: 6px;
+    transition: width 0.4s;
+  }
+
+  .tut-grid { display: flex; flex-direction: column; gap: 14px; }
+
+  .tut-step {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    display: flex; gap: 18px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .tut-step.done {
+    border-color: rgba(16,185,129,0.4);
+    background: rgba(16,185,129,0.04);
+  }
+
+  .tut-num {
+    width: 44px; height: 44px;
+    background: var(--accent-muted);
+    color: var(--accent-light);
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .tut-step.done .tut-num {
+    background: var(--green); color: #000;
+  }
+
+  .tut-content { flex: 1; min-width: 0; }
+  .tut-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700; color: var(--white);
+    margin-bottom: 8px;
+  }
+  .tut-text {
+    color: var(--text-muted); font-size: 13px; line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .tut-text strong { color: var(--accent-light); font-weight: 600; }
+  .tut-text code {
+    background: var(--bg-card2);
+    color: var(--accent-light);
+    padding: 2px 6px; border-radius: 4px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .tut-screenshot {
+    background: var(--bg-card2);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .tut-screenshot strong { color: var(--text-muted); font-style: normal; display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .shortcut-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 8px;
+  }
+  .shortcut {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .shortcut-key {
+    font-family: monospace;
+    background: var(--bg-card);
+    color: var(--accent-light);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 12px; font-weight: 700;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .shortcut-text { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+  .tut-check-btn {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 12px; font-weight: 700;
+    padding: 10px 16px; border-radius: 10px;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .tut-check-btn:hover { border-color: var(--green); color: var(--green); }
+  .tut-step.done .tut-check-btn {
+    background: rgba(16,185,129,0.12);
+    border-color: rgba(16,185,129,0.4);
+    color: var(--green);
+  }
+  .tut-check-btn svg { width: 14px; height: 14px; }
+
+  /* ===== MEUS TEMPLATES ===== */
+  .my-empty {
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    padding: 50px 24px;
+    text-align: center;
+  }
+  .my-empty-icon {
+    width: 56px; height: 56px;
+    background: var(--accent-muted);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .my-empty-icon svg { width: 28px; height: 28px; color: var(--accent); }
+  .my-empty-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700; color: var(--white);
+    margin-bottom: 8px;
+  }
+  .my-empty-text {
+    color: var(--text-muted); font-size: 14px;
+    max-width: 360px; margin: 0 auto 18px; line-height: 1.6;
+  }
+  .my-empty-btn {
+    background: var(--accent-muted);
+    border: 1px solid var(--border);
+    color: var(--accent-light);
+    font-size: 13px; font-weight: 700;
+    padding: 10px 20px; border-radius: 10px;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+  }
+  .my-empty-btn:hover { background: rgba(236,72,153,0.2); }
+
+  .my-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .my-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .my-card-mockup {
+    aspect-ratio: 16 / 6;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .my-card-mockup::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.10), transparent 60%);
+  }
+  .my-card-mockup-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+    z-index: 1;
+  }
+  .my-card-body { padding: 14px 16px 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .my-card-name { font-size: 14px; font-weight: 700; color: var(--white); line-height: 1.3; }
+
+  .status-row { display: flex; gap: 6px; }
+  .status-btn {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 5px 9px; border-radius: 6px;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    transition: all 0.2s; flex: 1;
+  }
+  .status-btn:hover { color: var(--text-muted); }
+  .status-btn.active.ativo { background: rgba(59,130,246,0.15); color: var(--blue); border-color: rgba(59,130,246,0.4); }
+  .status-btn.active.uso { background: rgba(16,185,129,0.15); color: var(--green); border-color: rgba(16,185,129,0.4); }
+  .status-btn.active.aband { background: rgba(239,68,68,0.10); color: var(--red); border-color: rgba(239,68,68,0.3); }
+
+  .my-textarea {
+    width: 100%;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; line-height: 1.5;
+    resize: vertical;
+    min-height: 60px;
+    transition: border-color 0.2s;
+  }
+  .my-textarea:focus { outline: none; border-color: var(--accent); }
+  .my-textarea::placeholder { color: var(--text-dim); }
+
+  .my-actions { display: flex; gap: 6px; }
+  .my-action {
+    flex: 1;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    color: var(--accent-light);
+    font-size: 11px; font-weight: 700;
+    padding: 8px; border-radius: 8px;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    text-decoration: none;
+  }
+  .my-action:hover { background: var(--accent-muted); }
+  .my-action.danger { color: var(--red); }
+  .my-action.danger:hover { background: rgba(239,68,68,0.10); }
+  .my-action svg { width: 11px; height: 11px; }
+
+  /* ===== TOAST ===== */
+  .toast {
     position: fixed;
-    bottom: 24px; right: 24px;
+    bottom: 24px; left: 50%;
+    transform: translate(-50%, 10px);
     background: var(--green);
     color: #000;
     font-size: 13px; font-weight: 700;
     padding: 12px 20px; border-radius: 10px;
     z-index: 999; opacity: 0;
-    transform: translateY(10px);
     transition: opacity 0.3s, transform 0.3s;
     pointer-events: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
   }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-  .saved-toast.show { opacity: 1; transform: translateY(0); }
-
-  /* ===== FIELD BLOCKS ===== */
-  .field-block { margin-bottom: 24px; }
-
-  .field-label {
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--text-dim); margin-bottom: 8px;
-    display: flex; align-items: center; gap: 8px;
-  }
-
-  .field-input {
-    width: 100%;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 16px;
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
+  /* ===== EMPTY (filtered no results) ===== */
+  .empty-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--text-dim);
     font-size: 14px;
-    line-height: 1.6;
-    resize: vertical;
-    min-height: 44px;
-    transition: border-color 0.2s;
   }
+  .empty-results strong { color: var(--text-muted); display: block; margin-bottom: 4px; }
 
-  .field-input:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
-
-  .field-input::placeholder { color: var(--text-dim); }
-
-  textarea.field-input { min-height: 100px; }
-
-  .field-select {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 16px;
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239E7A8A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: 32px;
-    min-width: 140px;
-  }
-
-  .field-select:focus { outline: none; border-color: var(--accent); }
-  .field-select option { background: #1C1015; }
-
-  /* ===== GRID LAYOUT ===== */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-
+  /* ===== RESPONSIVE ===== */
   @media (max-width: 640px) {
-    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-  }
-
-  /* ===== CARD ===== */
-  .card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 20px;
-  }
-
-  .card-title {
-    font-size: 13px; font-weight: 700;
-    color: var(--accent-light); text-transform: uppercase;
-    letter-spacing: 1px; margin-bottom: 16px;
-    display: flex; align-items: center; gap: 8px;
-  }
-
-  /* ===== CALLOUT ===== */
-  .callout {
-    background: var(--accent-muted);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 10px;
-    padding: 16px 20px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
-
-  .callout strong { color: var(--accent-light); display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; }
-
-  /* ===== DIVIDER ===== */
-  .divider { height: 1px; background: var(--border); margin: 32px 0; }
-
-  /* ===== PROGRESS BAR ===== */
-  .progress-wrap { margin: 10px 0; }
-
-  .progress-header {
-    display: flex; justify-content: space-between;
-    font-size: 12px; color: var(--text-dim); margin-bottom: 6px;
-  }
-
-  .progress-bar {
-    background: rgba(255,255,255,0.06);
-    border-radius: 6px; height: 8px; overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent-light));
-    border-radius: 6px;
-    transition: width 0.4s ease;
-  }
-
-  /* ===== CHECKBOX LIST ===== */
-  .check-list { display: flex; flex-direction: column; gap: 10px; }
-
-  .check-item {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 10px 14px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: border-color 0.2s;
-    user-select: none;
-  }
-
-  .check-item:hover { border-color: var(--accent); }
-
-  .check-item.done {
-    opacity: 0.6;
-    border-color: rgba(16,185,129,0.3);
-    background: rgba(16,185,129,0.05);
-  }
-
-  .check-box {
-    width: 18px; height: 18px;
-    border: 2px solid var(--text-dim);
-    border-radius: 4px;
-    flex-shrink: 0; margin-top: 1px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; transition: all 0.2s;
-  }
-
-  .check-item.done .check-box {
-    background: var(--green);
-    border-color: var(--green);
-    color: #000;
-  }
-
-  .check-item.done .check-box::after { content: '✓'; }
-
-  .check-text {
-    font-size: 14px; color: var(--text-muted); line-height: 1.5; flex: 1;
-    transition: text-decoration 0.2s;
-  }
-
-  .check-item.done .check-text { text-decoration: line-through; color: var(--text-dim); }
-
-  /* ===== DYNAMIC TABLE ===== */
-  .dyn-table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px; }
-
-  .dyn-table {
-    width: 100%; border-collapse: collapse; min-width: 600px;
-  }
-
-  .dyn-table thead tr {
-    background: var(--bg-card2);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .dyn-table th {
-    padding: 12px 14px;
-    text-align: left;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  .dyn-table td {
-    padding: 4px 6px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-  }
-
-  .dyn-table tr:last-child td { border-bottom: none; }
-  .dyn-table tr:hover td { background: rgba(236,72,153,0.03); }
-
-  .td-input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    padding: 8px 8px;
-    border-radius: 6px;
-    transition: background 0.2s;
-  }
-
-  .td-input:focus {
-    outline: none;
-    background: rgba(236,72,153,0.08);
-    color: var(--text);
-  }
-
-  .td-input::placeholder { color: var(--text-dim); }
-
-  .td-select {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    padding: 8px;
-    cursor: pointer;
-    width: 100%;
-  }
-
-  .td-select:focus { outline: none; background: rgba(236,72,153,0.08); }
-  .td-select option { background: #1C1015; }
-
-  .btn-add-row {
-    background: none;
-    border: 1px dashed var(--border);
-    color: var(--text-dim);
-    font-size: 13px; font-family: 'Inter', sans-serif;
-    padding: 10px 18px; border-radius: 8px;
-    cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; gap: 6px;
-  }
-
-  .btn-add-row:hover { border-color: var(--accent); color: var(--accent-light); }
-
-  .btn-del-row {
-    background: none; border: none;
-    color: var(--text-dim); cursor: pointer;
-    font-size: 16px; padding: 4px 8px;
-    transition: color 0.2s; line-height: 1;
-  }
-
-  .btn-del-row:hover { color: var(--red); }
-
-  /* ===== STATUS BADGE ===== */
-  .badge {
-    display: inline-block;
-    padding: 2px 10px; border-radius: 20px;
-    font-size: 11px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
-
-  .badge-pink { background: var(--accent-muted); color: var(--accent-light); }
-  .badge-green { background: rgba(16,185,129,0.12); color: #4ade80; }
-  .badge-yellow { background: rgba(245,158,11,0.12); color: #fbbf24; }
-  .badge-blue { background: rgba(59,130,246,0.12); color: #60a5fa; }
-  .badge-red { background: rgba(239,68,68,0.12); color: #f87171; }
-
-  /* ===== HABIT TRACKER ===== */
-  .habit-grid-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px; }
-
-  .habit-grid {
-    min-width: 700px;
-    border-collapse: collapse;
-  }
-
-  .habit-grid th {
-    padding: 8px 4px;
-    text-align: center;
-    font-size: 10px; color: var(--text-dim); font-weight: 600;
-    border-bottom: 1px solid var(--border);
-    min-width: 28px;
-  }
-
-  .habit-grid th.habit-name-col {
-    text-align: left;
-    min-width: 160px;
-    padding: 8px 14px;
-  }
-
-  .habit-grid td {
-    padding: 4px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-  }
-
-  .habit-grid td.habit-name-cell {
-    text-align: left;
-    padding: 8px 14px;
-    font-size: 13px; color: var(--text-muted);
-  }
-
-  .habit-grid td.habit-pct {
-    font-size: 12px; font-weight: 700;
-    padding: 4px 10px;
-    min-width: 52px;
-  }
-
-  .habit-dot {
-    width: 20px; height: 20px;
-    border-radius: 4px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    cursor: pointer; margin: 0 auto;
-    transition: all 0.15s;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px;
-  }
-
-  .habit-dot.done { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .habit-dot.done::after { content: '✓'; }
-  .habit-dot:hover { border-color: var(--accent); }
-
-  .btn-add-habit {
-    background: none;
-    border: 1px dashed var(--border);
-    color: var(--text-dim);
-    font-size: 13px; font-family: 'Inter', sans-serif;
-    padding: 10px 18px; border-radius: 8px;
-    cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; gap: 6px;
-    margin-top: 12px;
-  }
-
-  .btn-add-habit:hover { border-color: var(--accent); color: var(--accent-light); }
-
-  .habit-meta { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 16px; }
-
-  .habit-month-select {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 12px;
-    color: var(--text-muted);
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    cursor: pointer;
-  }
-
-  .habit-month-select:focus { outline: none; border-color: var(--accent); }
-  .habit-month-select option { background: #1C1015; }
-
-  /* ===== STAR RATING ===== */
-  .star-rating { display: flex; gap: 4px; }
-
-  .star {
-    font-size: 18px; cursor: pointer;
-    color: var(--text-dim);
-    transition: color 0.1s;
-    user-select: none;
-  }
-
-  .star.active { color: #fbbf24; }
-  .star:hover { color: #fcd34d; }
-
-  /* ===== QUICK LINKS ===== */
-  .quick-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
-
-  .quick-link-item {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 14px;
-    font-size: 13px;
-    display: flex; align-items: center; gap: 8px;
-  }
-
-  .quick-link-item input {
-    background: none; border: none;
-    color: var(--text-muted); font-family: 'Inter', sans-serif;
-    font-size: 13px; width: 180px;
-    outline: none;
-  }
-
-  .quick-link-item input::placeholder { color: var(--text-dim); }
-
-  /* ===== STATS ROW ===== */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 14px; margin-bottom: 24px;
-  }
-
-  .stat-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-    text-align: center;
-  }
-
-  .stat-value {
-    font-family: 'Playfair Display', serif;
-    font-size: 30px; font-weight: 700;
-    color: var(--accent-light); line-height: 1; margin-bottom: 6px;
-  }
-
-  .stat-label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
-
-  /* ===== PRINT ===== */
-  @media print {
-    .topbar, .sh-actions, .btn-add-row, .btn-add-habit, .btn-del-row, .quick-link-item .emoji-btn, .topbar-data-actions, .data-notice { display: none !important; }
-    body { background: #fff; color: #111; }
-    .section.active { display: block !important; }
-    .card { background: #f9f9f9; border-color: #ddd; }
-    .field-input, .td-input, .td-select {
-      background: transparent !important;
-      color: #444 !important;
-      border-bottom: 1.5px dotted #bbb !important;
-      border-top: none; border-left: none; border-right: none;
-      border-radius: 0 !important;
-      padding-bottom: 4px;
-    }
-    .field-input[type="textarea"], textarea.field-input {
-      border: none !important;
-      border-bottom: 1.5px dotted #bbb !important;
-    }
-    .sh-title { color: #111; }
-    .sh-label { color: var(--accent-dark); }
-    .callout { background: #fdf2f8; border-color: #fbcfe8; border-left-color: var(--accent-dark); color: #555; }
-    .habit-dot { border: 1px solid #ddd; }
-    .habit-dot.done { background: var(--accent-dark); border-color: var(--accent-dark); }
-    .check-item { background: #f9f9f9; border-color: #eee; }
-    .dyn-table-wrap { border-color: #ddd; }
-    .dyn-table th { color: #888; }
-    .dyn-table td { border-bottom-color: #eee; }
-    .progress-bar { background: #eee; }
-    .stat-card { background: #f9f9f9; border-color: #eee; }
-    .stat-value { color: var(--accent-dark); }
-    footer { display: none; }
+    .topbar { padding: 0 14px; }
+    .topbar-brand { padding-right: 14px; }
+    .nav-btn { padding: 14px 10px; font-size: 12px; }
+    .main { padding: 20px 14px 60px; }
+    .grid { grid-template-columns: 1fr; }
+    .modal-mockup { aspect-ratio: 16 / 9; padding: 24px; }
+    .modal-mockup-title { font-size: 22px; }
+    .modal-body { padding: 18px; }
+    .tut-step { flex-direction: column; padding: 18px; gap: 14px; }
+    .tut-num { width: 38px; height: 38px; font-size: 18px; }
   }
 </style>
 </head>
 <body>
 
-<!-- TOAST -->
-<div class="saved-toast" id="toast">✓ Salvo automaticamente</div>
-
-<!-- TOP NAV -->
+<!-- ===== TOP NAV ===== -->
 <nav class="topbar">
-  <div class="topbar-brand">Life OS</div>
-  <button class="nav-btn active" onclick="showSection('cover')">Início</button>
-  <button class="nav-btn" onclick="showSection('dashboard')">01 · Dashboard</button>
-  <button class="nav-btn" onclick="showSection('weekly')">02 · Revisão Semanal</button>
-  <button class="nav-btn" onclick="showSection('projetos')">03 · Projetos</button>
-  <button class="nav-btn" onclick="showSection('crm')">04 · CRM Pessoal</button>
-  <button class="nav-btn" onclick="showSection('habitos')">05 · Hábitos</button>
-  <button class="nav-btn" onclick="showSection('leituras')">06 · Leituras</button>
-  <button class="nav-btn" onclick="showSection('meta12')">07 · Meta 12 Semanas</button>
-  <div class="topbar-data-actions">
-    <button id="btn-install-pwa" class="btn-install" onclick="installPWA()" title="Instalar como app no celular" style="display:none">📲 Instalar app</button>
-    <button class="btn-export" onclick="exportData()" title="Baixar backup dos seus dados">⬇ Backup</button>
-    <label class="btn-import" title="Restaurar dados de um backup">
-      ⬆ Restaurar
-      <input type="file" accept=".json" style="display:none" onchange="importData(event)">
-    </label>
-  </div>
+  <div class="topbar-brand">Templates Notion</div>
+  <button class="nav-btn active" data-tab="galeria">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    Galeria
+  </button>
+  <button class="nav-btn" data-tab="tutorial">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+    Tutorial
+    <span class="pill" id="tut-pill">0/6</span>
+  </button>
+  <button class="nav-btn" data-tab="meus">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+    Meus Templates
+    <span class="pill" id="my-pill">0</span>
+  </button>
 </nav>
 
-<!-- ===== COVER ===== -->
-<div id="cover" class="section active">
-  <div class="cover">
-    <div class="cover-icon">🛠</div>
-    <div class="cover-badge">Life OS · Produtividade</div>
-    <h1 class="cover-title">Ferramentas<br><span class="accent">Interativas</span></h1>
-    <p class="cover-sub">7 ferramentas prontas para usar agora — tudo salvo automaticamente no seu navegador. Nenhuma conta necessária.</p>
-    <div class="cover-tools">
-      <div class="cover-tool" onclick="showSection('dashboard')">
-        <span class="cover-tool-num">01</span>
-        <div class="cover-tool-name">Life Dashboard</div>
+<main class="main">
+
+  <!-- ====== GALERIA ====== -->
+  <section class="section active" id="sec-galeria">
+    <div class="page-head">
+      <div class="page-label">Galeria Curada</div>
+      <h1 class="page-title">20 Templates Notion prontos pra duplicar</h1>
+      <p class="page-desc">Coleção curada de templates Notion para vida pessoal, trabalho, estudos, finanças e negócios. Click em qualquer card pra ver detalhes, instruções de uso e duplicar pro seu Notion.</p>
+    </div>
+
+    <div class="filters">
+      <div class="search-wrap">
+        <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" class="search-input" id="search" placeholder="Buscar template por nome...">
       </div>
-      <div class="cover-tool" onclick="showSection('weekly')">
-        <span class="cover-tool-num">02</span>
-        <div class="cover-tool-name">Revisão Semanal</div>
+      <select class="filter-select" id="filter-cat">
+        <option value="">Todas categorias</option>
+        <option value="vida">Vida Pessoal</option>
+        <option value="trabalho">Trabalho/Produtividade</option>
+        <option value="estudos">Estudos</option>
+        <option value="financas">Finanças</option>
+        <option value="negocios">Negócios</option>
+      </select>
+      <select class="filter-select" id="filter-diff">
+        <option value="">Toda dificuldade</option>
+        <option value="1">Iniciante</option>
+        <option value="2">Intermediário</option>
+        <option value="3">Avançado</option>
+      </select>
+      <div class="results-count" id="results-count"><strong>20</strong> templates</div>
+    </div>
+
+    <div id="gallery-content"></div>
+  </section>
+
+  <!-- ====== TUTORIAL ====== -->
+  <section class="section" id="sec-tutorial">
+    <div class="page-head">
+      <div class="page-label">Notion para Iniciantes</div>
+      <h1 class="page-title">Aprenda Notion em 6 passos</h1>
+      <p class="page-desc">Não conhece Notion ainda? Sem problema. Este guia rápido cobre desde criar conta até atalhos de produtividade. Marque cada passo conforme avançar.</p>
+    </div>
+
+    <div class="tut-progress">
+      <div class="tut-progress-text">
+        <div class="tut-progress-label">Seu progresso</div>
+        <div class="tut-progress-num"><span id="tut-done">0</span>/6 passos concluídos</div>
       </div>
-      <div class="cover-tool" onclick="showSection('projetos')">
-        <span class="cover-tool-num">03</span>
-        <div class="cover-tool-name">Gestão de Projetos</div>
-      </div>
-      <div class="cover-tool" onclick="showSection('crm')">
-        <span class="cover-tool-num">04</span>
-        <div class="cover-tool-name">CRM Pessoal</div>
-      </div>
-      <div class="cover-tool" onclick="showSection('habitos')">
-        <span class="cover-tool-num">05</span>
-        <div class="cover-tool-name">Rastreador de Hábitos</div>
-      </div>
-      <div class="cover-tool" onclick="showSection('leituras')">
-        <span class="cover-tool-num">06</span>
-        <div class="cover-tool-name">Biblioteca de Leituras</div>
-      </div>
-      <div class="cover-tool" onclick="showSection('meta12')">
-        <span class="cover-tool-num">07</span>
-        <div class="cover-tool-name">Meta 12 Semanas</div>
+      <div class="tut-progress-bar">
+        <div class="tut-progress-fill" id="tut-fill" style="width: 0%"></div>
       </div>
     </div>
 
-    <div class="data-notice">
-      <div class="data-notice-icon">💾</div>
-      <div class="data-notice-text">
-        <strong>📲 No celular?</strong> Toque em <strong>Instalar app</strong> (canto superior direito) para fixar como ícone na tela inicial — fica igual a um app, funciona offline e seus dados ficam protegidos.<br><br>
-        <strong>💾 Backup garantido:</strong> use <strong>Backup</strong> para baixar um arquivo dos seus dados e <strong>Restaurar</strong> para recarregar em qualquer dispositivo.
-      </div>
+    <div class="tut-grid" id="tut-grid"></div>
+  </section>
+
+  <!-- ====== MEUS TEMPLATES ====== -->
+  <section class="section" id="sec-meus">
+    <div class="page-head">
+      <div class="page-label">Sua Coleção</div>
+      <h1 class="page-title">Meus Templates duplicados</h1>
+      <p class="page-desc">Templates que você marcou como duplicados. Acompanhe status, deixe notas pessoais e abra rápido no Notion. Tudo salvo localmente no seu navegador.</p>
     </div>
+
+    <div id="my-content"></div>
+  </section>
+
+</main>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal" id="modal-inner">
+    <div class="modal-mockup" id="modal-mockup">
+      <button class="modal-close" id="modal-close">x</button>
+      <div class="modal-mockup-icon" id="modal-mock-icon"></div>
+      <div class="modal-mockup-title" id="modal-mock-title"></div>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 
-<!-- ===== 01 LIFE DASHBOARD ===== -->
-<div id="dashboard" class="section">
-  <div class="section-wrap">
-    <div class="sh">
-      <div class="sh-left">
-        <div class="sh-label">Ferramenta 01</div>
-        <div class="sh-title">🏠 Life Dashboard</div>
-        <div class="sh-desc">Sua central de comando. Revise diariamente antes de começar a trabalhar.</div>
-      </div>
-      <div class="sh-actions">
-        <button class="btn-save" onclick="saveAll()">💾 Salvar</button>
-        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
-      </div>
-    </div>
-
-    <!-- FOCO DA SEMANA -->
-    <div class="card">
-      <div class="card-title">⚡ Foco da Semana</div>
-      <div class="field-block">
-        <div class="field-label">Em uma frase — o que define essa semana?</div>
-        <input type="text" class="field-input" id="dash-foco" placeholder="Ex: Fechar o lançamento + treinar 4x + revisar finanças..." />
-      </div>
-    </div>
-
-    <!-- METAS DO TRIMESTRE -->
-    <div class="card">
-      <div class="card-title">🎯 Metas do Trimestre</div>
-      <div class="grid-2">
-        <div>
-          <div class="field-label">💼 Profissional</div>
-          <div id="metas-prof-list" class="check-list">
-            <div class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <input class="td-input check-text" placeholder="Meta profissional 1..." onclick="event.stopPropagation()" />
-            </div>
-            <div class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <input class="td-input check-text" placeholder="Meta profissional 2..." onclick="event.stopPropagation()" />
-            </div>
-            <div class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <input class="td-input check-text" placeholder="Meta profissional 3..." onclick="event.stopPropagation()" />
-            </div>
-          </div>
-          <div class="progress-wrap" style="margin-top:12px;">
-            <div class="progress-header"><span>Progresso</span><span id="pct-prof">0%</span></div>
-            <div class="progress-bar"><div class="progress-fill" id="fill-prof" style="width:0%"></div></div>
-          </div>
-        </div>
-        <div>
-          <div class="field-label">🙌 Pessoal</div>
-          <div id="metas-pes-list" class="check-list">
-            <div class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <input class="td-input check-text" placeholder="Meta pessoal 1..." onclick="event.stopPropagation()" />
-            </div>
-            <div class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <input class="td-input check-text" placeholder="Meta pessoal 2..." onclick="event.stopPropagation()" />
-            </div>
-            <div class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <input class="td-input check-text" placeholder="Meta pessoal 3..." onclick="event.stopPropagation()" />
-            </div>
-          </div>
-          <div class="progress-wrap" style="margin-top:12px;">
-            <div class="progress-header"><span>Progresso</span><span id="pct-pes">0%</span></div>
-            <div class="progress-bar"><div class="progress-fill" id="fill-pes" style="width:0%"></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- INBOX -->
-    <div class="card">
-      <div class="card-title">📥 Inbox — Captura Rápida</div>
-      <div class="callout"><strong>Como usar</strong>Capture aqui qualquer ideia, tarefa ou lembrança. Na revisão semanal (domingo), processe tudo desta lista.</div>
-      <div id="inbox-list" class="check-list">
-        <div class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <input class="td-input check-text" placeholder="Capture uma ideia ou tarefa..." onclick="event.stopPropagation()" />
-        </div>
-      </div>
-      <button class="btn-add-row" style="margin-top:12px" onclick="addInboxItem()">+ Adicionar item</button>
-    </div>
-
-    <!-- LINKS RÁPIDOS -->
-    <div class="card">
-      <div class="card-title">🔗 Links Rápidos</div>
-      <div class="quick-links" id="quick-links">
-        <div class="quick-link-item">🗓 <input type="text" placeholder="Agenda / Calendário (URL ou texto)" /></div>
-        <div class="quick-link-item">📊 <input type="text" placeholder="Planilha de finanças..." /></div>
-        <div class="quick-link-item">📚 <input type="text" placeholder="Livro atual..." /></div>
-        <div class="quick-link-item">💪 <input type="text" placeholder="Plano de treino..." /></div>
-      </div>
-    </div>
-
-    <!-- GRATIDÃO DO DIA -->
-    <div class="card">
-      <div class="card-title">🙏 Gratidão e Intenção do Dia</div>
-      <div class="grid-2">
-        <div class="field-block">
-          <div class="field-label">Sou grato por...</div>
-          <textarea class="field-input" id="dash-gratitude" rows="3" placeholder="3 coisas pelas quais você é grato hoje..."></textarea>
-        </div>
-        <div class="field-block">
-          <div class="field-label">Minha intenção para hoje é...</div>
-          <textarea class="field-input" id="dash-intention" rows="3" placeholder="Como você quer se sentir e agir hoje?"></textarea>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== 02 WEEKLY REVIEW ===== -->
-<div id="weekly" class="section">
-  <div class="section-wrap">
-    <div class="sh">
-      <div class="sh-left">
-        <div class="sh-label">Ferramenta 02</div>
-        <div class="sh-title">🔄 Revisão Semanal</div>
-        <div class="sh-desc">Reserve 30 minutos todo domingo. Este ritual separa quem age de quem reage.</div>
-      </div>
-      <div class="sh-actions">
-        <button class="btn-save" onclick="saveAll()">💾 Salvar</button>
-        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
-      </div>
-    </div>
-
-    <!-- META INFO -->
-    <div class="grid-3" style="margin-bottom:24px;">
-      <div class="field-block">
-        <div class="field-label">📅 Semana (período)</div>
-        <input type="text" class="field-input" id="wr-periodo" placeholder="Ex: 17 - 23 de Março, 2025" />
-      </div>
-      <div class="field-block">
-        <div class="field-label">⚡ Energia geral</div>
-        <select class="field-select" id="wr-energia" style="width:100%">
-          <option value="">Selecione...</option>
-          <option value="Alta">🟢 Alta</option>
-          <option value="Media">🟡 Média</option>
-          <option value="Baixa">🔴 Baixa</option>
-        </select>
-      </div>
-      <div class="field-block">
-        <div class="field-label">⭐ Nota da semana (1-10)</div>
-        <div class="star-rating" id="wr-stars">
-          <span class="star" onclick="setStar(1)">★</span>
-          <span class="star" onclick="setStar(2)">★</span>
-          <span class="star" onclick="setStar(3)">★</span>
-          <span class="star" onclick="setStar(4)">★</span>
-          <span class="star" onclick="setStar(5)">★</span>
-          <span class="star" onclick="setStar(6)">★</span>
-          <span class="star" onclick="setStar(7)">★</span>
-          <span class="star" onclick="setStar(8)">★</span>
-          <span class="star" onclick="setStar(9)">★</span>
-          <span class="star" onclick="setStar(10)">★</span>
-        </div>
-        <input type="hidden" id="wr-nota" value="0" />
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- PARTE 1: COLETA -->
-    <div class="card">
-      <div class="card-title">✅ Parte 1 — Coleta e Limpeza (10 min)</div>
-      <div class="check-list" id="wr-coleta">
-        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Processar email (responder, arquivar, deletar)</span></div>
-        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Processar notas e anotações soltas</span></div>
-        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Processar fotos e screenshots acumulados</span></div>
-        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Limpar área de trabalho (física e digital)</span></div>
-        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Revisar calendário da semana passada</span></div>
-        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Verificar tarefas abertas e em atraso</span></div>
-      </div>
-    </div>
-
-    <!-- PARTE 2: REVISÃO -->
-    <div class="card">
-      <div class="card-title">🔍 Parte 2 — Revisão e Reflexão (10 min)</div>
-      <div class="field-block">
-        <div class="field-label">🏆 Quais foram as 3 maiores vitórias da semana?</div>
-        <textarea class="field-input" id="wr-vitorias" rows="4" placeholder="1. ...&#10;2. ...&#10;3. ..."></textarea>
-      </div>
-      <div class="field-block">
-        <div class="field-label">🔧 O que poderia ter sido melhor? (1-2 pontos)</div>
-        <textarea class="field-input" id="wr-melhorias" rows="3" placeholder="Seja específico — o que você faria diferente se pudesse repetir a semana?"></textarea>
-      </div>
-      <div class="field-block">
-        <div class="field-label">💡 Principal insight ou aprendizado da semana</div>
-        <textarea class="field-input" id="wr-insight" rows="3" placeholder="Uma ideia, padrão ou lição que ficou..."></textarea>
-      </div>
-      <div class="field-block">
-        <div class="field-label">😤 O que está me sobrecarregando ou preocupando?</div>
-        <textarea class="field-input" id="wr-preocupacao" rows="3" placeholder="Coloque para fora — o que está ocupando espaço mental desnecessariamente?"></textarea>
-      </div>
-    </div>
-
-    <!-- PARTE 3: PLANEJAMENTO -->
-    <div class="card">
-      <div class="card-title">🗓 Parte 3 — Planejamento da Próxima Semana (10 min)</div>
-      <div class="field-block">
-        <div class="field-label">🎯 Top 3 prioridades da próxima semana</div>
-        <div class="check-list" id="wr-top3">
-          <div class="check-item" onclick="toggleCheck(this)">
-            <div class="check-box"></div>
-            <input class="td-input check-text" placeholder="Prioridade 1 — a mais importante da semana..." onclick="event.stopPropagation()" />
-          </div>
-          <div class="check-item" onclick="toggleCheck(this)">
-            <div class="check-box"></div>
-            <input class="td-input check-text" placeholder="Prioridade 2..." onclick="event.stopPropagation()" />
-          </div>
-          <div class="check-item" onclick="toggleCheck(this)">
-            <div class="check-box"></div>
-            <input class="td-input check-text" placeholder="Prioridade 3..." onclick="event.stopPropagation()" />
-          </div>
-        </div>
-      </div>
-      <div class="field-block">
-        <div class="field-label">📅 Compromissos da semana (reuniões, eventos, prazos)</div>
-        <textarea class="field-input" id="wr-compromissos" rows="4" placeholder="Segunda: ...&#10;Terça: ...&#10;Quarta: ...&#10;Quinta: ...&#10;Sexta: ..."></textarea>
-      </div>
-      <div class="field-block">
-        <div class="field-label">🙏 Palavra ou tema da próxima semana</div>
-        <input type="text" class="field-input" id="wr-tema" placeholder="Ex: Foco, Consistência, Coragem, Gratidão..." />
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== 03 GESTÃO DE PROJETOS ===== -->
-<div id="projetos" class="section">
-  <div class="section-wrap">
-    <div class="sh">
-      <div class="sh-left">
-        <div class="sh-label">Ferramenta 03</div>
-        <div class="sh-title">📁 Gestão de Projetos</div>
-        <div class="sh-desc">Todos os seus projetos ativos em um único lugar. Foco em próxima ação — não em status.</div>
-      </div>
-      <div class="sh-actions">
-        <button class="btn-save" onclick="saveAll()">💾 Salvar</button>
-        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
-      </div>
-    </div>
-
-    <div class="callout">
-      <strong>Regra PARA</strong>Projeto = tem deadline e resultado específico. Área = contínua (saúde, finanças). Arquivo = concluído. Se não tem data de fim, é área — não projeto.
-    </div>
-
-    <div class="dyn-table-wrap">
-      <table class="dyn-table" id="proj-table">
-        <thead>
-          <tr>
-            <th style="min-width:220px">Projeto</th>
-            <th>Área</th>
-            <th>Status</th>
-            <th>Deadline</th>
-            <th style="min-width:200px">Próxima Ação</th>
-            <th>Prioridade</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="proj-body">
-          <!-- rows via JS -->
-        </tbody>
-      </table>
-    </div>
-    <button class="btn-add-row" onclick="addProjRow()">+ Adicionar projeto</button>
-
-    <div class="divider"></div>
-
-    <!-- DETALHES DO PROJETO -->
-    <div class="card">
-      <div class="card-title">📌 Detalhamento de Projeto (clique em um para expandir)</div>
-      <div class="field-block">
-        <div class="field-label">Nome do projeto</div>
-        <input type="text" class="field-input" id="proj-det-nome" placeholder="Qual projeto está detalhando?" />
-      </div>
-      <div class="field-block">
-        <div class="field-label">🎯 Resultado esperado (como ficará quando concluído?)</div>
-        <textarea class="field-input" id="proj-det-resultado" rows="3" placeholder="Descreva o resultado final de forma específica e mensurável..."></textarea>
-      </div>
-      <div class="field-block">
-        <div class="field-label">📋 Próximas ações (até 5)</div>
-        <div class="check-list" id="proj-det-acoes">
-          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><input class="td-input check-text" placeholder="Ação física mais específica..." onclick="event.stopPropagation()" /></div>
-          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><input class="td-input check-text" placeholder="..." onclick="event.stopPropagation()" /></div>
-          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><input class="td-input check-text" placeholder="..." onclick="event.stopPropagation()" /></div>
-          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><input class="td-input check-text" placeholder="..." onclick="event.stopPropagation()" /></div>
-          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><input class="td-input check-text" placeholder="..." onclick="event.stopPropagation()" /></div>
-        </div>
-      </div>
-      <div class="field-block">
-        <div class="field-label">🚧 Obstáculos e dependências</div>
-        <textarea class="field-input" id="proj-det-obs" rows="2" placeholder="O que pode travar este projeto? Do que você depende?"></textarea>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== 04 CRM PESSOAL ===== -->
-<div id="crm" class="section">
-  <div class="section-wrap">
-    <div class="sh">
-      <div class="sh-left">
-        <div class="sh-label">Ferramenta 04</div>
-        <div class="sh-title">👥 CRM Pessoal</div>
-        <div class="sh-desc">Networking real = acompanhamento consistente. Registre quem merece atenção e quando entrar em contato.</div>
-      </div>
-      <div class="sh-actions">
-        <button class="btn-save" onclick="saveAll()">💾 Salvar</button>
-        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
-      </div>
-    </div>
-
-    <div class="callout">
-      <strong>Frequência por Tier</strong>Tier 1 (mentores, sócios) → mensal. Tier 2 (colegas-chave) → trimestral. Tier 3 (rede geral) → semestral.
-    </div>
-
-    <div class="dyn-table-wrap">
-      <table class="dyn-table" id="crm-table">
-        <thead>
-          <tr>
-            <th style="min-width:160px">Nome</th>
-            <th>Contexto</th>
-            <th>Tier</th>
-            <th>Último contato</th>
-            <th style="min-width:180px">Próximo follow-up</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="crm-body"></tbody>
-      </table>
-    </div>
-    <button class="btn-add-row" onclick="addCrmRow()">+ Adicionar contato</button>
-
-    <div class="divider"></div>
-
-    <div class="card">
-      <div class="card-title">📌 Notas de Relacionamento</div>
-      <div class="grid-2">
-        <div class="field-block">
-          <div class="field-label">Contato</div>
-          <input type="text" class="field-input" id="crm-det-nome" placeholder="Nome do contato..." />
-        </div>
-        <div class="field-block">
-          <div class="field-label">Como nos conhecemos</div>
-          <input type="text" class="field-input" id="crm-det-como" placeholder="Evento, indicação, online..." />
-        </div>
-      </div>
-      <div class="field-block">
-        <div class="field-label">💡 O que é importante para essa pessoa?</div>
-        <textarea class="field-input" id="crm-det-imp" rows="2" placeholder="Interesses, desafios, projetos, família..."></textarea>
-      </div>
-      <div class="field-block">
-        <div class="field-label">🤝 Como posso agregar valor a ela?</div>
-        <textarea class="field-input" id="crm-det-valor" rows="2" placeholder="Conexões, conhecimento, oportunidades..."></textarea>
-      </div>
-      <div class="field-block">
-        <div class="field-label">📝 Histórico de interações</div>
-        <textarea class="field-input" id="crm-det-historico" rows="4" placeholder="[data] — O que conversaram, o que foi combinado...&#10;[data] — ..."></textarea>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== 05 HÁBITOS ===== -->
-<div id="habitos" class="section">
-  <div class="section-wrap">
-    <div class="sh">
-      <div class="sh-left">
-        <div class="sh-label">Ferramenta 05</div>
-        <div class="sh-title">🔥 Rastreador de Hábitos</div>
-        <div class="sh-desc">Máximo de 5 hábitos por vez. Consistência de 80% por 66 dias torna qualquer comportamento automático.</div>
-      </div>
-      <div class="sh-actions">
-        <button class="btn-save" onclick="saveAll()">💾 Salvar</button>
-        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
-      </div>
-    </div>
-
-    <div class="habit-meta">
-      <div>
-        <div class="field-label" style="margin-bottom:6px;">Mês de referência</div>
-        <select class="habit-month-select" id="habit-month" onchange="rebuildHabitGrid()">
-          <option value="1">Janeiro</option>
-          <option value="2">Fevereiro</option>
-          <option value="3">Março</option>
-          <option value="4">Abril</option>
-          <option value="5">Maio</option>
-          <option value="6">Junho</option>
-          <option value="7">Julho</option>
-          <option value="8">Agosto</option>
-          <option value="9">Setembro</option>
-          <option value="10">Outubro</option>
-          <option value="11">Novembro</option>
-          <option value="12">Dezembro</option>
-        </select>
-      </div>
-      <div>
-        <div class="field-label" style="margin-bottom:6px;">Ano</div>
-        <input type="number" class="field-input" id="habit-year" value="2025" style="width:100px" onchange="rebuildHabitGrid()" />
-      </div>
-    </div>
-
-    <div class="habit-grid-wrap">
-      <table class="habit-grid" id="habit-table">
-        <!-- built by JS -->
-      </table>
-    </div>
-
-    <button class="btn-add-habit" onclick="addHabit()">+ Adicionar hábito</button>
-
-    <div class="divider"></div>
-
-    <div class="card">
-      <div class="card-title">💬 Reflexão do Mês</div>
-      <div class="field-block">
-        <div class="field-label">Qual hábito teve melhor desempenho e por quê?</div>
-        <textarea class="field-input" id="habit-reflection-best" rows="2" placeholder="..."></textarea>
-      </div>
-      <div class="field-block">
-        <div class="field-label">Qual hábito precisa de ajuste? O que vai mudar?</div>
-        <textarea class="field-input" id="habit-reflection-worst" rows="2" placeholder="Ex: Leitura caiu para 40% — vou mover para 21h como âncora após escovação..."></textarea>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== 06 LEITURAS ===== -->
-<div id="leituras" class="section">
-  <div class="section-wrap">
-    <div class="sh">
-      <div class="sh-left">
-        <div class="sh-label">Ferramenta 06</div>
-        <div class="sh-title">📚 Biblioteca de Leituras</div>
-        <div class="sh-desc">O que você lê só vira seu quando processa e aplica. Registre, anote e defina a ação de cada livro.</div>
-      </div>
-      <div class="sh-actions">
-        <button class="btn-save" onclick="saveAll()">💾 Salvar</button>
-        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
-      </div>
-    </div>
-
-    <div class="stats-row" id="leit-stats">
-      <div class="stat-card"><div class="stat-value" id="leit-total">0</div><div class="stat-label">Total de livros</div></div>
-      <div class="stat-card"><div class="stat-value" id="leit-lidos">0</div><div class="stat-label">Lidos</div></div>
-      <div class="stat-card"><div class="stat-value" id="leit-lendo">0</div><div class="stat-label">Lendo agora</div></div>
-      <div class="stat-card"><div class="stat-value" id="leit-fila">0</div><div class="stat-label">Na fila</div></div>
-    </div>
-
-    <div class="dyn-table-wrap">
-      <table class="dyn-table" id="leit-table">
-        <thead>
-          <tr>
-            <th style="min-width:200px">Título</th>
-            <th style="min-width:140px">Autor</th>
-            <th>Tipo</th>
-            <th>Status</th>
-            <th>Nota</th>
-            <th>Início</th>
-            <th>Fim</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="leit-body"></tbody>
-      </table>
-    </div>
-    <button class="btn-add-row" onclick="addLeitRow()">+ Adicionar leitura</button>
-
-    <div class="divider"></div>
-
-    <div class="card">
-      <div class="card-title">📌 Notas de Leitura</div>
-      <div class="grid-2" style="margin-bottom:16px;">
-        <div class="field-block">
-          <div class="field-label">Livro</div>
-          <input type="text" class="field-input" id="leit-det-titulo" placeholder="Título que está anotando..." />
-        </div>
-        <div class="field-block">
-          <div class="field-label">Avaliação</div>
-          <div class="star-rating" id="leit-stars">
-            <span class="star" onclick="setLeitStar(1)">★</span>
-            <span class="star" onclick="setLeitStar(2)">★</span>
-            <span class="star" onclick="setLeitStar(3)">★</span>
-            <span class="star" onclick="setLeitStar(4)">★</span>
-            <span class="star" onclick="setLeitStar(5)">★</span>
-          </div>
-          <input type="hidden" id="leit-det-nota" value="0" />
-        </div>
-      </div>
-      <div class="field-block">
-        <div class="field-label">💡 As 3 maiores ideias do livro</div>
-        <textarea class="field-input" id="leit-det-ideias" rows="4" placeholder="1. (com suas próprias palavras)&#10;2. ...&#10;3. ..."></textarea>
-      </div>
-      <div class="field-block">
-        <div class="field-label">📝 Citações que quero guardar</div>
-        <textarea class="field-input" id="leit-det-citacoes" rows="3" placeholder="Transcreva as citações mais poderosas..."></textarea>
-      </div>
-      <div class="field-block">
-        <div class="field-label">⚡ Ação que vou tomar por causa deste livro</div>
-        <input type="text" class="field-input" id="leit-det-acao" placeholder="Seja específico e com prazo. Ex: Implementar rotina matinal até sexta..." />
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== 07 META 12 SEMANAS ===== -->
-<div id="meta12" class="section">
-  <div class="section-wrap">
-    <div class="sh">
-      <div class="sh-left">
-        <div class="sh-label">Ferramenta 07</div>
-        <div class="sh-title">🎯 Meta 12 Semanas</div>
-        <div class="sh-desc">Trate 12 semanas como 1 ano. Urgência real, foco total, revisão semanal. 85% de execução = excelente.</div>
-      </div>
-      <div class="sh-actions">
-        <button class="btn-save" onclick="saveAll()">💾 Salvar</button>
-        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
-      </div>
-    </div>
-
-    <!-- VISÃO -->
-    <div class="card">
-      <div class="card-title">🔭 Visão das 12 Semanas</div>
-      <div class="grid-2">
-        <div class="field-block">
-          <div class="field-label">📅 Data de início</div>
-          <input type="date" class="field-input" id="m12-inicio" onchange="calcM12Weeks()" />
-        </div>
-        <div class="field-block">
-          <div class="field-label">🏁 Data de fim (calculada automaticamente)</div>
-          <input type="text" class="field-input" id="m12-fim" placeholder="Preenchida automaticamente..." readonly style="opacity:0.6" />
-        </div>
-      </div>
-      <div class="field-block">
-        <div class="field-label">🎯 Em 12 semanas, quero ter conquistado...</div>
-        <textarea class="field-input" id="m12-visao" rows="3" placeholder="Descreva o resultado específico como se já tivesse acontecido. Ex: Lancei o produto X com R$10k de faturamento e 50 clientes pagantes."></textarea>
-      </div>
-      <div class="field-block">
-        <div class="field-label">💪 Por que este objetivo é importante para mim?</div>
-        <textarea class="field-input" id="m12-porque" rows="2" placeholder="A razão emocional por trás da meta — conecte com seus valores..."></textarea>
-      </div>
-    </div>
-
-    <!-- SEMANA ATUAL -->
-    <div class="card">
-      <div class="card-title">📊 Progresso Geral</div>
-      <div class="stats-row" id="m12-stats-row">
-        <div class="stat-card"><div class="stat-value" id="m12-semana-atual">—</div><div class="stat-label">Semana Atual</div></div>
-        <div class="stat-card"><div class="stat-value" id="m12-dias-restantes">—</div><div class="stat-label">Dias Restantes</div></div>
-        <div class="stat-card"><div class="stat-value" id="m12-pct-tempo">—</div><div class="stat-label">% do Tempo Usado</div></div>
-        <div class="stat-card"><div class="stat-value" id="m12-pct-exec">—</div><div class="stat-label">Taxa de Execução</div></div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-header"><span>Progresso do período</span><span id="m12-pct-label">0%</span></div>
-        <div class="progress-bar"><div class="progress-fill" id="m12-fill" style="width:0%"></div></div>
-      </div>
-    </div>
-
-    <!-- SEMANAS -->
-    <div id="m12-semanas">
-      <!-- Built by JS for all 12 weeks -->
-    </div>
-  </div>
-</div>
-
-<footer style="text-align:center; padding: 40px 32px; border-top: 1px solid var(--border); color: var(--text-dim); font-size:13px; margin-top:40px;">
-  <div style="font-family: 'Playfair Display', serif; font-size:18px; color:var(--accent); margin-bottom:6px;">Life OS</div>
-  <div>Ferramentas de Produtividade · Material exclusivo para membros</div>
-  <div style="margin-top:8px;"><a href="https://agenciacriativa.shop" style="color:var(--accent); text-decoration:none;">agenciacriativa.shop</a></div>
-</footer>
+<div class="toast" id="toast"></div>
 
 <script>
-// ===== STORAGE KEY =====
-const KEY = 'lifeos_tools_v1';
+/* ============================================================
+   TEMPLATES NOTION — DATABASE
+   ============================================================ */
 
-function getStore() {
-  try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
-  catch { return {}; }
-}
+const CATEGORIES = {
+  vida:      { name: 'Vida Pessoal',         color: '#EC4899', dark: '#9D174D' },
+  trabalho:  { name: 'Trabalho/Produtividade', color: '#8B5CF6', dark: '#5B21B6' },
+  estudos:   { name: 'Estudos',              color: '#3B82F6', dark: '#1E40AF' },
+  financas:  { name: 'Finanças',             color: '#10B981', dark: '#065F46' },
+  negocios:  { name: 'Negócios',             color: '#F59E0B', dark: '#92400E' }
+};
 
-function setStore(data) {
-  localStorage.setItem(KEY, JSON.stringify(data));
-}
+const DIFFICULTY = { 1: 'Iniciante', 2: 'Intermediário', 3: 'Avançado' };
 
-// ===== NAVIGATION =====
-function showSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const el = document.getElementById(id);
-  if (el) el.classList.add('active');
-  const btns = document.querySelectorAll('.nav-btn');
-  btns.forEach(b => { if (b.textContent.toLowerCase().includes(id) || (id === 'cover' && b.textContent === 'Início')) b.classList.add('active'); });
-  // fix nav active by index
-  const sectionOrder = ['cover','dashboard','weekly','projetos','crm','habitos','leituras','meta12'];
-  const idx = sectionOrder.indexOf(id);
-  if (idx >= 0) btns[idx] && btns[idx].classList.add('active');
-}
+const ICONS = {
+  dashboard:  '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>',
+  habits:     '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>',
+  diary:      '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V2.5H6.5A2.5 2.5 0 004 5v14.5z"/><path d="M4 19.5A2.5 2.5 0 016.5 22H20v-5"/></svg>',
+  book:       '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',
+  film:       '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M7 3v18M17 3v18M2 9h5M2 15h5M17 9h5M17 15h5"/></svg>',
+  project:    '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>',
+  okr:        '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+  gtd:        '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+  calendar:   '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+  knowledge:  '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
+  pomodoro:   '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M5 3l3-1M19 3l-3-1"/></svg>',
+  notes:      '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>',
+  questions:  '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>',
+  money:      '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+  invest:     '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
+  goal:       '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><circle cx="12" cy="12" r="4"/></svg>',
+  crm:        '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>',
+  lead:       '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>',
+  edit:       '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h8M8 18h5"/></svg>',
+  sales:      '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>'
+};
 
-// ===== TOAST =====
+const TEMPLATES = [
+  /* ===== VIDA PESSOAL (5) ===== */
+  {
+    id: 'dashboard-vida', cat: 'vida', diff: 2, icon: 'dashboard',
+    name: 'Dashboard de Vida',
+    desc: 'Painel central com áreas, metas e calendário num lugar só',
+    full: 'Um Dashboard de Vida é seu centro de comando pessoal — todas as áreas que importam (saúde, relacionamentos, carreira, finanças, lazer) reunidas numa única página. Ideal pra quem quer parar de pular entre 10 apps diferentes e ter visão única do que está acontecendo.',
+    steps: [
+      'Duplique o template e abra no seu workspace Notion',
+      'Personalize as áreas da vida que fazem sentido pra você',
+      'Conecte com suas databases existentes (metas, projetos, hábitos)',
+      'Defina widgets na home: hoje, esta semana, próximo mês',
+      'Marque pra acessar diariamente e iterar conforme uso'
+    ],
+    feats: ['Visão por áreas da vida', 'Widget de hoje/semana', 'Links pra databases conectadas', 'Dashboard de metas anuais', 'Quote do dia rotativo', 'Mood tracker integrado'],
+    tags: ['produtividade', 'vida', 'dashboard', 'metas', 'home']
+  },
+  {
+    id: 'tracker-habitos', cat: 'vida', diff: 1, icon: 'habits',
+    name: 'Tracker de Hábitos',
+    desc: 'Acompanhe rotinas diárias com checkbox e streaks',
+    full: 'Sistema simples e poderoso para construir hábitos. Visualize sequências (streaks), tendências semanais e o impacto cumulativo das suas escolhas diárias. Funciona melhor com 3 a 5 hábitos por vez.',
+    steps: [
+      'Duplique o template no seu Notion',
+      'Liste de 3 a 5 hábitos prioritários (não mais que isso!)',
+      'Marque os checkboxes diariamente — funciona tipo App Streaks',
+      'Revise a tabela semanal aos domingos',
+      'Ajuste hábitos a cada 30 dias com base no que funcionou'
+    ],
+    feats: ['Vista mensal com checkboxes', 'Cálculo de streak automático', 'Gráfico de consistência', 'Notas diárias por hábito', 'Categorias por área da vida'],
+    tags: ['hábitos', 'rotina', 'tracker', 'consistência', 'disciplina']
+  },
+  {
+    id: 'diario-pessoal', cat: 'vida', diff: 1, icon: 'diary',
+    name: 'Diário Pessoal',
+    desc: 'Journaling diário com prompts e tags emocionais',
+    full: 'Estrutura simples para journaling consistente. Vem com prompts diários (gratidão, aprendizado, desafios) e sistema de tags emocionais para identificar padrões ao longo do tempo. Ideal pra quem quer começar mas trava na página em branco.',
+    steps: [
+      'Duplique o template e renomeie pro seu nome',
+      'Crie a primeira entrada usando o template diário',
+      'Use os prompts pré-definidos quando travar',
+      'Tag cada entrada com emoção predominante',
+      'Faça revisão mensal pra identificar padrões'
+    ],
+    feats: ['Template de entrada diária', 'Prompts de journaling', 'Tags emocionais', 'Visão mensal/anual', 'Busca por palavra-chave', 'Reflexão semanal'],
+    tags: ['journaling', 'reflexão', 'autoconhecimento', 'mental', 'escrita']
+  },
+  {
+    id: 'lista-livros', cat: 'vida', diff: 1, icon: 'book',
+    name: 'Lista de Livros',
+    desc: 'Biblioteca pessoal com status, notas e quotes',
+    full: 'Catalogue tudo que você lê. Status (quero ler / lendo / lido / abandonado), avaliação por estrelas, notas pessoais, quotes favoritas e estatísticas anuais. Mais organizado que Goodreads, mais rápido que planilha.',
+    steps: [
+      'Duplique o template no seu workspace',
+      'Adicione livros que está lendo agora — comece pequeno',
+      'Marque status conforme avança',
+      'Salve quotes favoritas dentro da página de cada livro',
+      'Veja stats no fim do ano: total lido, gênero, autor favorito'
+    ],
+    feats: ['Galeria com capas', 'Status de leitura', 'Avaliação 1-5 estrelas', 'Quotes destacadas', 'Estatísticas anuais', 'Filtro por gênero/autor'],
+    tags: ['livros', 'leitura', 'biblioteca', 'cultura', 'aprendizado']
+  },
+  {
+    id: 'tracker-filmes', cat: 'vida', diff: 1, icon: 'film',
+    name: 'Tracker de Filmes/Séries',
+    desc: 'Watchlist organizada com avaliações e episódios',
+    full: 'Watchlist completa pra cinema e séries. Organize o que quer assistir, está assistindo (com episódio atual) e já assistiu. Avalie, deixe reviews curtos e descubra padrões de gosto pessoal.',
+    steps: [
+      'Duplique o template',
+      'Importe sua watchlist atual (ou comece do zero)',
+      'Pra séries: marque episódio atual e temporada',
+      'Avalie depois de assistir e deixe review curto',
+      'Use filtros por gênero quando estiver indeciso'
+    ],
+    feats: ['Galeria com posters', 'Status assistindo/visto/queue', 'Episódios para séries', 'Reviews curtos', 'Filtro por plataforma streaming', 'Top 10 do ano automático'],
+    tags: ['filmes', 'séries', 'watchlist', 'streaming', 'reviews']
+  },
+
+  /* ===== TRABALHO / PRODUTIVIDADE (5) ===== */
+  {
+    id: 'project-manager', cat: 'trabalho', diff: 3, icon: 'project',
+    name: 'Project Manager',
+    desc: 'Gestão completa de projetos com timeline e tarefas',
+    full: 'Sistema robusto pra gerenciar múltiplos projetos simultâneos. Inclui database de projetos, tarefas vinculadas, timeline visual, status pipeline e métricas de progresso. Perfeito pra freelancers, líderes de equipe ou consultores.',
+    steps: [
+      'Duplique o template e remova projetos exemplo',
+      'Crie seu primeiro projeto preenchendo todos os campos',
+      'Quebre em tarefas pequenas (1-4h cada)',
+      'Defina datas em todas as tarefas',
+      'Acompanhe semanalmente em uma reunião de revisão'
+    ],
+    feats: ['Database de projetos com status pipeline', 'Tarefas vinculadas com timeline', 'Vista Kanban e Calendário', 'Métricas de progresso', 'Histórico de projetos finalizados', 'Templates de tarefas recorrentes'],
+    tags: ['projetos', 'gestão', 'kanban', 'freelancer', 'workflow']
+  },
+  {
+    id: 'okrs-pessoais', cat: 'trabalho', diff: 3, icon: 'okr',
+    name: 'OKRs Pessoais',
+    desc: 'Objetivos e Key Results trimestrais com tracking',
+    full: 'Framework OKR (Objectives and Key Results) adaptado pra uso pessoal. Defina 3-5 objetivos por trimestre com 2-4 key results mensuráveis cada. Sistema usado por Google, Intel e várias empresas top — agora pra você.',
+    steps: [
+      'Duplique o template no início do trimestre',
+      'Defina 3-5 Objetivos qualitativos pro trimestre',
+      'Pra cada objetivo, crie 2-4 Key Results numéricos',
+      'Atualize progresso semanalmente (toda sexta)',
+      'No fim do trimestre faça retrospectiva e crie próximo ciclo'
+    ],
+    feats: ['Estrutura OKR trimestral', 'Tracking de progresso 0-100%', 'Vista por objetivo e por KR', 'Histórico de trimestres anteriores', 'Score automático de fim de ciclo', 'Reflexão e learnings'],
+    tags: ['okrs', 'metas', 'trimestre', 'performance', 'execução']
+  },
+  {
+    id: 'sistema-gtd', cat: 'trabalho', diff: 3, icon: 'gtd',
+    name: 'Sistema GTD',
+    desc: 'Getting Things Done completo com inbox e contextos',
+    full: 'Implementação completa do método GTD (David Allen) no Notion. Inclui inbox, processamento, listas de próximas ações por contexto, projetos ativos, alguma-dia/talvez, agenda e revisão semanal. Para quem leva produtividade a sério.',
+    steps: [
+      'Leia o livro GTD (ou resumo) antes de implementar',
+      'Duplique o template e capture TUDO no inbox',
+      'Processe inbox até zerar — 2 minutos? Faça agora',
+      'Organize próximas ações por contexto (@casa, @rua, @computador)',
+      'Faça revisão semanal religiosamente — toda sexta'
+    ],
+    feats: ['Inbox de captura rápida', 'Processamento via prompts', 'Listas por contexto', 'Projetos ativos vinculados', 'Lista alguma-dia/talvez', 'Template de revisão semanal', 'Calendário de eventos'],
+    tags: ['gtd', 'produtividade', 'sistema', 'workflow', 'david-allen']
+  },
+  {
+    id: 'planejador-semanal', cat: 'trabalho', diff: 1, icon: 'calendar',
+    name: 'Planejador Semanal',
+    desc: 'Time blocking e prioridades da semana',
+    full: 'Visão semanal limpa pra planejar com intenção. Defina prioridades da semana (top 3), time blocks por dia e revise o que rolou no domingo. Mais simples que GTD, mais estruturado que TODO list.',
+    steps: [
+      'Duplique o template todo domingo de manhã',
+      'Defina 3 prioridades MÁXIMAS pra semana',
+      'Bloqueie tempo no calendário pra cada uma',
+      'Revise no fim de cada dia (5 min)',
+      'Faça retrospectiva no domingo seguinte e replanejе'
+    ],
+    feats: ['Vista semanal de 7 dias', 'Top 3 prioridades destacadas', 'Time blocking por dia', 'Notas e reflexões diárias', 'Retrospectiva semanal', 'Histórico de semanas anteriores'],
+    tags: ['planejamento', 'semanal', 'time-blocking', 'prioridades', 'revisão']
+  },
+  {
+    id: 'knowledge-base', cat: 'trabalho', diff: 2, icon: 'knowledge',
+    name: 'Knowledge Base',
+    desc: 'Wiki pessoal com tags e backlinks',
+    full: 'Sua segunda mente. Sistema de notas conectadas estilo Zettelkasten — tudo que você aprende vai pra cá, organizado por tags, conectado por backlinks e pesquisável instantaneamente. Use por anos e o valor cresce exponencialmente.',
+    steps: [
+      'Duplique o template — esse vai ser seu cérebro digital',
+      'Comece capturando 1 nota por dia (não importa o tema)',
+      'Use tags consistentes (não invente novas a cada nota)',
+      'Conecte notas relacionadas usando @mentions',
+      'Revise tags e estrutura a cada 3 meses'
+    ],
+    feats: ['Database de notas por tópico', 'Sistema de tags hierárquicas', 'Backlinks automáticos', 'Vista por área de conhecimento', 'Busca full-text', 'Template de nova nota com prompts', 'Map of content (MOC)'],
+    tags: ['knowledge', 'wiki', 'zettelkasten', 'segunda-mente', 'notas']
+  },
+
+  /* ===== ESTUDOS (3) ===== */
+  {
+    id: 'estudos-pomodoro', cat: 'estudos', diff: 1, icon: 'pomodoro',
+    name: 'Estudos Pomodoro',
+    desc: 'Tracker de sessões pomodoro com matérias',
+    full: 'Combine método Pomodoro (25 min foco / 5 min pausa) com Notion pra acompanhar produtividade real de estudo. Veja quantos pomodoros você fez por matéria, identifique horário mais produtivo e quebre meta diária.',
+    steps: [
+      'Duplique o template no início do semestre',
+      'Cadastre todas suas matérias na database',
+      'Use timer externo (Forest, Pomofocus) pra cronometrar',
+      'Registre cada pomodoro completo na timeline',
+      'Revise stats semanais — descubra padrões pessoais'
+    ],
+    feats: ['Database de matérias', 'Log de sessões pomodoro', 'Stats por matéria', 'Vista de tempo total estudado', 'Meta diária de pomodoros', 'Comparação semana a semana'],
+    tags: ['pomodoro', 'estudos', 'foco', 'tempo', 'produtividade']
+  },
+  {
+    id: 'resumos-materia', cat: 'estudos', diff: 2, icon: 'notes',
+    name: 'Resumos por Matéria',
+    desc: 'Banco de resumos organizados por disciplina',
+    full: 'Estrutura pra criar e organizar resumos de qualquer matéria. Cada resumo vira uma página separada com tópicos, tags, dificuldade e link com aulas/livros. Ideal pra concursos, faculdade, vestibular ou aprendizado contínuo.',
+    steps: [
+      'Duplique o template e cadastre matérias',
+      'Crie um resumo por aula/capítulo estudado',
+      'Use template de resumo (com tópicos, conceitos, exemplos)',
+      'Marque tópicos difíceis pra revisar depois',
+      'Revise resumos antigos antes de prova/avaliação'
+    ],
+    feats: ['Database por matéria', 'Template de resumo padronizado', 'Tags de dificuldade', 'Vista de tópicos pra revisar', 'Link com fontes (livros, vídeos)', 'Histórico de revisões'],
+    tags: ['resumos', 'estudos', 'matéria', 'concurso', 'faculdade']
+  },
+  {
+    id: 'banco-questoes', cat: 'estudos', diff: 2, icon: 'questions',
+    name: 'Banco de Questões',
+    desc: 'Repositório de questões com gabarito e revisão',
+    full: 'Centralize questões de provas, simulados e exercícios. Cada questão tem enunciado, alternativas, gabarito, comentário e tags por tópico. Perfeito pra concursos, ENEM, vestibular ou OAB. Filtre por tópico antes de prova.',
+    steps: [
+      'Duplique o template no Notion',
+      'Adicione questões erradas em provas/simulados',
+      'Categorize por matéria e tópico',
+      'Escreva comentário explicativo de cada gabarito',
+      'Filtre por tópico fraco antes de cada prova'
+    ],
+    feats: ['Database por tópico', 'Enunciado + alternativas + gabarito', 'Comentário explicativo', 'Tags de dificuldade', 'Histórico de tentativas', 'Filtro inteligente por tópico fraco'],
+    tags: ['questões', 'concurso', 'enem', 'oab', 'simulado']
+  },
+
+  /* ===== FINANÇAS (3) ===== */
+  {
+    id: 'controle-gastos', cat: 'financas', diff: 2, icon: 'money',
+    name: 'Controle de Gastos',
+    desc: 'Lançamentos de receitas e despesas com categorias',
+    full: 'Sistema de controle financeiro pessoal completo. Cadastre toda movimentação (receita/despesa), categorize, defina orçamento por categoria e acompanhe quanto sobra no fim do mês. Substitui apps tipo Mobills/Organizze.',
+    steps: [
+      'Duplique o template no início do mês',
+      'Cadastre todas categorias relevantes pra você',
+      'Defina orçamento mensal por categoria',
+      'Lance toda movimentação (mesmo R$ 5)',
+      'Revise dia 1 do mês seguinte e ajuste orçamentos'
+    ],
+    feats: ['Database de transações', 'Categorias customizáveis', 'Vista mensal/anual', 'Orçamento vs realizado', 'Gráfico de gastos por categoria', 'Alertas de estouro de categoria'],
+    tags: ['finanças', 'gastos', 'orçamento', 'controle', 'pessoal']
+  },
+  {
+    id: 'investimentos', cat: 'financas', diff: 3, icon: 'invest',
+    name: 'Investimentos',
+    desc: 'Portfolio de ativos com rentabilidade',
+    full: 'Acompanhe sua carteira de investimentos sem depender de app de corretora. Cadastre ativos (ações, FIIs, renda fixa, cripto), valor investido, valor atual e veja rentabilidade total do portfolio. Atualização manual semanal.',
+    steps: [
+      'Duplique o template e crie 1 página por classe de ativo',
+      'Cadastre todas suas posições atuais',
+      'Atualize preços manualmente toda sexta',
+      'Calcule rentabilidade no fim do mês',
+      'Revise alocação trimestralmente e rebalanceie'
+    ],
+    feats: ['Database de ativos por classe', 'Valor investido vs atual', 'Rentabilidade percentual', 'Alocação por classe (gráfico)', 'Histórico de aportes', 'Notas de tese de investimento'],
+    tags: ['investimentos', 'portfolio', 'ações', 'fiis', 'renda-fixa']
+  },
+  {
+    id: 'metas-financeiras', cat: 'financas', diff: 1, icon: 'goal',
+    name: 'Metas Financeiras',
+    desc: 'Objetivos de poupança com progresso visual',
+    full: 'Defina metas financeiras (reserva, viagem, casa própria, FIRE) e acompanhe progresso visualmente. Cada meta tem valor alvo, prazo, valor atual e quanto falta. Simples mas extremamente motivador.',
+    steps: [
+      'Duplique o template e liste todas suas metas',
+      'Defina valor alvo realista e prazo pra cada uma',
+      'Atualize valor atual mensalmente',
+      'Veja barra de progresso visual',
+      'Celebre cada milestone pequeno (25%, 50%, 75%)'
+    ],
+    feats: ['Database de metas com prazo', 'Barra de progresso visual', 'Cálculo de aporte mensal necessário', 'Histórico de aportes', 'Notas de motivação por meta', 'Vista de metas atingidas'],
+    tags: ['metas', 'poupança', 'objetivos', 'reserva', 'fire']
+  },
+
+  /* ===== NEGÓCIOS (4) ===== */
+  {
+    id: 'crm-pessoal', cat: 'negocios', diff: 2, icon: 'crm',
+    name: 'CRM Pessoal',
+    desc: 'Database de contatos profissionais com follow-ups',
+    full: 'CRM pessoal pra freelancers, consultores ou networkers. Centralize contatos profissionais, registre cada interação, agende follow-ups e nunca mais esqueça de retornar uma mensagem importante. Mais barato que HubSpot, mais flexível que planilha.',
+    steps: [
+      'Duplique o template e importe contatos relevantes',
+      'Pra cada contato, registre origem e contexto',
+      'Defina próximo follow-up (30, 60, 90 dias)',
+      'Anote toda interação na linha do tempo do contato',
+      'Revise semanalmente quem precisa de follow-up'
+    ],
+    feats: ['Database de contatos', 'Linha do tempo de interações', 'Sistema de follow-up automatizado', 'Tags por origem (linkedin, evento, indicação)', 'Score de relacionamento', 'Lembretes de aniversário'],
+    tags: ['crm', 'networking', 'contatos', 'follow-up', 'freelancer']
+  },
+  {
+    id: 'lead-tracker', cat: 'negocios', diff: 2, icon: 'lead',
+    name: 'Lead Tracker',
+    desc: 'Pipeline de leads com status e conversão',
+    full: 'Pipeline visual pra acompanhar leads do primeiro contato até venda fechada. Vista Kanban com colunas (novo, qualificando, proposta, negociação, fechado). Tracking de origem, valor potencial e taxa de conversão.',
+    steps: [
+      'Duplique o template e customize estágios do pipeline',
+      'Cadastre leads atuais nos estágios corretos',
+      'Mova cards conforme avança a conversa',
+      'Anote cada interação dentro do card',
+      'Calcule taxa de conversão no fim do mês'
+    ],
+    feats: ['Vista Kanban por estágio', 'Tracking de origem do lead', 'Valor potencial do deal', 'Taxa de conversão automática', 'Histórico de leads perdidos com motivo', 'Forecast mensal'],
+    tags: ['leads', 'pipeline', 'vendas', 'crm', 'conversão']
+  },
+  {
+    id: 'calendario-editorial', cat: 'negocios', diff: 2, icon: 'edit',
+    name: 'Calendário Editorial',
+    desc: 'Planejamento de conteúdo com status e canais',
+    full: 'Pra criadores de conteúdo, social media e copywriters. Planeje posts/artigos/vídeos com antecedência, acompanhe status (ideia → produção → revisão → publicado) e organize por canal (Instagram, YouTube, blog, newsletter).',
+    steps: [
+      'Duplique o template e cadastre seus canais',
+      'Defina frequência ideal por canal',
+      'Capture ideias na coluna "Banco de Ideias"',
+      'Mova pra produção quando bater data',
+      'Acompanhe métricas pós-publicação'
+    ],
+    feats: ['Vista calendário e Kanban', 'Status pipeline (ideia → publicado)', 'Database de ideias separada', 'Por canal/plataforma', 'Métricas pós-publicação', 'Templates de briefing'],
+    tags: ['conteúdo', 'editorial', 'social-media', 'creator', 'marketing']
+  },
+  {
+    id: 'vendas-receita', cat: 'negocios', diff: 3, icon: 'sales',
+    name: 'Vendas e Receita',
+    desc: 'Tracker de vendas com MRR e LTV',
+    full: 'Pra empresas SaaS, infoprodutores ou serviços recorrentes. Acompanhe vendas, MRR (Monthly Recurring Revenue), churn, LTV (Lifetime Value) e métricas SaaS principais. Substitui parte de Stripe Dashboard / ChartMogul.',
+    steps: [
+      'Duplique o template (esse é avançado!)',
+      'Cadastre todas vendas históricas',
+      'Atualize semanalmente novas vendas e cancelamentos',
+      'Acompanhe MRR e churn mensal',
+      'Calcule LTV e ROI de aquisição trimestralmente'
+    ],
+    feats: ['Database de vendas', 'Cálculo automático MRR', 'Tracking de churn', 'LTV por cohort', 'Vista de receita por canal', 'Dashboard executivo de SaaS'],
+    tags: ['vendas', 'mrr', 'saas', 'receita', 'ltv', 'churn']
+  }
+];
+
+/* ============================================================
+   STATE & STORAGE
+   ============================================================ */
+const KEYS = {
+  duplicated: 'notion:duplicated:v1',
+  tutorial:   'notion:tutorial:v1',
+  myTemplates:'notion:my_templates:v1'
+};
+
+const store = {
+  get(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch { return fallback; }
+  },
+  set(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+  }
+};
+
+let state = {
+  duplicated: store.get(KEYS.duplicated, []),
+  tutorial:   store.get(KEYS.tutorial, []),
+  myTemplates:store.get(KEYS.myTemplates, {}),
+  filter: { cat: '', diff: '', q: '' }
+};
+
+/* ============================================================
+   TUTORIAL DATA
+   ============================================================ */
+const TUT_STEPS = [
+  {
+    id: 1,
+    title: 'O que é Notion',
+    body: `<p><strong>Notion</strong> é um app que combina notas, databases, tarefas e wikis num só lugar. Funciona como um Lego digital — você monta exatamente o sistema que precisa.</p>
+           <p style="margin-top:10px"><strong>Quando usar:</strong> organizar projetos, criar wikis pessoais, gerenciar bases de conhecimento, rodar OKRs, planejar conteúdo. Em resumo: qualquer coisa que envolva texto + dados estruturados.</p>
+           <p style="margin-top:10px"><strong>Quando NÃO usar:</strong> cálculos pesados de planilha (use Excel/Sheets), edição colaborativa em tempo real super fluida (Google Docs ainda ganha), apps mobile-first (Notion mobile melhorou mas não é o foco).</p>`
+  },
+  {
+    id: 2,
+    title: 'Criar conta gratuita',
+    body: `<p>Notion é grátis pra uso pessoal. Sem cartão de crédito, sem trial — o plano free serve eternamente pra individuais.</p>
+           <div class="tut-screenshot"><strong>Passo a passo</strong>
+             1. Acesse <code>notion.so</code> no navegador<br>
+             2. Click em "Try Notion free" (botão grande no topo direito)<br>
+             3. Use Google, Apple ou email pra criar conta<br>
+             4. Confirme email se pediu<br>
+             5. Na pergunta "Like personal use ou for work?", escolha <strong>Personal</strong><br>
+             6. Pula tutorial inicial — vamos aprender com templates reais
+           </div>
+           <p style="margin-top:10px">Pronto. Você já tem workspace Notion vazio esperando.</p>`
+  },
+  {
+    id: 3,
+    title: 'Como duplicar template',
+    body: `<p>Templates Notion são páginas que você copia pro seu workspace. Funciona assim:</p>
+           <div class="tut-screenshot"><strong>Passo a passo</strong>
+             1. Click no botão <strong>"Duplicar para meu Notion"</strong> (verde) na galeria<br>
+             2. Vai abrir <code>notion.so</code> com a tela "Duplicate"<br>
+             3. Faça login se ainda não estiver<br>
+             4. Escolha em qual workspace duplicar (se tiver mais de um)<br>
+             5. Click em <strong>"Duplicate page"</strong><br>
+             6. Página é copiada pro seu sidebar — agora é SUA cópia
+           </div>
+           <p style="margin-top:10px">Pode editar livremente. Mudanças não afetam o template original. Marque como duplicado aqui pra acompanhar.</p>`
+  },
+  {
+    id: 4,
+    title: 'Personalizar pra você',
+    body: `<p>Template duplicado é só um <strong>ponto de partida</strong>. Personalize pra que faça sentido pro seu contexto.</p>
+           <p style="margin-top:10px"><strong>O que dá pra personalizar:</strong></p>
+           <ul style="margin-left:20px; color:var(--text-muted); font-size:13px; line-height:1.8; margin-top:6px">
+             <li><strong>Emoji da página:</strong> click no emoji no topo, escolha outro</li>
+             <li><strong>Cor de capa:</strong> hover no topo da página, "Add cover" → "Change cover"</li>
+             <li><strong>Propriedades de database:</strong> click em "+" no header da tabela pra adicionar coluna</li>
+             <li><strong>Excluir o que não serve:</strong> hover no bloco, click nos 6 pontinhos, "Delete"</li>
+             <li><strong>Renomear tudo:</strong> click no título, edite</li>
+           </ul>
+           <p style="margin-top:10px"><strong>Dica:</strong> não tente personalizar tudo de uma vez. Use 1 semana, depois ajuste o que incomodou.</p>`
+  },
+  {
+    id: 5,
+    title: 'Sincronizar mobile/desktop',
+    body: `<p>Notion sincroniza automaticamente entre todos seus devices via cloud. Mas pra acessar offline e ter notificações, instale o app.</p>
+           <div class="tut-screenshot"><strong>Apps oficiais</strong>
+             <strong>Desktop:</strong> baixa em <code>notion.so/desktop</code> — versão Mac, Windows, Linux<br>
+             <strong>iOS:</strong> App Store, busca "Notion"<br>
+             <strong>Android:</strong> Google Play, busca "Notion"<br>
+             <strong>Web:</strong> sempre disponível em <code>notion.so</code>
+           </div>
+           <p style="margin-top:10px">Faça login com a mesma conta em todos os devices. Mudanças aparecem em segundos.</p>
+           <p style="margin-top:10px"><strong>Dica:</strong> use desktop pra criar conteúdo (mais rápido), mobile pra consultar e check-ins rápidos. Não tente fazer tudo no celular.</p>`
+  },
+  {
+    id: 6,
+    title: 'Atalhos de produtividade',
+    body: `<p>10 atalhos essenciais que vão acelerar seu uso de Notion <strong>tipo 5x</strong>. Decore esses primeiro:</p>
+           <div class="shortcut-grid" style="margin-top:12px">
+             <div class="shortcut"><span class="shortcut-key">/</span><span class="shortcut-text">Menu de comandos (TUDO começa aqui)</span></div>
+             <div class="shortcut"><span class="shortcut-key">@</span><span class="shortcut-text">Mencionar pessoa, página ou data</span></div>
+             <div class="shortcut"><span class="shortcut-key">[[</span><span class="shortcut-text">Linkar pra outra página</span></div>
+             <div class="shortcut"><span class="shortcut-key">Ctrl+P</span><span class="shortcut-text">Quick find — busca global</span></div>
+             <div class="shortcut"><span class="shortcut-key">Ctrl+N</span><span class="shortcut-text">Nova página rápida</span></div>
+             <div class="shortcut"><span class="shortcut-key">Ctrl+Shift+L</span><span class="shortcut-text">Toggle dark/light mode</span></div>
+             <div class="shortcut"><span class="shortcut-key">Ctrl+/</span><span class="shortcut-text">Editar bloco selecionado</span></div>
+             <div class="shortcut"><span class="shortcut-key">Tab</span><span class="shortcut-text">Indentar bloco (criar sub-item)</span></div>
+             <div class="shortcut"><span class="shortcut-key">Ctrl+D</span><span class="shortcut-text">Duplicar bloco/página</span></div>
+             <div class="shortcut"><span class="shortcut-key">Ctrl+\\</span><span class="shortcut-text">Toggle sidebar</span></div>
+           </div>
+           <p style="margin-top:14px"><strong>Dica final:</strong> os atalhos são case-sensitive. <code>Ctrl</code> no Windows/Linux equivale a <code>Cmd</code> no Mac.</p>`
+  }
+];
+
+/* ============================================================
+   RENDERS
+   ============================================================ */
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg || '✓ Salvo automaticamente';
+  t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-// ===== SAVE ALL =====
-function saveAll() {
-  const store = {};
+function renderGallery() {
+  const root = document.getElementById('gallery-content');
+  const { cat, diff, q } = state.filter;
 
-  // Dashboard
-  store.dash_foco = val('dash-foco');
-  store.dash_gratitude = val('dash-gratitude');
-  store.dash_intention = val('dash-intention');
-  store.dash_metas_prof = getCheckList('metas-prof-list');
-  store.dash_metas_pes = getCheckList('metas-pes-list');
-  store.dash_inbox = getCheckList('inbox-list');
-  store.dash_links = getQuickLinks();
-
-  // Weekly Review
-  store.wr_periodo = val('wr-periodo');
-  store.wr_energia = val('wr-energia');
-  store.wr_nota = val('wr-nota');
-  store.wr_vitorias = val('wr-vitorias');
-  store.wr_melhorias = val('wr-melhorias');
-  store.wr_insight = val('wr-insight');
-  store.wr_preocupacao = val('wr-preocupacao');
-  store.wr_coleta = getCheckListSimple('wr-coleta');
-  store.wr_top3 = getCheckList('wr-top3');
-  store.wr_compromissos = val('wr-compromissos');
-  store.wr_tema = val('wr-tema');
-
-  // Projetos
-  store.proj_rows = getTableRows('proj-body', 6);
-  store.proj_det_nome = val('proj-det-nome');
-  store.proj_det_resultado = val('proj-det-resultado');
-  store.proj_det_obs = val('proj-det-obs');
-  store.proj_det_acoes = getCheckList('proj-det-acoes');
-
-  // CRM
-  store.crm_rows = getTableRows('crm-body', 6);
-  store.crm_det_nome = val('crm-det-nome');
-  store.crm_det_como = val('crm-det-como');
-  store.crm_det_imp = val('crm-det-imp');
-  store.crm_det_valor = val('crm-det-valor');
-  store.crm_det_historico = val('crm-det-historico');
-
-  // Hábitos
-  store.habit_month = val('habit-month');
-  store.habit_year = val('habit-year');
-  store.habit_names = getHabitNames();
-  store.habit_dots = getHabitDots();
-  store.habit_reflection_best = val('habit-reflection-best');
-  store.habit_reflection_worst = val('habit-reflection-worst');
-
-  // Leituras
-  store.leit_rows = getLeitRows();
-  store.leit_det_titulo = val('leit-det-titulo');
-  store.leit_det_nota = val('leit-det-nota');
-  store.leit_det_ideias = val('leit-det-ideias');
-  store.leit_det_citacoes = val('leit-det-citacoes');
-  store.leit_det_acao = val('leit-det-acao');
-
-  // Meta 12 Semanas
-  store.m12_inicio = val('m12-inicio');
-  store.m12_visao = val('m12-visao');
-  store.m12_porque = val('m12-porque');
-  store.m12_semanas = getM12Semanas();
-
-  setStore(store);
-  showToast('✓ Salvo automaticamente');
-}
-
-// auto-save on any input
-document.addEventListener('input', debounce(saveAll, 1200));
-document.addEventListener('change', debounce(saveAll, 800));
-
-function debounce(fn, ms) {
-  let t;
-  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
-}
-
-// ===== HELPERS =====
-function val(id) { const el = document.getElementById(id); return el ? el.value : ''; }
-function setVal(id, v) { const el = document.getElementById(id); if (el) el.value = v || ''; }
-
-function getCheckList(listId) {
-  const list = document.getElementById(listId);
-  if (!list) return [];
-  return Array.from(list.querySelectorAll('.check-item')).map(item => ({
-    done: item.classList.contains('done'),
-    text: (item.querySelector('input') || item.querySelector('.check-text'))?.value ||
-          item.querySelector('.check-text')?.textContent || ''
-  }));
-}
-
-function getCheckListSimple(listId) {
-  const list = document.getElementById(listId);
-  if (!list) return [];
-  return Array.from(list.querySelectorAll('.check-item')).map(item => ({
-    done: item.classList.contains('done'),
-    text: item.querySelector('.check-text')?.textContent || ''
-  }));
-}
-
-function getQuickLinks() {
-  return Array.from(document.querySelectorAll('#quick-links .quick-link-item input')).map(i => i.value);
-}
-
-function getTableRows(bodyId, colCount) {
-  const body = document.getElementById(bodyId);
-  if (!body) return [];
-  return Array.from(body.querySelectorAll('tr')).map(tr => {
-    const cells = tr.querySelectorAll('td');
-    return Array.from(cells).slice(0, colCount).map(td => {
-      const inp = td.querySelector('input, textarea, select');
-      return inp ? inp.value : '';
-    });
-  });
-}
-
-function getLeitRows() {
-  const body = document.getElementById('leit-body');
-  if (!body) return [];
-  return Array.from(body.querySelectorAll('tr')).map(tr => {
-    const inputs = tr.querySelectorAll('input, select');
-    return Array.from(inputs).map(i => i.value);
-  });
-}
-
-function getHabitNames() {
-  return Array.from(document.querySelectorAll('.habit-name-input')).map(i => i.value);
-}
-
-function getHabitDots() {
-  const rows = document.querySelectorAll('.habit-row');
-  return Array.from(rows).map(row => {
-    return Array.from(row.querySelectorAll('.habit-dot')).map(d => d.classList.contains('done'));
-  });
-}
-
-function getM12Semanas() {
-  const semanas = [];
-  document.querySelectorAll('.m12-semana-card').forEach(card => {
-    const acoes = Array.from(card.querySelectorAll('.check-item')).map(item => ({
-      done: item.classList.contains('done'),
-      text: item.querySelector('input')?.value || ''
-    }));
-    semanas.push({ acoes, nota: card.querySelector('.m12-nota')?.value || '' });
-  });
-  return semanas;
-}
-
-// ===== CHECKBOX TOGGLE =====
-function toggleCheck(el) {
-  el.classList.toggle('done');
-  updateProgress();
-  debounce(saveAll, 800)();
-}
-
-function updateProgress() {
-  // Dashboard metas
-  updateListProgress('metas-prof-list', 'fill-prof', 'pct-prof');
-  updateListProgress('metas-pes-list', 'fill-pes', 'pct-pes');
-  updateM12Stats();
-  updateLeitStats();
-}
-
-function updateListProgress(listId, fillId, pctId) {
-  const list = document.getElementById(listId);
-  if (!list) return;
-  const items = list.querySelectorAll('.check-item');
-  const done = list.querySelectorAll('.check-item.done').length;
-  const pct = items.length ? Math.round(done / items.length * 100) : 0;
-  const fill = document.getElementById(fillId);
-  const pctEl = document.getElementById(pctId);
-  if (fill) fill.style.width = pct + '%';
-  if (pctEl) pctEl.textContent = pct + '%';
-}
-
-// ===== STAR RATING =====
-let wrStarValue = 0;
-function setStar(n) {
-  wrStarValue = n;
-  setVal('wr-nota', n);
-  document.querySelectorAll('#wr-stars .star').forEach((s, i) => s.classList.toggle('active', i < n));
-}
-
-let leitStarValue = 0;
-function setLeitStar(n) {
-  leitStarValue = n;
-  setVal('leit-det-nota', n);
-  document.querySelectorAll('#leit-stars .star').forEach((s, i) => s.classList.toggle('active', i < n));
-}
-
-// ===== INBOX =====
-function addInboxItem() {
-  const list = document.getElementById('inbox-list');
-  const div = document.createElement('div');
-  div.className = 'check-item';
-  div.onclick = function() { toggleCheck(this); };
-  div.innerHTML = `<div class="check-box"></div><input class="td-input check-text" placeholder="Capture..." onclick="event.stopPropagation()" />`;
-  list.appendChild(div);
-}
-
-// ===== PROJETOS TABLE =====
-function addProjRow(data) {
-  const body = document.getElementById('proj-body');
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td><input class="td-input" placeholder="Nome do projeto..." value="${data?.[0]||''}" /></td>
-    <td>
-      <select class="td-select">
-        <option value="">Área...</option>
-        <option ${data?.[1]==='Trabalho'?'selected':''}>Trabalho</option>
-        <option ${data?.[1]==='Pessoal'?'selected':''}>Pessoal</option>
-        <option ${data?.[1]==='Saúde'?'selected':''}>Saúde</option>
-        <option ${data?.[1]==='Finanças'?'selected':''}>Finanças</option>
-        <option ${data?.[1]==='Aprendizado'?'selected':''}>Aprendizado</option>
-        <option ${data?.[1]==='Casa'?'selected':''}>Casa</option>
-      </select>
-    </td>
-    <td>
-      <select class="td-select">
-        <option value="">Status...</option>
-        <option ${data?.[2]==='Planejando'?'selected':''}>Planejando</option>
-        <option ${data?.[2]==='Em andamento'?'selected':''}>Em andamento</option>
-        <option ${data?.[2]==='Pausado'?'selected':''}>Pausado</option>
-        <option ${data?.[2]==='Concluído'?'selected':''}>Concluído</option>
-      </select>
-    </td>
-    <td><input class="td-input" type="date" value="${data?.[3]||''}" /></td>
-    <td><input class="td-input" placeholder="Próxima ação física..." value="${data?.[4]||''}" /></td>
-    <td>
-      <select class="td-select">
-        <option value="">Prioridade...</option>
-        <option ${data?.[5]==='Alta'?'selected':''}>Alta</option>
-        <option ${data?.[5]==='Média'?'selected':''}>Média</option>
-        <option ${data?.[5]==='Baixa'?'selected':''}>Baixa</option>
-      </select>
-    </td>
-    <td><button class="btn-del-row" onclick="this.closest('tr').remove()">×</button></td>
-  `;
-  body.appendChild(tr);
-}
-
-// ===== CRM TABLE =====
-function addCrmRow(data) {
-  const body = document.getElementById('crm-body');
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td><input class="td-input" placeholder="Nome..." value="${data?.[0]||''}" /></td>
-    <td>
-      <select class="td-select">
-        <option value="">Contexto...</option>
-        <option ${data?.[1]==='Trabalho'?'selected':''}>Trabalho</option>
-        <option ${data?.[1]==='Mentor'?'selected':''}>Mentor</option>
-        <option ${data?.[1]==='Parceiro'?'selected':''}>Parceiro</option>
-        <option ${data?.[1]==='Amizade'?'selected':''}>Amizade</option>
-        <option ${data?.[1]==='Família'?'selected':''}>Família</option>
-        <option ${data?.[1]==='Cliente'?'selected':''}>Cliente</option>
-      </select>
-    </td>
-    <td>
-      <select class="td-select">
-        <option value="">Tier...</option>
-        <option ${data?.[2]==='1'?'selected':''} value="1">T1 — Mensal</option>
-        <option ${data?.[2]==='2'?'selected':''} value="2">T2 — Trimestral</option>
-        <option ${data?.[2]==='3'?'selected':''} value="3">T3 — Semestral</option>
-      </select>
-    </td>
-    <td><input class="td-input" type="date" value="${data?.[3]||''}" /></td>
-    <td><input class="td-input" placeholder="Quando e para quê..." value="${data?.[4]||''}" /></td>
-    <td>
-      <select class="td-select">
-        <option value="">Status...</option>
-        <option ${data?.[5]==='Em dia'?'selected':''}>Em dia</option>
-        <option ${data?.[5]==='Atenção'?'selected':''}>Atenção</option>
-        <option ${data?.[5]==='Em atraso'?'selected':''}>Em atraso</option>
-      </select>
-    </td>
-    <td><button class="btn-del-row" onclick="this.closest('tr').remove()">×</button></td>
-  `;
-  body.appendChild(tr);
-}
-
-// ===== LEITURAS TABLE =====
-function addLeitRow(data) {
-  const body = document.getElementById('leit-body');
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td><input class="td-input" placeholder="Título..." value="${data?.[0]||''}" oninput="updateLeitStats()" /></td>
-    <td><input class="td-input" placeholder="Autor..." value="${data?.[1]||''}" /></td>
-    <td>
-      <select class="td-select">
-        <option value="">Tipo...</option>
-        <option ${data?.[2]==='Livro'?'selected':''}>Livro</option>
-        <option ${data?.[2]==='Artigo'?'selected':''}>Artigo</option>
-        <option ${data?.[2]==='Podcast'?'selected':''}>Podcast</option>
-        <option ${data?.[2]==='Curso'?'selected':''}>Curso</option>
-      </select>
-    </td>
-    <td>
-      <select class="td-select" onchange="updateLeitStats()">
-        <option value="">Status...</option>
-        <option ${data?.[3]==='Lendo'?'selected':''}>Lendo</option>
-        <option ${data?.[3]==='Lido'?'selected':''}>Lido</option>
-        <option ${data?.[3]==='Na fila'?'selected':''}>Na fila</option>
-        <option ${data?.[3]==='Abandonei'?'selected':''}>Abandonei</option>
-      </select>
-    </td>
-    <td>
-      <select class="td-select">
-        <option value="">...</option>
-        <option ${data?.[4]==='5'?'selected':''}>★★★★★</option>
-        <option ${data?.[4]==='4'?'selected':''}>★★★★</option>
-        <option ${data?.[4]==='3'?'selected':''}>★★★</option>
-        <option ${data?.[4]==='2'?'selected':''}>★★</option>
-        <option ${data?.[4]==='1'?'selected':''}>★</option>
-      </select>
-    </td>
-    <td><input class="td-input" type="date" value="${data?.[5]||''}" /></td>
-    <td><input class="td-input" type="date" value="${data?.[6]||''}" /></td>
-    <td><button class="btn-del-row" onclick="this.closest('tr').remove(); updateLeitStats();">×</button></td>
-  `;
-  body.appendChild(tr);
-  updateLeitStats();
-}
-
-function updateLeitStats() {
-  const rows = document.querySelectorAll('#leit-body tr');
-  let total = rows.length, lidos = 0, lendo = 0, fila = 0;
-  rows.forEach(tr => {
-    const sel = tr.querySelector('select:nth-of-type(2)');
-    if (!sel) return;
-    if (sel.value === 'Lido') lidos++;
-    else if (sel.value === 'Lendo') lendo++;
-    else if (sel.value === 'Na fila') fila++;
-  });
-  document.getElementById('leit-total').textContent = total;
-  document.getElementById('leit-lidos').textContent = lidos;
-  document.getElementById('leit-lendo').textContent = lendo;
-  document.getElementById('leit-fila').textContent = fila;
-}
-
-// ===== HABIT TRACKER =====
-let habitNames = ['🧘 Meditação', '💪 Treino', '📚 Leitura', '✍ Escrita', '💧 2L de água'];
-
-function getDaysInMonth(month, year) {
-  return new Date(year, month, 0).getDate();
-}
-
-function rebuildHabitGrid() {
-  const month = parseInt(document.getElementById('habit-month').value) || new Date().getMonth() + 1;
-  const year = parseInt(document.getElementById('habit-year').value) || new Date().getFullYear();
-  const days = getDaysInMonth(month, year);
-
-  const table = document.getElementById('habit-table');
-  table.innerHTML = '';
-
-  // HEADER
-  const thead = table.createTHead();
-  const hr = thead.insertRow();
-  const th0 = document.createElement('th');
-  th0.className = 'habit-name-col';
-  th0.textContent = 'Hábito';
-  hr.appendChild(th0);
-
-  for (let d = 1; d <= days; d++) {
-    const th = document.createElement('th');
-    th.textContent = d;
-    hr.appendChild(th);
-  }
-
-  const thPct = document.createElement('th');
-  thPct.textContent = '%';
-  hr.appendChild(thPct);
-
-  const thDel = document.createElement('th');
-  thDel.textContent = '';
-  hr.appendChild(thDel);
-
-  // ROWS
-  const tbody = table.createTBody();
-
-  habitNames.forEach((name, hi) => {
-    const tr = tbody.insertRow();
-    tr.className = 'habit-row';
-
-    const tdName = tr.insertCell();
-    tdName.className = 'habit-name-cell';
-    const nameInput = document.createElement('input');
-    nameInput.className = 'td-input habit-name-input';
-    nameInput.value = name;
-    nameInput.placeholder = 'Nome do hábito...';
-    nameInput.style.width = '100%';
-    nameInput.oninput = () => { habitNames[hi] = nameInput.value; };
-    tdName.appendChild(nameInput);
-
-    for (let d = 1; d <= days; d++) {
-      const td = tr.insertCell();
-      const dot = document.createElement('div');
-      dot.className = 'habit-dot';
-      dot.dataset.habit = hi;
-      dot.dataset.day = d;
-      dot.onclick = function() {
-        this.classList.toggle('done');
-        updateHabitRow(tr, days);
-        debounce(saveAll, 800)();
-      };
-      td.appendChild(dot);
+  let filtered = TEMPLATES.filter(t => {
+    if (cat && t.cat !== cat) return false;
+    if (diff && String(t.diff) !== diff) return false;
+    if (q) {
+      const needle = q.toLowerCase();
+      const hay = (t.name + ' ' + t.desc + ' ' + (t.tags || []).join(' ')).toLowerCase();
+      if (!hay.includes(needle)) return false;
     }
-
-    const tdPct = tr.insertCell();
-    tdPct.className = 'habit-pct';
-    tdPct.id = `habit-pct-${hi}`;
-    tdPct.textContent = '0%';
-    tdPct.style.color = 'var(--text-dim)';
-
-    const tdDel = tr.insertCell();
-    const delBtn = document.createElement('button');
-    delBtn.className = 'btn-del-row';
-    delBtn.textContent = '×';
-    delBtn.onclick = () => {
-      habitNames.splice(hi, 1);
-      rebuildHabitGrid();
-    };
-    tdDel.appendChild(delBtn);
+    return true;
   });
-}
 
-function updateHabitRow(tr, days) {
-  const dots = tr.querySelectorAll('.habit-dot');
-  const done = Array.from(dots).filter(d => d.classList.contains('done')).length;
-  const pct = Math.round(done / days * 100);
-  const pctEl = tr.querySelector('.habit-pct');
-  if (pctEl) {
-    pctEl.textContent = pct + '%';
-    pctEl.style.color = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--yellow)' : 'var(--red)';
+  document.getElementById('results-count').innerHTML = `<strong>${filtered.length}</strong> templates`;
+
+  if (filtered.length === 0) {
+    root.innerHTML = `<div class="empty-results"><strong>Nenhum template encontrado</strong>Tenta ajustar os filtros ou buscar outro termo.</div>`;
+    return;
   }
-}
 
-function addHabit() {
-  if (habitNames.length >= 7) { showToast('⚠ Máximo de 7 hábitos recomendado'); return; }
-  habitNames.push('Novo hábito...');
-  rebuildHabitGrid();
-}
+  // Group by category, but only show category headers when no specific cat filter is on
+  const groups = {};
+  filtered.forEach(t => {
+    if (!groups[t.cat]) groups[t.cat] = [];
+    groups[t.cat].push(t);
+  });
 
-// ===== META 12 SEMANAS =====
-function calcM12Weeks() {
-  const inicio = document.getElementById('m12-inicio').value;
-  if (!inicio) return;
-  const start = new Date(inicio);
-  const end = new Date(start);
-  end.setDate(end.getDate() + 83); // 12 * 7 - 1
-  document.getElementById('m12-fim').value = end.toLocaleDateString('pt-BR');
-  buildM12Semanas();
-  updateM12Stats();
-}
+  const order = ['vida', 'trabalho', 'estudos', 'financas', 'negocios'];
+  let html = '';
 
-function buildM12Semanas(savedData) {
-  const container = document.getElementById('m12-semanas');
-  container.innerHTML = '';
-
-  for (let w = 1; w <= 12; w++) {
-    const card = document.createElement('div');
-    card.className = 'card m12-semana-card';
-    card.style.marginBottom = '20px';
-
-    const saved = savedData?.[w - 1];
-
-    card.innerHTML = `
-      <div class="card-title">Semana ${w} <span style="margin-left:auto; font-size:12px; color:var(--text-dim);" id="m12-exec-${w}">0% executado</span></div>
-      <div class="check-list" id="m12-acoes-${w}">
-        <div class="check-item ${saved?.acoes?.[0]?.done ? 'done' : ''}" onclick="toggleCheck(this); updateM12Stats()">
-          <div class="check-box"></div>
-          <input class="td-input check-text" placeholder="Tática 1 da semana ${w}..." value="${saved?.acoes?.[0]?.text || ''}" onclick="event.stopPropagation()" />
+  for (const k of order) {
+    if (!groups[k]) continue;
+    const cInfo = CATEGORIES[k];
+    html += `
+      <div class="cat-section">
+        <div class="cat-header">
+          <div class="cat-icon" style="background: linear-gradient(135deg, ${cInfo.color}, ${cInfo.dark});">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l9 4.5v9L12 20l-9-4.5v-9z"/><path d="M12 11l9-4.5M12 11v9M12 11L3 6.5"/></svg>
+          </div>
+          <h3 class="cat-title">${cInfo.name}</h3>
+          <span class="cat-count">${groups[k].length}</span>
         </div>
-        <div class="check-item ${saved?.acoes?.[1]?.done ? 'done' : ''}" onclick="toggleCheck(this); updateM12Stats()">
-          <div class="check-box"></div>
-          <input class="td-input check-text" placeholder="Tática 2..." value="${saved?.acoes?.[1]?.text || ''}" onclick="event.stopPropagation()" />
+        <div class="grid">
+          ${groups[k].map(renderCard).join('')}
         </div>
-        <div class="check-item ${saved?.acoes?.[2]?.done ? 'done' : ''}" onclick="toggleCheck(this); updateM12Stats()">
-          <div class="check-box"></div>
-          <input class="td-input check-text" placeholder="Tática 3..." value="${saved?.acoes?.[2]?.text || ''}" onclick="event.stopPropagation()" />
-        </div>
-        <div class="check-item ${saved?.acoes?.[3]?.done ? 'done' : ''}" onclick="toggleCheck(this); updateM12Stats()">
-          <div class="check-box"></div>
-          <input class="td-input check-text" placeholder="Tática 4 (opcional)..." value="${saved?.acoes?.[3]?.text || ''}" onclick="event.stopPropagation()" />
-        </div>
-      </div>
-      <div style="margin-top:12px;">
-        <div class="field-label" style="margin-bottom:6px;">Nota da semana / Reflexão</div>
-        <input type="text" class="field-input m12-nota" placeholder="O que foi bem? O que ajustar?" value="${saved?.nota || ''}" style="font-size:13px;" />
       </div>
     `;
-    container.appendChild(card);
   }
-}
 
-function updateM12Stats() {
-  const inicio = document.getElementById('m12-inicio').value;
-  if (!inicio) return;
+  root.innerHTML = html;
 
-  const start = new Date(inicio);
-  const now = new Date();
-  const elapsed = Math.floor((now - start) / 86400000);
-  const total = 84;
-  const semanaAtual = Math.min(12, Math.max(1, Math.ceil((elapsed + 1) / 7)));
-  const diasRestantes = Math.max(0, total - elapsed);
-  const pctTempo = Math.min(100, Math.round(elapsed / total * 100));
-
-  setTextContent('m12-semana-atual', semanaAtual + '/12');
-  setTextContent('m12-dias-restantes', diasRestantes);
-  setTextContent('m12-pct-tempo', pctTempo + '%');
-
-  // taxa de execução
-  let totalTaticas = 0, feitas = 0;
-  document.querySelectorAll('.m12-semana-card').forEach(card => {
-    const items = card.querySelectorAll('.check-item');
-    totalTaticas += items.length;
-    feitas += card.querySelectorAll('.check-item.done').length;
-  });
-  const exec = totalTaticas ? Math.round(feitas / totalTaticas * 100) : 0;
-  setTextContent('m12-pct-exec', exec + '%');
-
-  const fill = document.getElementById('m12-fill');
-  const pctLabel = document.getElementById('m12-pct-label');
-  if (fill) fill.style.width = pctTempo + '%';
-  if (pctLabel) pctLabel.textContent = pctTempo + '%';
-
-  // per-week exec
-  document.querySelectorAll('.m12-semana-card').forEach((card, i) => {
-    const items = card.querySelectorAll('.check-item');
-    const done = card.querySelectorAll('.check-item.done').length;
-    const pct = items.length ? Math.round(done / items.length * 100) : 0;
-    const el = document.getElementById(`m12-exec-${i + 1}`);
-    if (el) {
-      el.textContent = pct + '% executado';
-      el.style.color = pct >= 85 ? 'var(--green)' : pct >= 50 ? 'var(--yellow)' : 'var(--text-dim)';
-    }
-  });
-}
-
-function setTextContent(id, v) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = v;
-}
-
-// ===== LOAD FROM STORAGE =====
-function loadAll() {
-  const store = getStore();
-
-  // Dashboard
-  setVal('dash-foco', store.dash_foco);
-  setVal('dash-gratitude', store.dash_gratitude);
-  setVal('dash-intention', store.dash_intention);
-  loadCheckList('metas-prof-list', store.dash_metas_prof);
-  loadCheckList('metas-pes-list', store.dash_metas_pes);
-  loadInbox(store.dash_inbox);
-  loadQuickLinks(store.dash_links);
-
-  // Weekly
-  setVal('wr-periodo', store.wr_periodo);
-  setVal('wr-energia', store.wr_energia);
-  if (store.wr_nota) setStar(parseInt(store.wr_nota));
-  setVal('wr-vitorias', store.wr_vitorias);
-  setVal('wr-melhorias', store.wr_melhorias);
-  setVal('wr-insight', store.wr_insight);
-  setVal('wr-preocupacao', store.wr_preocupacao);
-  if (store.wr_coleta) {
-    const items = document.querySelectorAll('#wr-coleta .check-item');
-    store.wr_coleta.forEach((s, i) => { if (items[i] && s.done) items[i].classList.add('done'); });
-  }
-  loadCheckList('wr-top3', store.wr_top3);
-  setVal('wr-compromissos', store.wr_compromissos);
-  setVal('wr-tema', store.wr_tema);
-
-  // Projetos
-  if (store.proj_rows?.length) {
-    store.proj_rows.forEach(r => addProjRow(r));
-  } else {
-    addProjRow(); addProjRow(); addProjRow();
-  }
-  setVal('proj-det-nome', store.proj_det_nome);
-  setVal('proj-det-resultado', store.proj_det_resultado);
-  setVal('proj-det-obs', store.proj_det_obs);
-  loadCheckList('proj-det-acoes', store.proj_det_acoes);
-
-  // CRM
-  if (store.crm_rows?.length) {
-    store.crm_rows.forEach(r => addCrmRow(r));
-  } else {
-    addCrmRow(); addCrmRow(); addCrmRow();
-  }
-  setVal('crm-det-nome', store.crm_det_nome);
-  setVal('crm-det-como', store.crm_det_como);
-  setVal('crm-det-imp', store.crm_det_imp);
-  setVal('crm-det-valor', store.crm_det_valor);
-  setVal('crm-det-historico', store.crm_det_historico);
-
-  // Hábitos
-  const savedMonth = store.habit_month;
-  const savedYear = store.habit_year;
-  if (savedMonth) setVal('habit-month', savedMonth);
-  if (savedYear) setVal('habit-year', savedYear);
-  if (store.habit_names?.length) habitNames = store.habit_names;
-  rebuildHabitGrid();
-  if (store.habit_dots) {
-    const rows = document.querySelectorAll('.habit-row');
-    store.habit_dots.forEach((rowDots, ri) => {
-      const dots = rows[ri]?.querySelectorAll('.habit-dot');
-      if (!dots) return;
-      rowDots.forEach((done, di) => {
-        if (done && dots[di]) dots[di].classList.add('done');
-      });
-      const month = parseInt(document.getElementById('habit-month').value) || new Date().getMonth() + 1;
-      const year = parseInt(document.getElementById('habit-year').value) || new Date().getFullYear();
-      if (rows[ri]) updateHabitRow(rows[ri], getDaysInMonth(month, year));
+  // Bind clicks
+  root.querySelectorAll('[data-tpl]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openModal(el.dataset.tpl);
     });
-  }
-  setVal('habit-reflection-best', store.habit_reflection_best);
-  setVal('habit-reflection-worst', store.habit_reflection_worst);
-
-  // Leituras
-  if (store.leit_rows?.length) {
-    store.leit_rows.forEach(r => addLeitRow(r));
-  } else {
-    addLeitRow(); addLeitRow();
-  }
-  setVal('leit-det-titulo', store.leit_det_titulo);
-  setVal('leit-det-ideias', store.leit_det_ideias);
-  setVal('leit-det-citacoes', store.leit_det_citacoes);
-  setVal('leit-det-acao', store.leit_det_acao);
-  if (store.leit_det_nota) setLeitStar(parseInt(store.leit_det_nota));
-
-  // Meta 12 Semanas
-  if (store.m12_inicio) {
-    setVal('m12-inicio', store.m12_inicio);
-    const start = new Date(store.m12_inicio);
-    const end = new Date(start); end.setDate(end.getDate() + 83);
-    document.getElementById('m12-fim').value = end.toLocaleDateString('pt-BR');
-    buildM12Semanas(store.m12_semanas);
-    updateM12Stats();
-  } else {
-    buildM12Semanas();
-  }
-  setVal('m12-visao', store.m12_visao);
-  setVal('m12-porque', store.m12_porque);
-
-  updateProgress();
-  updateLeitStats();
-}
-
-function loadCheckList(listId, data) {
-  if (!data?.length) return;
-  const list = document.getElementById(listId);
-  if (!list) return;
-  const items = list.querySelectorAll('.check-item');
-  data.forEach((d, i) => {
-    if (items[i]) {
-      if (d.done) items[i].classList.add('done');
-      const inp = items[i].querySelector('input');
-      if (inp && d.text) inp.value = d.text;
-    }
   });
 }
 
-function loadInbox(data) {
-  if (!data?.length) return;
-  const list = document.getElementById('inbox-list');
-  if (!list) return;
-  list.innerHTML = '';
-  data.forEach(d => {
-    const div = document.createElement('div');
-    div.className = 'check-item' + (d.done ? ' done' : '');
-    div.onclick = function() { toggleCheck(this); };
-    div.innerHTML = `<div class="check-box">${d.done ? '' : ''}</div><input class="td-input check-text" value="${d.text || ''}" placeholder="Capture..." onclick="event.stopPropagation()" />`;
-    list.appendChild(div);
+function renderCard(t) {
+  const c = CATEGORIES[t.cat];
+  const dup = state.duplicated.includes(t.id);
+  return `
+    <div class="card-template" data-tpl="${t.id}">
+      <div class="card-mockup" style="background: linear-gradient(135deg, ${c.color}, ${c.dark});">
+        <div class="card-mockup-icon">${ICONS[t.icon] || ICONS.dashboard}</div>
+        <div class="card-mockup-title">${t.name}</div>
+        <div class="card-mockup-sub">${c.name}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="tag tag-cat">${c.name}</span>
+          <span class="tag tag-diff-${t.diff}">${DIFFICULTY[t.diff]}</span>
+          ${dup ? '<span class="tag tag-dup"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Duplicado</span>' : ''}
+        </div>
+        <div class="card-name">${t.name}</div>
+        <div class="card-desc">${t.desc}</div>
+        <button class="btn-detail">
+          Ver detalhes
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function openModal(id) {
+  const t = TEMPLATES.find(x => x.id === id);
+  if (!t) return;
+  const c = CATEGORIES[t.cat];
+  const dup = state.duplicated.includes(t.id);
+
+  document.getElementById('modal-mockup').style.background =
+    `linear-gradient(135deg, ${c.color}, ${c.dark})`;
+  document.getElementById('modal-mock-icon').innerHTML = ICONS[t.icon] || ICONS.dashboard;
+  document.getElementById('modal-mock-title').textContent = t.name;
+
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-meta">
+      <span class="tag tag-cat">${c.name}</span>
+      <span class="tag tag-diff-${t.diff}">${DIFFICULTY[t.diff]}</span>
+      ${dup ? '<span class="tag tag-dup"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já duplicado</span>' : ''}
+    </div>
+    <h2 class="modal-name">${t.name}</h2>
+    <p class="modal-desc">${t.full}</p>
+
+    <div class="modal-section">
+      <div class="modal-section-title">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Como usar
+      </div>
+      <ol class="step-list">
+        ${t.steps.map(s => `<li>${s}</li>`).join('')}
+      </ol>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Funcionalidades-chave
+      </div>
+      <ul class="feat-list">
+        ${t.feats.map(f => `<li>${f}</li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        Tags relacionadas
+      </div>
+      <div class="modal-tags">
+        ${t.tags.map(tag => `<span class="tag-related">#${tag}</span>`).join('')}
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <!-- TODO: trocar URL pelo template real do Notion quando disponível -->
+      <a class="btn-primary" href="https://www.notion.so/templates" target="_blank" rel="noopener">
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 3h7v7M10 14L21 3M21 14v7h-7M10 10L3 17"/></svg>
+        Duplicar para meu Notion
+      </a>
+      <button class="btn-secondary ${dup ? 'is-dup' : ''}" id="btn-dup">
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">${dup ? '<polyline points="20 6 9 17 4 12"/>' : '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>'}</svg>
+        ${dup ? 'Marcado como duplicado' : 'Marcar como duplicado'}
+      </button>
+    </div>
+  `;
+
+  document.getElementById('btn-dup').addEventListener('click', () => toggleDuplicated(t.id));
+
+  document.getElementById('modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function toggleDuplicated(id) {
+  const idx = state.duplicated.indexOf(id);
+  if (idx === -1) {
+    state.duplicated.push(id);
+    if (!state.myTemplates[id]) {
+      state.myTemplates[id] = { status: 'ativo', notes: '', addedAt: Date.now() };
+    }
+    showToast('Adicionado aos seus templates');
+  } else {
+    state.duplicated.splice(idx, 1);
+    delete state.myTemplates[id];
+    showToast('Removido dos seus templates');
+  }
+  store.set(KEYS.duplicated, state.duplicated);
+  store.set(KEYS.myTemplates, state.myTemplates);
+  renderGallery();
+  renderMy();
+  updatePills();
+  // Re-open modal to refresh the button state
+  openModal(id);
+}
+
+/* ============================================================
+   TUTORIAL RENDER
+   ============================================================ */
+function renderTutorial() {
+  const root = document.getElementById('tut-grid');
+  root.innerHTML = TUT_STEPS.map(s => {
+    const done = state.tutorial.includes(s.id);
+    return `
+      <div class="tut-step ${done ? 'done' : ''}" data-step="${s.id}">
+        <div class="tut-num">${s.id}</div>
+        <div class="tut-content">
+          <h4 class="tut-title">${s.title}</h4>
+          <div class="tut-text">${s.body}</div>
+          <button class="tut-check-btn" data-toggle="${s.id}">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">${done ? '<polyline points="20 6 9 17 4 12"/>' : '<rect x="3" y="3" width="18" height="18" rx="2"/>'}</svg>
+            ${done ? 'Concluído' : 'Marcar como concluído'}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  root.querySelectorAll('[data-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => toggleTutStep(parseInt(btn.dataset.toggle)));
+  });
+
+  const done = state.tutorial.length;
+  document.getElementById('tut-done').textContent = done;
+  document.getElementById('tut-fill').style.width = (done / TUT_STEPS.length * 100) + '%';
+}
+
+function toggleTutStep(id) {
+  const idx = state.tutorial.indexOf(id);
+  if (idx === -1) state.tutorial.push(id);
+  else state.tutorial.splice(idx, 1);
+  store.set(KEYS.tutorial, state.tutorial);
+  renderTutorial();
+  updatePills();
+}
+
+/* ============================================================
+   MEUS TEMPLATES RENDER
+   ============================================================ */
+function renderMy() {
+  const root = document.getElementById('my-content');
+  const ids = Object.keys(state.myTemplates);
+
+  if (ids.length === 0) {
+    root.innerHTML = `
+      <div class="my-empty">
+        <div class="my-empty-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="my-empty-title">Nenhum template ainda</div>
+        <p class="my-empty-text">Vá pra galeria, encontre um template que faz sentido pra você e marque como duplicado. Vai aparecer aqui pra você acompanhar o uso.</p>
+        <button class="my-empty-btn" data-jump="galeria">Ir para galeria</button>
+      </div>
+    `;
+    root.querySelector('[data-jump]').addEventListener('click', () => switchTab('galeria'));
+    return;
+  }
+
+  // Sort: most recently added first
+  ids.sort((a, b) => (state.myTemplates[b].addedAt || 0) - (state.myTemplates[a].addedAt || 0));
+
+  const cards = ids.map(id => {
+    const t = TEMPLATES.find(x => x.id === id);
+    if (!t) return '';
+    const my = state.myTemplates[id];
+    const c = CATEGORIES[t.cat];
+    return `
+      <div class="my-card">
+        <div class="my-card-mockup" style="background: linear-gradient(135deg, ${c.color}, ${c.dark});">
+          <div class="my-card-mockup-text">${t.name}</div>
+        </div>
+        <div class="my-card-body">
+          <div class="my-card-name">${t.name}</div>
+          <div class="status-row">
+            <button class="status-btn ativo ${my.status==='ativo'?'active':''}" data-status="${id}|ativo">Ativo</button>
+            <button class="status-btn uso ${my.status==='uso'?'active':''}" data-status="${id}|uso">Em uso</button>
+            <button class="status-btn aband ${my.status==='aband'?'active':''}" data-status="${id}|aband">Abandonado</button>
+          </div>
+          <textarea class="my-textarea" data-notes="${id}" placeholder="Notas pessoais — o que está funcionando, o que ajustar...">${(my.notes||'').replace(/</g,'&lt;')}</textarea>
+          <div class="my-actions">
+            <a class="my-action" href="https://www.notion.so/" target="_blank" rel="noopener">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 3h7v7M10 14L21 3"/></svg>
+              Abrir Notion
+            </a>
+            <button class="my-action" data-edit="${id}">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              Detalhes
+            </button>
+            <button class="my-action danger" data-remove="${id}">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 01-2 2H9a2 2 0 01-2-2L5 6"/></svg>
+              Remover
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  root.innerHTML = `<div class="my-grid">${cards}</div>`;
+
+  root.querySelectorAll('[data-status]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const [id, status] = btn.dataset.status.split('|');
+      state.myTemplates[id].status = status;
+      store.set(KEYS.myTemplates, state.myTemplates);
+      renderMy();
+    });
+  });
+
+  root.querySelectorAll('[data-notes]').forEach(ta => {
+    ta.addEventListener('input', (e) => {
+      const id = ta.dataset.notes;
+      state.myTemplates[id].notes = e.target.value;
+      store.set(KEYS.myTemplates, state.myTemplates);
+    });
+  });
+
+  root.querySelectorAll('[data-edit]').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.edit));
+  });
+
+  root.querySelectorAll('[data-remove]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.remove;
+      if (!confirm(`Remover ${TEMPLATES.find(t => t.id === id).name} da sua lista?`)) return;
+      delete state.myTemplates[id];
+      const dIdx = state.duplicated.indexOf(id);
+      if (dIdx !== -1) state.duplicated.splice(dIdx, 1);
+      store.set(KEYS.duplicated, state.duplicated);
+      store.set(KEYS.myTemplates, state.myTemplates);
+      renderMy();
+      renderGallery();
+      updatePills();
+      showToast('Template removido');
+    });
   });
 }
 
-function loadQuickLinks(data) {
-  if (!data?.length) return;
-  const inputs = document.querySelectorAll('#quick-links .quick-link-item input');
-  data.forEach((v, i) => { if (inputs[i]) inputs[i].value = v || ''; });
+/* ============================================================
+   PILLS / TAB SWITCHING
+   ============================================================ */
+function updatePills() {
+  document.getElementById('tut-pill').textContent = `${state.tutorial.length}/6`;
+  document.getElementById('my-pill').textContent = Object.keys(state.myTemplates).length;
 }
 
-// ===== DEFAULT MONTH =====
-function initMonth() {
-  const now = new Date();
-  setVal('habit-month', now.getMonth() + 1);
-  setVal('habit-year', now.getFullYear());
+function switchTab(name) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === 'sec-' + name));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ===== EXPORT / IMPORT =====
-function exportData() {
-  saveAll();
-  const data = localStorage.getItem(KEY) || '{}';
-  const blob = new Blob([data], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  const date = new Date().toISOString().slice(0, 10);
-  a.href = url;
-  a.download = `lifeos-backup-${date}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('Backup baixado com sucesso!');
-}
+/* ============================================================
+   INIT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Tabs
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.addEventListener('click', () => switchTab(b.dataset.tab));
+  });
 
-function importData(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const parsed = JSON.parse(e.target.result);
-      localStorage.setItem(KEY, JSON.stringify(parsed));
-      showToast('Dados restaurados! Recarregando...');
-      setTimeout(() => location.reload(), 1200);
-    } catch {
-      showToast('Arquivo inválido. Use um backup gerado por esta ferramenta.');
-    }
-  };
-  reader.readAsText(file);
-  event.target.value = '';
-}
+  // Filters
+  document.getElementById('search').addEventListener('input', (e) => {
+    state.filter.q = e.target.value;
+    renderGallery();
+  });
+  document.getElementById('filter-cat').addEventListener('change', (e) => {
+    state.filter.cat = e.target.value;
+    renderGallery();
+  });
+  document.getElementById('filter-diff').addEventListener('change', (e) => {
+    state.filter.diff = e.target.value;
+    renderGallery();
+  });
 
-// ===== PWA: SERVICE WORKER + INSTALL =====
-let deferredPrompt = null;
+  // Modal close
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('modal').addEventListener('click', (e) => {
+    if (e.target.id === 'modal') closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
 
+  // Initial renders
+  renderGallery();
+  renderTutorial();
+  renderMy();
+  updatePills();
+});
+
+/* ============================================================
+   SERVICE WORKER
+   ============================================================ */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   });
 }
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  const btn = document.getElementById('btn-install-pwa');
-  if (btn) btn.style.display = 'flex';
-});
-
-async function installPWA() {
-  // iOS Safari path: show instructions (no beforeinstallprompt API)
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
-  if (isStandalone) {
-    showToast('App já instalado!');
-    return;
-  }
-
-  if (isIOS) {
-    alert('Para instalar no iPhone/iPad:\n\n1. Toque no botão Compartilhar (quadrado com seta para cima)\n2. Role e toque em "Adicionar à Tela de Início"\n3. Toque em "Adicionar"\n\nPronto! O app fica como ícone na sua tela inicial e seus dados ficam protegidos.');
-    return;
-  }
-
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') showToast('App instalado!');
-    deferredPrompt = null;
-    const btn = document.getElementById('btn-install-pwa');
-    if (btn) btn.style.display = 'none';
-  } else {
-    alert('Para instalar no Android/Chrome:\n\n1. Toque no menu (3 pontos no canto superior direito)\n2. Toque em "Instalar app" ou "Adicionar à tela inicial"\n\nPronto! O app fica como ícone no seu celular.');
-  }
-}
-
-window.addEventListener('appinstalled', () => {
-  const btn = document.getElementById('btn-install-pwa');
-  if (btn) btn.style.display = 'none';
-  showToast('Instalado! Abra pelo ícone na tela inicial.');
-});
-
-// Show iOS install button always (no beforeinstallprompt on iOS)
-document.addEventListener('DOMContentLoaded', () => {
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-  if (isIOS && !isStandalone) {
-    const btn = document.getElementById('btn-install-pwa');
-    if (btn) btn.style.display = 'flex';
-  }
-});
-
-// ===== EXPORT / IMPORT =====
-function exportData() {
-  try {
-    const data = JSON.stringify(getStore(), null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `lifeos-tools-backup-${new Date().toISOString().slice(0,10)}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    showToast('✓ Backup baixado');
-  } catch (err) {
-    console.error('Export error:', err);
-    showToast('Erro ao exportar');
-  }
-}
-
-// ===== INIT =====
-// Mostra a section ativa inicial (caso o HTML não tenha pré-aplicado .active)
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof loadAll === 'function') loadAll();
-  const initialActive = document.querySelector('.section.active');
-  if (!initialActive) showSection('cover');
-});
 </script>
+
 </body>
 </html>

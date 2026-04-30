@@ -1,7 +1,7 @@
 {
-  "name": "Life OS — Ferramentas",
-  "short_name": "Life OS",
-  "description": "7 ferramentas interativas de produtividade — Dashboard, Revisão Semanal, Projetos, CRM, Hábitos, Leituras e Meta 12 Semanas.",
+  "name": "Templates Notion — Galeria Curada",
+  "short_name": "Templates Notion",
+  "description": "Galeria curada com 20 templates Notion para vida, trabalho, estudos, finanças e negócios — com tutorial integrado e tracker de uso.",
   "start_url": "./templates-notion.html",
   "scope": "./",
   "display": "standalone",

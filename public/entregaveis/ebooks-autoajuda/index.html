@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Coleção 5 Ebooks — Life OS</title>
+<title>Biblioteca · 5 Ebooks de Autoajuda — Life OS</title>
 <script src="../_shared/auth-gate.js"></script>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#8B5CF6">
@@ -21,113 +21,910 @@
     --accent: #8B5CF6;
     --accent-dark: #5B21B6;
     --accent-light: #C4B5FD;
+    --accent-soft: #A78BFA;
     --accent-muted: rgba(139,92,246,0.12);
     --bg: #0F0820;
     --bg-card: #18102A;
     --bg-card2: #221634;
+    --bg-card3: #2A1B3F;
     --border: rgba(139,92,246,0.18);
+    --border-strong: rgba(139,92,246,0.35);
     --text: #EDE9F8;
     --text-muted: #9B8BB8;
     --text-dim: #5C4D75;
     --white: #F7F4FF;
+    --green: #34D399;
+    --amber: #F59E0B;
+    --red: #F87171;
+    --gold: #FCD34D;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { -webkit-tap-highlight-color: transparent; }
   body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     background:
-      radial-gradient(ellipse at 30% 20%, rgba(139,92,246,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse at 70% 80%, rgba(91,33,182,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 30% 10%, rgba(139,92,246,0.14) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 90%, rgba(91,33,182,0.10) 0%, transparent 60%),
       var(--bg);
+    padding-bottom: env(safe-area-inset-bottom);
   }
+
+  /* ───── Layout ───── */
   .wrap {
-    max-width: 880px;
+    max-width: 980px;
     margin: 0 auto;
-    padding: 60px 24px 100px;
+    padding: 32px 20px 120px;
   }
-  .header { text-align: center; margin-bottom: 56px; }
-  .icon-big { font-size: 56px; margin-bottom: 20px; }
-  .badge {
-    display: inline-block;
-    background: var(--accent-muted);
-    border: 1px solid var(--border);
-    color: var(--accent-light);
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 28px; gap: 12px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    display: grid; place-items: center;
+    box-shadow: 0 6px 18px rgba(139,92,246,0.35);
+    flex-shrink: 0;
+  }
+  .brand-mark svg { width: 20px; height: 20px; color: #fff; }
+  .brand-text { line-height: 1.1; }
+  .brand-text .b1 {
     font-size: 11px; font-weight: 700;
-    letter-spacing: 3px; text-transform: uppercase;
-    padding: 8px 20px; border-radius: 40px;
-    margin-bottom: 24px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent-light);
   }
-  h1 {
+  .brand-text .b2 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 6vw, 64px);
-    font-weight: 900; line-height: 1.05;
+    font-size: 18px; font-weight: 800;
     color: var(--white);
-    margin-bottom: 16px;
   }
-  h1 .accent { color: var(--accent); }
-  .sub {
-    font-size: clamp(14px, 2vw, 17px);
-    color: var(--text-muted);
-    max-width: 520px;
-    margin: 0 auto 32px;
-    font-weight: 300;
-    line-height: 1.6;
-  }
-  .ebooks {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 640px) {
-    .ebooks { grid-template-columns: 1fr 1fr; }
-  }
-  .ebook-card {
+  .topbar-actions { display: flex; gap: 8px; }
+  .icon-btn {
+    width: 38px; height: 38px;
+    border-radius: 10px;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 24px;
-    text-decoration: none;
-    color: inherit;
-    display: flex; flex-direction: column;
-    transition: transform 0.2s, border-color 0.2s, background 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .ebook-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent);
-    background: var(--bg-card2);
-  }
-  .ebook-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 48px; font-weight: 900;
-    color: var(--accent);
-    line-height: 1; margin-bottom: 16px;
-    opacity: 0.6;
-  }
-  .ebook-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px; font-weight: 700;
-    color: var(--white);
-    line-height: 1.25;
-    margin-bottom: 10px;
-  }
-  .ebook-desc {
-    font-size: 13px;
     color: var(--text-muted);
-    line-height: 1.6;
-    flex: 1;
+    display: grid; place-items: center;
+    cursor: pointer;
+    transition: all 0.15s;
   }
-  .ebook-cta {
-    margin-top: 18px;
-    display: flex; align-items: center; gap: 8px;
-    font-size: 12px; font-weight: 700;
-    color: var(--accent-light);
+  .icon-btn:hover { color: var(--accent-light); border-color: var(--accent); }
+  .icon-btn svg { width: 16px; height: 16px; }
+
+  /* ───── Hero ───── */
+  .hero { margin-bottom: 28px; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 900; line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .hero h1 .accent { color: var(--accent); }
+  .hero p {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.55;
+    max-width: 540px;
+  }
+
+  /* ───── Tabs ───── */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 28px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: 1;
+    min-width: max-content;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .tab svg { width: 14px; height: 14px; }
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(139,92,246,0.35);
+  }
+
+  .panel { display: none; animation: fadeIn 0.25s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ───── Library Grid ───── */
+  .lib-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 560px) { .lib-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 880px) { .lib-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .book {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .book:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  .cover {
+    aspect-ratio: 3/4;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    color: #fff;
+  }
+  .cover::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 100%);
+    pointer-events: none;
+  }
+  .cover-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px; font-weight: 700;
+    opacity: 0.75;
+    letter-spacing: 4px;
+    z-index: 1;
+  }
+  .cover-bottom { z-index: 1; }
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+  .cover-author {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.85;
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
+  .cover-status {
+    position: absolute;
+    top: 14px; right: 14px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    z-index: 2;
+    backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.18);
+  }
+  .cover-status.done {
+    background: rgba(52,211,153,0.25);
+    border-color: rgba(52,211,153,0.5);
+    color: #A7F3D0;
+  }
+  .cover-status.reading {
+    background: rgba(245,158,11,0.25);
+    border-color: rgba(245,158,11,0.5);
+    color: #FCD34D;
+  }
+  .cover-meta {
+    position: absolute;
+    bottom: 14px; right: 14px;
+    font-size: 10px;
+    opacity: 0.9;
+    z-index: 2;
+    background: rgba(0,0,0,0.45);
+    padding: 4px 8px;
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .book-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+  .book-title-h {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 800;
+    color: var(--white);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .book-meta {
+    display: flex; gap: 10px; align-items: center;
+    font-size: 11px; color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 0.3px;
+  }
+  .book-meta-dot {
+    width: 3px; height: 3px;
+    background: var(--text-dim);
+    border-radius: 50%;
+  }
+  .book-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .book-progress-row {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 12px;
+  }
+  .book-progress-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(139,92,246,0.12);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .book-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    transition: width 0.3s;
+    border-radius: 3px;
+  }
+  .book-progress-fill.done {
+    background: linear-gradient(90deg, var(--green), #6EE7B7);
+  }
+  .book-progress-pct {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 30px;
+    text-align: right;
+  }
+  .book-progress-pct.done { color: var(--green); }
+  .book-actions {
+    display: flex;
+    gap: 6px;
+  }
+  .btn {
+    font-family: 'Inter', sans-serif;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+  }
+  .btn svg { width: 12px; height: 12px; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+    flex: 1;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(139,92,246,0.4); }
+  .btn-ghost {
+    background: var(--bg-card2);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { color: var(--accent-light); border-color: var(--accent); }
+  .btn-done {
+    background: rgba(52,211,153,0.15);
+    color: var(--green);
+    border: 1px solid rgba(52,211,153,0.3);
+    flex: 1;
+  }
+  .btn-done:hover { background: rgba(52,211,153,0.22); }
+
+  /* ───── Cover gradients ───── */
+  .grad-1 { background: linear-gradient(135deg, #8B5CF6 0%, #5B21B6 60%, #2E1065 100%); }
+  .grad-2 { background: linear-gradient(135deg, #A78BFA 0%, #7C3AED 60%, #4C1D95 100%); }
+  .grad-3 { background: linear-gradient(135deg, #C4B5FD 0%, #8B5CF6 60%, #5B21B6 100%); }
+  .grad-4 { background: linear-gradient(135deg, #6D28D9 0%, #4C1D95 60%, #1E1B4B 100%); }
+  .grad-5 { background: linear-gradient(135deg, #DDD6FE 0%, #A78BFA 60%, #6D28D9 100%); color: #1E1B4B !important; }
+  .grad-5 .cover-num, .grad-5 .cover-author { color: #2E1065; }
+  .grad-5::after { background: linear-gradient(180deg, transparent 0%, rgba(46,16,101,0.35) 100%) !important; }
+
+  /* ───── Stats Cards ───── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 16px;
+    transition: border-color 0.15s;
+  }
+  .stat-card:hover { border-color: var(--border-strong); }
+  .stat-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--accent-muted);
+    color: var(--accent-light);
+    display: grid; place-items: center;
+    margin-bottom: 12px;
+  }
+  .stat-icon svg { width: 16px; height: 16px; }
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  /* ───── Section title ───── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 800;
+    color: var(--white);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title svg { width: 18px; height: 18px; color: var(--accent-light); }
+
+  /* ───── Heatmap ───── */
+  .heatmap-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 24px;
+  }
+  .heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 480px) {
+    .heatmap-grid { grid-template-columns: repeat(10, 1fr); }
+  }
+  .heatmap-cell {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: rgba(139,92,246,0.08);
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+  }
+  .heatmap-cell:hover { transform: scale(1.15); z-index: 2; box-shadow: 0 0 0 2px var(--accent); }
+  .heatmap-cell[data-level="1"] { background: rgba(139,92,246,0.30); }
+  .heatmap-cell[data-level="2"] { background: rgba(139,92,246,0.55); }
+  .heatmap-cell[data-level="3"] { background: var(--accent); box-shadow: 0 0 8px rgba(139,92,246,0.5); }
+  .heatmap-legend {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    flex-wrap: wrap; gap: 12px;
+  }
+  .heatmap-scale { display: flex; align-items: center; gap: 6px; }
+  .heatmap-scale-cell {
+    width: 12px; height: 12px;
+    border-radius: 3px;
+  }
+
+  /* ───── Quick log ───── */
+  .quicklog {
+    background: linear-gradient(135deg, var(--accent-muted), rgba(91,33,182,0.06));
+    border: 1px solid var(--border-strong);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .quicklog-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 800;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .quicklog-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .quicklog-buttons {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .quicklog-btn {
+    flex: 1; min-width: 60px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .quicklog-btn:hover {
+    background: var(--accent-muted);
+    border-color: var(--accent);
+    color: var(--white);
+    transform: translateY(-1px);
+  }
+  .quicklog-btn:active { transform: translateY(0); }
+
+  /* ───── Progress list ───── */
+  .progress-list {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 8px;
+  }
+  .progress-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 12px;
+    border-radius: 10px;
+    transition: background 0.15s;
+  }
+  .progress-row:hover { background: var(--bg-card2); }
+  .progress-row + .progress-row {
+    border-top: 1px solid rgba(139,92,246,0.08);
+  }
+  .progress-mini-cover {
+    width: 36px; height: 48px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: grid; place-items: center;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 14px;
+  }
+  .progress-info { flex: 1; min-width: 0; }
+  .progress-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .progress-bar-wrap {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 5px;
+    background: rgba(139,92,246,0.12);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    transition: width 0.3s;
+  }
+  .progress-bar-fill.done { background: linear-gradient(90deg, var(--green), #6EE7B7); }
+  .progress-pct {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 36px;
+    text-align: right;
+  }
+  .progress-pct.done { color: var(--green); }
+
+  /* ───── Notes ───── */
+  .notes-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .notes-select {
+    flex: 1;
+    min-width: 180px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .notes-select:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .notes-new-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.15s;
+    letter-spacing: 0.3px;
+  }
+  .notes-new-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(139,92,246,0.4); }
+  .notes-new-btn svg { width: 14px; height: 14px; }
+
+  .notes-list {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) { .notes-list { grid-template-columns: 1fr 1fr; } }
+
+  .note-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .note-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .note-card-bar {
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+  }
+  .note-card-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .note-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 800;
+    color: var(--white);
+    line-height: 1.25;
+    flex: 1;
+  }
+  .note-card-del {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+  .note-card-del:hover { color: var(--red); }
+  .note-card-del svg { width: 14px; height: 14px; }
+  .note-card-book {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-light);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .note-card-content {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .note-card-date {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  .empty-state {
+    background: var(--bg-card);
+    border: 1px dashed var(--border-strong);
+    border-radius: 16px;
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .empty-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: var(--accent-muted);
+    color: var(--accent-light);
+    display: grid; place-items: center;
+    margin: 0 auto 16px;
+  }
+  .empty-icon svg { width: 26px; height: 26px; }
+  .empty-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 800;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .empty-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  /* ───── Modal ───── */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(15,8,32,0.85);
+    backdrop-filter: blur(6px);
+    z-index: 9998;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+  }
+  .modal-backdrop.show { display: flex; }
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 18px;
+    padding: 24px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  }
+  .modal-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 18px;
+  }
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 800;
+    color: var(--white);
+  }
+  .modal-close {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 8px;
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .modal-close:hover { color: var(--red); border-color: var(--red); }
+  .modal-close svg { width: 14px; height: 14px; }
+  .field { margin-bottom: 14px; }
+  .field-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .field-input, .field-textarea, .field-select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .field-input:focus, .field-textarea:focus, .field-select:focus {
+    border-color: var(--accent);
+  }
+  .field-textarea {
+    min-height: 160px;
+    resize: vertical;
+    line-height: 1.6;
+  }
+  .modal-actions {
+    display: flex; gap: 10px;
+    margin-top: 18px;
+  }
+  .modal-btn {
+    flex: 1;
+    padding: 11px 16px;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    letter-spacing: 0.3px;
+  }
+  .modal-btn-cancel {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .modal-btn-cancel:hover { color: var(--text); border-color: var(--border-strong); }
+  .modal-btn-save {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+  }
+  .modal-btn-save:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(139,92,246,0.4); }
+
+  /* ───── Achievements ───── */
+  .ach-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 560px) { .ach-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 880px) { .ach-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .ach-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    display: flex; align-items: center; gap: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .ach-card.unlocked {
+    border-color: var(--border-strong);
+    background: linear-gradient(135deg, var(--bg-card2), var(--bg-card));
+  }
+  .ach-card.unlocked::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -20%;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,92,246,0.18), transparent 70%);
+  }
+  .ach-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    display: grid; place-items: center;
+    background: var(--bg-card3);
+    color: var(--text-dim);
+    position: relative; z-index: 1;
+  }
+  .ach-card.unlocked .ach-icon {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(139,92,246,0.4);
+  }
+  .ach-icon svg { width: 22px; height: 22px; }
+  .ach-info { flex: 1; min-width: 0; position: relative; z-index: 1; }
+  .ach-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 800;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+    line-height: 1.2;
+  }
+  .ach-card.unlocked .ach-title { color: var(--white); }
+  .ach-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+  .ach-card.unlocked .ach-desc { color: var(--text-muted); }
+  .ach-lock {
+    position: absolute;
+    top: 12px; right: 12px;
+    color: var(--text-dim);
+    z-index: 1;
+  }
+  .ach-lock svg { width: 14px; height: 14px; }
+  .ach-card.unlocked .ach-lock { color: var(--green); }
+
+  .ach-summary {
+    background: linear-gradient(135deg, var(--bg-card2), var(--bg-card));
+    border: 1px solid var(--border-strong);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ach-summary::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -30%;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,92,246,0.20), transparent 70%);
+  }
+  .ach-summary-row {
+    display: flex; align-items: center; gap: 16px;
+    position: relative; z-index: 1;
+  }
+  .ach-summary-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    box-shadow: 0 6px 20px rgba(139,92,246,0.4);
+  }
+  .ach-summary-icon svg { width: 26px; height: 26px; color: #fff; }
+  .ach-summary-info { flex: 1; min-width: 0; }
+  .ach-summary-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .ach-summary-count {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; font-weight: 800;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .ach-summary-bar {
+    height: 6px;
+    background: rgba(139,92,246,0.15);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .ach-summary-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  /* ───── Footer ───── */
   footer {
     text-align: center;
     margin-top: 60px;
@@ -138,63 +935,165 @@
   }
   footer a { color: var(--accent-light); text-decoration: none; }
 
+  /* ───── PWA install ───── */
   .pwa-install-fab {
-    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+    position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); right: 20px; z-index: 9999;
     background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    color: #fff; border: none; padding: 12px 20px; border-radius: 50px;
-    font-weight: 700; font-size: 13px; font-family: 'Inter', sans-serif;
-    cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    color: #fff; border: none; padding: 12px 18px; border-radius: 50px;
+    font-weight: 700; font-size: 12px; font-family: 'Inter', sans-serif;
+    cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.5);
     display: flex; align-items: center; gap: 6px; letter-spacing: 0.3px;
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  .pwa-install-fab:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
+  .pwa-install-fab:hover { transform: translateY(-2px); }
+  .pwa-install-fab svg { width: 14px; height: 14px; }
+
+  /* ───── Toast ───── */
+  .toast {
+    position: fixed;
+    bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--bg-card2);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 13px; font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 10000;
+    transition: transform 0.3s ease;
+    display: flex; align-items: center; gap: 8px;
+    max-width: 90%;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; }
+  .toast.unlock { border-color: rgba(252,211,77,0.5); }
+  .toast.unlock svg { color: var(--gold); }
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <div class="header">
-    <div class="icon-big">📚</div>
-    <div class="badge">Life OS · Coleção</div>
-    <h1>5 Ebooks de <span class="accent">Autoajuda</span></h1>
-    <p class="sub">Toque em qualquer ebook para começar a leitura. Tudo offline depois de aberto uma vez.</p>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </div>
+      <div class="brand-text">
+        <div class="b1">Life OS · Coleção</div>
+        <div class="b2">Biblioteca</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" title="Instalar app" id="btn-install-pwa-top" onclick="installPWA()" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
+    </div>
   </div>
 
-  <div class="ebooks">
-    <a href="01-a-arte-da-disciplina.html" class="ebook-card">
-      <div class="ebook-num">01</div>
-      <div class="ebook-title">A Arte da Disciplina</div>
-      <div class="ebook-desc">Como construir hábitos sólidos e parar de depender de motivação. O sistema que separa quem realiza de quem só planeja.</div>
-      <div class="ebook-cta">Ler agora →</div>
-    </a>
+  <!-- HERO -->
+  <div class="hero">
+    <h1>5 Ebooks de <span class="accent">Autoajuda</span></h1>
+    <p>Sua biblioteca digital com tracker de leitura, anotações e conquistas. Tudo offline depois de aberto uma vez.</p>
+  </div>
 
-    <a href="02-mentalidade-de-crescimento.html" class="ebook-card">
-      <div class="ebook-num">02</div>
-      <div class="ebook-title">Mentalidade de Crescimento</div>
-      <div class="ebook-desc">A diferença entre quem trava no fracasso e quem usa a falha como combustível. Reprograme sua relação com erros e desafios.</div>
-      <div class="ebook-cta">Ler agora →</div>
-    </a>
+  <!-- TABS -->
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="library" role="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Biblioteca
+    </button>
+    <button class="tab" data-tab="progress" role="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Meu Progresso
+    </button>
+    <button class="tab" data-tab="notes" role="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Minhas Notas
+    </button>
+    <button class="tab" data-tab="achievements" role="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+      Conquistas
+    </button>
+  </div>
 
-    <a href="03-foco-total.html" class="ebook-card">
-      <div class="ebook-num">03</div>
-      <div class="ebook-title">Foco Total</div>
-      <div class="ebook-desc">Como recuperar sua atenção em uma era de distração permanente. Métodos práticos para deep work no mundo real.</div>
-      <div class="ebook-cta">Ler agora →</div>
-    </a>
+  <!-- ───── PANEL: LIBRARY ───── -->
+  <div class="panel active" id="panel-library">
+    <div class="lib-grid" id="lib-grid"></div>
+  </div>
 
-    <a href="04-o-poder-do-nao.html" class="ebook-card">
-      <div class="ebook-num">04</div>
-      <div class="ebook-title">O Poder do Não</div>
-      <div class="ebook-desc">Por que dizer não é a habilidade mais lucrativa que você pode desenvolver. Liberdade através da subtração.</div>
-      <div class="ebook-cta">Ler agora →</div>
-    </a>
+  <!-- ───── PANEL: PROGRESS ───── -->
+  <div class="panel" id="panel-progress">
+    <div class="stats-grid" id="stats-grid"></div>
 
-    <a href="05-realizacao-em-90-dias.html" class="ebook-card">
-      <div class="ebook-num">05</div>
-      <div class="ebook-title">Realização em 90 Dias</div>
-      <div class="ebook-desc">O método para tirar projetos do papel em 12 semanas. Sistema completo de execução com revisões e métricas.</div>
-      <div class="ebook-cta">Ler agora →</div>
-    </a>
+    <div class="quicklog">
+      <div class="quicklog-title">Quanto tempo li hoje?</div>
+      <div class="quicklog-sub">Registre os minutos lidos para alimentar seu calendário.</div>
+      <div class="quicklog-buttons">
+        <button class="quicklog-btn" onclick="logMinutes(5)">+5 min</button>
+        <button class="quicklog-btn" onclick="logMinutes(15)">+15 min</button>
+        <button class="quicklog-btn" onclick="logMinutes(30)">+30 min</button>
+        <button class="quicklog-btn" onclick="logMinutes(60)">+60 min</button>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Calendário · últimos 30 dias
+    </div>
+    <div class="heatmap-card">
+      <div class="heatmap-grid" id="heatmap-grid"></div>
+      <div class="heatmap-legend">
+        <span id="heatmap-label">Tempo lido nos últimos 30 dias</span>
+        <div class="heatmap-scale">
+          <span>Menos</span>
+          <div class="heatmap-scale-cell" style="background: rgba(139,92,246,0.08);"></div>
+          <div class="heatmap-scale-cell" style="background: rgba(139,92,246,0.30);"></div>
+          <div class="heatmap-scale-cell" style="background: rgba(139,92,246,0.55);"></div>
+          <div class="heatmap-scale-cell" style="background: var(--accent);"></div>
+          <span>Mais</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Progresso por livro
+    </div>
+    <div class="progress-list" id="progress-list"></div>
+  </div>
+
+  <!-- ───── PANEL: NOTES ───── -->
+  <div class="panel" id="panel-notes">
+    <div class="notes-toolbar">
+      <select class="notes-select" id="notes-filter">
+        <option value="all">Todos os ebooks</option>
+      </select>
+      <button class="notes-new-btn" onclick="openNoteModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nova nota
+      </button>
+    </div>
+    <div id="notes-container"></div>
+  </div>
+
+  <!-- ───── PANEL: ACHIEVEMENTS ───── -->
+  <div class="panel" id="panel-achievements">
+    <div class="ach-summary">
+      <div class="ach-summary-row">
+        <div class="ach-summary-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+        <div class="ach-summary-info">
+          <div class="ach-summary-label">Conquistas desbloqueadas</div>
+          <div class="ach-summary-count" id="ach-count">0 / 10</div>
+          <div class="ach-summary-bar"><div class="ach-summary-fill" id="ach-fill" style="width: 0%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ach-grid" id="ach-grid"></div>
   </div>
 
   <footer>
@@ -203,37 +1102,762 @@
   </footer>
 </div>
 
+<!-- Note modal -->
+<div class="modal-backdrop" id="note-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="note-modal-title">Nova nota</div>
+      <button class="modal-close" onclick="closeNoteModal()" title="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="field">
+      <label class="field-label">Título</label>
+      <input class="field-input" id="note-input-title" type="text" placeholder="Ex: Insight sobre disciplina" maxlength="120">
+    </div>
+    <div class="field">
+      <label class="field-label">Ebook associado</label>
+      <select class="field-select" id="note-input-book"></select>
+    </div>
+    <div class="field">
+      <label class="field-label">Conteúdo</label>
+      <textarea class="field-textarea" id="note-input-content" placeholder="Suas ideias-chave, exercícios feitos, planos&#10;&#10;Ex: hábito que vou criar a partir disso..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" onclick="closeNoteModal()">Cancelar</button>
+      <button class="modal-btn modal-btn-save" onclick="saveNote()">Salvar nota</button>
+    </div>
+  </div>
+</div>
+
 <button id="btn-install-pwa" onclick="installPWA()" class="pwa-install-fab" style="display:none">
-  <span style="font-size:16px">📲</span> Instalar app
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+  Instalar app
 </button>
 
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-text">Salvo</span>
+</div>
+
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+/* ─────────────────────────────────────────────────────────
+   DATA — books
+───────────────────────────────────────────────────────── */
+const BOOKS = [
+  {
+    id: '01',
+    file: '01-a-arte-da-disciplina.html',
+    title: 'A Arte da Disciplina',
+    author: 'Agência Criativa',
+    pages: 60,
+    minutes: 180,
+    grad: 'grad-1',
+    desc: 'Como criar hábitos que realmente duram. Método de pequenos compromissos que vencem a procrastinação.'
+  },
+  {
+    id: '02',
+    file: '02-mentalidade-de-crescimento.html',
+    title: 'Mentalidade de Crescimento',
+    author: 'Agência Criativa',
+    pages: 70,
+    minutes: 210,
+    grad: 'grad-2',
+    desc: 'Pense como um vencedor. Como mudar crenças limitantes e desbloquear seu potencial.'
+  },
+  {
+    id: '03',
+    file: '03-foco-total.html',
+    title: 'Foco Total',
+    author: 'Agência Criativa',
+    pages: 65,
+    minutes: 180,
+    grad: 'grad-3',
+    desc: 'Elimine distrações e faça o que importa. Sistema de produção profunda em era de notificações.'
+  },
+  {
+    id: '04',
+    file: '04-o-poder-do-nao.html',
+    title: 'O Poder do Não',
+    author: 'Agência Criativa',
+    pages: 55,
+    minutes: 150,
+    grad: 'grad-4',
+    desc: 'Limites que liberam. Como dizer não com clareza e proteger seu tempo e energia.'
+  },
+  {
+    id: '05',
+    file: '05-realizacao-em-90-dias.html',
+    title: 'Realização em 90 Dias',
+    author: 'Agência Criativa',
+    pages: 75,
+    minutes: 240,
+    grad: 'grad-5',
+    desc: 'Método prático de metas trimestrais. Quebre objetivos grandes em sprints executáveis.'
   }
-  let __pwaPrompt = null;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault(); __pwaPrompt = e;
-    const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
-  });
-  function installPWA() {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-    if (isStandalone) { alert('App já instalado!'); return; }
-    if (isIOS) {
-      alert('Para instalar no iPhone:\n\n1. Toque no botão Compartilhar (quadrado com seta para cima)\n2. Role e toque em "Adicionar à Tela de Início"\n3. Toque em "Adicionar"');
-      return;
-    }
-    if (__pwaPrompt) { __pwaPrompt.prompt(); __pwaPrompt.userChoice.then(() => __pwaPrompt = null); }
-    else { alert('Para instalar no Android: menu (3 pontos) → "Instalar app"'); }
+];
+
+/* ─────────────────────────────────────────────────────────
+   DATA — achievements
+───────────────────────────────────────────────────────── */
+const ACHIEVEMENTS = [
+  {
+    id: 'first_page',
+    title: 'Primeira página',
+    desc: 'Abriu qualquer ebook pela primeira vez.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'
+  },
+  {
+    id: 'marathon',
+    title: 'Maratonista',
+    desc: '30 minutos lendo num único dia.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>'
+  },
+  {
+    id: 'discipline_done',
+    title: 'Disciplina conquistada',
+    desc: 'Concluiu A Arte da Disciplina.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>'
+  },
+  {
+    id: 'mindset_done',
+    title: 'Mentalidade nova',
+    desc: 'Concluiu Mentalidade de Crescimento.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>'
+  },
+  {
+    id: 'focus_done',
+    title: 'Foco absoluto',
+    desc: 'Concluiu Foco Total.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>'
+  },
+  {
+    id: 'limits_done',
+    title: 'Limites estabelecidos',
+    desc: 'Concluiu O Poder do Não.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>'
+  },
+  {
+    id: 'goals_done',
+    title: 'Metas executadas',
+    desc: 'Concluiu Realização em 90 Dias.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/></svg>'
+  },
+  {
+    id: 'bibliophile',
+    title: 'Bibliófilo',
+    desc: 'Concluiu todos os 5 ebooks da coleção.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>'
+  },
+  {
+    id: 'reading_week',
+    title: 'Semana de leitura',
+    desc: '7 dias consecutivos lendo qualquer ebook.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
+  },
+  {
+    id: 'note_taker',
+    title: 'Anotador',
+    desc: 'Criou 10 notas em qualquer ebook.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>'
   }
-  document.addEventListener('DOMContentLoaded', () => {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-    if (isIOS && !isStandalone) {
-      const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
-    }
+];
+
+/* ─────────────────────────────────────────────────────────
+   STORAGE
+───────────────────────────────────────────────────────── */
+const LS_PROGRESS_PREFIX = 'ebook:progress:'; // per-book percent
+const LS_LOG     = 'ebook:reading_log:v1';    // { 'YYYY-MM-DD': minutes }
+const LS_NOTES   = 'ebook:notes:v1';          // [{id, title, content, bookId, date}]
+const LS_ACH     = 'ebook:achievements:v1';   // { id: unlockedAt }
+
+function readJSON(key, fallback) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch (e) { return fallback; }
+}
+function writeJSON(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+}
+
+let readingLog   = readJSON(LS_LOG, {});
+let notesList    = readJSON(LS_NOTES, []);
+let achievements = readJSON(LS_ACH, {});
+
+/* per-book progress in separate keys */
+function getBookProgress(id) {
+  return readJSON(LS_PROGRESS_PREFIX + id, { percent: 0, lastRead: null, sessions: 0 });
+}
+function setBookProgress(id, patch) {
+  const cur = getBookProgress(id);
+  writeJSON(LS_PROGRESS_PREFIX + id, { ...cur, ...patch });
+}
+
+/* ─────────────────────────────────────────────────────────
+   HELPERS
+───────────────────────────────────────────────────────── */
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function dateStr(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function formatDate(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+  } catch (e) { return iso; }
+}
+function uid() {
+  return 'n_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,7);
+}
+
+/* streak from log */
+function computeStreak() {
+  let days = 0;
+  const cur = new Date();
+  while (true) {
+    const k = dateStr(cur);
+    if ((readingLog[k] || 0) > 0) {
+      days++;
+      cur.setDate(cur.getDate() - 1);
+    } else break;
+  }
+  return days;
+}
+
+/* ─────────────────────────────────────────────────────────
+   TABS
+───────────────────────────────────────────────────────── */
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === btn));
+    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + target));
+    if (target === 'library')      renderLibrary();
+    if (target === 'progress')     renderProgress();
+    if (target === 'notes')        renderNotes();
+    if (target === 'achievements') renderAchievements();
   });
+});
+
+/* ─────────────────────────────────────────────────────────
+   LIBRARY
+───────────────────────────────────────────────────────── */
+function statusOf(id) {
+  const p = getBookProgress(id);
+  if (p.percent >= 100) return { label: 'Concluído', cls: 'done' };
+  if (p.percent > 0)    return { label: 'Lendo · ' + p.percent + '%', cls: 'reading' };
+  return { label: 'Não iniciado', cls: '' };
+}
+function statusFull(id) {
+  const p = getBookProgress(id);
+  if (p.percent >= 100) return 'Concluído';
+  if (p.percent > 0)    return 'Lendo';
+  return 'Não iniciado';
+}
+
+function readingTimeLabel(min) {
+  if (min < 60) return min + 'min';
+  const h = min / 60;
+  return (h % 1 === 0 ? h : h.toFixed(1)) + 'h';
+}
+
+function renderLibrary() {
+  const grid = document.getElementById('lib-grid');
+  grid.innerHTML = BOOKS.map(b => {
+    const st = statusOf(b.id);
+    const p  = getBookProgress(b.id);
+    const isDone = p.percent >= 100;
+    const isStarted = p.percent > 0;
+    return `
+      <div class="book">
+        <div class="cover ${b.grad}" onclick="openBook('${b.id}')">
+          ${st.cls ? `<div class="cover-status ${st.cls}">${st.label}</div>` : ''}
+          <div class="cover-num">EBOOK ${b.id}</div>
+          <div class="cover-bottom">
+            <div class="cover-title">${b.title}</div>
+            <div class="cover-author">${b.author}</div>
+          </div>
+          <div class="cover-meta">${b.pages} pág · ${readingTimeLabel(b.minutes)}</div>
+        </div>
+        <div class="book-body">
+          <div class="book-title-h">${b.title}</div>
+          <div class="book-meta">
+            <span>${b.pages} páginas</span>
+            <span class="book-meta-dot"></span>
+            <span>${readingTimeLabel(b.minutes)}</span>
+            <span class="book-meta-dot"></span>
+            <span>${statusFull(b.id)}</span>
+          </div>
+          <div class="book-desc">${b.desc}</div>
+          <div class="book-progress-row">
+            <div class="book-progress-bar">
+              <div class="book-progress-fill ${isDone ? 'done' : ''}" style="width: ${p.percent}%"></div>
+            </div>
+            <div class="book-progress-pct ${isDone ? 'done' : ''}">${p.percent}%</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn btn-primary" onclick="openBook('${b.id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Abrir ebook
+            </button>
+            ${isDone
+              ? `<button class="btn btn-ghost" title="Reiniciar progresso" onclick="event.stopPropagation();resetBook('${b.id}')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                </button>`
+              : `<button class="btn btn-done" title="Marcar como lido" onclick="event.stopPropagation();markDone('${b.id}')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  Marcar
+                </button>`
+            }
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openBook(id) {
+  const b = BOOKS.find(x => x.id === id);
+  if (!b) return;
+  const p = getBookProgress(id);
+  // If first time opening, jump to 25% (started); otherwise nudge if mid-progress.
+  let nextPct = p.percent;
+  if (p.percent === 0) nextPct = 25;
+  else if (p.percent < 100) nextPct = Math.min(p.percent + 25, 99);
+  setBookProgress(id, {
+    percent: nextPct,
+    sessions: (p.sessions || 0) + 1,
+    lastRead: todayStr()
+  });
+  // Log a small reading session by default if no quick-log was used today
+  // (we keep the log strictly user-driven via the +5/+15/+30/+60 buttons; no auto-log here)
+  checkAchievements();
+  renderLibrary();
+  // Open in new tab as required
+  window.open(b.file, '_blank', 'noopener');
+}
+
+function markDone(id) {
+  const p = getBookProgress(id);
+  setBookProgress(id, {
+    percent: 100,
+    sessions: (p.sessions || 0) + 1,
+    lastRead: todayStr()
+  });
+  toast('Marcado como lido');
+  checkAchievements();
+  renderLibrary();
+}
+function resetBook(id) {
+  if (!confirm('Reiniciar progresso deste livro?')) return;
+  localStorage.removeItem(LS_PROGRESS_PREFIX + id);
+  toast('Progresso reiniciado');
+  renderLibrary();
+}
+
+/* ─────────────────────────────────────────────────────────
+   PROGRESS
+───────────────────────────────────────────────────────── */
+function logMinutes(min) {
+  const k = todayStr();
+  readingLog[k] = (readingLog[k] || 0) + min;
+  writeJSON(LS_LOG, readingLog);
+  toast('+' + min + ' min registrados hoje');
+  checkAchievements();
+  renderProgress();
+}
+
+function statsCard(svg, value, label) {
+  return `
+    <div class="stat-card">
+      <div class="stat-icon">${svg}</div>
+      <div class="stat-value">${value}</div>
+      <div class="stat-label">${label}</div>
+    </div>
+  `;
+}
+
+function heatmapLevel(min) {
+  if (!min || min <= 0) return 0;
+  if (min < 15) return 1;
+  if (min < 30) return 2;
+  return 3;
+}
+
+function renderHeatmap() {
+  const grid = document.getElementById('heatmap-grid');
+  const cells = [];
+  const today = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const k = dateStr(d);
+    const min = readingLog[k] || 0;
+    const lvl = heatmapLevel(min);
+    const lbl = d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+    const tip = lbl + ' · ' + (min > 0 ? min + ' min' : 'nada');
+    cells.push(`<div class="heatmap-cell" data-level="${lvl}" title="${tip}"></div>`);
+  }
+  grid.innerHTML = cells.join('');
+
+  // Total minutes in last 30 days
+  let total30 = 0;
+  for (let i = 0; i < 30; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    total30 += (readingLog[dateStr(d)] || 0);
+  }
+  document.getElementById('heatmap-label').textContent =
+    total30 > 0 ? total30 + ' min nos últimos 30 dias' : 'Nenhum tempo registrado';
+}
+
+function renderProgress() {
+  const done    = BOOKS.filter(b => getBookProgress(b.id).percent >= 100).length;
+  // total pages read (estimate from percent of each book)
+  const totalPagesRead = BOOKS.reduce((acc, b) => {
+    const p = getBookProgress(b.id);
+    return acc + Math.round(b.pages * (p.percent / 100));
+  }, 0);
+  // total minutes invested = sum of full minutes for each completed book + partial for in-progress
+  const totalMin = BOOKS.reduce((acc, b) => {
+    const p = getBookProgress(b.id);
+    return acc + b.minutes * (p.percent / 100);
+  }, 0);
+  const totalH = totalMin >= 60 ? (totalMin / 60).toFixed(1) + 'h' : Math.round(totalMin) + 'min';
+
+  const streak = computeStreak();
+
+  document.getElementById('stats-grid').innerHTML = [
+    statsCard(
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+      done + ' / 5', 'Concluídos'),
+    statsCard(
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+      totalPagesRead, 'Páginas lidas'),
+    statsCard(
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+      totalH, 'Tempo investido'),
+    statsCard(
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+      streak + (streak === 1 ? ' dia' : ' dias'), 'Streak')
+  ].join('');
+
+  renderHeatmap();
+
+  document.getElementById('progress-list').innerHTML = BOOKS.map(b => {
+    const p = getBookProgress(b.id);
+    const isDone = p.percent >= 100;
+    return `
+      <div class="progress-row">
+        <div class="progress-mini-cover ${b.grad}">${b.id}</div>
+        <div class="progress-info">
+          <div class="progress-title">${b.title}</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar"><div class="progress-bar-fill ${isDone ? 'done' : ''}" style="width: ${p.percent}%"></div></div>
+            <div class="progress-pct ${isDone ? 'done' : ''}">${isDone ? '100%' : p.percent + '%'}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ─────────────────────────────────────────────────────────
+   NOTES
+───────────────────────────────────────────────────────── */
+let noteEditingId = null;
+
+function bookGrad(bookId) {
+  const b = BOOKS.find(x => x.id === bookId);
+  return b ? b.grad : 'grad-1';
+}
+function bookTitle(bookId) {
+  const b = BOOKS.find(x => x.id === bookId);
+  return b ? b.title : 'Ebook';
+}
+function bookAccentColor(bookId) {
+  const map = {
+    'grad-1': '#8B5CF6',
+    'grad-2': '#A78BFA',
+    'grad-3': '#C4B5FD',
+    'grad-4': '#6D28D9',
+    'grad-5': '#DDD6FE'
+  };
+  return map[bookGrad(bookId)] || '#8B5CF6';
+}
+
+function renderNotesFilter() {
+  const sel = document.getElementById('notes-filter');
+  const cur = sel.value || 'all';
+  sel.innerHTML = '<option value="all">Todos os ebooks</option>' +
+    BOOKS.map(b => `<option value="${b.id}">Ebook ${b.id} · ${b.title}</option>`).join('');
+  sel.value = cur;
+}
+
+function renderNotes() {
+  renderNotesFilter();
+  const sel = document.getElementById('notes-filter');
+  sel.onchange = () => renderNotes();
+
+  const filter = sel.value;
+  const filtered = (filter === 'all')
+    ? notesList.slice()
+    : notesList.filter(n => n.bookId === filter);
+
+  // newest first
+  filtered.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+  const container = document.getElementById('notes-container');
+  if (!filtered.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="empty-title">${filter === 'all' ? 'Nenhuma nota ainda' : 'Sem notas para este ebook'}</div>
+        <div class="empty-desc">Clique em <strong>Nova nota</strong> para registrar um insight, exercício ou plano enquanto lê.</div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = '<div class="notes-list">' + filtered.map(n => {
+    const accent = bookAccentColor(n.bookId);
+    const safeTitle = (n.title || 'Sem título').replace(/</g, '&lt;');
+    const safeContent = (n.content || '').replace(/</g, '&lt;');
+    return `
+      <div class="note-card" onclick="openNoteModal('${n.id}')">
+        <div class="note-card-bar" style="background: ${accent};"></div>
+        <div class="note-card-head">
+          <div class="note-card-title">${safeTitle}</div>
+          <button class="note-card-del" title="Excluir" onclick="event.stopPropagation();deleteNote('${n.id}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+        <div class="note-card-book">Ebook ${n.bookId} · ${bookTitle(n.bookId)}</div>
+        <div class="note-card-content">${safeContent || '<em style="color: var(--text-dim)">(sem conteúdo)</em>'}</div>
+        <div class="note-card-date">${formatDate(n.date)}</div>
+      </div>
+    `;
+  }).join('') + '</div>';
+}
+
+function openNoteModal(id) {
+  noteEditingId = id || null;
+  const titleEl   = document.getElementById('note-input-title');
+  const contentEl = document.getElementById('note-input-content');
+  const bookSel   = document.getElementById('note-input-book');
+  const modalTitle= document.getElementById('note-modal-title');
+
+  bookSel.innerHTML = BOOKS.map(b => `<option value="${b.id}">Ebook ${b.id} · ${b.title}</option>`).join('');
+
+  if (id) {
+    const n = notesList.find(x => x.id === id);
+    if (!n) return;
+    titleEl.value   = n.title || '';
+    contentEl.value = n.content || '';
+    bookSel.value   = n.bookId;
+    modalTitle.textContent = 'Editar nota';
+  } else {
+    titleEl.value = '';
+    contentEl.value = '';
+    // pre-select filter if any
+    const filterVal = document.getElementById('notes-filter').value;
+    bookSel.value = (filterVal && filterVal !== 'all') ? filterVal : '01';
+    modalTitle.textContent = 'Nova nota';
+  }
+
+  document.getElementById('note-modal').classList.add('show');
+  setTimeout(() => titleEl.focus(), 50);
+}
+
+function closeNoteModal() {
+  document.getElementById('note-modal').classList.remove('show');
+  noteEditingId = null;
+}
+
+function saveNote() {
+  const title   = document.getElementById('note-input-title').value.trim();
+  const content = document.getElementById('note-input-content').value.trim();
+  const bookId  = document.getElementById('note-input-book').value;
+  if (!title && !content) {
+    toast('Preencha ao menos o título ou conteúdo');
+    return;
+  }
+  if (noteEditingId) {
+    const idx = notesList.findIndex(n => n.id === noteEditingId);
+    if (idx > -1) {
+      notesList[idx] = { ...notesList[idx], title: title || 'Sem título', content, bookId, updatedAt: new Date().toISOString() };
+    }
+    toast('Nota atualizada');
+  } else {
+    notesList.push({
+      id: uid(),
+      title: title || 'Sem título',
+      content,
+      bookId,
+      date: new Date().toISOString()
+    });
+    toast('Nota criada');
+  }
+  writeJSON(LS_NOTES, notesList);
+  closeNoteModal();
+  checkAchievements();
+  renderNotes();
+}
+
+function deleteNote(id) {
+  if (!confirm('Excluir esta nota? Essa ação é permanente.')) return;
+  notesList = notesList.filter(n => n.id !== id);
+  writeJSON(LS_NOTES, notesList);
+  toast('Nota excluída');
+  renderNotes();
+}
+
+/* ─────────────────────────────────────────────────────────
+   ACHIEVEMENTS
+───────────────────────────────────────────────────────── */
+function unlockAch(id) {
+  if (achievements[id]) return false;
+  achievements[id] = new Date().toISOString();
+  writeJSON(LS_ACH, achievements);
+  const ach = ACHIEVEMENTS.find(a => a.id === id);
+  if (ach) toastUnlock('Conquista: ' + ach.title);
+  return true;
+}
+
+function maxConsecutiveDays() {
+  // Walk through the recorded log to find longest run of consecutive days with min > 0
+  const dates = Object.keys(readingLog).filter(k => readingLog[k] > 0).sort();
+  if (!dates.length) return 0;
+  let best = 1, run = 1;
+  for (let i = 1; i < dates.length; i++) {
+    const a = new Date(dates[i-1] + 'T00:00:00');
+    const b = new Date(dates[i]   + 'T00:00:00');
+    const diff = Math.round((b - a) / 86400000);
+    if (diff === 1) { run++; best = Math.max(best, run); }
+    else            { run = 1; }
+  }
+  return best;
+}
+
+function checkAchievements() {
+  // first_page: opened any book (sessions > 0 in any)
+  if (BOOKS.some(b => (getBookProgress(b.id).sessions || 0) > 0)) unlockAch('first_page');
+
+  // marathon: any day with >= 30 min
+  if (Object.values(readingLog).some(v => v >= 30)) unlockAch('marathon');
+
+  // per-book completions
+  if (getBookProgress('01').percent >= 100) unlockAch('discipline_done');
+  if (getBookProgress('02').percent >= 100) unlockAch('mindset_done');
+  if (getBookProgress('03').percent >= 100) unlockAch('focus_done');
+  if (getBookProgress('04').percent >= 100) unlockAch('limits_done');
+  if (getBookProgress('05').percent >= 100) unlockAch('goals_done');
+
+  // bibliophile: all 5 done
+  if (BOOKS.every(b => getBookProgress(b.id).percent >= 100)) unlockAch('bibliophile');
+
+  // reading_week: 7 consecutive days
+  if (maxConsecutiveDays() >= 7) unlockAch('reading_week');
+
+  // note_taker: 10+ notes
+  if (notesList.length >= 10) unlockAch('note_taker');
+}
+
+function renderAchievements() {
+  const grid = document.getElementById('ach-grid');
+  const unlockedCount = ACHIEVEMENTS.filter(a => achievements[a.id]).length;
+  document.getElementById('ach-count').textContent = unlockedCount + ' / ' + ACHIEVEMENTS.length;
+  document.getElementById('ach-fill').style.width = ((unlockedCount / ACHIEVEMENTS.length) * 100) + '%';
+
+  grid.innerHTML = ACHIEVEMENTS.map(a => {
+    const isUnlocked = !!achievements[a.id];
+    return `
+      <div class="ach-card ${isUnlocked ? 'unlocked' : ''}">
+        <div class="ach-icon">${a.icon}</div>
+        <div class="ach-info">
+          <div class="ach-title">${a.title}</div>
+          <div class="ach-desc">${a.desc}</div>
+        </div>
+        <div class="ach-lock" title="${isUnlocked ? 'Desbloqueada' : 'Bloqueada'}">
+          ${isUnlocked
+            ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+            : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>'}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ─────────────────────────────────────────────────────────
+   TOAST
+───────────────────────────────────────────────────────── */
+let toastTimer = null;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.classList.remove('unlock');
+  document.getElementById('toast-text').textContent = msg;
+  el.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
+}
+function toastUnlock(msg) {
+  const el = document.getElementById('toast');
+  el.classList.add('unlock');
+  document.getElementById('toast-text').textContent = msg;
+  el.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+}
+
+/* ─────────────────────────────────────────────────────────
+   PWA
+───────────────────────────────────────────────────────── */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+let __pwaPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); __pwaPrompt = e;
+  const a = document.getElementById('btn-install-pwa');     if (a) a.style.display = 'flex';
+  const b = document.getElementById('btn-install-pwa-top'); if (b) b.style.display = 'grid';
+});
+function installPWA() {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (isStandalone) { alert('App já instalado!'); return; }
+  if (isIOS) {
+    alert('Para instalar no iPhone:\n\n1. Toque no botão Compartilhar (quadrado com seta para cima)\n2. Role e toque em "Adicionar à Tela de Início"\n3. Toque em "Adicionar"');
+    return;
+  }
+  if (__pwaPrompt) { __pwaPrompt.prompt(); __pwaPrompt.userChoice.then(() => __pwaPrompt = null); }
+  else { alert('Para instalar no Android: menu (3 pontos) → "Instalar app"'); }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (isIOS && !isStandalone) {
+    const a = document.getElementById('btn-install-pwa');     if (a) a.style.display = 'flex';
+    const b = document.getElementById('btn-install-pwa-top'); if (b) b.style.display = 'grid';
+  }
+});
+
+/* close modal on backdrop click / esc */
+document.getElementById('note-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'note-modal') closeNoteModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeNoteModal();
+});
+
+/* ─────────────────────────────────────────────────────────
+   INIT
+───────────────────────────────────────────────────────── */
+checkAchievements();
+renderLibrary();
 </script>
 </body>
 </html>
