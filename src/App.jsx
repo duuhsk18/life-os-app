@@ -13,6 +13,7 @@ import SalesPage        from '@/pages/SalesPage'
 import Catalogo         from '@/pages/Catalogo'
 import OTOPage          from '@/pages/OTOPage'
 import CheckoutPage     from '@/pages/CheckoutPage'
+import PixPaymentPage   from '@/pages/PixPaymentPage'
 import ThankYou         from '@/pages/ThankYou'
 import MinhaConta       from '@/pages/MinhaConta'
 import Assinatura       from '@/pages/Assinatura'
@@ -46,6 +47,7 @@ export default function App() {
           <Route path="/catalogo"             element={<Catalogo />} />
           <Route path="/oto/life-os"          element={<OTOPage />} />
           <Route path="/checkout/:slug"       element={<CheckoutPage />} />
+          <Route path="/pagamento/pix"        element={<PixPaymentPage />} />
           <Route path="/obrigado"             element={<ThankYou />} />
           <Route path="/minha-conta"          element={<Protected><MinhaConta /></Protected>} />
           <Route path="/conta/assinatura"     element={<Protected><Assinatura /></Protected>} />

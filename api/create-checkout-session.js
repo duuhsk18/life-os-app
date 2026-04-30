@@ -69,9 +69,10 @@ export default async function handler(req, res) {
     quantity: 1,
   }))
 
-  // Cupom (LANCAMENTO já configurado no Stripe). Opcional, deixamos cliente digitar.
-  // Habilita campo de cupom pro cliente.
-  const allow_promotion_codes = true
+  // Cupom LANCAMENTO: APENAS quando Life OS está no carrinho.
+  // Pra produtos avulsos (R$27,90), R$20 off = quase prejuízo. Só faz sentido pro
+  // Life OS (R$59,90 → R$39,90 mantém margem). Cobertura via allow_promotion_codes.
+  const allow_promotion_codes = hasSubscription
 
   try {
     const sessionParams = {

@@ -49,22 +49,61 @@ export default function CheckoutPage() {
   const bumpDelta = 47 - mainPrice // diferença pra fazer Kit (R$47)
   const total = withBump ? 47 : mainPrice
 
+  // Validação de email
+  const isValidEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.trim())
+  const emailValid = isValidEmail(email)
+  // Pix exige email — sem email a gente NÃO consegue mandar magic link depois
+  const canSubmit = paymentMethod === 'pix' ? emailValid : true
+
   async function submit(e) {
     e?.preventDefault()
     if (loading) return
+
+    // Bloqueia Pix sem email válido (acesso fica preso)
+    if (paymentMethod === 'pix' && !emailValid) {
+      setErrorMsg('Pra Pix precisamos do seu email — é onde mandamos o acesso depois do pagamento.')
+      return
+    }
+
     setLoading(true)
     setErrorMsg('')
 
     // Monta items: produto principal (substituído por kit-completo se bump)
     const items = withBump ? ['kit-completo'] : [slug]
 
-    // Endpoint depende do método: cartão = Stripe, Pix = Mercado Pago
-    const endpoint = paymentMethod === 'pix'
-      ? '/api/create-mp-payment'
-      : '/api/create-checkout-session'
-
     try {
-      const res = await fetch(endpoint, {
+      // Pix: novo fluxo embedado — gera QR + redireciona pra /pagamento/pix
+      if (paymentMethod === 'pix') {
+        const res = await fetch('/api/create-mp-pix', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ items, email: email.trim() }),
+        })
+        const data = await res.json()
+
+        if (!res.ok || !data.qrCode) {
+          setErrorMsg(data.message || data.error || 'Não foi possível gerar o Pix. Tenta de novo.')
+          setLoading(false)
+          return
+        }
+
+        // Vai pra nossa página de Pix (com polling)
+        navigate('/pagamento/pix', {
+          state: {
+            paymentId:    data.paymentId,
+            qrCode:       data.qrCode,
+            qrCodeBase64: data.qrCodeBase64,
+            ticketUrl:    data.ticketUrl,
+            amount:       data.amount,
+            slugs:        items,
+            email:        email.trim(),
+          },
+        })
+        return
+      }
+
+      // Cartão: Stripe Checkout (redirect)
+      const res = await fetch('/api/create-checkout-session', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ items, email: email.trim() }),
@@ -76,8 +115,6 @@ export default function CheckoutPage() {
         setLoading(false)
         return
       }
-
-      // Redireciona pro Stripe ou Mercado Pago
       window.location.href = data.url
     } catch (err) {
       setErrorMsg('Erro de rede. Tenta de novo daqui a pouco.')
@@ -252,13 +289,20 @@ export default function CheckoutPage() {
           className="space-y-3 mb-4">
           <div>
             <label className="text-xs font-bold mb-1.5 block" style={{ color: '#aaa' }}>
-              Seu email (opcional — preenche no checkout depois)
+              Seu email {paymentMethod === 'pix' ? <span style={{ color: GOLD }}>(obrigatório — acesso vai pra cá)</span> : '(opcional — pode preencher na próxima tela)'}
             </label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
               placeholder="seu@email.com"
               autoComplete="email"
+              required={paymentMethod === 'pix'}
               className="w-full bg-transparent border rounded-xl px-4 py-3 text-sm outline-none transition focus:border-yellow-400"
-              style={{ borderColor: 'rgba(255,255,255,0.1)', color: '#fff' }} />
+              style={{
+                borderColor: paymentMethod === 'pix' && email && !emailValid ? '#ef4444' : 'rgba(255,255,255,0.1)',
+                color: '#fff',
+              }} />
+            {paymentMethod === 'pix' && email && !emailValid && (
+              <p className="text-[11px] mt-1" style={{ color: '#fca5a5' }}>Email inválido. Confere se digitou direito.</p>
+            )}
           </div>
 
           {errorMsg && (
@@ -268,8 +312,8 @@ export default function CheckoutPage() {
             </div>
           )}
 
-          <button type="submit" disabled={loading}
-            className="w-full py-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 active:scale-95 transition shadow-2xl disabled:opacity-50"
+          <button type="submit" disabled={loading || !canSubmit}
+            className="w-full py-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 active:scale-95 transition shadow-2xl disabled:opacity-40 disabled:cursor-not-allowed"
             style={{ background: GOLD, color: '#000', boxShadow: '0 8px 32px rgba(244,196,48,0.3)' }}>
             {loading ? (
               <><Loader2 className="w-5 h-5 animate-spin" /> Abrindo pagamento...</>
