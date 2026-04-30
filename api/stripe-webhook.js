@@ -153,7 +153,24 @@ async function handleCheckoutCompleted(session, res) {
   }
   console.log('[stripe] ✅ Entitlements concedidos:', email, slugs.join(', '))
 
-  await sendMagicLinkEmail({ supabase, email, name, logPrefix: '[stripe]' })
+  // Magic link com retry (3 tentativas, backoff exponencial)
+  let emailResult = null
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    emailResult = await sendMagicLinkEmail({ supabase, email, name, logPrefix: `[stripe:try${attempt}]` })
+    if (emailResult?.ok) break
+    console.warn(`[stripe-webhook] tentativa ${attempt} de email falhou:`, emailResult?.error)
+    if (attempt < 3) {
+      await new Promise((r) => setTimeout(r, attempt * 1500))
+    }
+  }
+  if (!emailResult?.ok) {
+    console.error('[stripe-webhook] ⚠️ ALERTA: entitlement liberado mas magic link FALHOU após 3 tentativas:', {
+      sessionId: session.id,
+      email,
+      slugs,
+      error: emailResult?.error,
+    })
+  }
 
   // Meta Conversion API — envia Purchase server-side (no-op se env vars faltando)
   const valueInBRL = (session.amount_total || 0) / 100

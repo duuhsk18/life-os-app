@@ -177,8 +177,26 @@ export default async function handler(req, res) {
     }
     console.log('[mp-webhook] ✅ Entitlements concedidos:', email, expandedSlugs.join(', '))
 
-    // 4. Magic link branded via Resend
-    await sendMagicLinkEmail({ supabase, email, name, logPrefix: '[mp]' })
+    // 4. Magic link branded via Resend (com retry: 3 tentativas com backoff exponencial)
+    let emailResult = null
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      emailResult = await sendMagicLinkEmail({ supabase, email, name, logPrefix: `[mp:try${attempt}]` })
+      if (emailResult?.ok) break
+      console.warn(`[mp-webhook] tentativa ${attempt} de email falhou:`, emailResult?.error)
+      if (attempt < 3) {
+        await new Promise((r) => setTimeout(r, attempt * 1500)) // 1.5s, 3s
+      }
+    }
+    if (!emailResult?.ok) {
+      // Loga estado crítico — entitlement foi liberado mas email falhou.
+      // O cliente pode logar manualmente em /login (magic link) já que user/profile/entitlements existem.
+      console.error('[mp-webhook] ⚠️ ALERTA: entitlement liberado mas magic link FALHOU após 3 tentativas:', {
+        paymentId: payment.id,
+        email,
+        slugs: expandedSlugs,
+        error: emailResult?.error,
+      })
+    }
 
     // 5. Meta CAPI Purchase event
     await sendPurchaseEvent({

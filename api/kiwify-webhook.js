@@ -312,6 +312,20 @@ async function ensureProfile(userId, email, name) {
 }
 
 async function sendMagicLink({ email, name }) {
-  // Bypassa SMTP do Supabase (que tem bugs com Resend) — usamos Resend REST API direto
-  await sendMagicLinkEmail({ supabase, email, name, logPrefix: '[kiwify]' })
+  // Magic link com retry (3 tentativas, backoff exponencial)
+  let emailResult = null
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    emailResult = await sendMagicLinkEmail({ supabase, email, name, logPrefix: `[kiwify:try${attempt}]` })
+    if (emailResult?.ok) break
+    console.warn(`[kiwify-webhook] tentativa ${attempt} de email falhou:`, emailResult?.error)
+    if (attempt < 3) {
+      await new Promise((r) => setTimeout(r, attempt * 1500))
+    }
+  }
+  if (!emailResult?.ok) {
+    console.error('[kiwify-webhook] ⚠️ ALERTA: entitlement liberado mas magic link FALHOU após 3 tentativas:', {
+      email,
+      error: emailResult?.error,
+    })
+  }
 }
