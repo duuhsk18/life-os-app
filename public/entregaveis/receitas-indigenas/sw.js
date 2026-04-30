@@ -1,4 +1,4 @@
-﻿const CACHE = 'lifeos-indig-v5';
+const CACHE = 'lifeos-indig-v8';
 const ASSETS = ['./','./receitas-indigenas.html','./manifest.json','./icon.svg','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install', (e) => {

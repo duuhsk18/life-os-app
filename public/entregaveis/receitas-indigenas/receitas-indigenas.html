@@ -27,1433 +27,1714 @@
     --bg-card: #14100A;
     --bg-card2: #1A140C;
     --border: rgba(217,119,6,0.20);
+    --border-strong: rgba(217,119,6,0.36);
     --text: #F5EDD8;
     --text-muted: #A89070;
     --text-dim: #6B5C44;
     --white: #FFF8ED;
-    --number-color: rgba(217,119,6,0.05);
     --terra: #8B4513;
     --floresta: #2D5016;
     --rio: #1A4A6B;
+    --danger: #E74C3C;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
   body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.7;
-    font-size: 16px;
-  }
-
-  /* ===== COVER ===== */
-  .cover {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 60px 40px;
-    position: relative;
-    overflow: hidden;
-    background: radial-gradient(ellipse at 20% 40%, rgba(139,69,19,0.12) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 60%, rgba(217,119,6,0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 90%, rgba(45,80,22,0.10) 0%, transparent 50%),
-                var(--bg);
-  }
-
-  .cover-symbol {
-    font-size: 72px;
-    margin-bottom: 24px;
-    position: relative;
-    z-index: 2;
-    filter: drop-shadow(0 0 20px rgba(217,119,6,0.3));
-  }
-
-  .cover-badge {
-    background: var(--accent-muted);
-    border: 1px solid var(--border);
-    color: var(--accent-light);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    padding: 8px 20px;
-    border-radius: 40px;
-    margin-bottom: 32px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .cover-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 6.5vw, 82px);
-    font-weight: 900;
-    line-height: 1.05;
-    position: relative;
-    z-index: 2;
-    margin-bottom: 12px;
-    color: var(--white);
-  }
-
-  .cover-title .accent { color: var(--accent); }
-  .cover-title em { font-style: italic; color: var(--accent-light); }
-
-  .cover-subtitle {
-    font-size: clamp(15px, 2vw, 19px);
-    color: var(--text-muted);
-    max-width: 580px;
-    position: relative;
-    z-index: 2;
-    margin-bottom: 16px;
-    font-weight: 300;
-    font-style: italic;
-  }
-
-  .cover-quote {
-    font-size: 13px;
-    color: var(--text-dim);
-    font-style: italic;
-    position: relative;
-    z-index: 2;
-    margin-bottom: 48px;
-    max-width: 420px;
-  }
-
-  .cover-line {
-    width: 100px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    margin: 0 auto 48px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .cover-regions {
-    display: flex;
-    gap: 16px;
-    position: relative;
-    z-index: 2;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .region-tag {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    padding: 8px 20px;
-    font-size: 13px;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* ===== CONTAINER ===== */
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 32px;
-  }
-
-  /* ===== SECTION HEADER ===== */
-  .section-header {
-    padding: 80px 0 48px;
-    border-top: 1px solid var(--border);
-    margin-top: 60px;
-  }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(26px, 4vw, 42px);
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--white);
-    margin-bottom: 16px;
-  }
-
-  .section-desc {
-    color: var(--text-muted);
-    font-size: 16px;
-    max-width: 620px;
-    font-weight: 300;
-    line-height: 1.8;
-  }
-
-  /* ===== INTRO BOX ===== */
-  .intro-box {
-    background: linear-gradient(135deg, var(--bg-card2), var(--bg-card));
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 36px;
-    margin: 32px 0 48px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .intro-box::before {
-    content: '🌿';
-    position: absolute;
-    right: 24px;
-    top: 24px;
-    font-size: 48px;
-    opacity: 0.3;
-  }
-
-  .intro-box p {
-    color: var(--text-muted);
+    line-height: 1.6;
     font-size: 15px;
-    line-height: 1.9;
-    font-style: italic;
+    padding-bottom: 80px;
+    min-height: 100vh;
   }
+  button { font-family: inherit; cursor: pointer; }
+  input, select { font-family: inherit; }
+  a { color: var(--accent-light); text-decoration: none; }
 
-  .intro-box p + p {
-    margin-top: 16px;
-  }
-
-  /* ===== CATEGORY HEADER ===== */
-  .category-header {
-    margin: 72px 0 36px;
-    padding-bottom: 24px;
+  /* ===== HEADER ===== */
+  .app-header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(12,10,6,0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
-
-  .category-region {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 8px;
+  .app-header-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 14px 20px 0;
+    display: flex; flex-direction: column; gap: 12px;
   }
-
-  .category-title {
+  .app-brand {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .app-brand-title {
     font-family: 'Playfair Display', serif;
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 10px;
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    color: var(--text);
   }
-
-  .category-desc {
-    font-size: 14px;
-    color: var(--text-muted);
+  .app-brand-title em {
     font-style: italic;
-    max-width: 600px;
+    color: var(--accent-light);
+    font-weight: 700;
+  }
+  .app-brand-badge {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent-light); font-weight: 700;
+    background: var(--accent-muted); padding: 5px 10px; border-radius: 20px;
+    border: 1px solid var(--border);
   }
 
-  /* ===== RECIPE CARD ===== */
+  /* ===== TABS ===== */
+  .tabs {
+    display: flex; gap: 4px;
+    overflow-x: auto; scrollbar-width: none;
+    margin: 0 -20px; padding: 0 20px 12px;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all .2s ease;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    background: var(--accent-muted);
+    border-color: var(--border-strong);
+    color: var(--accent-light);
+  }
+  .tab-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* ===== MAIN ===== */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 20px;
+  }
+  .panel { display: none; animation: fadeIn .2s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform:none; } }
+
+  .panel-head { margin-bottom: 20px; }
+  .panel-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 6px;
+    color: var(--white);
+  }
+  .panel-title em { font-style: italic; color: var(--accent-light); font-weight: 700; }
+  .panel-sub {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  /* ===== FILTERS ===== */
+  .filters {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 18px;
+  }
+  .filter-row { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; }
+  .filter-label {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-dim); font-weight: 700;
+    padding: 8px 0 0;
+    width: 100%;
+  }
+  .search {
+    flex: 1 1 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 11px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+  .search:focus { outline: none; border-color: var(--accent); }
+  .chip {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    transition: all .15s ease;
+  }
+  .chip.active {
+    background: var(--accent-muted);
+    border-color: var(--border-strong);
+    color: var(--accent-light);
+  }
+
+  /* ===== RECIPE GRID ===== */
   .recipe-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
   }
-
   .recipe-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-  }
-
-  .recipe-card:hover {
-    border-color: var(--accent);
-  }
-
-  .recipe-header {
-    background: linear-gradient(135deg, var(--bg-card2), var(--bg-card));
-    padding: 28px 32px 24px;
-    border-bottom: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    transition: border-color .2s, transform .2s;
+    cursor: pointer;
     position: relative;
   }
-
-  .recipe-origin {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 6px;
-  }
-
-  .recipe-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--white);
+  .recipe-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+  .recipe-region {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent-light); font-weight: 700;
     margin-bottom: 8px;
-    line-height: 1.2;
   }
-
-  .recipe-name-native {
-    font-size: 14px;
-    color: var(--text-dim);
-    font-style: italic;
-    margin-bottom: 12px;
+  .recipe-region .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
   }
+  .recipe-region.amazonia .dot { background: #2D5016; }
+  .recipe-region.cerrado .dot { background: #D97706; }
+  .recipe-region.mata-atlantica .dot { background: #1A4A6B; }
+  .recipe-region.pantanal .dot { background: #5C8B3D; }
+  .recipe-region.caatinga .dot { background: #B45309; }
 
-  .recipe-meta {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+  .recipe-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    color: var(--white);
   }
-
-  .recipe-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
+  .recipe-native {
+    font-size: 12px;
     color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.4;
+    margin-bottom: 10px;
   }
-
-  .recipe-tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 14px;
+  .recipe-meta {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    font-size: 12px; color: var(--text-muted);
+    margin-bottom: 10px;
   }
-
+  .recipe-meta .icon { color: var(--accent); margin-right: 4px; }
+  .recipe-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 12px; }
   .recipe-tag {
+    font-size: 10px; font-weight: 600;
+    padding: 3px 9px; border-radius: 999px;
     background: var(--accent-muted);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 3px 12px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--accent-light);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .recipe-tag.verde { color: #4ade80; border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.08); }
-  .recipe-tag.azul  { color: #60a5fa; border-color: rgba(96,165,250,0.3); background: rgba(96,165,250,0.08); }
-
-  .recipe-body {
-    padding: 28px 32px;
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 32px;
-  }
-
-  @media (max-width: 640px) {
-    .recipe-body { grid-template-columns: 1fr; }
-  }
-
-  .col-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 14px;
-  }
-
-  .ingredients-list {
-    list-style: none;
-  }
-
-  .ingredients-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 14px;
     color: var(--text-muted);
-    padding: 7px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    line-height: 1.4;
+    letter-spacing: 0.3px;
   }
-
-  .ingredients-list li:last-child { border-bottom: none; }
-
-  .ingredients-list li::before {
-    content: '◆';
-    color: var(--accent);
-    font-size: 8px;
-    flex-shrink: 0;
+  .recipe-tag.verde { color: #8FBC5C; border-color: rgba(143,188,92,0.3); background: rgba(143,188,92,0.06); }
+  .recipe-tag.azul { color: #6BA4C2; border-color: rgba(107,164,194,0.3); background: rgba(107,164,194,0.06); }
+  .recipe-card-actions {
+    display: flex; gap: 6px;
     margin-top: 4px;
   }
-
-  .steps-list {
-    list-style: none;
-    counter-reset: steps;
-  }
-
-  .steps-list li {
-    counter-increment: steps;
-    display: flex;
-    gap: 14px;
-    font-size: 14px;
-    color: var(--text-muted);
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    line-height: 1.6;
-    align-items: flex-start;
-  }
-
-  .steps-list li:last-child { border-bottom: none; }
-
-  .steps-list li::before {
-    content: counter(steps);
+  .btn {
     background: var(--accent-muted);
     border: 1px solid var(--border);
-    color: var(--accent);
-    font-size: 11px;
-    font-weight: 700;
-    min-width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
+    color: var(--accent-light);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px; font-weight: 600;
+    transition: all .15s ease;
+  }
+  .btn:hover { background: rgba(217,119,6,0.22); }
+  .btn-primary {
+    background: var(--accent); color: #1A0F00; border-color: var(--accent);
+  }
+  .btn-primary:hover { background: var(--accent-light); color: #1A0F00; }
+  .btn-ghost { background: transparent; }
+  .btn-danger { color: var(--danger); border-color: rgba(231,76,60,0.3); }
+
+  .empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-bg {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.78);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    display: none;
+    padding: 20px;
+    align-items: flex-start;
     justify-content: center;
+    overflow-y: auto;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    padding: 22px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.06); border: none;
+    color: var(--text); font-size: 18px;
+  }
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; margin-bottom: 6px;
+    padding-right: 32px;
+    color: var(--white);
+  }
+  .modal-body { margin-top: 14px; }
+  .modal-section {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .modal-section h4 {
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent-light); margin-bottom: 8px;
+  }
+  .modal-section ul, .modal-section ol {
+    padding-left: 18px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .modal-section li { margin-bottom: 5px; }
+  .modal-tip {
+    background: var(--accent-muted);
+    border-left: 3px solid var(--accent);
+    padding: 11px 13px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .modal-history {
+    background: rgba(45,80,22,0.10);
+    border-left: 3px solid #8FBC5C;
+    padding: 11px 13px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text);
+    font-style: italic;
+  }
+  .modal-history b { font-style: normal; color: #8FBC5C; }
+
+  .recipe-picker {
+    display: grid; gap: 8px;
+    max-height: 60vh; overflow-y: auto;
+  }
+  .picker-item {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    cursor: pointer;
+    text-align: left;
+    color: var(--text);
+    font-size: 13px;
+    transition: border-color .15s;
+  }
+  .picker-item:hover { border-color: var(--border-strong); }
+  .picker-item .pi-cat {
+    font-size: 10px; color: var(--accent-light);
+    letter-spacing: 1px; text-transform: uppercase;
+    font-weight: 700;
+  }
+  .picker-item .pi-name { font-weight: 600; margin-top: 2px; }
+
+  /* ===== PLANNING GRID ===== */
+  .plan-toolbar {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .plan-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(3, 1fr);
+    gap: 4px;
+    min-width: 540px;
+  }
+  .plan-wrap { overflow-x: auto; padding-bottom: 6px; }
+  .plan-cell-h {
+    background: var(--bg-card2);
+    padding: 8px 6px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    font-weight: 700;
+    border-radius: 6px;
+  }
+  .plan-day-h {
+    background: transparent;
+    padding: 8px 6px;
+    font-size: 12px; font-weight: 700;
+    color: var(--text);
+    align-self: center;
+  }
+  .plan-slot {
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    min-height: 76px;
+    font-size: 11px;
+    color: var(--text-dim);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .plan-slot:hover { border-color: var(--accent); color: var(--text-muted); }
+  .plan-slot.filled {
+    background: var(--accent-muted);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    text-align: left;
+    align-items: flex-start;
+    justify-content: flex-start;
+    line-height: 1.3;
+    font-size: 11px;
+  }
+  .plan-slot.filled .ps-name { font-weight: 600; color: var(--text); }
+
+  /* ===== SHOPPING ===== */
+  .shop-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .shop-section h3 {
+    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent-light); margin-bottom: 10px;
+  }
+  .shop-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 0;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(217,119,6,0.06);
+  }
+  .shop-item:last-child { border-bottom: none; }
+  .shop-item input[type=checkbox] {
+    width: 18px; height: 18px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  .shop-item.checked label { text-decoration: line-through; color: var(--text-dim); }
+  .shop-item label { cursor: pointer; flex: 1; }
+  .shop-item .qty { color: var(--text-muted); font-size: 12px; }
+  .shop-item .buy-link {
+    font-size: 11px;
+    background: rgba(143,188,92,0.10);
+    color: #8FBC5C;
+    padding: 3px 9px;
+    border-radius: 999px;
+    border: 1px solid rgba(143,188,92,0.3);
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .shop-item .buy-link:hover { background: rgba(143,188,92,0.20); }
+
+  /* ===== PLANTS TABLE ===== */
+  .plant-table-wrap { overflow-x: auto; }
+  .plant-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+    min-width: 720px;
+  }
+  .plant-table th, .plant-table td {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .plant-table th {
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--accent-light); font-weight: 700;
+    position: sticky; top: 0; background: var(--bg);
+  }
+  .plant-table td:first-child { font-weight: 600; color: var(--text); }
+  .plant-table td.sci { font-style: italic; color: var(--text-muted); font-size: 12px; }
+  .plant-table tr:hover { background: rgba(217,119,6,0.04); }
+
+  .plants-warning {
+    background: rgba(231,76,60,0.10);
+    border: 1px solid rgba(231,76,60,0.3);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--text);
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .plants-warning .warn-ico {
+    color: var(--danger);
+    font-size: 20px;
+    line-height: 1;
     flex-shrink: 0;
     margin-top: 2px;
   }
+  .plants-warning b { color: var(--danger); }
 
-  .recipe-footer {
-    padding: 0 32px 28px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  @media (max-width: 600px) {
-    .recipe-footer { grid-template-columns: 1fr; }
-  }
-
-  .recipe-note {
-    background: var(--accent-muted);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 10px;
-    padding: 14px 18px;
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-
-  .recipe-note strong {
-    color: var(--accent-light);
-    display: block;
-    margin-bottom: 4px;
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-  }
-
-  .recipe-history {
-    background: rgba(139,69,19,0.08);
-    border: 1px solid rgba(139,69,19,0.25);
-    border-left: 3px solid var(--terra);
-    border-radius: 10px;
-    padding: 14px 18px;
-    font-size: 13px;
-    color: var(--text-muted);
-    font-style: italic;
-  }
-
-  .recipe-history strong {
-    color: #D4956A;
-    display: block;
-    margin-bottom: 4px;
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    font-style: normal;
-  }
-
-  /* ===== INFO BLOCKS ===== */
-  .pantry-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 14px;
-    margin: 32px 0;
-  }
-
-  .pantry-item {
+  /* ===== GUIDE ===== */
+  .guide-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 20px;
+    padding: 22px;
+    margin-bottom: 14px;
   }
-
-  .pantry-item-emoji {
-    font-size: 28px;
-    margin-bottom: 10px;
-    display: block;
-  }
-
-  .pantry-item-name {
-    font-size: 14px;
-    font-weight: 700;
+  .guide-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; margin-bottom: 12px;
     color: var(--white);
+  }
+  .guide-card p, .guide-card li {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .guide-card p { margin-bottom: 10px; }
+  .guide-card ul, .guide-card ol { padding-left: 20px; margin: 10px 0; }
+  .guide-card li { margin-bottom: 6px; }
+  .guide-card b { color: var(--accent-light); }
+
+  .fruit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .fruit-card {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+  }
+  .fruit-card h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--accent-light);
     margin-bottom: 4px;
   }
-
-  .pantry-item-desc {
+  .fruit-card p {
     font-size: 12px;
-    color: var(--text-dim);
+    color: var(--text-muted);
+    margin-bottom: 0;
     line-height: 1.5;
   }
 
-  /* ===== FOOTER ===== */
-  footer {
-    margin-top: 100px;
-    padding: 48px 32px;
-    border-top: 1px solid var(--border);
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 4px;
+    margin-top: 14px;
+  }
+  .cal-month {
+    background: var(--accent-muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 11px;
+    color: var(--accent-light);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     text-align: center;
-    color: var(--text-dim);
+    align-self: center;
+  }
+  .cal-content {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
     font-size: 13px;
-    background: linear-gradient(0deg, rgba(139,69,19,0.05) 0%, transparent 100%);
+    color: var(--text);
+    line-height: 1.5;
   }
 
-  footer a { color: var(--accent); text-decoration: none; }
+  .faq details {
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+  }
+  .faq summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text);
+    list-style: none;
+    padding-right: 24px;
+    position: relative;
+    font-size: 14px;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+';
+    position: absolute;
+    right: 0; top: 0;
+    color: var(--accent-light);
+    font-size: 18px;
+    transition: transform .2s;
+  }
+  .faq details[open] summary::after { content: '−'; }
+  .faq details p {
+    margin-top: 10px;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.7;
+  }
 
-  footer .brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 8px;
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--accent);
+    color: #1A0F00;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 13px; font-weight: 700;
+    z-index: 300;
+    opacity: 0;
+    transition: all .2s ease;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .panel-title { font-size: 24px; }
+    .recipe-grid { grid-template-columns: 1fr; }
+    main { padding: 18px 16px; }
+    .app-header-inner { padding: 12px 16px 0; }
+    .calendar-grid { grid-template-columns: 1fr; }
+    .cal-month { padding: 6px 10px; text-align: left; }
   }
 
   /* ===== PRINT ===== */
   @media print {
-    body { background: #fff; color: #111; }
-    .cover { background: #fff; min-height: auto; padding: 60px 40px 40px; }
-    .cover-title { color: #111; }
-    .cover-title .accent, .cover-title em { color: var(--accent-dark); }
-    .cover-subtitle, .cover-quote { color: #555; }
-    .cover-badge { color: var(--accent-dark); background: #fef3c7; border-color: #fde68a; }
-    .cover-line { background: linear-gradient(90deg, transparent, var(--accent-dark), transparent); }
-    .region-tag { background: #f9f9f9; border-color: #ddd; color: #555; }
+    .app-header, .pwa-install-fab, .filters, .plan-toolbar,
+    .modal-bg, .panel:not(.print-target) { display: none !important; }
+    body { background: white; color: black; padding: 0; }
+    .panel.print-target { display: block !important; }
+    .shop-section, .plan-slot { background: white; border-color: #ccc; color: black; }
+    .plan-slot.filled { background: #f5f5f5; }
+    .plan-cell-h, .plan-day-h, .shop-section h3 { color: black; }
+    .plant-table th, .plant-table td { color: black; }
+  }
 
-    .section-header { border-top-color: #ddd; }
-    .section-label, .category-region { color: var(--accent-dark); }
-    .section-title, .category-title { color: #111; }
-    .section-desc, .category-desc { color: #555; }
-
-    .intro-box { background: #f9f9f9; border-color: #ddd; }
-    .intro-box p { color: #555; }
-
-    .category-header { border-bottom-color: #ddd; }
-
-    .recipe-card { background: #fff; border-color: #ddd; break-inside: avoid; }
-    .recipe-header { background: #f9f9f9; border-bottom-color: #eee; }
-    .recipe-origin { color: var(--accent-dark); }
-    .recipe-name { color: #111; }
-    .recipe-name-native { color: #888; }
-    .recipe-meta-item { color: #555; }
-    .recipe-tag { background: #fef3c7; color: var(--accent-dark); border-color: #fde68a; }
-    .recipe-tag.verde { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
-    .recipe-tag.azul  { background: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
-    .col-title { color: #888; }
-    .ingredients-list li { color: #444; border-bottom-color: #eee; }
-    .ingredients-list li::before { color: var(--accent-dark); }
-    .steps-list li { color: #444; border-bottom-color: #eee; }
-    .steps-list li::before { background: #fef3c7; color: var(--accent-dark); border-color: #fde68a; }
-    .recipe-note { background: #fef3c7; border-color: #fde68a; border-left-color: var(--accent-dark); color: #555; }
-    .recipe-note strong { color: var(--accent-dark); }
-    .recipe-history { background: #fdf6ee; border-color: #e5c9a0; border-left-color: #8B4513; color: #555; }
-    .recipe-history strong { color: #8B4513; }
-
-    .pantry-item { background: #f9f9f9; border-color: #eee; }
-    .pantry-item-name { color: #111; }
-    .pantry-item-desc { color: #666; }
-
-    footer { background: #fff; border-top-color: #eee; color: #888; }
-    footer a { color: var(--accent-dark); }
-    footer .brand { color: var(--accent-dark); }
+  .pwa-install-fab {
+    position: fixed; bottom: 20px; right: 20px; z-index: 99;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff; border: none; padding: 11px 18px; border-radius: 50px;
+    font-weight: 700; font-size: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    display: none; align-items: center; gap: 6px;
   }
 </style>
 </head>
 <body>
 
-<!-- COVER -->
-<div class="cover">
-  <div class="cover-symbol">🌿</div>
-  <div class="cover-badge">Life OS · Receitas da Terra</div>
-  <h1 class="cover-title">Sabores<br><em>Ancestrais</em><br>do <span class="accent">Brasil</span></h1>
-  <p class="cover-subtitle">Receitas indígenas e de raiz que alimentaram nações por séculos — redescobertas para a mesa contemporânea.</p>
-  <p class="cover-quote">"A floresta não é apenas o pulmão do mundo. É também sua despensa mais rica."</p>
-  <div class="cover-line"></div>
-  <div class="cover-regions">
-    <div class="region-tag">🌳 Amazônia</div>
-    <div class="region-tag">🏜 Cerrado</div>
-    <div class="region-tag">🌊 Nordeste</div>
-    <div class="region-tag">🌾 Sul do Brasil</div>
-    <div class="region-tag">🏔 Mata Atlântica</div>
+<header class="app-header">
+  <div class="app-header-inner">
+    <div class="app-brand">
+      <div class="app-brand-title">Receitas <em>da Terra</em></div>
+      <div class="app-brand-badge">Life OS</div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Navegação principal">
+      <button class="tab-btn active" data-tab="receitas" role="tab">Receitas</button>
+      <button class="tab-btn" data-tab="planejamento" role="tab">Planejamento</button>
+      <button class="tab-btn" data-tab="compras" role="tab">Lista de Compras</button>
+      <button class="tab-btn" data-tab="plantas" role="tab">Plantas Medicinais</button>
+      <button class="tab-btn" data-tab="cultura" role="tab">Cultura &amp; Guia</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ RECEITAS ============ -->
+<section class="panel active" id="panel-receitas" role="tabpanel">
+  <div class="panel-head">
+    <h1 class="panel-title">Sabores <em>Ancestrais</em></h1>
+    <p class="panel-sub">Receitas dos povos originários do Brasil — Amazônia, Cerrado, Mata Atlântica, Pantanal e Caatinga.</p>
+  </div>
+  <div class="filters">
+    <input type="search" id="search" class="search" placeholder="Buscar receita ou ingrediente..." aria-label="Buscar receita">
+    <span class="filter-label">Região</span>
+    <div class="filter-row">
+      <button class="chip active" data-filter-reg="all">Todas regiões</button>
+      <button class="chip" data-filter-reg="amazonia">Amazônia</button>
+      <button class="chip" data-filter-reg="cerrado">Cerrado</button>
+      <button class="chip" data-filter-reg="mata-atlantica">Mata Atlântica</button>
+      <button class="chip" data-filter-reg="pantanal">Pantanal</button>
+      <button class="chip" data-filter-reg="caatinga">Caatinga</button>
+    </div>
+    <span class="filter-label">Tipo</span>
+    <div class="filter-row">
+      <button class="chip active" data-filter-tipo="all">Todos tipos</button>
+      <button class="chip" data-filter-tipo="principal">Principal</button>
+      <button class="chip" data-filter-tipo="acompanhamento">Acompanhamento</button>
+      <button class="chip" data-filter-tipo="bebida">Bebida</button>
+      <button class="chip" data-filter-tipo="doce">Doce/Sobremesa</button>
+    </div>
+    <span class="filter-label">Restrição</span>
+    <div class="filter-row">
+      <button class="chip active" data-filter-rest="all">Todas</button>
+      <button class="chip" data-filter-rest="vegano">Vegano</button>
+      <button class="chip" data-filter-rest="semGluten">Sem glúten</button>
+      <button class="chip" data-filter-rest="semLactose">Sem lactose</button>
+      <button class="chip" data-filter-rest="kids">Pra crianças</button>
+    </div>
+  </div>
+  <div id="recipe-grid" class="recipe-grid"></div>
+</section>
+
+<!-- ============ PLANEJAMENTO ============ -->
+<section class="panel" id="panel-planejamento" role="tabpanel">
+  <div class="panel-head">
+    <h1 class="panel-title">Planejamento <em>Semanal</em></h1>
+    <p class="panel-sub">Toque em um slot vazio para escolher uma receita. Toque em uma receita planejada para remover.</p>
+  </div>
+  <div class="plan-toolbar">
+    <button class="btn btn-danger" id="btn-clear-plan">Limpar semana</button>
+    <button class="btn" onclick="window.print()">Imprimir plano</button>
+  </div>
+  <div class="plan-wrap">
+    <div class="plan-grid" id="plan-grid"></div>
+  </div>
+</section>
+
+<!-- ============ COMPRAS ============ -->
+<section class="panel" id="panel-compras" role="tabpanel">
+  <div class="panel-head">
+    <h1 class="panel-title">Lista de <em>Compras</em></h1>
+    <p class="panel-sub">Gerada do seu planejamento, agrupada por categoria. Ingredientes regionais têm link direto.</p>
+  </div>
+  <div class="plan-toolbar">
+    <button class="btn" onclick="window.print()">Imprimir lista</button>
+    <button class="btn" id="btn-share-wa">Enviar no WhatsApp</button>
+    <button class="btn btn-ghost" id="btn-clear-checks">Desmarcar tudo</button>
+  </div>
+  <div id="shop-list"></div>
+</section>
+
+<!-- ============ PLANTAS MEDICINAIS ============ -->
+<section class="panel" id="panel-plantas" role="tabpanel">
+  <div class="panel-head">
+    <h1 class="panel-title">Plantas <em>Medicinais</em></h1>
+    <p class="panel-sub">Conhecimento tradicional dos povos originários do Brasil. Filtre por indicação para encontrar a planta certa.</p>
+  </div>
+  <div class="plants-warning">
+    <span class="warn-ico">!</span>
+    <div><b>Aviso importante:</b> esta tabela é educativa. Sempre consulte um profissional (médico, fitoterapeuta, parteira tradicional) antes de uso medicinal — especialmente em gestação, lactação, crianças ou em uso com remédios alopáticos.</div>
+  </div>
+  <div class="filters">
+    <input type="search" id="plant-search" class="search" placeholder="Buscar planta ou indicação..." aria-label="Buscar planta">
+    <button class="chip active" data-filter-uso="all">Todas</button>
+    <button class="chip" data-filter-uso="digestivo">Digestivo</button>
+    <button class="chip" data-filter-uso="anti-inflamatorio">Anti-inflamatório</button>
+    <button class="chip" data-filter-uso="calmante">Calmante</button>
+    <button class="chip" data-filter-uso="energetico">Energético</button>
+    <button class="chip" data-filter-uso="imunidade">Imunidade</button>
+    <button class="chip" data-filter-uso="respiratorio">Respiratório</button>
+    <button class="chip" data-filter-uso="feminino">Saúde feminina</button>
+  </div>
+  <div class="plant-table-wrap">
+    <table class="plant-table" id="plant-table">
+      <thead>
+        <tr>
+          <th>Nome popular</th>
+          <th>Nome científico</th>
+          <th>Indicação tradicional</th>
+          <th>Parte usada</th>
+          <th>Modo de preparo</th>
+        </tr>
+      </thead>
+      <tbody id="plant-tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ CULTURA & GUIA ============ -->
+<section class="panel" id="panel-cultura" role="tabpanel">
+  <div class="panel-head">
+    <h1 class="panel-title">Cultura &amp; <em>Guia</em></h1>
+    <p class="panel-sub">Os princípios da culinária ancestral, ingredientes-base e a sabedoria do calendário.</p>
+  </div>
+
+  <div class="guide-card">
+    <h3>A culinária ancestral</h3>
+    <p>A culinária dos povos originários do Brasil não é uma "etnia gastronômica" — é a base. Antes de o português chegar, mais de 1.000 etnias já ocupavam o território, com sistemas alimentares completos baseados em manejo florestal, agroecologia rotativa e fermentações sofisticadas.</p>
+    <p><b>Os três pilares:</b></p>
+    <ul>
+      <li><b>Manejo da terra</b> — coivara controlada, agrofloresta, rotação de culturas em ciclos de 5 a 15 anos. Não é "agricultura primitiva" — é silvicultura avançada.</li>
+      <li><b>Aproveitamento total</b> — da raiz à folha. A mandioca vira goma, farinha, tucupi, beiju e tipiti — tudo de uma única planta.</li>
+      <li><b>Fermentação tradicional</b> — caxiri (mandioca), cauim (milho ou batata-doce), cajuína (caju). A ciência das bactérias antes da microbiologia.</li>
+    </ul>
+    <p>Cada panela tem uma história. Cada técnica vem de séculos de observação. Cozinhar essas receitas é manter um patrimônio vivo.</p>
+  </div>
+
+  <div class="guide-card">
+    <h3>Mandioca: a rainha</h3>
+    <p>Sem mandioca, não há culinária brasileira. Os povos originários domesticaram <em>Manihot esculenta</em> há mais de 10.000 anos — e desenvolveram uma rede de transformações que neutraliza o ácido cianídrico naturalmente presente na variedade brava.</p>
+    <p><b>A árvore-mãe da mandioca:</b></p>
+    <ul>
+      <li><b>Macaxeira (mansa)</b> — pode ser cozida e comida diretamente. Açúcar lento, fibra, vitamina C.</li>
+      <li><b>Mandioca brava</b> — alta em ácido cianídrico. Precisa ser ralada, espremida no tipiti e fervida.</li>
+      <li><b>Goma (polvilho fresco)</b> — amido extraído da mandioca. Vira tapioca, beiju, biju.</li>
+      <li><b>Farinha d'água</b> — mandioca fermentada por dias na água, depois torrada. Probiótico natural.</li>
+      <li><b>Farinha seca</b> — mandioca brava torrada após espremer. Acompanhamento universal.</li>
+      <li><b>Tucupi</b> — o líquido amarelo da mandioca brava, fervido por horas. Base de tacacá e caldeiradas.</li>
+      <li><b>Tapioca</b> — disco de goma hidratada cozida em chapa. Sem glúten, sem lactose.</li>
+      <li><b>Beiju</b> — bolacha fina e crocante feita com massa fermentada. Tem 5.000 anos.</li>
+    </ul>
+  </div>
+
+  <div class="guide-card">
+    <h3>Frutas nativas — guia das 15 mais comuns</h3>
+    <p>O Brasil tem mais de 300 frutas nativas com uso alimentar documentado. Estas 15 são as mais acessíveis hoje em mercados, feiras orgânicas e marketplaces.</p>
+    <div class="fruit-grid">
+      <div class="fruit-card"><h5>Açaí</h5><p>Amazônia · Antioxidante, gordura boa, ferro. Tradicional batido com farinha d'água.</p></div>
+      <div class="fruit-card"><h5>Cupuaçu</h5><p>Amazônia · Polpa cítrica e cremosa. Vira mousse, suco, geleia. Vitamina C alta.</p></div>
+      <div class="fruit-card"><h5>Baru</h5><p>Cerrado · Castanha rica em proteína e zinco. Substituta nativa do amendoim.</p></div>
+      <div class="fruit-card"><h5>Pequi</h5><p>Cerrado · Polpa amarela com espinhos internos. Sabor único, vitamina A.</p></div>
+      <div class="fruit-card"><h5>Buriti</h5><p>Cerrado e Amazônia · Polpa alaranjada. Maior fonte natural de vitamina A do planeta.</p></div>
+      <div class="fruit-card"><h5>Cajá</h5><p>Nordeste · Sabor azedo característico. Sucos, sorvetes, geleias.</p></div>
+      <div class="fruit-card"><h5>Caju</h5><p>Nordeste · Pseudofruto de vitamina C. Suco, doce, fermentado (cajuína).</p></div>
+      <div class="fruit-card"><h5>Umbu</h5><p>Caatinga · "Árvore que dá de beber" — fruto de água. Geleia, suco.</p></div>
+      <div class="fruit-card"><h5>Jabuticaba</h5><p>Mata Atlântica · Cresce no tronco. Casca rica em antocianinas. Suco, geleia, licor.</p></div>
+      <div class="fruit-card"><h5>Cambuci</h5><p>Mata Atlântica · Quase extinto. Sabor azedo intenso. Caipirinha, geleia.</p></div>
+      <div class="fruit-card"><h5>Bacuri</h5><p>Amazônia · Polpa cremosa branca, sabor agridoce. Mousse, sorvete.</p></div>
+      <div class="fruit-card"><h5>Graviola</h5><p>Norte/Nordeste · Polpa cremosa, ácida. Suco, vitaminas. Anti-inflamatório.</p></div>
+      <div class="fruit-card"><h5>Mangaba</h5><p>Cerrado e Caatinga · Sabor adocicado. Sorvete, geleia. Pouco oxigênio na fruta.</p></div>
+      <div class="fruit-card"><h5>Pitanga</h5><p>Mata Atlântica · Vermelha, doce-azeda. Vitamina C, suco, licor.</p></div>
+      <div class="fruit-card"><h5>Açaí-do-amazonas (juçara)</h5><p>Mata Atlântica · Mesma família do açaí amazônico, ameaçado. Reflorestar consumindo.</p></div>
+    </div>
+  </div>
+
+  <div class="guide-card">
+    <h3>Pesca artesanal e caça sustentável</h3>
+    <p>Os povos originários praticavam pesca e caça com regulação cultural — quotas, períodos de defeso, espécies-tabu. Não era pesca extrativista; era manejo intergeracional.</p>
+    <p><b>Peixes nativos comuns nos mercados:</b></p>
+    <ul>
+      <li><b>Tambaqui</b> — peixe de várzea amazônica, "boi d'água". Carne firme, gorda. Frita, assa, ensopa.</li>
+      <li><b>Tucunaré</b> — peixe carnívoro do Amazonas. Carne branca, magra. Caldeirada, grelhado.</li>
+      <li><b>Pirarucu</b> — o "bacalhau brasileiro". Pode atingir 200kg. Hoje vem majoritariamente de manejo sustentável (criação em lagos).</li>
+      <li><b>Pintado</b> — bagre do Pantanal. Carne firme e gordurosa. Filé, escabeche, churrasco.</li>
+      <li><b>Surubim</b> — semelhante ao pintado, comum em todo Centro-Oeste e Norte.</li>
+      <li><b>Dourado</b> — peixe esportivo de rios encachoeirados. Carne suculenta.</li>
+      <li><b>Traíra</b> — peixe de pantano e açudes. Carne firme, muitas espinhas. Cozida no leite de coco é clássica.</li>
+    </ul>
+    <p><b>Onde comprar com responsabilidade:</b> peixarias certificadas (selo Coletivo Pirarucu, ABRAF), feiras de povos tradicionais. Evite pirarucu de pesca predatória — sempre pergunte a origem.</p>
+  </div>
+
+  <div class="guide-card">
+    <h3>Calendário ancestral</h3>
+    <p>Os povos originários mantinham calendários precisos baseados nos ciclos da floresta, do cerrado e do sertão. Comer "no tempo certo" é a base nutricional mais antiga do Brasil.</p>
+    <div class="calendar-grid">
+      <div class="cal-month">Jan-Fev</div>
+      <div class="cal-content"><b>Verão / Cheia.</b> Açaí, cupuaçu, jabuticaba, bacuri. Pesca abundante na Amazônia. Cuidar das roças jovens.</div>
+      <div class="cal-month">Mar-Abr</div>
+      <div class="cal-content"><b>Outono.</b> Castanha-do-Pará no chão das matas (caía nas grandes chuvas). Mangaba madura no Nordeste. Início do plantio do milho no Sul.</div>
+      <div class="cal-month">Mai-Jun</div>
+      <div class="cal-content"><b>Frio começa.</b> Pinhão (Sul) — colheita sagrada Kaingang/Guarani. Pequi início no Cerrado. Fim das chuvas amazônicas.</div>
+      <div class="cal-month">Jul-Ago</div>
+      <div class="cal-content"><b>Inverno seco.</b> Pequi, baru e buriti em pico no Cerrado. Vazante amazônica — pesca de pirarucu autorizada. Sertão em festa do umbu.</div>
+      <div class="cal-month">Set-Out</div>
+      <div class="cal-content"><b>Primavera.</b> Floração — começa o mel das abelhas nativas (jataí, mandaçaia). Caju florido no Nordeste. Mandioca pronta para colher.</div>
+      <div class="cal-month">Nov-Dez</div>
+      <div class="cal-content"><b>Chuvas voltam.</b> Caju maduro. Pitanga e jabuticaba começando. Festa do milho verde no Sul (Guarani Avati Kyry). Plantio da mandioca para o ano seguinte.</div>
+    </div>
+  </div>
+
+  <div class="guide-card">
+    <h3>Dúvidas Frequentes</h3>
+    <div class="faq">
+      <details>
+        <summary>Onde encontrar tucupi, jambu e folha de mandioca fora do Norte?</summary>
+        <p>Mercados municipais e empórios brasileiros em São Paulo, Rio e BH costumam ter. Online: Mercado Livre, iFood Mercado e plataformas como Manioca, Cupuama e Tucumã têm tucupi pasteurizado e jambu congelado. A folha de mandioca já cozida vem em embalagens da marca Maniva. Sempre cozinhe novamente por 30 min para garantir.</p>
+      </details>
+      <details>
+        <summary>Posso substituir frutas nativas por frutas comuns?</summary>
+        <p>Algumas substituições funcionam: cupuaçu por maracujá + manga; baru por amendoim ou castanha-de-caju; pequi não tem substituto real (sabor e textura únicos). Para açaí use polpa congelada — o açaí "industrial" doce não é a mesma coisa. O importante é experimentar a receita original ao menos uma vez.</p>
+      </details>
+      <details>
+        <summary>O que é o moquém e como reproduzir em casa?</summary>
+        <p>Moquém é a técnica indígena de cozinhar carnes e peixes em grelha de varas verdes sobre brasa, em fogo lento de até 24 horas. Em casa, use o forno em temperatura baixa (90-110°C) por 4-6 horas, com a carne ou peixe sobre uma grelha alta — o resultado é parecido: carne desfiando, sabor concentrado e leve toque de fumaça (adicione lascas de madeira frutífera no forno se possível).</p>
+      </details>
+      <details>
+        <summary>Como começar a fermentar caxiri e cauim em casa?</summary>
+        <p>Caxiri tradicional usa mandioca mascada (saliva tem amilase). Versão moderna: mandioca cozida + um pouco de farinha de tapioca (amilase) + tempo. O cauim usa milho ou batata-doce do mesmo jeito. Comece com 24-48h de fermentação em pote aberto coberto com pano, em local fresco. Sabor levemente alcoólico e azedo é normal — se borbulhar e cheirar avinagrado em excesso, descarte. Comece com pequenas quantidades (2 xíc.) até pegar o ponto.</p>
+      </details>
+      <details>
+        <summary>Posso comer mandioca brava se cozinhar muito?</summary>
+        <p>Sim, mas com técnica certa. A mandioca brava tem ácido cianídrico que evapora com calor prolongado. O método tradicional: ralar, espremer no tipiti, secar a massa, torrar. Versão simplificada: nunca consuma cru. Cozinhe ao menos 25 min em fervura intensa. O tucupi industrializado já vem fervido. Em dúvida, use macaxeira (mandioca mansa) — não tem o veneno e fica perfeita cozida.</p>
+      </details>
+      <details>
+        <summary>Como fazer farinha d'água em casa?</summary>
+        <p>Verdade: difícil em ambiente doméstico. O processo tradicional envolve fermentar mandioca submersa em água por 4-7 dias, espremer, esfarelar e torrar em forno de barro a 200°C por horas. O resultado é uma farinha grossa, ácida, levemente amarelada e probiótica. A versão de mercado vem pronta — busque "farinha d'água do Pará" ou "farinha amarela" em mercados especializados.</p>
+      </details>
+      <details>
+        <summary>Mel de abelha nativa (jataí, mandaçaia) é seguro?</summary>
+        <p>Sim, e muitas vezes mais saudável que o mel de Apis mellifera. As abelhas sem ferrão (meliponíneos) produzem mel mais ácido, levemente fluido e com perfil microbiano único — usado tradicionalmente como remédio. O mel de jataí, especificamente, é citado em pesquisas por sua ação antimicrobiana. Compre de meliponicultores familiares (associações como AMA e MELIPONÁRIO BR têm produtores certificados).</p>
+      </details>
+      <details>
+        <summary>É apropriação comer/cozinhar essas receitas se eu não sou indígena?</summary>
+        <p>Não é apropriação reconhecer, valorizar e praticar — é apropriação omitir a origem ou explorar comercialmente sem retorno. Cozinhar com respeito significa: nomear a tradição, citar o povo, comprar de produtores indígenas quando possível, e tratar a receita como herança a ser preservada (não "exotizada"). Essas culinárias são patrimônio da humanidade. Comer com consciência é a melhor forma de mantê-las vivas.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== MODALS ===== -->
+<div class="modal-bg" id="modal-recipe" role="dialog">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-recipe')" aria-label="Fechar">×</button>
+    <div id="modal-recipe-content"></div>
   </div>
 </div>
 
-<!-- INTRO -->
-<div class="container">
-  <div class="section-header">
-    <div class="section-label">Sobre esta coleção</div>
-    <h2 class="section-title">O que você vai encontrar aqui</h2>
-  </div>
-
-  <div class="intro-box">
-    <p>Os povos originários do Brasil desenvolveram, ao longo de milênios, um dos sistemas alimentares mais sofisticados e nutritivos do mundo. Muito antes de qualquer dieta moderna ou protocolo nutricional, eles sabiam que certos alimentos davam energia sustentada, que combinações específicas potencializavam a absorção de nutrientes, e que comer da terra local era o caminho mais direto para a saúde.</p>
-    <p>Esta coleção reúne receitas baseadas nas tradições alimentares de povos como Tupinambá, Yanomami, Guarani, Xinguana e Sertanejo-Nordestino — adaptadas para a cozinha contemporânea mantendo a essência de cada ingrediente ancestral. Não é um cardápio exótico para olhar. É comida de verdade, para comer todo dia.</p>
-  </div>
-
-  <!-- DESPENSA ANCESTRAL -->
-  <div class="section-header">
-    <div class="section-label">Despensa</div>
-    <h2 class="section-title">Ingredientes ancestrais para ter sempre</h2>
-    <p class="section-desc">Estes são os pilares da cozinha indígena brasileira. Encontre em feiras orgânicas, lojas de produtos naturais e mercados regionais.</p>
-  </div>
-
-  <div class="pantry-grid">
-    <div class="pantry-item">
-      <span class="pantry-item-emoji">🟤</span>
-      <div class="pantry-item-name">Mandioca</div>
-      <div class="pantry-item-desc">Base de tudo. Raiz, farinha, tapioca, tucupi — nenhum outro alimento é mais versátil.</div>
-    </div>
-    <div class="pantry-item">
-      <span class="pantry-item-emoji">🌽</span>
-      <div class="pantry-item-name">Milho Nativo</div>
-      <div class="pantry-item-desc">Variedades coloridas como milho roxo e milho crioulo — muito mais nutritivas que o milho comercial.</div>
-    </div>
-    <div class="pantry-item">
-      <span class="pantry-item-emoji">🌺</span>
-      <div class="pantry-item-name">Açaí</div>
-      <div class="pantry-item-desc">Energia densa, rico em antocianinas. O alimento pré-treino dos Yanomami.</div>
-    </div>
-    <div class="pantry-item">
-      <span class="pantry-item-emoji">🌶</span>
-      <div class="pantry-item-name">Pimentas Nativas</div>
-      <div class="pantry-item-desc">Cumari, murupi, pimenta-de-cheiro. Cada uma com perfil de sabor único e propriedades anti-inflamatórias.</div>
-    </div>
-    <div class="pantry-item">
-      <span class="pantry-item-emoji">🫘</span>
-      <div class="pantry-item-name">Feijão Carioca / Preto</div>
-      <div class="pantry-item-desc">Proteína e fibra completas quando combinados com mandioca ou milho.</div>
-    </div>
-    <div class="pantry-item">
-      <span class="pantry-item-emoji">🥥</span>
-      <div class="pantry-item-name">Castanha-do-Pará</div>
-      <div class="pantry-item-desc">Selenio orgânico mais alto do mundo. Duas unidades/dia suprem 100% da necessidade diária.</div>
-    </div>
-    <div class="pantry-item">
-      <span class="pantry-item-emoji">🌿</span>
-      <div class="pantry-item-name">Ervas Nativas</div>
-      <div class="pantry-item-desc">Coentro-do-Pará (chicória), alfavaca, erva-cidreira, capim-santo, jambu.</div>
-    </div>
-    <div class="pantry-item">
-      <span class="pantry-item-emoji">🟡</span>
-      <div class="pantry-item-name">Cúrcuma / Açafrão</div>
-      <div class="pantry-item-desc">Anti-inflamatório natural usado há séculos nas cozinhas indígenas do interior.</div>
+<div class="modal-bg" id="modal-picker" role="dialog">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-picker')" aria-label="Fechar">×</button>
+    <h2>Escolha uma receita</h2>
+    <p class="panel-sub" id="picker-context"></p>
+    <div class="modal-body">
+      <input type="search" id="picker-search" class="search" placeholder="Buscar...">
+      <div class="recipe-picker" id="recipe-picker" style="margin-top:10px"></div>
     </div>
   </div>
-
-  <!-- AMAZÔNIA -->
-  <div class="category-header">
-    <div class="category-region">Região · Amazônia</div>
-    <div class="category-title">Sabores da Floresta</div>
-    <div class="category-desc">A Amazônia abriga a maior biodiversidade alimentar do planeta. Estas receitas traduzem a riqueza da floresta em pratos completos e nutritivos.</div>
-  </div>
-
-  <div class="recipe-grid">
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Amazônia · Povo Tucano</div>
-        <div class="recipe-name">Pirarucu Assado na Folha de Bananeira</div>
-        <div class="recipe-name-native">Tradição do Rio Negro — peixe sagrado assado na floresta</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 45 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 4 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 380 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag">Sem glúten</span>
-          <span class="recipe-tag verde">Alta proteína</span>
-          <span class="recipe-tag azul">Ômega-3</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>800g pirarucu em postas (ou filhote)</li>
-            <li>Folhas de bananeira para embrulhar</li>
-            <li>Suco de 2 limões crioulos</li>
-            <li>4 dentes de alho amassado</li>
-            <li>Pimenta-de-cheiro a gosto</li>
-            <li>Sal, coentro-do-Pará (chicória)</li>
-            <li>Azeite de dendê (1 col. sopa)</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Marine o peixe com limão, alho, sal e pimenta por 20 minutos.</li>
-            <li>Passe as folhas de bananeira rapidamente sobre a chama do fogão para amolecer e não quebrar.</li>
-            <li>Coloque o peixe sobre a folha, regue com dendê e adicione coentro-do-Pará.</li>
-            <li>Embrulhe bem, fechando as pontas como um pacote. Prenda com palito ou barbante.</li>
-            <li>Asse em brasa ou forno a 200°C por 30-35 minutos.</li>
-            <li>Abra o embrulho na mesa — o vapor e o aroma da banana fazem parte da experiência.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Dica de Preparo</strong>A folha de bananeira não é só estética — ela cria uma câmara de vapor que mantém o peixe incrivelmente úmido e perfumado.</div>
-        <div class="recipe-history"><strong>Origem</strong>Os Tucano do Rio Negro assavam o pirarucu assim durante pescarias de dias — um método que dispensava utensílios e aproveitava a própria floresta como cozinha.</div>
-      </div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Amazônia · Tradição Ribeirinha</div>
-        <div class="recipe-name">Caldeirada de Tucunaré com Tucupi</div>
-        <div class="recipe-name-native">O caldo amarelo da mandioca brava — base da culinária amazônica</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 50 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 6 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 290 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag">Tradicional</span>
-          <span class="recipe-tag verde">Anti-inflamatório</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>1kg tucunaré em postas (ou tambaqui)</li>
-            <li>500ml tucupi (fervido e pronto)</li>
-            <li>2 xíc. jambu fresco</li>
-            <li>1 cebola grande em rodelas</li>
-            <li>4 tomates maduros</li>
-            <li>Pimenta murupi a gosto</li>
-            <li>Coentro-do-Pará, sal</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Tempere o peixe com sal, limão e pimenta murupi. Deixe marinar 15 min.</li>
-            <li>Numa panela grande, refogue a cebola em azeite até dourar.</li>
-            <li>Adicione o tomate picado e refogue por 5 min até dissolver.</li>
-            <li>Despeje o tucupi (já fervido — nunca use tucupi cru, é tóxico).</li>
-            <li>Adicione as postas de peixe. Cozinhe em fogo médio por 15 min.</li>
-            <li>Nos últimos 3 min, adicione o jambu — ele murcha rapidamente e entorpece levemente a língua (sensação característica).</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Sobre o Tucupi</strong>O tucupi é vendido já fervido em mercados do Norte. Se comprar in natura, ferva por no mínimo 20 min antes de usar — o ácido cianídrico da mandioca brava é neutralizado pelo calor.</div>
-        <div class="recipe-history"><strong>Origem</strong>O tacacá e a caldeirada com tucupi são preparações que os povos amazônicos dominavam séculos antes da colonização. O jambu que entorpece a boca era usado também em rituais e medicação.</div>
-      </div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Amazônia · Povo Yanomami</div>
-        <div class="recipe-name">Açaí da Floresta com Castanha-do-Pará</div>
-        <div class="recipe-name-native">Thëpë — refeição completa dos caçadores Yanomami</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 15 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 440 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag verde">Superalimento</span>
-          <span class="recipe-tag">Energia</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>300g polpa de açaí (sem adição)</li>
-            <li>6 castanhas-do-Pará</li>
-            <li>1 banana-da-terra</li>
-            <li>2 col. sopa farinha d'água grossa</li>
-            <li>Mel de abelha nativa (opcional)</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Deixe a polpa de açaí descongelar naturalmente ou em banho-maria frio.</li>
-            <li>Toste as castanhas-do-Pará em frigideira seca por 2-3 min até cheirar a amendoim.</li>
-            <li>Grelhe a banana-da-terra fatiada em chapa quente com uma gota de óleo de coco.</li>
-            <li>Sirva o açaí em tigela de madeira ou cerâmica.</li>
-            <li>Cubra com as castanhas grosseiramente picadas e a banana grelhada.</li>
-            <li>Polvilhe a farinha d'água e regue com mel se desejar.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Dica</strong>A farinha d'água (fermentada e torrada) dá textura crocante e probióticos naturais — é o acompanhamento tradicional do açaí no Pará e Amazonas.</div>
-        <div class="recipe-history"><strong>Origem</strong>Para os Yanomami, o açaí com castanha era a refeição pré-caçada: energia densa, sustentada e portátil. Nenhum suplemento moderno supera essa combinação em biodisponibilidade.</div>
-      </div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Amazônia · Tradição Marajoara</div>
-        <div class="recipe-name">Maniçoba Rápida</div>
-        <div class="recipe-name-native">A feijoada da Amazônia — folha de mandioca com carnes</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 60 min (versão rápida)</span>
-          <span class="recipe-meta-item"><span>🍽</span> 8 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 520 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag">Festivo</span>
-          <span class="recipe-tag verde">Alto ferro</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>500g folha de mandioca moída (congelada)</li>
-            <li>300g charque dessalgado</li>
-            <li>300g costelinha de porco</li>
-            <li>200g toucinho defumado</li>
-            <li>1 cebola, 6 dentes alho</li>
-            <li>Sal, pimenta-do-reino</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Dessalgue o charque: ferva com água por 15 min, troque a água 2x.</li>
-            <li>Cozinhe a folha de mandioca em panela de pressão por 30 min. É obrigatório — a folha crua é tóxica.</li>
-            <li>Na panela de pressão separada, cozinhe todas as carnes com cebola e alho por 20 min.</li>
-            <li>Misture as carnes cozidas e desfiadas à folha de mandioca já cozida.</li>
-            <li>Cozinhe tudo junto por mais 15 min em fogo baixo, mexendo para não grudar.</li>
-            <li>Ajuste o sal. Sirva com arroz, farinha d'água e pimenta murupi.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Segurança</strong>Nunca use folha de mandioca brava crua. A versão industrializada congelada já vem pré-cozida — mas cozinhe mais 30 min para garantir. É segura após o processo completo.</div>
-        <div class="recipe-history"><strong>Origem</strong>A maniçoba é considerada a "feijoada paraense". Originalmente preparada pelos Marajoara, levava dias de cozimento lento. A versão em pressão é contemporânea mas mantém o sabor profundo.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- NORDESTE / SERTÃO -->
-  <div class="category-header">
-    <div class="category-region">Região · Nordeste e Sertão</div>
-    <div class="category-title">Cozinha do Sertão</div>
-    <div class="category-desc">A culinária sertaneja é herdeira direta dos povos Tupinambá, Kariri e Cariris. Técnicas de conservação, aproveitamento total e o uso de plantas da Caatinga.</div>
-  </div>
-
-  <div class="recipe-grid">
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Nordeste · Tradição Tupinambá</div>
-        <div class="recipe-name">Baião de Dois Original</div>
-        <div class="recipe-name-native">Arroz-com-feijão que sustentou impérios sertanejos</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 40 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 6 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 480 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag">Proteína completa</span>
-          <span class="recipe-tag verde">Cultura</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 xíc. feijão verde (ou fradinho)</li>
-            <li>1 xíc. arroz parboilizado</li>
-            <li>200g queijo coalho em cubos</li>
-            <li>200g carne-seca dessalgada</li>
-            <li>1 cebola, 4 dentes alho</li>
-            <li>Coentro, pimenta-de-cheiro</li>
-            <li>Manteiga de garrafa (2 col. sopa)</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Cozinhe o feijão na pressão por 15 min. Reserve com o caldo.</li>
-            <li>Dessalgue e cozinhe a carne-seca. Desfie e reserve.</li>
-            <li>Refogue cebola e alho na manteiga de garrafa até dourar intensamente.</li>
-            <li>Adicione o arroz e refogue por 2 min.</li>
-            <li>Adicione o feijão com caldo suficiente para cozinhar o arroz. Cozinhe tampado.</li>
-            <li>Quando quase seco, adicione a carne, o queijo coalho e o coentro. Finalize com pimenta-de-cheiro.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Dica</strong>A manteiga de garrafa (clarificada, do sertão nordestino) dá o sabor insubstituível. Encontre em mercados nordestinos ou use ghee como substituto próximo.</div>
-        <div class="recipe-history"><strong>Origem</strong>O baião de dois não é arroz-com-feijão genérico — é a combinação específica de feijão de corda ou fradinho com queijo coalho e manteiga de garrafa, herança direta dos povos indígenas do Nordeste que combinavam leguminosas e cereais para proteína completa.</div>
-      </div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Nordeste · Tradição Cariris</div>
-        <div class="recipe-name">Carne de Sol na Pedra com Macaxeira</div>
-        <div class="recipe-name-native">A técnica de conservação mais antiga do Brasil</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 30 min (carne pré-curada)</span>
-          <span class="recipe-meta-item"><span>🍽</span> 4 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 560 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag">Ancestral</span>
-          <span class="recipe-tag verde">Alta proteína</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>600g carne de sol (contrafilé curado)</li>
-            <li>500g macaxeira (mandioca mansa)</li>
-            <li>4 col. sopa manteiga de garrafa</li>
-            <li>1 cebola roxa em tiras</li>
-            <li>Pimenta-bode, coentro</li>
-            <li>Nata (creme de leite regional)</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Corte a macaxeira e cozinhe na pressão com sal por 12 min até macia.</li>
-            <li>Dessalgue a carne de sol rapidamente (1 hora em água fria) se necessário.</li>
-            <li>Aqueça pedra de granito no fogo ou use frigideira de ferro bem quente.</li>
-            <li>Sele a carne de sol em alta temperatura, 3-4 min de cada lado.</li>
-            <li>Na mesma frigideira, frite a cebola na manteiga de garrafa até caramelizar.</li>
-            <li>Sirva: carne na pedra, macaxeira ao lado, cebola por cima e nata para mergulhar.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Dica</strong>A macaxeira (mandioca mansa) é diferente da mandioca brava — pode ser consumida crua sem risco. Cozida com manteiga de garrafa ela é simplesmente perfeita.</div>
-        <div class="recipe-history"><strong>Origem</strong>A técnica de curar carne no sal e secar ao sol foi desenvolvida pelos povos da Caatinga como solução de conservação sem refrigeração. Funcionava por semanas — tecnologia de sobrevivência que virou tradição gastronômica.</div>
-      </div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Nordeste · Tradição Popular</div>
-        <div class="recipe-name">Cuscuz de Milho com Ovo Caipira</div>
-        <div class="recipe-name-native">O café da manhã mais nutritivo do sertão</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 20 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 3 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 340 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag">Rápido</span>
-          <span class="recipe-tag verde">Sem glúten</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 xíc. flocão de milho</li>
-            <li>½ xíc. água morna (vai aos poucos)</li>
-            <li>Sal a gosto</li>
-            <li>3 ovos caipiras</li>
-            <li>Queijo coalho em tiras</li>
-            <li>Manteiga para servir</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Misture o flocão de milho com o sal e vá adicionando água aos poucos, esfregando entre as palmas até a massa firmar.</li>
-            <li>A massa deve ficar úmida mas não grudenta — segure um punhado e ela não deve desmanchar.</li>
-            <li>Coloque na cuscuzeira (ou peneira sobre água fervente) e cozinhe por 15 min no vapor.</li>
-            <li>Enquanto isso, frite os ovos caipiras na manteiga com a gema para cima.</li>
-            <li>Desenforme o cuscuz na hora de servir.</li>
-            <li>Sirva com ovo frito, queijo coalho grelhado e manteiga por cima.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Dica</strong>A proporção de água é sempre "de olho" — o segredo é ir adicionando aos poucos e testando a textura com as mãos, como ensinavam as avós nordestinas.</div>
-        <div class="recipe-history"><strong>Origem</strong>O cuscuz de milho é herança dos Tupinambá que já preparavam farinha e bolos de milho muito antes da chegada europeia. A palavra "cuscuz" é árabe, mas a técnica de vapor no Brasil é indígena.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- CERRADO / CENTRO-OESTE -->
-  <div class="category-header">
-    <div class="category-region">Região · Cerrado e Centro-Oeste</div>
-    <div class="category-title">Frutos do Cerrado</div>
-    <div class="category-desc">O Cerrado brasileiro é o segundo maior bioma do país e abriga uma das culinárias mais esquecidas e ricas — frutas, raízes e preparações dos Bororo, Karajá e Xavante.</div>
-  </div>
-
-  <div class="recipe-grid">
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Cerrado · Tradição Xavante</div>
-        <div class="recipe-name">Empadão de Pequi com Frango Caipira</div>
-        <div class="recipe-name-native">O fruto sagrado do Cerrado em sua preparação mais generosa</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 55 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 6 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 510 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag">Festivo</span>
-          <span class="recipe-tag verde">Vitamina A</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>1 frango caipira cortado</li>
-            <li>8 unidades pequi em conserva</li>
-            <li>2 xíc. arroz parboilizado</li>
-            <li>1 cebola, 5 dentes alho</li>
-            <li>Pimenta-do-reino, urucum</li>
-            <li>Caldo de galinha natural</li>
-            <li>Cheiro-verde, azeite</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Tempere o frango com alho, sal, pimenta e urucum. Deixe marinar 30 min.</li>
-            <li>Doure o frango em panela grossa com azeite por todos os lados. Reserve.</li>
-            <li>Refogue cebola e alho no mesmo óleo até dourar.</li>
-            <li>Adicione o arroz e refogue por 2 min.</li>
-            <li>Adicione o frango, os pequis e o caldo quente suficiente para cozinhar.</li>
-            <li>Cozinhe tampado em fogo médio-baixo por 20-25 min. Finalize com cheiro-verde.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Atenção ao Pequi</strong>Nunca raspe o pequi com os dentes — dentro da polpa amarela há espinhos que podem ferir a boca. Coma "chupando" a polpa ao redor sem morder fundo.</div>
-        <div class="recipe-history"><strong>Origem</strong>O pequi é fruto sagrado para os Xavante — associado à fertilidade e à memória ancestral. Era consumido em rituais de passagem e colheita. Hoje é símbolo gastronômico de Goiás e Mato Grosso.</div>
-      </div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Cerrado · Tradição Bororo</div>
-        <div class="recipe-name">Geleia de Baru com Castanha</div>
-        <div class="recipe-name-native">Pasta ancestral de sementes do Cerrado</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 20 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 8 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 180 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag verde">Superalimento</span>
-          <span class="recipe-tag">Proteína vegetal</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>200g castanha de baru</li>
-            <li>2 col. sopa mel de abelha nativa</li>
-            <li>1 col. sopa óleo de coco</li>
-            <li>Pitada de sal marinho</li>
-            <li>Canela em pó (opcional)</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Torre a castanha de baru em forno a 160°C por 10 min, mexendo uma vez.</li>
-            <li>Deixe esfriar completamente antes de processar.</li>
-            <li>Processe no processador por 3-5 min — vai passar por várias fases até virar pasta.</li>
-            <li>Adicione óleo de coco e sal. Processe mais 2 min.</li>
-            <li>Adicione mel e canela. Pulse apenas para incorporar.</li>
-            <li>Guarde em pote de vidro na geladeira por até 3 semanas.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Sobre o Baru</strong>A castanha de baru tem mais proteína que o amendoim, é rica em zinco e magnésio. Encontrada em feiras orgânicas e lojas de produtos do Cerrado.</div>
-        <div class="recipe-history"><strong>Origem</strong>Os Bororo do Mato Grosso usavam a amêndoa do baru como alimento de força para caçadas longas. Moída com mel de jataí (abelha sem ferrão), era o "energético" dos guerreiros do Cerrado.</div>
-      </div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Cerrado · Tradição Karajá</div>
-        <div class="recipe-name">Pamonha de Milho Verde com Carne</div>
-        <div class="recipe-name-native">O alimento de caminho — transportável, nutritivo, completo</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 60 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 8 unidades</span>
-          <span class="recipe-meta-item"><span>🔥</span> 280 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag">Festivo</span>
-          <span class="recipe-tag verde">Sem glúten</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>8 espigas de milho verde</li>
-            <li>300g carne moída temperada</li>
-            <li>1 xíc. leite de coco</li>
-            <li>Sal, queijo meia-cura</li>
-            <li>Palhas do próprio milho</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Retire as palhas inteiras com cuidado para reutilizar. Reserve as palhas maiores.</li>
-            <li>Rale o milho ou processe para obter a massa — textura deve ser grossa.</li>
-            <li>Misture a massa com leite de coco e sal até ficar homogênea.</li>
-            <li>Frite a carne moída temperada e deixe esfriar levemente.</li>
-            <li>Monte: palha, massa de milho, carne, queijo, mais massa, feche com outra palha.</li>
-            <li>Amarre com tiras de palha e cozinhe em água fervente por 40 min.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Dica</strong>A palha de milho serve como embalagem biodegradável perfeita — transmite um leve aroma ao cozinhar. Não use papel manteiga ou alumínio, perde o caráter.</div>
-        <div class="recipe-history"><strong>Origem</strong>Os Karajá às margens do Rio Araguaia levavam pamonhas nas longas viagens de canoa — o equivalente indígena à marmita. A versão salgada com carne é mais antiga que a doce.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- SUL / MATA ATLÂNTICA -->
-  <div class="category-header">
-    <div class="category-region">Região · Sul e Mata Atlântica</div>
-    <div class="category-title">Sabores Guarani e da Serra</div>
-    <div class="category-desc">O povo Guarani, espalhado entre Brasil, Paraguai e Argentina, deixou uma culinária baseada em milho, erva-mate e caça que influenciou toda a gastronomia sulista.</div>
-  </div>
-
-  <div class="recipe-grid">
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Sul · Povo Guarani</div>
-        <div class="recipe-name">Sopa de Mandioquinha com Ervas da Mata</div>
-        <div class="recipe-name-native">Caldo de raízes para dias frios da Serra</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 35 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 4 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 220 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag verde">Anti-inflamatório</span>
-          <span class="recipe-tag">Reconfortante</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>600g mandioquinha (batata-baroa)</li>
-            <li>1L caldo de osso ou legumes</li>
-            <li>1 alho-poró</li>
-            <li>3 dentes alho</li>
-            <li>Erva-cidreira fresca, alfavaca</li>
-            <li>Gengibre 1 col. chá ralado</li>
-            <li>Azeite, sal, noz-moscada</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Refogue alho-poró fatiado e alho em azeite por 5 min.</li>
-            <li>Adicione o gengibre e refogue mais 1 min.</li>
-            <li>Adicione a mandioquinha em cubos e o caldo. Ferva por 20 min até macia.</li>
-            <li>Bata no liquidificador até creme liso. Volte ao fogo.</li>
-            <li>Ajuste sal, adicione noz-moscada e alfavaca picada.</li>
-            <li>Sirva com fio de azeite e folhas de erva-cidreira fresca.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Sobre a Mandioquinha</strong>A batata-baroa (mandioquinha) é uma raiz nativa da América do Sul, rica em betacaroteno, potássio e fibras. O sabor levemente adocicado a torna perfeita para cremes.</div>
-        <div class="recipe-history"><strong>Origem</strong>Os Guarani preparavam caldos de raízes com ervas da mata durante os invernos rigorosos da Serra Gaúcha e Catarinense. O caldo de osso era o centro das cerimônias de cura.</div>
-      </div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Sul · Tradição Guarani-Kaiowá</div>
-        <div class="recipe-name">Chipa Guasú — Bolo de Milho Verde</div>
-        <div class="recipe-name-native">O pão sagrado Guarani preparado em dias de festa</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 50 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 8 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 240 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag">Festivo</span>
-          <span class="recipe-tag verde">Sem glúten</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>6 espigas milho verde</li>
-            <li>3 ovos</li>
-            <li>200g queijo meia-cura ralado</li>
-            <li>1 cebola ralada</li>
-            <li>100g manteiga derretida</li>
-            <li>Sal a gosto</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Rale o milho verde nas espigas até obter pasta grossa (use o lado grosso do ralador).</li>
-            <li>Misture milho ralado, ovos, queijo, cebola e manteiga até homogêneo.</li>
-            <li>Tempere com sal — experimente a massa antes de assar.</li>
-            <li>Despeje em forma untada e enfarinhada com fubá.</li>
-            <li>Asse em forno a 180°C por 35-40 min até dourar e firmar no centro.</li>
-            <li>Deixe esfriar 15 min antes de cortar. Sirva quente ou frio.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Dica</strong>Quanto mais fresco o milho, mais doce e úmido o bolo. Em época de safra (jan-mar no Sul), o resultado é incomparável.</div>
-        <div class="recipe-history"><strong>Origem</strong>A "chipa guasú" é o bolo de milho sagrado dos Guarani, preparado em festas, colheitas e rituais de agradecimento à terra. O nome significa "bolo grande" em Guarani.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- RECEITAS COTIDIANAS -->
-  <div class="category-header">
-    <div class="category-region">Uso Diário · Brasil Inteiro</div>
-    <div class="category-title">Para o Dia a Dia</div>
-    <div class="category-desc">Receitas simples e rápidas baseadas em ingredientes ancestrais — para incluir na rotina sem cerimônia.</div>
-  </div>
-
-  <div class="recipe-grid">
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Brasil · Tradição Nacional</div>
-        <div class="recipe-name">Tapioca com Coco e Mel de Abelha Nativa</div>
-        <div class="recipe-name-native">A beiju dos Tupinambá — sem glúten, sem lactose</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 10 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 1 porção</span>
-          <span class="recipe-meta-item"><span>🔥</span> 200 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag verde">Sem glúten</span>
-          <span class="recipe-tag">Rápido</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>4 col. sopa goma de tapioca hidratada</li>
-            <li>3 col. sopa coco ralado fresco</li>
-            <li>1 col. sopa mel de abelha nativa (ou jataí)</li>
-            <li>Pitada de sal</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Aqueça frigideira antiaderente em fogo médio — sem óleo.</li>
-            <li>Peneire a goma de tapioca diretamente na frigideira formando disco uniforme.</li>
-            <li>Espere firmar (1-2 min) sem mexer. A tapioca vai grudar em si mesma.</li>
-            <li>Adicione o coco ralado sobre metade da tapioca.</li>
-            <li>Dobre ao meio. Retire da frigideira.</li>
-            <li>Regue com mel de abelha nativa e sirva imediatamente.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Goma vs Polvilho</strong>Use sempre goma hidratada (biju goma), não polvilho azedo. A textura é completamente diferente — a goma forma a tapioca elástica característica.</div>
-        <div class="recipe-history"><strong>Origem</strong>O beiju de mandioca era o pão dos Tupinambá — consumido há mais de 5.000 anos no Brasil. O português "tapioca" vem do Tupi "tipi'óka", nome do processo de extração da goma.</div>
-      </div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Brasil · Tradição Afro-indígena</div>
-        <div class="recipe-name">Suco de Caju Verde com Gengibre</div>
-        <div class="recipe-name-native">A fruta mais subutilizada do Brasil</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 8 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 80 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag verde">Vitamina C</span>
-          <span class="recipe-tag">Imunidade</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 cajus maduros</li>
-            <li>500ml água de coco</li>
-            <li>1 col. chá gengibre fresco ralado</li>
-            <li>Suco de ½ limão crioulo</li>
-            <li>Hortelã fresca</li>
-            <li>Gelo</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Lave bem os cajus. Retire o pedúnculo (castanha) para usar separado.</li>
-            <li>Esprema os cajus com as mãos para extrair o suco sem bater — bater deixa amargo.</li>
-            <li>Coe o suco para retirar o tanino (líquido branco) que amarga.</li>
-            <li>Misture o suco coado com água de coco, gengibre e limão.</li>
-            <li>Sirva com muito gelo e hortelã fresca.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Por que espremer e não bater?</strong>A liquidificação quebra as células e libera compostos tanínicos que deixam o caju amargo. Espremer gentilmente extrai apenas o suco doce.</div>
-        <div class="recipe-history"><strong>Origem</strong>O caju é nativo do Nordeste brasileiro — os Tupinambá chamavam de "acaju". A fruta era usada como alimento, bebida fermentada (cajuína) e remédio. O Brasil exporta 95% da castanha e descarta o pedúnculo — um desperdício cultural e nutricional.</div>
-      </div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-origin">Brasil · Preparo Universal</div>
-        <div class="recipe-name">Caldo de Osso Brasileiro</div>
-        <div class="recipe-name-native">A base de cura de todas as tradições indígenas do Brasil</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 3-8 horas (vale cada minuto)</span>
-          <span class="recipe-meta-item"><span>🍽</span> 8 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 60 kcal</span>
-        </div>
-        <div class="recipe-tags">
-          <span class="recipe-tag verde">Colágeno natural</span>
-          <span class="recipe-tag">Cura intestinal</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="col-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>1kg osso de boi (tutano, juntas)</li>
-            <li>2 cenouras, 3 talos de aipo</li>
-            <li>1 cebola inteira com casca</li>
-            <li>2 col. sopa vinagre de maçã</li>
-            <li>Alho, louro, ervas nativas</li>
-            <li>Água suficiente para cobrir (3L)</li>
-            <li>Sal e pimenta-do-reino</li>
-          </ul>
-        </div>
-        <div>
-          <div class="col-title">Preparo</div>
-          <ol class="steps-list">
-            <li>Asse os ossos em forno a 220°C por 20 min para dourar e intensificar o sabor.</li>
-            <li>Coloque tudo em panela grande ou panela de pressão com o vinagre.</li>
-            <li>O vinagre extrai mais minerais dos ossos — não omita, o sabor some no cozimento.</li>
-            <li>Panela comum: 8h em fogo baixíssimo. Pressão: 3h.</li>
-            <li>Coe e descarte os sólidos. Ajuste o sal.</li>
-            <li>Guarde na geladeira (solidifica — é sinal de qualidade: colágeno gelificado).</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-footer">
-        <div class="recipe-note"><strong>Como usar</strong>Use como base para sopas, para cozinhar grãos, para tomar puro aquecido como chá matinal — a "medicina" mais barata e eficaz para intestino, pele e articulações.</div>
-        <div class="recipe-history"><strong>Origem</strong>Todas as tradições indígenas brasileiras tinham uma versão de caldo de osso. Era o alimento dado a doentes, mulheres pós-parto e crianças em crescimento — a "medicina líquida" de milênios.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ENCERRAMENTO -->
-  <div class="section-header">
-    <div class="section-label">Reflexão Final</div>
-    <h2 class="section-title">Comer é um ato político e ancestral</h2>
-    <p class="section-desc">Escolher ingredientes nativos, valorizar técnicas tradicionais e conhecer a origem do que comemos é uma forma de resistência cultural. Cada vez que você prepara uma dessas receitas, você participa de uma corrente que tem milênios.</p>
-  </div>
-
-  <div class="intro-box">
-    <p>O Brasil tem a maior biodiversidade alimentar do mundo — e boa parte dela está sendo esquecida. A biodiversidade que vemos nos supermercados representa menos de 1% do que os povos originários sabiam cultivar, preparar e preservar.</p>
-    <p>Use este material como ponto de partida. Busque feiras de agricultores orgânicos e familiares. Pergunte de onde vem cada ingrediente. Valorize produtores que mantêm variedades crioulas. A comida ancestral não é nostalgia — é futuro.</p>
-  </div>
-
 </div>
 
-<footer>
-  <div class="brand">Life OS</div>
-  <p>Receitas da Terra — Sabores Ancestrais do Brasil</p>
-  <p style="margin-top: 4px; font-style: italic; color: var(--text-dim);">Material exclusivo para membros · Com respeito aos povos originários</p>
-  <p style="margin-top: 10px;"><a href="https://agenciacriativa.shop">agenciacriativa.shop</a></p>
-</footer>
+<div class="toast" id="toast"></div>
 
-<button id="btn-install-pwa" onclick="installPWA()" class="pwa-install-fab" style="display:none">
-  <span style="font-size:16px">📲</span> Instalar app
+<button id="btn-install-pwa" onclick="installPWA()" class="pwa-install-fab">
+  <span>◆</span> Instalar app
 </button>
-<style>
-  .pwa-install-fab {
-    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark, var(--accent)));
-    color: #fff; border: none; padding: 12px 20px; border-radius: 50px;
-    font-weight: 700; font-size: 13px; font-family: 'Inter', sans-serif;
-    cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-    display: flex; align-items: center; gap: 6px; letter-spacing: 0.3px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .pwa-install-fab:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
-  @media print { .pwa-install-fab { display: none !important; } }
-</style>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
-  }
-  let __pwaPrompt = null;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault(); __pwaPrompt = e;
-    const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
-  });
-  function installPWA() {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-    if (isStandalone) { alert('App já instalado!'); return; }
-    if (isIOS) {
-      alert('Para instalar no iPhone:\n\n1. Toque no botão Compartilhar (quadrado com seta para cima)\n2. Role e toque em "Adicionar à Tela de Início"\n3. Toque em "Adicionar"');
-      return;
-    }
-    if (__pwaPrompt) { __pwaPrompt.prompt(); __pwaPrompt.userChoice.then(() => __pwaPrompt = null); }
-    else { alert('Para instalar no Android: menu (3 pontos) → "Instalar app"'); }
-  }
-  document.addEventListener('DOMContentLoaded', () => {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-    if (isIOS && !isStandalone) {
-      const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
-    }
-  });
-</script>
 
+<script>
+// ============ DATA: 30 RECEITAS ANCESTRAIS ============
+// reg = região: amazonia, cerrado, mata-atlantica, pantanal, caatinga
+// tipo = principal, acompanhamento, bebida, doce
+// rest = vegano, semGluten, semLactose, kids
+const RECIPES = [
+  {n:1,name:"Pirarucu Assado na Folha de Bananeira",native:"Tradição Tucano do Rio Negro",reg:"amazonia",tipo:"principal",time:45,serv:4,kcal:380,
+   tags:["Sem glúten","Alta proteína","Ômega-3"],rest:["semGluten","semLactose"],
+   ing:["800g pirarucu em postas (ou filhote)","Folhas de bananeira para embrulhar","Suco de 2 limões crioulos","4 dentes de alho amassados","Pimenta-de-cheiro a gosto","Sal e coentro-do-Pará (chicória)","Azeite de dendê (1 col. sopa)"],
+   steps:["Marine o peixe com limão, alho, sal e pimenta por 20 minutos.","Passe as folhas de bananeira rapidamente sobre a chama do fogão para amolecer e não quebrar.","Coloque o peixe sobre a folha, regue com dendê e adicione coentro-do-Pará.","Embrulhe bem fechando as pontas como pacote. Prenda com palito ou barbante.","Asse em brasa ou forno a 200°C por 30-35 minutos.","Abra o embrulho na mesa — o vapor e o aroma da banana fazem parte da experiência."],
+   tip:"A folha de bananeira não é só estética — cria uma câmara de vapor que mantém o peixe incrivelmente úmido e perfumado.",
+   history:"Os Tucano do Rio Negro assavam o pirarucu assim em pescarias de dias — método que dispensava utensílios e usava a própria floresta como cozinha.",
+   med:"Peixe gordo nativo, fonte de ômega-3 e selênio — anti-inflamatório natural usado tradicionalmente em pós-parto."},
+
+  {n:2,name:"Caldeirada de Tucunaré com Tucupi",native:"Tradição ribeirinha amazônica",reg:"amazonia",tipo:"principal",time:50,serv:6,kcal:290,
+   tags:["Tradicional","Anti-inflamatório"],rest:["semGluten","semLactose"],
+   ing:["1kg tucunaré em postas (ou tambaqui)","500ml tucupi (já fervido e pronto)","2 xíc. jambu fresco","1 cebola grande em rodelas","4 tomates maduros","Pimenta murupi a gosto","Coentro-do-Pará e sal"],
+   steps:["Tempere o peixe com sal, limão e pimenta murupi. Marine 15 min.","Em panela grande, refogue a cebola em azeite até dourar.","Adicione o tomate picado e refogue por 5 min até dissolver.","Despeje o tucupi (já fervido — nunca use cru, é tóxico).","Adicione as postas de peixe. Cozinhe em fogo médio por 15 min.","Nos últimos 3 min, adicione o jambu — ele murcha rapidamente e entorpece levemente a língua."],
+   tip:"O tucupi é vendido já fervido em mercados do Norte. Se comprar in natura, ferva por no mínimo 20 min antes de usar.",
+   history:"O tacacá e a caldeirada com tucupi são preparações que os povos amazônicos dominavam séculos antes da colonização. O jambu que entorpece a boca era usado em rituais e medicação.",
+   med:"O jambu (Acmella oleracea) tem espilantol — composto anestésico natural. Usado tradicionalmente para dor de dente e estímulo da circulação."},
+
+  {n:3,name:"Açaí da Floresta com Castanha-do-Pará",native:"Thëpë — refeição Yanomami",reg:"amazonia",tipo:"doce",time:15,serv:2,kcal:440,
+   tags:["Superalimento","Energia"],rest:["vegano","semGluten","semLactose","kids"],
+   ing:["300g polpa de açaí (sem adição)","6 castanhas-do-Pará","1 banana-da-terra","2 col. sopa farinha d'água grossa","Mel de abelha nativa (opcional)"],
+   steps:["Deixe a polpa de açaí descongelar naturalmente ou em banho-maria frio.","Toste as castanhas-do-Pará em frigideira seca por 2-3 min até cheirar a amendoim.","Grelhe a banana-da-terra fatiada em chapa quente com uma gota de óleo de coco.","Sirva o açaí em tigela de madeira ou cerâmica.","Cubra com castanhas grosseiramente picadas e a banana grelhada.","Polvilhe a farinha d'água e regue com mel se desejar."],
+   tip:"A farinha d'água (fermentada e torrada) dá textura crocante e probióticos naturais — acompanhamento tradicional do açaí no Pará.",
+   history:"Para os Yanomami, o açaí com castanha era a refeição pré-caçada: energia densa, sustentada e portátil.",
+   med:"Açaí é antioxidante (antocianinas). Castanha-do-Pará tem o maior teor de selênio do mundo natural — 1 castanha já cobre a necessidade diária."},
+
+  {n:4,name:"Maniçoba",native:"A feijoada da Amazônia (Marajoara)",reg:"amazonia",tipo:"principal",time:90,serv:8,kcal:520,
+   tags:["Festivo","Alto ferro"],rest:["semGluten","semLactose"],
+   ing:["500g folha de mandioca moída (congelada)","300g charque dessalgado","300g costelinha de porco","200g toucinho defumado","1 cebola e 6 dentes alho","Sal e pimenta-do-reino"],
+   steps:["Dessalgue o charque: ferva com água por 15 min, troque a água 2x.","Cozinhe a folha de mandioca em pressão por 30 min — obrigatório, a folha crua é tóxica.","Em pressão separada, cozinhe todas as carnes com cebola e alho por 20 min.","Misture as carnes cozidas e desfiadas à folha já cozida.","Cozinhe tudo junto por mais 15 min em fogo baixo, mexendo para não grudar.","Ajuste sal. Sirva com arroz, farinha d'água e pimenta murupi."],
+   tip:"Nunca use folha de mandioca brava crua. A versão industrializada congelada já vem pré-cozida — mas cozinhe mais 30 min.",
+   history:"A maniçoba é considerada a 'feijoada paraense'. Originalmente preparada pelos Marajoara, levava dias de cozimento lento.",
+   med:"A folha de mandioca cozida é rica em ferro e betacaroteno — restaurativo tradicional pós-doença."},
+
+  {n:5,name:"Tacacá Tradicional",native:"O caldo amarelo dos paraenses",reg:"amazonia",tipo:"principal",time:30,serv:4,kcal:180,
+   tags:["Tradicional","Picante"],rest:["semGluten","semLactose"],
+   ing:["1L tucupi fervido","500g goma de tapioca","200g jambu","300g camarão seco descascado","2 dentes alho","Pimenta-de-cheiro e sal"],
+   steps:["Hidrate a goma de tapioca em 200ml de água por 10 min — vai virar uma pasta.","Cozinhe o tucupi com alho amassado e sal por 15 min em fogo baixo.","Coloque a goma hidratada no tucupi quente, mexendo até virar caldo grosso e translúcido.","Aferventes os camarões secos em água por 3 min.","Em cuias (ou tigelas fundas), monte: goma, camarão, jambu cozido por 1 min, e tucupi quente por cima.","Sirva imediatamente, bem quente, sem talher — toma na cuia."],
+   tip:"O tacacá só fica certo na cuia (ou tigela funda) — a temperatura cai rápido em prato raso e descaracteriza.",
+   history:"O tacacá é refeição cerimonial amazônica vendida em barraquinhas todas as tardes em Belém. O entorpecimento do jambu é parte do ritual.",
+   med:"Combinação medicinal completa — tucupi (cura intestino), jambu (estimulante), camarão (proteína)."},
+
+  {n:6,name:"Mingau de Banana-da-Terra",native:"Comida de criança e enfermo",reg:"amazonia",tipo:"doce",time:25,serv:4,kcal:240,
+   tags:["Reconfortante","Sem glúten"],rest:["vegano","semGluten","semLactose","kids"],
+   ing:["4 bananas-da-terra bem maduras","1L água","100g polvilho doce","Canela em pau","Cravo (3 unidades)","Mel ou rapadura ralada"],
+   steps:["Descasque e amasse as bananas-da-terra com garfo.","Em panela, ferva a água com canela e cravo.","Adicione as bananas amassadas e cozinhe por 10 min.","Dilua o polvilho em 100ml água fria. Adicione mexendo sem parar para não empelotar.","Cozinhe em fogo baixo por 8 min até engrossar tipo creme.","Adoce com mel ou rapadura. Retire canela e cravo antes de servir."],
+   tip:"A banana-da-terra deve estar com a casca quase preta — a doçura natural dispensa muito açúcar.",
+   history:"Mingau de banana é alimento de transição (bebê e idoso) em todas as etnias amazônicas. Sustenta sem agredir o intestino.",
+   med:"Banana-da-terra cozida é alimento de fácil digestão, rica em potássio e prebiótico natural — restaurativa pós-doença."},
+
+  {n:7,name:"Baião de Dois Original",native:"Tradição Tupinambá do sertão",reg:"caatinga",tipo:"principal",time:40,serv:6,kcal:480,
+   tags:["Proteína completa","Cultura"],rest:[],
+   ing:["2 xíc. feijão verde (ou fradinho)","1 xíc. arroz parboilizado","200g queijo coalho em cubos","200g carne-seca dessalgada","1 cebola e 4 dentes alho","Coentro e pimenta-de-cheiro","Manteiga de garrafa (2 col. sopa)"],
+   steps:["Cozinhe o feijão na pressão por 15 min. Reserve com o caldo.","Dessalgue e cozinhe a carne-seca. Desfie e reserve.","Refogue cebola e alho na manteiga de garrafa até dourar intensamente.","Adicione o arroz e refogue por 2 min.","Adicione o feijão com caldo suficiente para cozinhar o arroz. Cozinhe tampado.","Quando quase seco, adicione carne, queijo coalho e coentro. Finalize com pimenta-de-cheiro."],
+   tip:"A manteiga de garrafa (clarificada) dá o sabor insubstituível. Encontre em mercados nordestinos ou use ghee.",
+   history:"Não é arroz-com-feijão genérico — é a combinação específica de feijão de corda com queijo coalho e manteiga de garrafa, herança Tupinambá-Cariri.",
+   med:"Combinação de leguminosa + cereal forma proteína completa (todos os aminoácidos). Sabedoria nutricional pré-colombiana."},
+
+  {n:8,name:"Carne de Sol na Pedra com Macaxeira",native:"Tradição Cariris da Caatinga",reg:"caatinga",tipo:"principal",time:30,serv:4,kcal:560,
+   tags:["Ancestral","Alta proteína"],rest:["semGluten"],
+   ing:["600g carne de sol (contrafilé curado)","500g macaxeira (mandioca mansa)","4 col. sopa manteiga de garrafa","1 cebola roxa em tiras","Pimenta-bode e coentro","Nata (creme de leite regional)"],
+   steps:["Corte a macaxeira e cozinhe na pressão com sal por 12 min até macia.","Dessalgue a carne de sol rapidamente (1 hora em água fria) se necessário.","Aqueça pedra de granito no fogo ou use frigideira de ferro bem quente.","Sele a carne em alta temperatura, 3-4 min de cada lado.","Na mesma frigideira, frite a cebola na manteiga de garrafa até caramelizar.","Sirva: carne na pedra, macaxeira ao lado, cebola por cima e nata para mergulhar."],
+   tip:"A macaxeira (mandioca mansa) pode ser consumida cozida com segurança — é diferente da mandioca brava.",
+   history:"A técnica de curar carne no sal e secar ao sol foi desenvolvida pelos povos da Caatinga como solução de conservação sem refrigeração — semanas de duração sem refrigeração.",
+   med:"Macaxeira cozida tem amido resistente — alimenta a microbiota intestinal."},
+
+  {n:9,name:"Cuscuz de Milho com Ovo Caipira",native:"Café da manhã do sertão",reg:"caatinga",tipo:"principal",time:20,serv:3,kcal:340,
+   tags:["Rápido","Sem glúten"],rest:["semGluten","kids"],
+   ing:["2 xíc. flocão de milho","½ xíc. água morna (vai aos poucos)","Sal a gosto","3 ovos caipiras","Queijo coalho em tiras","Manteiga para servir"],
+   steps:["Misture flocão com sal e adicione água aos poucos, esfregando entre as palmas até a massa firmar.","A massa deve ficar úmida mas não grudenta — segure um punhado e ela não deve desmanchar.","Coloque na cuscuzeira (ou peneira sobre água fervente) e cozinhe por 15 min no vapor.","Enquanto isso, frite os ovos caipiras na manteiga com a gema para cima.","Desenforme o cuscuz na hora de servir.","Sirva com ovo frito, queijo coalho grelhado e manteiga por cima."],
+   tip:"A proporção de água é sempre 'de olho' — segredo é ir adicionando aos poucos e testando textura com as mãos.",
+   history:"Cuscuz de milho é herança dos Tupinambá que preparavam farinha e bolos de milho antes da chegada europeia. A palavra é árabe, mas a técnica de vapor brasileira é indígena.",
+   med:"Milho integral é fonte de niacina (vit. B3) e energia de absorção lenta."},
+
+  {n:10,name:"Empadão de Pequi com Frango Caipira",native:"Tradição Xavante do Cerrado",reg:"cerrado",tipo:"principal",time:55,serv:6,kcal:510,
+   tags:["Festivo","Vitamina A"],rest:["semGluten"],
+   ing:["1 frango caipira cortado","8 unidades de pequi em conserva","2 xíc. arroz parboilizado","1 cebola e 5 dentes alho","Pimenta-do-reino e urucum","Caldo de galinha natural","Cheiro-verde e azeite"],
+   steps:["Tempere o frango com alho, sal, pimenta e urucum. Marine 30 min.","Doure o frango em panela grossa com azeite por todos os lados. Reserve.","Refogue cebola e alho no mesmo óleo até dourar.","Adicione o arroz e refogue por 2 min.","Adicione frango, pequis e caldo quente suficiente para cozinhar.","Cozinhe tampado em fogo médio-baixo por 20-25 min. Finalize com cheiro-verde."],
+   tip:"Nunca raspe o pequi com os dentes — dentro da polpa amarela há espinhos. Coma 'chupando' a polpa ao redor.",
+   history:"O pequi é fruto sagrado para os Xavante — associado à fertilidade. Era consumido em rituais. Hoje é símbolo gastronômico de Goiás e Mato Grosso.",
+   med:"Pequi tem alto teor de vitamina A e betacaroteno — protege visão e pele."},
+
+  {n:11,name:"Pasta de Baru com Castanha",native:"Energético Bororo",reg:"cerrado",tipo:"acompanhamento",time:20,serv:8,kcal:180,
+   tags:["Superalimento","Proteína vegetal"],rest:["vegano","semGluten","semLactose","kids"],
+   ing:["200g castanha de baru","2 col. sopa mel de abelha nativa","1 col. sopa óleo de coco","Pitada de sal marinho","Canela em pó (opcional)"],
+   steps:["Torre a castanha de baru em forno a 160°C por 10 min, mexendo uma vez.","Deixe esfriar completamente antes de processar.","Processe no processador por 3-5 min — vai passar por várias fases até virar pasta.","Adicione óleo de coco e sal. Processe mais 2 min.","Adicione mel e canela. Pulse apenas para incorporar.","Guarde em pote de vidro na geladeira por até 3 semanas."],
+   tip:"A castanha de baru tem mais proteína que o amendoim, é rica em zinco e magnésio.",
+   history:"Os Bororo do Mato Grosso usavam o baru como alimento de força para caçadas longas. Moído com mel de jataí, era o 'energético' dos guerreiros do Cerrado.",
+   med:"Zinco do baru fortalece imunidade. Magnésio combate cãibras e ajuda no sono."},
+
+  {n:12,name:"Pamonha de Milho Verde com Carne",native:"Marmita Karajá",reg:"cerrado",tipo:"principal",time:60,serv:8,kcal:280,
+   tags:["Festivo","Sem glúten"],rest:["semGluten","kids"],
+   ing:["8 espigas de milho verde","300g carne moída temperada","1 xíc. leite de coco","Sal e queijo meia-cura","Palhas do próprio milho"],
+   steps:["Retire as palhas inteiras com cuidado para reutilizar. Reserve as palhas maiores.","Rale o milho ou processe para obter a massa — textura deve ser grossa.","Misture a massa com leite de coco e sal até ficar homogênea.","Frite a carne moída temperada e deixe esfriar levemente.","Monte: palha, massa de milho, carne, queijo, mais massa, feche com outra palha.","Amarre com tiras de palha e cozinhe em água fervente por 40 min."],
+   tip:"A palha de milho é embalagem biodegradável perfeita — transmite leve aroma. Não use papel alumínio, perde o caráter.",
+   history:"Os Karajá às margens do Rio Araguaia levavam pamonhas em viagens de canoa — equivalente indígena à marmita.",
+   med:"Milho verde é prebiótico natural. Combinação com carne dá refeição completa portátil."},
+
+  {n:13,name:"Sopa de Mandioquinha com Ervas da Mata",native:"Caldo Guarani",reg:"mata-atlantica",tipo:"principal",time:35,serv:4,kcal:220,
+   tags:["Anti-inflamatório","Reconfortante"],rest:["vegano","semGluten","semLactose","kids"],
+   ing:["600g mandioquinha (batata-baroa)","1L caldo de osso ou legumes","1 alho-poró","3 dentes alho","Erva-cidreira fresca e alfavaca","Gengibre 1 col. chá ralado","Azeite, sal e noz-moscada"],
+   steps:["Refogue alho-poró fatiado e alho em azeite por 5 min.","Adicione o gengibre e refogue mais 1 min.","Adicione mandioquinha em cubos e o caldo. Ferva por 20 min até macia.","Bata no liquidificador até creme liso. Volte ao fogo.","Ajuste sal, adicione noz-moscada e alfavaca picada.","Sirva com fio de azeite e folhas de erva-cidreira fresca."],
+   tip:"A batata-baroa é raiz nativa da América do Sul, rica em betacaroteno, potássio e fibras.",
+   history:"Os Guarani preparavam caldos de raízes com ervas durante invernos da Serra Gaúcha. O caldo de osso era central nas cerimônias de cura.",
+   med:"Erva-cidreira é calmante. Gengibre é anti-inflamatório. Combinação digestiva e relaxante."},
+
+  {n:14,name:"Chipa Guasú",native:"Bolo de milho sagrado Guarani-Kaiowá",reg:"mata-atlantica",tipo:"acompanhamento",time:50,serv:8,kcal:240,
+   tags:["Festivo","Sem glúten"],rest:["semGluten","kids"],
+   ing:["6 espigas milho verde","3 ovos","200g queijo meia-cura ralado","1 cebola ralada","100g manteiga derretida","Sal a gosto"],
+   steps:["Rale o milho verde nas espigas até obter pasta grossa (lado grosso do ralador).","Misture milho ralado, ovos, queijo, cebola e manteiga até homogêneo.","Tempere com sal — experimente a massa antes de assar.","Despeje em forma untada e enfarinhada com fubá.","Asse em forno a 180°C por 35-40 min até dourar e firmar no centro.","Deixe esfriar 15 min antes de cortar. Sirva quente ou frio."],
+   tip:"Quanto mais fresco o milho, mais doce e úmido o bolo. Em safra (jan-mar no Sul), incomparável.",
+   history:"A 'chipa guasú' é o bolo de milho sagrado dos Guarani, preparado em festas, colheitas e rituais. O nome significa 'bolo grande' em Guarani.",
+   med:"Milho verde fresco tem mais lutina e zeaxantina — protetores oculares."},
+
+  {n:15,name:"Tapioca com Coco e Mel de Jataí",native:"Beiju Tupinambá moderno",reg:"mata-atlantica",tipo:"acompanhamento",time:10,serv:1,kcal:200,
+   tags:["Sem glúten","Rápido"],rest:["semGluten","semLactose","kids"],
+   ing:["4 col. sopa goma de tapioca hidratada","3 col. sopa coco ralado fresco","1 col. sopa mel de abelha nativa (jataí)","Pitada de sal"],
+   steps:["Aqueça frigideira antiaderente em fogo médio — sem óleo.","Peneire a goma diretamente na frigideira formando disco uniforme.","Espere firmar (1-2 min) sem mexer. A goma vai grudar em si mesma.","Adicione coco ralado sobre metade da tapioca.","Dobre ao meio. Retire da frigideira.","Regue com mel de abelha nativa e sirva imediatamente."],
+   tip:"Use sempre goma hidratada (biju goma), não polvilho azedo. Texturas completamente diferentes.",
+   history:"O beiju de mandioca era o pão dos Tupinambá há mais de 5.000 anos. 'Tapioca' vem do Tupi 'tipi'óka', nome do processo de extração da goma.",
+   med:"Mel de jataí tem propriedades antimicrobianas únicas — usado tradicionalmente para tosse e feridas."},
+
+  {n:16,name:"Suco de Caju Verde com Gengibre",native:"Bebida afro-indígena",reg:"caatinga",tipo:"bebida",time:8,serv:2,kcal:80,
+   tags:["Vitamina C","Imunidade"],rest:["vegano","semGluten","semLactose","kids"],
+   ing:["2 cajus maduros","500ml água de coco","1 col. chá gengibre fresco ralado","Suco de ½ limão crioulo","Hortelã fresca","Gelo"],
+   steps:["Lave bem os cajus. Retire o pedúnculo (castanha) para usar separado.","Esprema os cajus com as mãos para extrair suco sem bater — bater deixa amargo.","Coe o suco para retirar o tanino (líquido branco) que amarga.","Misture o suco coado com água de coco, gengibre e limão.","Sirva com muito gelo e hortelã fresca."],
+   tip:"Liquidificar quebra as células e libera taninos amargos. Espremer extrai apenas o suco doce.",
+   history:"O caju é nativo do Nordeste — os Tupinambá chamavam de 'acaju'. Era alimento, bebida fermentada (cajuína) e remédio.",
+   med:"Caju tem 5x mais vitamina C que laranja. Gengibre é anti-inflamatório natural."},
+
+  {n:17,name:"Caldo de Osso Brasileiro",native:"Medicina líquida",reg:"amazonia",tipo:"acompanhamento",time:480,serv:8,kcal:60,
+   tags:["Colágeno natural","Cura intestinal"],rest:["semGluten","semLactose"],
+   ing:["1kg osso de boi (tutano, juntas)","2 cenouras e 3 talos de aipo","1 cebola inteira com casca","2 col. sopa vinagre de maçã","Alho, louro e ervas nativas","Água suficiente para cobrir (3L)","Sal e pimenta-do-reino"],
+   steps:["Asse os ossos em forno a 220°C por 20 min para dourar e intensificar sabor.","Coloque tudo em panela grande ou pressão com o vinagre.","O vinagre extrai mais minerais dos ossos — não omita.","Panela comum: 8h em fogo baixíssimo. Pressão: 3h.","Coe e descarte os sólidos. Ajuste o sal.","Guarde na geladeira (solidifica — sinal de qualidade: colágeno gelificado)."],
+   tip:"Use como base para sopas, para cozinhar grãos, ou tome puro aquecido como chá matinal.",
+   history:"Todas as tradições indígenas brasileiras tinham caldo de osso. Era dado a doentes, mulheres pós-parto e crianças — 'medicina líquida' de milênios.",
+   med:"Colágeno hidrolisado natural, glicina, prolina — restaurativo intestinal e articular."},
+
+  {n:18,name:"Vatapá Tradicional",native:"Tradição afro-Tupinambá",reg:"caatinga",tipo:"principal",time:60,serv:6,kcal:420,
+   tags:["Festivo","Sem glúten"],rest:["semGluten"],
+   ing:["500g camarão fresco","200g pão amanhecido","400ml leite de coco","100g amendoim torrado","100g castanha-de-caju","Camarão seco (100g)","Azeite de dendê","Cebola, alho, gengibre, pimenta"],
+   steps:["Hidrate o pão amanhecido em leite de coco morno por 10 min.","Bata pão hidratado, amendoim e castanhas no liquidificador até pasta.","Refogue cebola, alho e gengibre em dendê até dourar.","Adicione o creme processado e cozinhe em fogo baixo por 15 min mexendo sem parar.","Adicione os camarões frescos e secos. Cozinhe mais 5 min.","Ajuste com sal e pimenta. Sirva com arroz branco e farofa de dendê."],
+   tip:"O segredo do vatapá é a textura cremosa e o equilíbrio do dendê — não pode dominar.",
+   history:"Vatapá é resultado do encontro afro-indígena. A base de mandioca/pão e amendoim vem dos Tupinambá; o dendê e a sofisticação vêm da herança africana.",
+   med:"Castanhas e amendoim fornecem gorduras boas e magnésio. Camarão tem zinco e selênio."},
+
+  {n:19,name:"Moqueca Capixaba (sem dendê)",native:"Moqueca dos Tupiniquim",reg:"mata-atlantica",tipo:"principal",time:35,serv:4,kcal:280,
+   tags:["Tradicional","Sem glúten"],rest:["semGluten","semLactose"],
+   ing:["800g peixe branco firme em postas (badejo, robalo)","2 tomates maduros","1 cebola","1 pimentão amarelo","Coentro generoso","Urucum natural","Suco de 1 limão","Azeite de oliva"],
+   steps:["Tempere o peixe com sal, limão, pimenta e urucum. Marine 30 min.","Em panela de barro, faça uma cama com cebola, tomate e pimentão fatiados.","Coloque as postas de peixe sobre os legumes.","Cubra com mais legumes fatiados e bastante coentro.","Regue com azeite e o líquido da marinada. Tampe.","Cozinhe em fogo baixo por 20-25 min sem mexer. O peixe e os legumes soltam líquido próprio."],
+   tip:"A moqueca capixaba não leva dendê nem leite de coco — é a versão mais antiga, próxima do moquém indígena.",
+   history:"Os Tupiniquim do litoral capixaba já preparavam peixe em panela de barro com tomate-bravo e urucum. É a moqueca mais próxima da técnica original.",
+   med:"Peixe branco é proteína magra. Urucum é anti-inflamatório e cardio-protetor (tradicional)."},
+
+  {n:20,name:"Mingau de Tapioca com Coco",native:"Café da manhã universal",reg:"amazonia",tipo:"doce",time:15,serv:2,kcal:280,
+   tags:["Sem glúten","Reconfortante"],rest:["vegano","semGluten","semLactose","kids"],
+   ing:["3 col. sopa goma de tapioca hidratada","500ml leite de coco","Canela em pau","2 cravos","Mel ou rapadura ralada","Coco ralado para finalizar"],
+   steps:["Em panela, ferva o leite de coco com canela e cravo por 5 min.","Adicione a goma de tapioca aos poucos, mexendo sem parar.","Cozinhe em fogo baixo até a goma ficar translúcida e o creme engrossar (8 min).","Adoce com mel ou rapadura. Retire canela e cravo.","Sirva quente, com coco ralado por cima."],
+   tip:"O leite de coco caseiro fica mais suave. Para versão mais cremosa, use parte do creme da lata.",
+   history:"Mingau de tapioca é tradição Tupinambá adaptada com leite de coco — uma fusão que aconteceu nos litorais do Norte e Nordeste.",
+   med:"Tapioca é energia rápida. Combinação com leite de coco dá saciedade e gordura boa."},
+
+  {n:21,name:"Pintado Grelhado com Banana-da-Terra",native:"Tradição Pantaneira",reg:"pantanal",tipo:"principal",time:30,serv:4,kcal:430,
+   tags:["Sem glúten","Alta proteína"],rest:["semGluten","semLactose"],
+   ing:["4 postas de pintado (200g cada)","4 bananas-da-terra maduras","Limão, sal e pimenta-do-reino","2 dentes alho","Manteiga","Coentro fresco"],
+   steps:["Tempere o pintado com sal, limão, alho amassado e pimenta. Marine 20 min.","Asse as bananas com casca em forno a 200°C por 20 min até a casca rachar.","Aqueça frigideira de ferro com manteiga em fogo médio-alto.","Grelhe as postas de pintado por 5-6 min de cada lado.","Descasque as bananas e amasse com manteiga e sal.","Sirva o peixe com o purê de banana-da-terra e coentro fresco."],
+   tip:"O pintado é peixe gordo — não precisa de molho complicado. Manteiga, limão e ervas são suficientes.",
+   history:"Os povos pantaneiros (Guató, Bororo) consumiam pintado e surubim como base proteica. A combinação com banana-da-terra é fusão regional.",
+   med:"Peixe de água doce gordo tem ômega-3 e vitamina D. Banana-da-terra é rica em potássio."},
+
+  {n:22,name:"Arroz Carreteiro do Pantanal",native:"Refeição de viagem dos vaqueiros",reg:"pantanal",tipo:"principal",time:35,serv:4,kcal:480,
+   tags:["Substancial","Cultura"],rest:[],
+   ing:["2 xíc. arroz","300g carne-seca dessalgada","200g linguiça defumada","1 cebola e 4 dentes alho","Tomate, pimentão e cheiro-verde","Caldo de carne natural"],
+   steps:["Dessalgue, cozinhe e desfie a carne-seca.","Frite a linguiça em pedaços para soltar gordura. Reserve.","Refogue cebola e alho na própria gordura.","Adicione tomate e pimentão picados. Cozinhe 5 min.","Adicione carne desfiada e arroz. Refogue 2 min.","Adicione caldo quente, tampe e cozinhe por 18-20 min. Finalize com cheiro-verde."],
+   tip:"Carreteiro pode ser feito com qualquer sobra de carne — é a comida do reaproveitamento.",
+   history:"Tradição pantaneira de comitivas — feita em panelão único enquanto o gado pastava.",
+   med:"Refeição completa em uma panela — proteína, carboidrato e vegetais. Energia para trabalho físico."},
+
+  {n:23,name:"Caxiri (versão moderna não-fermentada)",native:"Bebida ritual da Amazônia",reg:"amazonia",tipo:"bebida",time:30,serv:6,kcal:140,
+   tags:["Tradicional","Sem glúten"],rest:["vegano","semGluten","semLactose"],
+   ing:["500g batata-doce roxa","1L água","Suco de 2 limões","2 col. sopa mel ou rapadura","Cravo e canela em pau","Gengibre fresco"],
+   steps:["Cozinhe a batata-doce com casca em água por 25 min até bem macia.","Descasque e bata no liquidificador com água do cozimento.","Volte ao fogo com cravo, canela e gengibre fatiado. Ferva por 10 min.","Coe e adoce com mel.","Adicione o limão depois de morno (não fervendo, perde vitamina C).","Sirva gelado em dia quente — é refrescante e energético."],
+   tip:"O caxiri tradicional é fermentado por dias. Esta versão é uma 'mock' refrescante e segura para todas as idades.",
+   history:"Caxiri verdadeiro é bebida ritual amazônica feita com mandioca ou batata-doce mascada (saliva ativa fermentação). Esta versão preserva o sabor sem o álcool.",
+   med:"Batata-doce roxa é rica em antocianinas e fibras. Gengibre estimula a circulação."},
+
+  {n:24,name:"Doce de Buriti com Castanha",native:"Sobremesa do Cerrado",reg:"cerrado",tipo:"doce",time:30,serv:6,kcal:240,
+   tags:["Vitamina A","Sobremesa"],rest:["vegano","semGluten","semLactose","kids"],
+   ing:["500g polpa de buriti","100g rapadura ralada","50g castanha-de-baru picada","Suco de 1 limão","Pitada de sal","Canela em pó"],
+   steps:["Em panela, leve a polpa de buriti com a rapadura ralada ao fogo médio.","Mexa sem parar por 15-20 min até a doçura derreter e o doce engrossar.","Adicione o suco de limão e a pitada de sal — equilibra o doce.","Continue mexendo até desgrudar do fundo da panela.","Retire do fogo, misture as castanhas de baru picadas.","Sirva morno ou frio, polvilhado com canela."],
+   tip:"O buriti tem aspecto fibroso — vale passar por peneira fina antes de cozinhar para sobremesa mais lisa.",
+   history:"O buriti é fruto da palmeira sagrada do Cerrado. Indica água — onde tem buriti, tem fonte. Sua polpa amarela tem mais vitamina A que cenoura.",
+   med:"Buriti tem o maior teor de vitamina A do reino vegetal — protetor da visão, pele e mucosas."},
+
+  {n:25,name:"Salada de Palmito Pupunha com Queijo",native:"Cultivo nativo amazônico",reg:"amazonia",tipo:"acompanhamento",time:15,serv:4,kcal:180,
+   tags:["Fresco","Vegetariano"],rest:["semGluten","kids"],
+   ing:["400g palmito pupunha fresco","200g queijo coalho ou minas em cubos","1 tomate, 1 pepino","Castanha-do-Pará picada","Azeite, limão e sal","Coentro fresco"],
+   steps:["Corte o palmito pupunha em fatias de 1cm.","Aqueça brasa ou grelha de ferro. Grelhe o palmito por 2 min de cada lado.","Corte tomate e pepino em cubos.","Em frigideira, doure o queijo coalho por 1 min de cada lado.","Monte: palmito grelhado, queijo, tomate, pepino e castanhas.","Tempere com azeite, limão e sal. Finalize com coentro."],
+   tip:"O palmito pupunha é cultivado e sustentável (não confunda com palmito-juçara, que é extrativista).",
+   history:"A pupunha (Bactris gasipaes) é palmeira amazônica domesticada há 4.000 anos. Toda a planta é útil — fruto, palmito, madeira.",
+   med:"Palmito pupunha é fonte de fibras e potássio. Castanha-do-Pará entrega selênio."},
+
+  {n:26,name:"Mandioca Frita com Manteiga de Garrafa",native:"Acompanhamento universal",reg:"caatinga",tipo:"acompanhamento",time:25,serv:6,kcal:280,
+   tags:["Sem glúten","Cultura"],rest:["semGluten","kids"],
+   ing:["800g macaxeira (mandioca mansa)","Sal grosso","Manteiga de garrafa","Alecrim fresco (opcional)","Pimenta-do-reino"],
+   steps:["Descasque a macaxeira e corte em palitos grossos.","Cozinhe em água com sal por 12 min na pressão (ou 25 min em panela comum).","Escorra bem e deixe esfriar levemente.","Aqueça óleo a 170°C ou prepare frigideira com bastante manteiga de garrafa.","Frite os palitos até dourar bem por fora — devem ficar crocantes por fora e cremosos por dentro.","Tempere com sal grosso e pimenta. Finalize com manteiga de garrafa derretida e alecrim."],
+   tip:"O segredo: cozinhar antes de fritar. Mandioca crua frita fica dura e oca por dentro.",
+   history:"A mandioca mansa frita é acompanhamento universal no Brasil — herança Tupinambá democratizada nacionalmente.",
+   med:"Mandioca cozida e resfriada antes de fritar tem amido resistente — alimenta a microbiota intestinal."},
+
+  {n:27,name:"Bobó de Camarão",native:"Encontro afro-indígena",reg:"amazonia",tipo:"principal",time:50,serv:6,kcal:380,
+   tags:["Festivo","Cremoso"],rest:["semGluten"],
+   ing:["1kg camarão limpo","800g mandioca cozida","400ml leite de coco","Cebola, tomate, pimentão","Coentro generoso","Azeite de dendê","Limão e pimenta"],
+   steps:["Cozinhe a mandioca em água com sal até desmanchar. Reserve com a água.","Bata a mandioca cozida no liquidificador com leite de coco até virar creme.","Tempere os camarões com limão, sal e pimenta.","Refogue cebola, tomate e pimentão em dendê.","Adicione o creme de mandioca. Cozinhe 10 min mexendo.","Adicione os camarões nos últimos 5 min — não cozinhe demais. Finalize com coentro."],
+   tip:"O bobó tradicional usa mandioca brava processada (aipim do nordeste). A mandioca mansa (macaxeira) também funciona perfeitamente.",
+   history:"Bobó é resultado do encontro entre técnica indígena (creme de mandioca) e ingredientes africanos (dendê e camarão). Bahia e Pará têm versões diferentes.",
+   med:"Mandioca cozida + camarão = refeição completa, proteína e energia. Dendê tem vitamina A."},
+
+  {n:28,name:"Tereré (chá frio Guarani)",native:"Bebida cerimonial Kaiowá",reg:"mata-atlantica",tipo:"bebida",time:10,serv:4,kcal:5,
+   tags:["Tradicional","Refrescante"],rest:["vegano","semGluten","semLactose","kids"],
+   ing:["Erva-mate verde (50g)","1L água gelada","Hortelã fresca","Erva-cidreira","Limão (rodelas)","Gelo abundante"],
+   steps:["Coloque erva-mate em uma cuia ou jarra grande.","Adicione hortelã, erva-cidreira e rodelas de limão.","Despeje água bem gelada com gelo.","Deixe descansar por 3 min para a erva infundir.","Tome com bomba (ou coe) — vá completando água gelada na medida.","Cuia compartilhada é tradição — cada pessoa toma toda a cuia antes de passar."],
+   tip:"O tereré é frio (diferente do mate quente). É a bebida do verão sul-mato-grossense e paraguaio.",
+   history:"Tereré é tradição Guarani-Kaiowá usada como reunião social e cerimonial. Compartilhar a cuia significa conexão.",
+   med:"Erva-mate tem cafeína natural moderada, antioxidantes e mateína — energético sem agitação."},
+
+  {n:29,name:"Frango com Açafrão-da-Terra",native:"Inspiração Pankararu",reg:"caatinga",tipo:"principal",time:45,serv:4,kcal:380,
+   tags:["Anti-inflamatório","Dourado"],rest:["semGluten","semLactose"],
+   ing:["1 frango caipira em pedaços","2 col. sopa açafrão-da-terra (cúrcuma) em pó","4 dentes alho","1 cebola roxa","Suco de 1 limão","Pimenta-do-reino e sal","Coentro e azeite"],
+   steps:["Tempere o frango com açafrão, alho amassado, sal, pimenta e limão. Marine 30 min.","Doure o frango em panela grossa com azeite por todos os lados.","Adicione cebola fatiada e refogue até murchar.","Adicione água quente até cobrir metade do frango. Tampe.","Cozinhe em fogo baixo por 25 min, virando os pedaços na metade.","Finalize com coentro picado e sirva com arroz e farinha."],
+   tip:"O açafrão-da-terra (Curcuma longa) brasileiro é mais suave que o indiano — pode usar mais quantidade sem amargar.",
+   history:"O açafrão-da-terra é cultivado pelos Pankararu e outras etnias do Nordeste há séculos. Era usado tanto na cozinha quanto como pintura corporal e remédio.",
+   med:"Cúrcuma é anti-inflamatório natural (curcumina). Combinação com gordura aumenta absorção em 2.000%."},
+
+  {n:30,name:"Cajuína Tradicional",native:"Bebida fermentada de caju",reg:"caatinga",tipo:"bebida",time:60,serv:8,kcal:90,
+   tags:["Tradicional","Sem álcool"],rest:["vegano","semGluten","semLactose"],
+   ing:["10 cajus maduros","2L água","Açúcar mascavo (200g, opcional)","Suco de 2 limões","Cravo e canela em pau"],
+   steps:["Esprema os cajus com as mãos para extrair o suco — não bata, fica amargo.","Coe duas vezes em pano fino para retirar todo tanino.","Em panela, ferva o suco com açúcar (se usar), cravo e canela por 30 min em fogo baixo.","O líquido vai mudar de cor (branco-leitoso para dourado-âmbar).","Coe novamente e adicione limão depois de morno.","Engarrafe e mantenha refrigerado. Dura 1 semana fechado."],
+   tip:"A cajuína industrial é pasteurizada. A versão caseira tem viva fermentação leve — sabor mais complexo.",
+   history:"Cajuína é bebida tradicional piauiense de origem indígena, popularizada por Humberto Teixeira (Asa Branca). É símbolo do Nordeste sem álcool.",
+   med:"Caju puro tem 5x mais vitamina C que laranja. Cajuína mantém grande parte. Antioxidante natural."}
+];
+
+// ============ DATA: 30+ PLANTAS MEDICINAIS ============
+const PLANTS = [
+  {nome:"Erva-cidreira",sci:"Melissa officinalis",ind:"Calmante natural, ansiedade leve, insônia, dor de cabeça nervosa",uso:"calmante",parte:"Folhas frescas ou secas",prep:"Chá: 1 col. sopa em 1 xíc. água fervente, abafar 10 min. Tomar 2-3x ao dia."},
+  {nome:"Capim-santo (capim-limão)",sci:"Cymbopogon citratus",ind:"Calmante, digestivo, dor abdominal infantil, antitérmico leve",uso:"calmante",parte:"Folhas frescas",prep:"Chá: 3-5 folhas em 1 xíc. água fervente, abafar 5 min. Pode adoçar com mel."},
+  {nome:"Hortelã",sci:"Mentha spp.",ind:"Digestivo, náusea, gases, congestão nasal, mau hálito",uso:"digestivo",parte:"Folhas frescas",prep:"Chá: punhado de folhas em 1 xíc. água quente. Inalação: ferver e respirar o vapor."},
+  {nome:"Boldo-do-chile",sci:"Peumus boldus",ind:"Digestivo potente, fígado pesado, ressaca, indigestão por gordura",uso:"digestivo",parte:"Folhas secas",prep:"Chá: 1 folha pequena em 1 xíc. água fervente. NÃO ferver as folhas, só abafar."},
+  {nome:"Boldo brasileiro",sci:"Plectranthus barbatus",ind:"Digestivo, fígado, refluxo, gases. Mais suave que o chileno",uso:"digestivo",parte:"Folhas frescas",prep:"Chá: 1 folha amassada em água quente, 5 min. Beber morno."},
+  {nome:"Guaraná",sci:"Paullinia cupana",ind:"Energético, foco mental, fadiga crônica, baixa cognição",uso:"energetico",parte:"Sementes torradas e raladas",prep:"Pó: ½ col. chá em água ou suco. Bastão de guaraná: ralar 1 cm em água. NÃO usar à noite."},
+  {nome:"Açaí (planta)",sci:"Euterpe oleracea",ind:"Antioxidante geral, recuperação muscular, anemia leve",uso:"energetico",parte:"Polpa do fruto",prep:"In natura batido sem açúcar. Frequência: 1 tigela ao dia (200g)."},
+  {nome:"Jaborandi",sci:"Pilocarpus jaborandi",ind:"Sudorífero, queda de cabelo (uso tópico), boca seca",uso:"feminino",parte:"Folhas",prep:"USO MÉDICO. Tópico: tintura no couro cabeludo. Internamente só com prescrição — pode causar arritmia."},
+  {nome:"Copaíba",sci:"Copaifera spp.",ind:"Anti-inflamatório, infecções respiratórias, feridas, dor articular",uso:"anti-inflamatorio",parte:"Óleo extraído do tronco",prep:"Tópico: aplicar puro em ferimento. Interno: 5-10 gotas em água com mel, 1x ao dia."},
+  {nome:"Urucum",sci:"Bixa orellana",ind:"Cicatrizante, queimadura solar, anti-inflamatório, vitamina A",uso:"anti-inflamatorio",parte:"Sementes",prep:"Tópico: macerar sementes em óleo. Culinária: cozinhar sementes em óleo, descartar grãos."},
+  {nome:"Jurubeba",sci:"Solanum paniculatum",ind:"Fígado, baço, indigestão crônica, ressaca, anemia",uso:"digestivo",parte:"Frutos, folhas e raiz",prep:"Chá: 1 col. sopa de raiz seca em 1L água, ferver 5 min. Tomar 1 xíc. antes das refeições."},
+  {nome:"Carqueja",sci:"Baccharis trimera",ind:"Digestivo, fígado, diabetes leve, dores intestinais",uso:"digestivo",parte:"Ramos secos",prep:"Chá amargo: 1 col. sopa em 1 xíc. água fervente, abafar 10 min. Tomar antes das refeições."},
+  {nome:"Quebra-pedra",sci:"Phyllanthus niruri",ind:"Cálculos renais, infecção urinária, problemas hepáticos",uso:"feminino",parte:"Planta inteira fresca ou seca",prep:"Chá: 1 col. sopa em 1 xíc. água fervente. Tomar 3x ao dia por até 30 dias."},
+  {nome:"Espinheira-santa",sci:"Maytenus ilicifolia",ind:"Gastrite, úlcera, refluxo, má digestão",uso:"digestivo",parte:"Folhas secas",prep:"Chá: 1 col. sopa em 1 xíc. água fervente. 30 min antes das refeições, 2-3x ao dia."},
+  {nome:"Sucupira",sci:"Pterodon emarginatus",ind:"Anti-inflamatório articular, gota, reumatismo, dores crônicas",uso:"anti-inflamatorio",parte:"Sementes",prep:"Tintura: macerar sementes em álcool por 21 dias. 20 gotas em água, 2x ao dia."},
+  {nome:"Camomila",sci:"Matricaria recutita",ind:"Calmante suave, cólica infantil, ansiedade, insônia leve",uso:"calmante",parte:"Flores secas",prep:"Chá: 1 col. sopa em 1 xíc. água fervente, abafar. Seguro para crianças."},
+  {nome:"Maracujá (folha)",sci:"Passiflora incarnata",ind:"Insônia, ansiedade, estresse, palpitações nervosas",uso:"calmante",parte:"Folhas",prep:"Chá: 1 col. sopa em 1 xíc. água fervente. Tomar 30 min antes de dormir."},
+  {nome:"Alecrim",sci:"Rosmarinus officinalis",ind:"Memória, fadiga mental, circulação cerebral, queda de cabelo",uso:"energetico",parte:"Folhas frescas ou secas",prep:"Chá pela manhã: 1 col. sopa em 1 xíc. água fervente. Não usar à noite."},
+  {nome:"Açafrão-da-terra",sci:"Curcuma longa",ind:"Anti-inflamatório, dor articular, problemas digestivos, fígado",uso:"anti-inflamatorio",parte:"Rizoma seco em pó",prep:"½ col. chá em leite quente com pimenta-do-reino. Diariamente em alimentação ou chá."},
+  {nome:"Gengibre",sci:"Zingiber officinale",ind:"Náusea, enjoo de viagem, gripe, anti-inflamatório, energético leve",uso:"anti-inflamatorio",parte:"Rizoma fresco",prep:"Chá: 3 fatias finas em 1 xíc. água fervente. Pode adoçar com mel e limão."},
+  {nome:"Sabugueiro",sci:"Sambucus australis",ind:"Gripe, sarampo, catapora, febre — sudorífero potente",uso:"imunidade",parte:"Flores secas",prep:"Chá: 1 col. sopa de flores em 1 xíc. água fervente. Tomar quente para suar."},
+  {nome:"Eucalipto",sci:"Eucalyptus globulus",ind:"Bronquite, sinusite, gripe, problemas respiratórios",uso:"respiratorio",parte:"Folhas frescas",prep:"Inalação: ferver folhas, respirar vapor com toalha por 10 min. Não tomar internamente."},
+  {nome:"Guaco",sci:"Mikania glomerata",ind:"Tosse, bronquite, asma, afecções respiratórias",uso:"respiratorio",parte:"Folhas frescas",prep:"Chá ou xarope: macerar folhas com mel. Tomar 1 col. sopa 3x ao dia."},
+  {nome:"Babosa (aloe vera)",sci:"Aloe vera",ind:"Cicatrização, queimaduras, hidratação capilar e da pele",uso:"anti-inflamatorio",parte:"Polpa interna da folha",prep:"Tópico: aplicar gel direto na pele. Internamente: APENAS sob orientação — pode irritar intestino."},
+  {nome:"Insulina vegetal",sci:"Cissus sicyoides",ind:"Diabetes (auxiliar), controle glicêmico",uso:"feminino",parte:"Folhas frescas",prep:"Chá: 5 folhas em 1 xíc. água fervente, abafar. Tomar 2x ao dia. NÃO substitui medicação."},
+  {nome:"Cumaru",sci:"Dipteryx odorata",ind:"Tosse, problemas respiratórios, expectorante, gripe",uso:"respiratorio",parte:"Sementes",prep:"Xarope: macerar 1 semente em mel por 7 dias. Tomar 1 col. sopa 3x ao dia."},
+  {nome:"Andiroba",sci:"Carapa guianensis",ind:"Anti-inflamatório, dores musculares, repelente, picadas",uso:"anti-inflamatorio",parte:"Óleo extraído da semente",prep:"Tópico: massagear área dolorida. Repelente: aplicar diluído em outro óleo na pele."},
+  {nome:"Picão-preto",sci:"Bidens pilosa",ind:"Hepatite, fígado, icterícia, infecções urinárias",uso:"digestivo",parte:"Planta inteira",prep:"Chá: 1 col. sopa em 1 xíc. água fervente. Tomar 3x ao dia por 7-15 dias."},
+  {nome:"Chapéu-de-couro",sci:"Echinodorus grandiflorus",ind:"Problemas renais, ácido úrico, retenção de líquidos",uso:"feminino",parte:"Folhas secas",prep:"Chá: 1 col. sopa em 1 xíc. água fervente. Tomar 2x ao dia, sem ultrapassar 30 dias contínuos."},
+  {nome:"Pata-de-vaca",sci:"Bauhinia forficata",ind:"Diabetes (auxiliar), controle glicêmico",uso:"feminino",parte:"Folhas",prep:"Chá: 2-3 folhas em 1 xíc. água fervente. Tomar 2x ao dia. Acompanhe glicemia."},
+  {nome:"Ipê-roxo",sci:"Handroanthus impetiginosus",ind:"Imunidade, infecções fúngicas, problemas dermatológicos",uso:"imunidade",parte:"Casca interna",prep:"Chá: 1 col. sopa em 500ml água, ferver 10 min. Tomar 1 xíc. 2x ao dia."},
+  {nome:"Catuaba",sci:"Trichilia catigua",ind:"Energético, libido, fadiga crônica, depressão leve",uso:"energetico",parte:"Casca",prep:"Tintura: macerar casca em cachaça por 21 dias. Tomar 1 col. sopa diária pela manhã."},
+  {nome:"Mulungu",sci:"Erythrina mulungu",ind:"Insônia, ansiedade severa, hiperatividade, agitação",uso:"calmante",parte:"Casca",prep:"Chá: 1 col. sopa de casca em 1 xíc. água fervente. Tomar à noite."},
+  {nome:"Unha-de-gato",sci:"Uncaria tomentosa",ind:"Imunidade, anti-inflamatório potente, doenças autoimunes (auxiliar)",uso:"imunidade",parte:"Casca interna",prep:"Chá: 1 col. sopa em 500ml água, ferver 15 min. Tomar 1 xíc. 2x ao dia."},
+  {nome:"Marcela",sci:"Achyrocline satureioides",ind:"Digestivo, refluxo, indigestão, cólica menstrual",uso:"digestivo",parte:"Flores secas",prep:"Chá: 1 col. sopa em 1 xíc. água fervente. Tomar morno após as refeições."}
+];
+
+const REG_LABEL = {
+  'amazonia': 'Amazônia',
+  'cerrado': 'Cerrado',
+  'mata-atlantica': 'Mata Atlântica',
+  'pantanal': 'Pantanal',
+  'caatinga': 'Caatinga'
+};
+const TIPO_LABEL = {
+  'principal': 'Principal',
+  'acompanhamento': 'Acompanhamento',
+  'bebida': 'Bebida',
+  'doce': 'Doce'
+};
+
+// ============ STORAGE ============
+const LS = {
+  TAB: 'indigena:tab:v1',
+  PLAN: 'indigena:planning:v1',
+  CHECKED: 'indigena:shopping_checked:v1'
+};
+const store = {
+  get(k, fb){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch { return fb; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+
+// ============ STATE ============
+const DAYS = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+const MEALS = [
+  { key: 'almoco', label: 'Almoço' },
+  { key: 'jantar', label: 'Jantar' },
+  { key: 'lanche', label: 'Lanche/Bebida' }
+];
+
+let state = {
+  filterReg: 'all',
+  filterTipo: 'all',
+  filterRest: 'all',
+  search: '',
+  plan: store.get(LS.PLAN, {}),
+  checked: store.get(LS.CHECKED, {}),
+  plantSearch: '',
+  plantUso: 'all',
+  pickerCtx: null
+};
+
+// ============ TABS ============
+function activateTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === name);
+    b.setAttribute('aria-selected', b.dataset.tab === name);
+  });
+  document.querySelectorAll('.panel').forEach(p => {
+    p.classList.toggle('active', p.id === 'panel-' + name);
+  });
+  store.set(LS.TAB, name);
+  if (name === 'compras') renderShopping();
+  if (name === 'planejamento') renderPlan();
+  if (name === 'plantas') renderPlants();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('.tab-btn').forEach(b => {
+  b.addEventListener('click', () => activateTab(b.dataset.tab));
+});
+
+// ============ RECIPES TAB ============
+function recipeMatches(r) {
+  if (state.filterReg !== 'all' && r.reg !== state.filterReg) return false;
+  if (state.filterTipo !== 'all' && r.tipo !== state.filterTipo) return false;
+  if (state.filterRest !== 'all' && !(r.rest || []).includes(state.filterRest)) return false;
+  if (state.search) {
+    const q = state.search.toLowerCase();
+    const hay = (r.name + ' ' + r.native + ' ' + r.ing.join(' ')).toLowerCase();
+    if (!hay.includes(q)) return false;
+  }
+  return true;
+}
+function renderRecipes() {
+  const grid = document.getElementById('recipe-grid');
+  const list = RECIPES.filter(recipeMatches);
+  if (!list.length) {
+    grid.innerHTML = '<div class="empty">Nenhuma receita encontrada com esses filtros.</div>';
+    return;
+  }
+  grid.innerHTML = list.map(r => `
+    <article class="recipe-card" data-n="${r.n}">
+      <div class="recipe-region ${r.reg}"><span class="dot"></span>${REG_LABEL[r.reg]} · #${String(r.n).padStart(2,'0')}</div>
+      <h3 class="recipe-title">${r.name}</h3>
+      <div class="recipe-native">${r.native}</div>
+      <div class="recipe-meta">
+        <span><span class="icon">◷</span>${formatTime(r.time)}</span>
+        <span><span class="icon">◆</span>${r.serv} porç.</span>
+        <span><span class="icon">●</span>${r.kcal} kcal</span>
+      </div>
+      <div class="recipe-tags">
+        ${r.tags.map((t,i) => `<span class="recipe-tag ${i===1?'verde':i===2?'azul':''}">${t}</span>`).join('')}
+      </div>
+      <div class="recipe-card-actions">
+        <button class="btn btn-primary" data-action="open" data-n="${r.n}">Ver receita</button>
+        <button class="btn" data-action="plan" data-n="${r.n}">+ Planejar</button>
+      </div>
+    </article>
+  `).join('');
+}
+function formatTime(t) {
+  if (t >= 60) return Math.floor(t/60) + 'h' + (t%60 ? ' '+(t%60)+'min' : '');
+  return t + ' min';
+}
+document.getElementById('recipe-grid').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-action]');
+  if (btn) {
+    e.stopPropagation();
+    const n = +btn.dataset.n;
+    if (btn.dataset.action === 'open') openRecipe(n);
+    if (btn.dataset.action === 'plan') openPlanFromRecipe(n);
+    return;
+  }
+  const card = e.target.closest('.recipe-card');
+  if (card) openRecipe(+card.dataset.n);
+});
+document.getElementById('search').addEventListener('input', (e) => {
+  state.search = e.target.value.trim();
+  renderRecipes();
+});
+document.querySelectorAll('[data-filter-reg]').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter-reg]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.filterReg = b.dataset.filterReg;
+    renderRecipes();
+  });
+});
+document.querySelectorAll('[data-filter-tipo]').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter-tipo]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.filterTipo = b.dataset.filterTipo;
+    renderRecipes();
+  });
+});
+document.querySelectorAll('[data-filter-rest]').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter-rest]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.filterRest = b.dataset.filterRest;
+    renderRecipes();
+  });
+});
+
+// ============ RECIPE MODAL ============
+function openRecipe(n) {
+  const r = RECIPES.find(x => x.n === n);
+  if (!r) return;
+  document.getElementById('modal-recipe-content').innerHTML = `
+    <div class="recipe-region ${r.reg}"><span class="dot"></span>${REG_LABEL[r.reg]} · ${TIPO_LABEL[r.tipo]} · Receita #${String(r.n).padStart(2,'0')}</div>
+    <h2>${r.name}</h2>
+    <div class="recipe-native" style="margin-top:2px">${r.native}</div>
+    <div class="recipe-meta" style="margin-top:8px">
+      <span><span class="icon">◷</span>${formatTime(r.time)}</span>
+      <span><span class="icon">◆</span>${r.serv} porções</span>
+      <span><span class="icon">●</span>${r.kcal} kcal</span>
+    </div>
+    <div class="recipe-tags" style="margin-top:8px">
+      ${r.tags.map((t,i) => `<span class="recipe-tag ${i===1?'verde':i===2?'azul':''}">${t}</span>`).join('')}
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>Ingredientes</h4>
+        <ul>${r.ing.map(i => `<li>${i}</li>`).join('')}</ul>
+      </div>
+      <div class="modal-section">
+        <h4>Modo de Preparo</h4>
+        <ol>${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      </div>
+      <div class="modal-tip"><b>Dica de preparo:</b> ${r.tip}</div>
+      <div class="modal-history"><b>Origem:</b> ${r.history}</div>
+      <div class="modal-tip" style="background:rgba(143,188,92,0.10);border-color:#8FBC5C;color:var(--text)"><b style="color:#8FBC5C">Benefício medicinal:</b> ${r.med}</div>
+      <div style="margin-top:14px; display:flex; gap:8px;">
+        <button class="btn btn-primary" onclick="openPlanFromRecipe(${r.n})">Adicionar ao Planejamento</button>
+      </div>
+    </div>
+  `;
+  openModal('modal-recipe');
+}
+function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = ''; }
+document.querySelectorAll('.modal-bg').forEach(m => {
+  m.addEventListener('click', (e) => { if (e.target === m) closeModal(m.id); });
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-bg.open').forEach(m => closeModal(m.id));
+});
+
+// ============ PLANNING ============
+function planKey(d, m) { return `${d}|${m}`; }
+function renderPlan() {
+  const grid = document.getElementById('plan-grid');
+  let html = '<div class="plan-day-h"></div>';
+  MEALS.forEach(m => { html += `<div class="plan-cell-h">${m.label}</div>`; });
+  DAYS.forEach((d, di) => {
+    html += `<div class="plan-day-h">${d}</div>`;
+    MEALS.forEach(m => {
+      const k = planKey(di, m.key);
+      const recipeN = state.plan[k];
+      const r = recipeN ? RECIPES.find(x => x.n === recipeN) : null;
+      if (r) {
+        html += `<button class="plan-slot filled" data-pk="${k}"><div><div class="ps-name">${r.name}</div><div style="margin-top:3px;color:var(--text-muted)">${REG_LABEL[r.reg]} · ${formatTime(r.time)}</div></div></button>`;
+      } else {
+        html += `<button class="plan-slot" data-pk="${k}" data-meal="${m.key}">+ adicionar</button>`;
+      }
+    });
+  });
+  grid.innerHTML = html;
+  grid.querySelectorAll('.plan-slot').forEach(slot => {
+    slot.addEventListener('click', () => {
+      const k = slot.dataset.pk;
+      if (state.plan[k]) {
+        if (confirm('Remover esta receita do planejamento?')) {
+          delete state.plan[k];
+          store.set(LS.PLAN, state.plan);
+          renderPlan();
+        }
+      } else {
+        openPicker(k, slot.dataset.meal);
+      }
+    });
+  });
+}
+document.getElementById('btn-clear-plan').addEventListener('click', () => {
+  if (confirm('Limpar todo o planejamento da semana?')) {
+    state.plan = {};
+    store.set(LS.PLAN, state.plan);
+    renderPlan();
+    toast('Semana limpa');
+  }
+});
+
+// ============ PICKER MODAL ============
+function openPicker(planKeyStr, mealHint) {
+  state.pickerCtx = { planKey: planKeyStr, fromRecipe: null, mealHint };
+  const [d, m] = planKeyStr.split('|');
+  const meal = MEALS.find(x => x.key === m);
+  document.getElementById('picker-context').textContent = `${DAYS[+d]} · ${meal.label}`;
+  renderPicker('');
+  document.getElementById('picker-search').value = '';
+  openModal('modal-picker');
+}
+function openPlanFromRecipe(n) {
+  state.pickerCtx = { planKey: null, fromRecipe: n };
+  document.getElementById('picker-context').textContent = 'Escolha o dia/refeição';
+  renderPlanPicker(n);
+  openModal('modal-picker');
+}
+function renderPicker(filter) {
+  const ctx = state.pickerCtx;
+  const f = filter.toLowerCase();
+  let list = RECIPES.filter(r => !f || r.name.toLowerCase().includes(f) || r.native.toLowerCase().includes(f));
+  document.getElementById('recipe-picker').innerHTML = list.map(r => `
+    <button class="picker-item" data-n="${r.n}">
+      <div class="pi-cat">${REG_LABEL[r.reg]} · ${TIPO_LABEL[r.tipo]} · ${formatTime(r.time)}</div>
+      <div class="pi-name">${r.name}</div>
+    </button>
+  `).join('');
+  document.getElementById('recipe-picker').querySelectorAll('.picker-item').forEach(b => {
+    b.addEventListener('click', () => {
+      const n = +b.dataset.n;
+      state.plan[ctx.planKey] = n;
+      store.set(LS.PLAN, state.plan);
+      closeModal('modal-picker');
+      toast('Adicionado ao planejamento');
+      renderPlan();
+    });
+  });
+}
+function renderPlanPicker(recipeN) {
+  let html = '<div class="recipe-picker">';
+  DAYS.forEach((d, di) => {
+    MEALS.forEach(m => {
+      const k = planKey(di, m.key);
+      const taken = state.plan[k];
+      const r = taken ? RECIPES.find(x => x.n === taken) : null;
+      html += `<button class="picker-item" data-pk="${k}">
+        <div class="pi-cat">${d} · ${m.label}</div>
+        <div class="pi-name">${r ? 'Substituir: ' + r.name : 'Vazio — adicionar aqui'}</div>
+      </button>`;
+    });
+  });
+  html += '</div>';
+  document.getElementById('recipe-picker').outerHTML = '<div id="recipe-picker">' + html + '</div>';
+  document.querySelectorAll('#recipe-picker .picker-item').forEach(b => {
+    b.addEventListener('click', () => {
+      state.plan[b.dataset.pk] = recipeN;
+      store.set(LS.PLAN, state.plan);
+      closeModal('modal-picker');
+      toast('Adicionado ao planejamento');
+      activateTab('planejamento');
+    });
+  });
+}
+document.getElementById('picker-search').addEventListener('input', (e) => {
+  if (state.pickerCtx && state.pickerCtx.planKey) renderPicker(e.target.value);
+});
+
+// ============ SHOPPING LIST ============
+const ING_CAT_RULES = [
+  { cat: 'Mandioca/Tubérculos', words: ['mandioca','macaxeira','tapioca','goma','farinha d\'água','fubá','batata-doce','batata-baroa','mandioquinha','aipim','polvilho','flocão','milho','cará','inhame'] },
+  { cat: 'Carnes/Peixes', words: ['frango','peito','salmão','pirarucu','tucunaré','tambaqui','tilápia','peixe','atum','carne','patinho','bife','ancho','peru','presunto','camarão','filé','pintado','surubim','dourado','traíra','linguiça','charque','toucinho','costelinha','carne-seca','carne de sol'] },
+  { cat: 'Hortaliças/Verduras', words: ['cebola','alho','tomate','pimentão','pimenta','jambu','coentro','salsa','salsinha','cebolinha','alho-poró','folha de mandioca','aipo','cenoura','pepino','rúcula','alface','espinafre','manjericão','tomilho','alecrim','hortelã','erva-cidreira','alfavaca','folhas','louro','cheiro-verde','urucum','gengibre','noz-moscada','folhas de bananeira','palmito'] },
+  { cat: 'Frutas Nativas', words: ['açaí','cupuaçu','baru','pequi','buriti','cajá','caju','umbu','jabuticaba','cambuci','bacuri','graviola','mangaba','pitanga','banana','banana-da-terra','limão','laranja','maracujá','coco','abacate'] },
+  { cat: 'Especiarias/Temperos', words: ['urucum','sal','pimenta-do-reino','pimenta-de-cheiro','pimenta murupi','pimenta dedo-de-moça','pimenta-bode','canela','cravo','noz-moscada','cúrcuma','açafrão','azeite','óleo','manteiga de garrafa','manteiga','dendê','azeite de dendê','mel','rapadura'] },
+  { cat: 'Mercearia/Outros', words: ['arroz','feijão','tucupi','leite de coco','queijo','coalho','meia-cura','muçarela','minas','cream cheese','iogurte','creme de leite','nata','ovo','ovos','vinagre','água','vinho','caldo','castanha','noz','amêndoa','chocolate','cacau','baunilha','fermento','gelatina','semente','amendoim','pasta de amendoim','goma','erva-mate'] }
+];
+function classify(ing) {
+  const low = ing.toLowerCase();
+  for (const r of ING_CAT_RULES) {
+    for (const w of r.words) if (low.includes(w)) return r.cat;
+  }
+  return 'Mercearia/Outros';
+}
+// Regional buy-links for hard-to-find ingredients
+const BUY_LINKS = [
+  { match: ['tucupi'], name: 'Tucupi', url: 'https://www.amazon.com.br/s?k=tucupi' },
+  { match: ['jambu'], name: 'Jambu', url: 'https://www.amazon.com.br/s?k=jambu+conserva' },
+  { match: ['açaí','acai'], name: 'Açaí', url: 'https://www.amazon.com.br/s?k=polpa+acai+sem+acucar' },
+  { match: ['baru'], name: 'Baru', url: 'https://www.amazon.com.br/s?k=castanha+baru' },
+  { match: ['pequi'], name: 'Pequi', url: 'https://www.amazon.com.br/s?k=pequi+conserva' },
+  { match: ['buriti'], name: 'Buriti', url: 'https://www.amazon.com.br/s?k=polpa+buriti' },
+  { match: ['castanha-do-pará','castanha-do-para','castanha do pará','castanha do para'], name: 'Castanha-do-Pará', url: 'https://www.amazon.com.br/s?k=castanha+do+para' },
+  { match: ['manteiga de garrafa'], name: 'Manteiga garrafa', url: 'https://www.amazon.com.br/s?k=manteiga+de+garrafa' },
+  { match: ['azeite de dendê','dendê'], name: 'Dendê', url: 'https://www.amazon.com.br/s?k=azeite+dende' },
+  { match: ['farinha d\'água','farinha d’água'], name: 'Farinha d\'água', url: 'https://www.amazon.com.br/s?k=farinha+dagua+para' },
+  { match: ['mel de abelha nativa','mel de jataí','mel jataí'], name: 'Mel jataí', url: 'https://www.amazon.com.br/s?k=mel+jatai' },
+  { match: ['folha de mandioca'], name: 'Maniva', url: 'https://www.amazon.com.br/s?k=maniva+folha+mandioca' },
+  { match: ['queijo coalho'], name: 'Queijo coalho', url: 'https://www.amazon.com.br/s?k=queijo+coalho' },
+  { match: ['carne de sol','carne-seca','charque'], name: 'Carne sol/seca', url: 'https://www.amazon.com.br/s?k=carne+de+sol+charque' },
+  { match: ['palmito pupunha'], name: 'Pupunha', url: 'https://www.amazon.com.br/s?k=palmito+pupunha' },
+  { match: ['erva-mate'], name: 'Erva-mate', url: 'https://www.amazon.com.br/s?k=erva+mate+terere' },
+  { match: ['cumaru'], name: 'Cumaru', url: 'https://www.amazon.com.br/s?k=semente+cumaru' },
+  { match: ['rapadura'], name: 'Rapadura', url: 'https://www.amazon.com.br/s?k=rapadura' }
+];
+function buyLinkFor(ing) {
+  const low = ing.toLowerCase();
+  for (const b of BUY_LINKS) {
+    if (b.match.some(w => low.includes(w))) return b;
+  }
+  return null;
+}
+function buildShopping() {
+  const used = Object.values(state.plan).map(n => RECIPES.find(r => r.n === n)).filter(Boolean);
+  const map = new Map();
+  used.forEach(r => {
+    r.ing.forEach(ing => {
+      const key = ing.trim();
+      if (!map.has(key)) map.set(key, { ing: key, cat: classify(key), times: 0, recipes: [] });
+      const item = map.get(key);
+      item.times++;
+      if (!item.recipes.includes(r.name)) item.recipes.push(r.name);
+    });
+  });
+  const grouped = {};
+  for (const v of map.values()) {
+    grouped[v.cat] = grouped[v.cat] || [];
+    grouped[v.cat].push(v);
+  }
+  return grouped;
+}
+function renderShopping() {
+  const grouped = buildShopping();
+  const wrap = document.getElementById('shop-list');
+  const order = ['Mandioca/Tubérculos','Carnes/Peixes','Hortaliças/Verduras','Frutas Nativas','Especiarias/Temperos','Mercearia/Outros'];
+  const sections = order.filter(c => grouped[c]);
+  if (!sections.length) {
+    wrap.innerHTML = '<div class="empty">Adicione receitas no Planejamento para gerar sua lista de compras automaticamente.</div>';
+    return;
+  }
+  wrap.innerHTML = sections.map(c => `
+    <div class="shop-section">
+      <h3>${c}</h3>
+      ${grouped[c].sort((a,b)=>a.ing.localeCompare(b.ing)).map(it => {
+        const id = 'chk_' + btoa(unescape(encodeURIComponent(it.ing))).replace(/[^a-z0-9]/gi,'').slice(0,20);
+        const isChecked = !!state.checked[it.ing];
+        const buy = buyLinkFor(it.ing);
+        return `<div class="shop-item ${isChecked?'checked':''}">
+          <input type="checkbox" id="${id}" ${isChecked?'checked':''} data-ing="${encodeURIComponent(it.ing)}">
+          <label for="${id}">${it.ing}</label>
+          ${it.times > 1 ? `<span class="qty">×${it.times}</span>` : ''}
+          ${buy ? `<a class="buy-link" href="${buy.url}" target="_blank" rel="noopener">${buy.name}</a>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+  `).join('');
+  wrap.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const ing = decodeURIComponent(cb.dataset.ing);
+      if (cb.checked) state.checked[ing] = true; else delete state.checked[ing];
+      store.set(LS.CHECKED, state.checked);
+      cb.closest('.shop-item').classList.toggle('checked', cb.checked);
+    });
+  });
+}
+document.getElementById('btn-clear-checks').addEventListener('click', () => {
+  state.checked = {};
+  store.set(LS.CHECKED, state.checked);
+  renderShopping();
+  toast('Marcações resetadas');
+});
+document.getElementById('btn-share-wa').addEventListener('click', () => {
+  const grouped = buildShopping();
+  const order = ['Mandioca/Tubérculos','Carnes/Peixes','Hortaliças/Verduras','Frutas Nativas','Especiarias/Temperos','Mercearia/Outros'];
+  let text = '*Lista de Compras — Receitas da Terra*\n\n';
+  order.forEach(c => {
+    if (!grouped[c]) return;
+    text += `*${c}*\n`;
+    grouped[c].forEach(it => {
+      text += `- ${it.ing}${it.times>1?' (×'+it.times+')':''}\n`;
+    });
+    text += '\n';
+  });
+  if (text.length < 50) { toast('Lista vazia — planeje sua semana primeiro'); return; }
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+});
+
+// ============ PLANTAS MEDICINAIS ============
+function plantMatches(p) {
+  if (state.plantUso !== 'all' && p.uso !== state.plantUso) return false;
+  if (state.plantSearch) {
+    const q = state.plantSearch.toLowerCase();
+    const hay = (p.nome + ' ' + p.sci + ' ' + p.ind).toLowerCase();
+    if (!hay.includes(q)) return false;
+  }
+  return true;
+}
+function renderPlants() {
+  const tbody = document.getElementById('plant-tbody');
+  const list = PLANTS.filter(plantMatches).sort((a,b) => a.nome.localeCompare(b.nome));
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty">Nenhuma planta encontrada.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(p => `
+    <tr>
+      <td>${p.nome}</td>
+      <td class="sci">${p.sci}</td>
+      <td>${p.ind}</td>
+      <td>${p.parte}</td>
+      <td>${p.prep}</td>
+    </tr>
+  `).join('');
+}
+document.getElementById('plant-search').addEventListener('input', (e) => {
+  state.plantSearch = e.target.value.trim();
+  renderPlants();
+});
+document.querySelectorAll('[data-filter-uso]').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter-uso]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.plantUso = b.dataset.filterUso;
+    renderPlants();
+  });
+});
+
+// ============ TOAST ============
+let toastT;
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ============ INIT ============
+const savedTab = store.get(LS.TAB, 'receitas');
+activateTab(savedTab);
+renderRecipes();
+renderPlan();
+renderPlants();
+
+// ============ PWA ============
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+let __pwaPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); __pwaPrompt = e;
+  const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
+});
+function installPWA() {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (isStandalone) { alert('App já instalado!'); return; }
+  if (isIOS) {
+    alert('Para instalar no iPhone:\n\n1. Toque no botão Compartilhar\n2. Toque em "Adicionar à Tela de Início"\n3. Toque em "Adicionar"');
+    return;
+  }
+  if (__pwaPrompt) { __pwaPrompt.prompt(); __pwaPrompt.userChoice.then(() => __pwaPrompt = null); }
+  else { alert('Para instalar no Android: menu (3 pontos) → "Instalar app"'); }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (isIOS && !isStandalone) {
+    const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
+  }
+});
+</script>
 </body>
 </html>
