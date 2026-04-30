@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>30 Receitas Low Carb — Life OS</title>
+<title>Low Carb System — Life OS</title>
 <script src="../_shared/auth-gate.js"></script>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#10B981">
@@ -27,2043 +27,1380 @@
     --bg-card: #111814;
     --bg-card2: #161E1A;
     --border: rgba(16,185,129,0.18);
+    --border-strong: rgba(16,185,129,0.32);
     --text: #E8F5F0;
     --text-muted: #6B9E8A;
     --text-dim: #4A6B5A;
     --white: #ffffff;
-    --number-color: rgba(16,185,129,0.06);
+    --danger: #E74C3C;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
   body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.7;
-    font-size: 16px;
-  }
-
-  /* ===== COVER ===== */
-  .cover {
+    line-height: 1.6;
+    font-size: 15px;
+    padding-bottom: 80px;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 60px 40px;
-    position: relative;
-    overflow: hidden;
-    background: radial-gradient(ellipse at 30% 30%, rgba(16,185,129,0.15) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 70%, rgba(5,150,105,0.10) 0%, transparent 60%),
-                var(--bg);
   }
+  button { font-family: inherit; cursor: pointer; }
+  input, select { font-family: inherit; }
+  a { color: var(--accent-light); text-decoration: none; }
 
-  .cover-number {
-    position: absolute;
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(200px, 35vw, 420px);
-    font-weight: 900;
-    color: var(--number-color);
-    line-height: 1;
-    user-select: none;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-  }
-
-  .cover-badge {
-    background: var(--accent-muted);
-    border: 1px solid var(--border);
-    color: var(--accent-light);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    padding: 8px 20px;
-    border-radius: 40px;
-    margin-bottom: 32px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .cover-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(40px, 7vw, 88px);
-    font-weight: 900;
-    line-height: 1.05;
-    position: relative;
-    z-index: 2;
-    margin-bottom: 20px;
-  }
-
-  .cover-title .accent { color: var(--accent); }
-
-  .cover-subtitle {
-    font-size: clamp(16px, 2vw, 20px);
-    color: var(--text-muted);
-    max-width: 560px;
-    position: relative;
-    z-index: 2;
-    margin-bottom: 48px;
-    font-weight: 300;
-  }
-
-  .cover-stats {
-    display: flex;
-    gap: 40px;
-    position: relative;
-    z-index: 2;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .cover-stat {
-    text-align: center;
-  }
-
-  .cover-stat-num {
-    display: block;
-    font-size: 36px;
-    font-weight: 800;
-    color: var(--accent);
-    line-height: 1;
-  }
-
-  .cover-stat-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 4px;
-  }
-
-  .cover-line {
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), transparent);
-    margin: 40px auto;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* ===== CONTAINER ===== */
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 32px;
-  }
-
-  /* ===== SECTION HEADER ===== */
-  .section-header {
-    padding: 80px 0 48px;
-    border-top: 1px solid var(--border);
-    margin-top: 60px;
-  }
-
-  .section-header:first-child {
-    border-top: none;
-    margin-top: 0;
-  }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 4vw, 44px);
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--white);
-    margin-bottom: 16px;
-  }
-
-  .section-desc {
-    color: var(--text-muted);
-    font-size: 16px;
-    max-width: 600px;
-    font-weight: 300;
-  }
-
-  /* ===== CATEGORY HEADER ===== */
-  .category-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin: 64px 0 32px;
-    padding-bottom: 20px;
+  /* ===== HEADER ===== */
+  .app-header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,15,13,0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
-
-  .category-icon {
-    width: 48px;
-    height: 48px;
-    background: var(--accent-muted);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
+  .app-header-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 14px 20px 0;
+    display: flex; flex-direction: column; gap: 12px;
   }
-
-  .category-title {
+  .app-brand {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .app-brand-title {
     font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--white);
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    color: var(--text);
   }
-
-  .category-count {
-    margin-left: auto;
-    background: var(--accent-muted);
-    color: var(--accent-light);
-    font-size: 12px;
-    font-weight: 700;
-    padding: 4px 14px;
-    border-radius: 20px;
+  .app-brand-title span { color: var(--accent-light); }
+  .app-brand-badge {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent-light); font-weight: 700;
+    background: var(--accent-muted); padding: 5px 10px; border-radius: 20px;
     border: 1px solid var(--border);
   }
 
-  /* ===== RECIPE CARD ===== */
+  /* ===== TABS ===== */
+  .tabs {
+    display: flex; gap: 4px;
+    overflow-x: auto; scrollbar-width: none;
+    margin: 0 -20px; padding: 0 20px 12px;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all .2s ease;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    background: var(--accent-muted);
+    border-color: var(--border-strong);
+    color: var(--accent-light);
+  }
+  .tab-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* ===== MAIN ===== */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 20px;
+  }
+  .panel { display: none; animation: fadeIn .2s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform:none; } }
+
+  .panel-head { margin-bottom: 20px; }
+  .panel-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .panel-sub {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  /* ===== FILTERS ===== */
+  .filters {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 18px;
+  }
+  .search {
+    flex: 1 1 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 11px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+  .search:focus { outline: none; border-color: var(--accent); }
+  .chip {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    transition: all .15s ease;
+  }
+  .chip.active {
+    background: var(--accent-muted);
+    border-color: var(--border-strong);
+    color: var(--accent-light);
+  }
+
+  /* ===== RECIPE GRID ===== */
   .recipe-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 28px;
-    margin-bottom: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
   }
-
   .recipe-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    transition: border-color 0.2s;
+    border-radius: 14px;
+    padding: 16px;
+    transition: border-color .2s, transform .2s;
+    cursor: pointer;
+    position: relative;
   }
-
-  .recipe-card:hover {
-    border-color: var(--accent);
-  }
-
-  .recipe-header {
-    background: linear-gradient(135deg, var(--bg-card2), var(--bg-card));
-    padding: 28px 32px 24px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .recipe-number {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--accent);
-    text-transform: uppercase;
+  .recipe-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+  .recipe-cat {
+    display: inline-block;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent-light); font-weight: 700;
     margin-bottom: 8px;
   }
-
-  .recipe-name {
+  .recipe-title {
     font-family: 'Playfair Display', serif;
-    font-size: 24px;
     font-weight: 700;
-    color: var(--white);
+    font-size: 17px;
+    line-height: 1.25;
     margin-bottom: 10px;
-    line-height: 1.2;
   }
-
   .recipe-meta {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    display: flex; gap: 12px; flex-wrap: wrap;
+    font-size: 12px; color: var(--text-muted);
+    margin-bottom: 10px;
   }
-
-  .recipe-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
+  .macros {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .macro {
+    font-size: 11px; font-weight: 600;
+    padding: 3px 8px; border-radius: 6px;
+    background: rgba(16,185,129,0.06);
+    border: 1px solid var(--border);
     color: var(--text-muted);
   }
-
-  .recipe-meta-item span {
-    font-size: 15px;
+  .macro b { color: var(--text); margin-right: 3px; }
+  .recipe-card-actions {
+    display: flex; gap: 6px;
+    margin-top: 4px;
   }
-
-  .macro-pills {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 14px;
-  }
-
-  .macro-pill {
+  .btn {
     background: var(--accent-muted);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 12px;
-    font-weight: 600;
     color: var(--accent-light);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px; font-weight: 600;
+    transition: all .15s ease;
   }
-
-  .macro-pill.carb { color: #F59E0B; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.08); }
-  .macro-pill.prot { color: #3B82F6; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.08); }
-  .macro-pill.fat  { color: #EC4899; border-color: rgba(236,72,153,0.3); background: rgba(236,72,153,0.08); }
-
-  .recipe-body {
-    padding: 28px 32px;
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 32px;
+  .btn:hover { background: rgba(16,185,129,0.2); }
+  .btn-primary {
+    background: var(--accent); color: #04140C; border-color: var(--accent);
   }
+  .btn-primary:hover { background: var(--accent-light); }
+  .btn-ghost { background: transparent; }
+  .btn-danger { color: var(--danger); border-color: rgba(231,76,60,0.3); }
 
-  @media (max-width: 640px) {
-    .recipe-body { grid-template-columns: 1fr; }
-  }
-
-  .ingredients-title,
-  .steps-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+  .empty {
+    text-align: center;
+    padding: 40px 20px;
     color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-bg {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    display: none;
+    padding: 20px;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    padding: 22px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.05); border: none;
+    color: var(--text); font-size: 18px;
+  }
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; margin-bottom: 6px;
+    padding-right: 32px;
+  }
+  .modal-body { margin-top: 14px; }
+  .modal-section {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .modal-section h4 {
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent-light); margin-bottom: 8px;
+  }
+  .modal-section ul, .modal-section ol {
+    padding-left: 18px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .modal-section li { margin-bottom: 4px; }
+  .modal-tip {
+    background: var(--accent-muted);
+    border-left: 3px solid var(--accent);
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .recipe-picker {
+    display: grid; gap: 8px;
+    max-height: 60vh; overflow-y: auto;
+  }
+  .picker-item {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    cursor: pointer;
+    text-align: left;
+    color: var(--text);
+    font-size: 13px;
+    transition: border-color .15s;
+  }
+  .picker-item:hover { border-color: var(--border-strong); }
+  .picker-item .pi-cat {
+    font-size: 10px; color: var(--accent-light);
+    letter-spacing: 1px; text-transform: uppercase;
+    font-weight: 700;
+  }
+  .picker-item .pi-name { font-weight: 600; margin-top: 2px; }
+
+  /* ===== PLANNING GRID ===== */
+  .plan-toolbar {
+    display: flex; gap: 8px; flex-wrap: wrap;
     margin-bottom: 14px;
   }
-
-  .ingredients-list {
-    list-style: none;
+  .plan-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(4, 1fr);
+    gap: 4px;
+    min-width: 600px;
   }
-
-  .ingredients-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 14px;
-    color: var(--text-muted);
-    padding: 6px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    line-height: 1.4;
-  }
-
-  .ingredients-list li:last-child { border-bottom: none; }
-
-  .ingredients-list li::before {
-    content: '—';
-    color: var(--accent);
-    font-weight: 700;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .steps-list {
-    list-style: none;
-    counter-reset: steps;
-  }
-
-  .steps-list li {
-    counter-increment: steps;
-    display: flex;
-    gap: 14px;
-    font-size: 14px;
-    color: var(--text-muted);
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    line-height: 1.6;
-    align-items: flex-start;
-  }
-
-  .steps-list li:last-child { border-bottom: none; }
-
-  .steps-list li::before {
-    content: counter(steps);
-    background: var(--accent-muted);
-    border: 1px solid var(--border);
-    color: var(--accent);
-    font-size: 11px;
-    font-weight: 700;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .recipe-tip {
-    margin: 0 32px 28px;
-    background: var(--accent-muted);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 10px;
-    padding: 14px 18px;
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-
-  .recipe-tip strong {
-    color: var(--accent-light);
-    display: block;
-    margin-bottom: 4px;
+  .plan-wrap { overflow-x: auto; padding-bottom: 6px; }
+  .plan-cell-h {
+    background: var(--bg-card2);
+    padding: 8px 6px;
+    text-align: center;
     font-size: 11px;
     letter-spacing: 1px;
     text-transform: uppercase;
-  }
-
-  /* ===== INFO BLOCKS ===== */
-  .info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin: 32px 0;
-  }
-
-  .info-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    text-align: center;
-  }
-
-  .info-card-icon {
-    font-size: 32px;
-    margin-bottom: 12px;
-    display: block;
-  }
-
-  .info-card-title {
-    font-size: 14px;
+    color: var(--accent-light);
     font-weight: 700;
-    color: var(--white);
-    margin-bottom: 6px;
+    border-radius: 6px;
   }
-
-  .info-card-text {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.5;
+  .plan-day-h {
+    background: transparent;
+    padding: 8px 6px;
+    font-size: 12px; font-weight: 700;
+    color: var(--text);
+    align-self: center;
   }
-
-  /* ===== GUIDE BLOCK ===== */
-  .guide-block {
+  .plan-slot {
     background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 36px;
-    margin: 40px 0;
-  }
-
-  .guide-block h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    color: var(--white);
-    margin-bottom: 20px;
-  }
-
-  .guide-list {
-    list-style: none;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  @media (max-width: 600px) {
-    .guide-list { grid-template-columns: 1fr; }
-  }
-
-  .guide-list li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    color: var(--text-muted);
-    padding: 10px 14px;
-    background: var(--bg);
-    border-radius: 10px;
-    border: 1px solid var(--border);
-  }
-
-  .guide-list li .check {
-    color: var(--accent);
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  /* ===== FOOTER ===== */
-  footer {
-    margin-top: 100px;
-    padding: 48px 32px;
-    border-top: 1px solid var(--border);
-    text-align: center;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    min-height: 70px;
+    font-size: 11px;
     color: var(--text-dim);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .plan-slot:hover { border-color: var(--accent); color: var(--text-muted); }
+  .plan-slot.filled {
+    background: var(--accent-muted);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    text-align: left;
+    align-items: flex-start;
+    justify-content: flex-start;
+    line-height: 1.3;
+    font-size: 11px;
+  }
+  .plan-slot.filled .ps-name { font-weight: 600; color: var(--text); }
+
+  /* ===== SHOPPING ===== */
+  .shop-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .shop-section h3 {
+    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent-light); margin-bottom: 10px;
+  }
+  .shop-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 0;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(16,185,129,0.06);
+  }
+  .shop-item:last-child { border-bottom: none; }
+  .shop-item input[type=checkbox] {
+    width: 18px; height: 18px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  .shop-item.checked label { text-decoration: line-through; color: var(--text-dim); }
+  .shop-item label { cursor: pointer; flex: 1; }
+  .shop-item .qty { color: var(--text-muted); font-size: 12px; }
+
+  /* ===== NUTRITION ===== */
+  .nut-table-wrap { overflow-x: auto; }
+  .nut-table {
+    width: 100%; border-collapse: collapse;
     font-size: 13px;
+    min-width: 540px;
   }
-
-  footer a {
-    color: var(--accent);
-    text-decoration: none;
+  .nut-table th, .nut-table td {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border);
   }
+  .nut-table th {
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--accent-light); font-weight: 700;
+  }
+  .nut-table td:first-child { font-weight: 600; }
+  .nut-table tr:hover { background: rgba(16,185,129,0.04); }
 
-  footer .brand {
+  /* ===== GUIDE ===== */
+  .guide-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .guide-card h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 8px;
+    font-size: 22px; margin-bottom: 10px;
+    color: var(--text);
+  }
+  .guide-card p, .guide-card li {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .guide-card ul, .guide-card ol { padding-left: 20px; margin: 10px 0; }
+  .guide-card li { margin-bottom: 5px; }
+  .yes-no {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    margin-top: 10px;
+  }
+  .yes-no > div {
+    background: var(--bg-card2);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .yes-no h4 { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .yes-no .ok h4 { color: var(--accent-light); }
+  .yes-no .no h4 { color: var(--danger); }
+  .yes-no li { font-size: 13px; list-style: none; padding: 3px 0; }
+  .faq details {
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+  }
+  .faq summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text);
+    list-style: none;
+    padding-right: 24px;
+    position: relative;
+    font-size: 14px;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+';
+    position: absolute;
+    right: 0; top: 0;
+    color: var(--accent-light);
+    font-size: 18px;
+    transition: transform .2s;
+  }
+  .faq details[open] summary::after { content: '−'; }
+  .faq details p {
+    margin-top: 8px;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--accent);
+    color: #04140C;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+    z-index: 300;
+    opacity: 0;
+    transition: all .2s ease;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .panel-title { font-size: 24px; }
+    .yes-no { grid-template-columns: 1fr; }
+    .recipe-grid { grid-template-columns: 1fr; }
+    main { padding: 18px 16px; }
+    .app-header-inner { padding: 12px 16px 0; }
   }
 
   /* ===== PRINT ===== */
   @media print {
-    body { background: #fff; color: #111; }
-    .cover { background: #fff; min-height: auto; padding: 60px 40px 40px; }
-    .cover-number { color: rgba(16,185,129,0.06); }
-    .cover-title { color: #111; }
-    .cover-title .accent { color: var(--accent-dark); }
-    .cover-subtitle { color: #555; }
-    .cover-stat-num { color: var(--accent-dark); }
-    .cover-stat-label { color: #666; }
-    .cover-badge { color: var(--accent-dark); background: #e8f8f2; border-color: #a7f3d0; }
-    .cover-line { background: linear-gradient(90deg, var(--accent-dark), transparent); }
+    .app-header, .pwa-install-fab, .filters, .plan-toolbar,
+    .modal-bg, .panel:not(.print-target) { display: none !important; }
+    body { background: white; color: black; padding: 0; }
+    .panel.print-target { display: block !important; }
+    .shop-section, .plan-slot { background: white; border-color: #ccc; color: black; }
+    .plan-slot.filled { background: #f5f5f5; }
+    .plan-cell-h, .plan-day-h, .shop-section h3 { color: black; }
+    .nut-table th, .nut-table td { color: black; }
+  }
 
-    .section-header { border-top-color: #ddd; }
-    .section-label { color: var(--accent-dark); }
-    .section-title { color: #111; }
-    .section-desc { color: #555; }
-
-    .category-header { border-bottom-color: #ddd; }
-    .category-icon { background: #e8f8f2; border-color: #a7f3d0; }
-    .category-title { color: #111; }
-    .category-count { background: #e8f8f2; color: var(--accent-dark); border-color: #a7f3d0; }
-
-    .recipe-card { background: #fff; border-color: #ddd; break-inside: avoid; }
-    .recipe-header { background: #f9f9f9; border-bottom-color: #eee; }
-    .recipe-number { color: var(--accent-dark); }
-    .recipe-name { color: #111; }
-    .recipe-meta-item { color: #555; }
-    .macro-pill { background: #e8f8f2; color: var(--accent-dark); border-color: #a7f3d0; }
-    .macro-pill.carb { background: #fef3c7; color: #92400e; border-color: #fde68a; }
-    .macro-pill.prot { background: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
-    .macro-pill.fat  { background: #fdf2f8; color: #9d174d; border-color: #fbcfe8; }
-    .ingredients-title, .steps-title { color: #888; }
-    .ingredients-list li { color: #444; border-bottom-color: #eee; }
-    .ingredients-list li::before { color: var(--accent-dark); }
-    .steps-list li { color: #444; border-bottom-color: #eee; }
-    .steps-list li::before { background: #e8f8f2; color: var(--accent-dark); border-color: #a7f3d0; }
-    .recipe-tip { background: #e8f8f2; border-color: #a7f3d0; border-left-color: var(--accent-dark); color: #555; }
-    .recipe-tip strong { color: var(--accent-dark); }
-
-    .info-card { background: #f9f9f9; border-color: #eee; }
-    .info-card-title { color: #111; }
-    .info-card-text { color: #555; }
-    .guide-block { background: #f9f9f9; border-color: #eee; }
-    .guide-block h3 { color: #111; }
-    .guide-list li { background: #fff; border-color: #ddd; color: #444; }
-    .guide-list li .check { color: var(--accent-dark); }
-
-    footer { border-top-color: #eee; color: #888; }
-    footer .brand { color: var(--accent-dark); }
-    footer a { color: var(--accent-dark); }
+  .pwa-install-fab {
+    position: fixed; bottom: 20px; right: 20px; z-index: 99;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff; border: none; padding: 11px 18px; border-radius: 50px;
+    font-weight: 700; font-size: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    display: none; align-items: center; gap: 6px;
   }
 </style>
 </head>
 <body>
 
-<!-- COVER -->
-<div class="cover">
-  <div class="cover-number">LC</div>
-  <div class="cover-badge">Life OS · Nutrição</div>
-  <h1 class="cover-title">30 Receitas<br><span class="accent">Low Carb</span></h1>
-  <p class="cover-subtitle">Refeições práticas, saborosas e que eliminam picos de insulina — sem abrir mão do prazer de comer bem.</p>
-  <div class="cover-line"></div>
-  <div class="cover-stats">
-    <div class="cover-stat">
-      <span class="cover-stat-num">30</span>
-      <span class="cover-stat-label">Receitas</span>
+<header class="app-header">
+  <div class="app-header-inner">
+    <div class="app-brand">
+      <div class="app-brand-title">Low Carb <span>System</span></div>
+      <div class="app-brand-badge">Life OS</div>
     </div>
-    <div class="cover-stat">
-      <span class="cover-stat-num">6</span>
-      <span class="cover-stat-label">Categorias</span>
+    <nav class="tabs" role="tablist" aria-label="Navegação principal">
+      <button class="tab-btn active" data-tab="receitas" role="tab" aria-label="Receitas">Receitas</button>
+      <button class="tab-btn" data-tab="planejamento" role="tab" aria-label="Planejamento semanal">Planejamento</button>
+      <button class="tab-btn" data-tab="compras" role="tab" aria-label="Lista de compras">Lista de Compras</button>
+      <button class="tab-btn" data-tab="nutricao" role="tab" aria-label="Tabela nutricional">Nutrição</button>
+      <button class="tab-btn" data-tab="guia" role="tab" aria-label="Guia low carb">Guia</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ RECEITAS ============ -->
+<section class="panel active" id="panel-receitas" role="tabpanel">
+  <div class="panel-head">
+    <h1 class="panel-title">30 Receitas</h1>
+    <p class="panel-sub">Selecionadas para alta saciedade, baixo carboidrato e preparo prático.</p>
+  </div>
+  <div class="filters">
+    <input type="search" id="search" class="search" placeholder="Buscar receita ou ingrediente..." aria-label="Buscar receita">
+    <button class="chip active" data-filter-cat="all">Todas</button>
+    <button class="chip" data-filter-cat="cafe">Café</button>
+    <button class="chip" data-filter-cat="almoco">Almoço</button>
+    <button class="chip" data-filter-cat="jantar">Jantar</button>
+    <button class="chip" data-filter-cat="lanche">Lanche</button>
+    <button class="chip active" data-filter-time="all">Qualquer tempo</button>
+    <button class="chip" data-filter-time="15">Até 15 min</button>
+    <button class="chip" data-filter-time="30">15-30 min</button>
+    <button class="chip" data-filter-time="31">30+ min</button>
+  </div>
+  <div id="recipe-grid" class="recipe-grid"></div>
+</section>
+
+<!-- ============ PLANEJAMENTO ============ -->
+<section class="panel" id="panel-planejamento" role="tabpanel">
+  <div class="panel-head">
+    <h1 class="panel-title">Planejamento Semanal</h1>
+    <p class="panel-sub">Toque em um slot vazio para escolher uma receita. Toque em uma receita planejada para remover.</p>
+  </div>
+  <div class="plan-toolbar">
+    <button class="btn btn-danger" id="btn-clear-plan">Limpar semana</button>
+    <button class="btn" onclick="window.print()">Imprimir plano</button>
+  </div>
+  <div class="plan-wrap">
+    <div class="plan-grid" id="plan-grid"></div>
+  </div>
+</section>
+
+<!-- ============ COMPRAS ============ -->
+<section class="panel" id="panel-compras" role="tabpanel">
+  <div class="panel-head">
+    <h1 class="panel-title">Lista de Compras</h1>
+    <p class="panel-sub">Gerada automaticamente do seu planejamento da semana, agrupada por seção do mercado.</p>
+  </div>
+  <div class="plan-toolbar">
+    <button class="btn" onclick="window.print()">Imprimir lista</button>
+    <button class="btn" id="btn-share-wa">Enviar no WhatsApp</button>
+    <button class="btn btn-ghost" id="btn-clear-checks">Desmarcar tudo</button>
+  </div>
+  <div id="shop-list"></div>
+</section>
+
+<!-- ============ NUTRICAO ============ -->
+<section class="panel" id="panel-nutricao" role="tabpanel">
+  <div class="panel-head">
+    <h1 class="panel-title">Tabela Nutricional</h1>
+    <p class="panel-sub">Valores aproximados por 100g (TBCA / USDA). Use como referência para planejar refeições.</p>
+  </div>
+  <div class="filters">
+    <input type="search" id="nut-search" class="search" placeholder="Buscar alimento..." aria-label="Buscar alimento">
+    <button class="chip" id="nut-low" data-active="false">Apenas &lt;5g de carbs</button>
+  </div>
+  <div class="nut-table-wrap">
+    <table class="nut-table" id="nut-table">
+      <thead>
+        <tr>
+          <th>Alimento</th>
+          <th>Carbs</th>
+          <th>Prot.</th>
+          <th>Gord.</th>
+          <th>Kcal</th>
+          <th>Fibra</th>
+        </tr>
+      </thead>
+      <tbody id="nut-tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ GUIA ============ -->
+<section class="panel" id="panel-guia" role="tabpanel">
+  <div class="panel-head">
+    <h1 class="panel-title">Guia Low Carb</h1>
+    <p class="panel-sub">O essencial para começar com fundamentação científica e sem promessas mirabolantes.</p>
+  </div>
+
+  <div class="guide-card">
+    <h3>O que é Low Carb</h3>
+    <p>Low carb é um padrão alimentar que reduz a ingestão de carboidratos — em especial os refinados — priorizando proteínas, gorduras saudáveis e vegetais fibrosos. O princípio metabólico é simples: ao reduzir carboidratos, mantemos a insulina baixa, o que facilita o uso de gordura corporal como fonte de energia e estabiliza glicemia.</p>
+    <ul>
+      <li><b>Liberal</b> (100-150g/dia) — bom para manutenção e atletas.</li>
+      <li><b>Moderada</b> (50-100g/dia) — perda de peso sustentável.</li>
+      <li><b>Cetogênica</b> (&lt;50g/dia, geralmente &lt;20g) — induz cetose nutricional.</li>
+    </ul>
+    <p>Não é dieta da moda, é um princípio metabólico — funciona por reduzir picos de glicose e demanda contínua de insulina.</p>
+  </div>
+
+  <div class="guide-card">
+    <h3>Como Começar — Primeiros 7 Dias</h3>
+    <ol>
+      <li><b>Dia 1-2:</b> elimine açúcar adicionado, refrigerantes, sucos, doces e farinhas refinadas.</li>
+      <li><b>Dia 3-4:</b> reduza pão, arroz, batata e massas. Substitua por vegetais fibrosos (couve-flor, brócolis, abobrinha).</li>
+      <li><b>Dia 5-7:</b> estabilize com 3 refeições + 1 lanche. Coma até saciedade — sem contar calorias obsessivamente.</li>
+    </ol>
+    <p><b>Hidrate bastante.</b> 35ml por kg de peso corporal por dia. E reponha eletrólitos (sódio, magnésio, potássio) — caldos, água com sal e limão, folhas verdes.</p>
+  </div>
+
+  <div class="guide-card">
+    <h3>Lista do SIM e do NÃO</h3>
+    <div class="yes-no">
+      <div class="ok">
+        <h4>Pode</h4>
+        <ul>
+          <li>◆ Carnes, frango, peixe, ovos</li>
+          <li>◆ Queijos, manteiga, iogurte grego</li>
+          <li>◆ Abacate, azeite, coco, oleaginosas</li>
+          <li>◆ Folhas verdes, brócolis, couve-flor</li>
+          <li>◆ Berries em pequenas porções</li>
+          <li>◆ Café e chá sem açúcar</li>
+          <li>◆ Especiarias e ervas frescas</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h4>Evitar</h4>
+        <ul>
+          <li>● Açúcar, mel, xarope</li>
+          <li>● Pão, massas, arroz branco</li>
+          <li>● Batata, mandioca, milho</li>
+          <li>● Refrigerantes e sucos</li>
+          <li>● Biscoitos e doces</li>
+          <li>● Frutas muito doces (banana, manga, uva)</li>
+          <li>● Cereais matinais industrializados</li>
+        </ul>
+      </div>
     </div>
-    <div class="cover-stat">
-      <span class="cover-stat-num">&lt;20g</span>
-      <span class="cover-stat-label">Carbs / refeição</span>
+  </div>
+
+  <div class="guide-card">
+    <h3>Sintomas Comuns ("Low Carb Flu")</h3>
+    <p>Nos primeiros 3-7 dias, é comum sentir:</p>
+    <ul>
+      <li>Cansaço, dor de cabeça, irritabilidade</li>
+      <li>Cãibras musculares</li>
+      <li>Tontura ao levantar</li>
+      <li>Insônia leve ou sono pesado</li>
+    </ul>
+    <p>Esses sintomas são causados pela perda rápida de água e eletrólitos. <b>Como minimizar:</b></p>
+    <ul>
+      <li>2-3g de sódio extra ao dia (caldo de osso, água com sal)</li>
+      <li>Suplementar magnésio (300-400mg) — qualidade do sono melhora</li>
+      <li>Folhas verdes e abacate fornecem potássio</li>
+      <li>Não restrinja gordura nas primeiras semanas</li>
+    </ul>
+  </div>
+
+  <div class="guide-card">
+    <h3>Dúvidas Frequentes</h3>
+    <div class="faq">
+      <details>
+        <summary>Posso beber álcool?</summary>
+        <p>Com moderação. Destilados puros (vodka, gin, whisky, tequila) têm zero carb. Vinho seco tem ~3g por taça. Cerveja é o pior — alta em carbs. Lembre que álcool pausa a queima de gordura enquanto o fígado o metaboliza.</p>
+      </details>
+      <details>
+        <summary>E as frutas?</summary>
+        <p>Berries (morango, mirtilo, framboesa) são as melhores — baixo índice glicêmico. Banana, manga, uva e abacaxi são ricas em frutose: limite ou evite na fase inicial. Abacate e coco contam como gordura, não como fruta açucarada.</p>
+      </details>
+      <details>
+        <summary>Low carb tem glúten?</summary>
+        <p>Não automaticamente. Low carb foca em reduzir carboidratos; sem glúten foca em eliminar trigo, centeio e cevada. Mas como pão e massas são as principais fontes de glúten e também de carbs, na prática a maioria dos pratos low carb acaba sendo sem glúten.</p>
+      </details>
+      <details>
+        <summary>Posso fazer exercícios em low carb?</summary>
+        <p>Sim. Exercícios de baixa-moderada intensidade (caminhada, musculação) funcionam muito bem. Para alta intensidade prolongada (corrida longa, HIIT extremo), pode ser necessário aumentar carbs estratégicos perto do treino.</p>
+      </details>
+      <details>
+        <summary>Quantos carbs por dia?</summary>
+        <p>Depende do objetivo. Para perda de peso sustentável: 50-100g/dia. Para cetose: &lt;20-30g/dia. Para manutenção e performance: 100-150g/dia. Sempre priorize carbs de vegetais e berries, não de açúcar refinado.</p>
+      </details>
+      <details>
+        <summary>Tenho que contar calorias?</summary>
+        <p>Não obsessivamente. A redução de carbs naturalmente regula apetite e saciedade. Para quem está estagnado, contar por 1-2 semanas pode revelar pontos cegos (oleaginosas e queijo são fáceis de exagerar).</p>
+      </details>
+      <details>
+        <summary>Posso usar adoçantes?</summary>
+        <p>Os melhores são eritritol, stevia e monk fruit — não elevam glicose. Evite maltodextrina, sucralose em excesso e xarope agave. Mesmo os "permitidos" podem manter o paladar viciado em doce — use com moderação.</p>
+      </details>
+      <details>
+        <summary>E o colesterol?</summary>
+        <p>Estudos modernos mostram que gordura saturada de fontes naturais (carne, ovos, manteiga) não é a vilã que se acreditava. O HDL geralmente sobe e os triglicerídeos caem em low carb. Faça exames antes e após 3 meses para monitorar seu caso individual.</p>
+      </details>
+      <details>
+        <summary>Funciona para diabético?</summary>
+        <p>Há ampla evidência de melhora na hemoglobina glicada (HbA1c) em diabéticos tipo 2 com low carb. Para tipo 1 e tipo 2 medicado: faça com acompanhamento médico — doses de insulina e medicação geralmente precisam ser ajustadas.</p>
+      </details>
+      <details>
+        <summary>Quanto tempo até ver resultado?</summary>
+        <p>Energia estável e clareza mental: 5-10 dias. Perda de peso visível: 2-4 semanas. Mudança de composição corporal real: 8-12 semanas. Não pese todo dia — monte fotos de progresso e medidas mensais.</p>
+      </details>
     </div>
-    <div class="cover-stat">
-      <span class="cover-stat-num">≤30min</span>
-      <span class="cover-stat-label">Preparo médio</span>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== MODALS ===== -->
+<div class="modal-bg" id="modal-recipe" role="dialog">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-recipe')" aria-label="Fechar">×</button>
+    <div id="modal-recipe-content"></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-picker" role="dialog">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-picker')" aria-label="Fechar">×</button>
+    <h2>Escolha uma receita</h2>
+    <p class="panel-sub" id="picker-context"></p>
+    <div class="modal-body">
+      <input type="search" id="picker-search" class="search" placeholder="Buscar...">
+      <div class="recipe-picker" id="recipe-picker" style="margin-top:10px"></div>
     </div>
   </div>
 </div>
 
-<!-- INTRO -->
-<div class="container">
-  <div class="section-header">
-    <div class="section-label">Por que Low Carb?</div>
-    <h2 class="section-title">O protocolo que regula energia, foco e composição corporal</h2>
-    <p class="section-desc">Reduzir carboidratos refinados estabiliza a glicose, reduz inflamação e melhora a clareza mental — sem contar calorias obsessivamente.</p>
-  </div>
+<div class="toast" id="toast"></div>
 
-  <div class="info-grid">
-    <div class="info-card">
-      <span class="info-card-icon">⚡</span>
-      <div class="info-card-title">Energia Estável</div>
-      <div class="info-card-text">Sem picos e quedas de glicose. Foco constante ao longo do dia.</div>
-    </div>
-    <div class="info-card">
-      <span class="info-card-icon">🔥</span>
-      <div class="info-card-title">Queima de Gordura</div>
-      <div class="info-card-text">Baixa insulina = corpo usa gordura como combustível preferencial.</div>
-    </div>
-    <div class="info-card">
-      <span class="info-card-icon">🧠</span>
-      <div class="info-card-title">Clareza Mental</div>
-      <div class="info-card-text">Cérebro funciona melhor com cetonas e glicose estável.</div>
-    </div>
-    <div class="info-card">
-      <span class="info-card-icon">😴</span>
-      <div class="info-card-title">Sono de Qualidade</div>
-      <div class="info-card-text">Sem hipoglicemia noturna. Recuperação e sonhos mais profundos.</div>
-    </div>
-  </div>
-
-  <div class="guide-block">
-    <h3>O que pode e o que evitar</h3>
-    <ul class="guide-list">
-      <li><span class="check">✓</span> Carnes, ovos, frango, peixe</li>
-      <li><span class="check">✓</span> Queijos, iogurte grego, manteiga</li>
-      <li><span class="check">✓</span> Abacate, azeite, coco, nozes</li>
-      <li><span class="check">✓</span> Folhas verdes, brócolis, couve-flor</li>
-      <li><span class="check">✓</span> Berries, limão, especiarias</li>
-      <li><span class="check">✓</span> Amêndoas, castanhas, sementes</li>
-      <li><span class="check" style="color:#E74C3C">✗</span> Pão, macarrão, arroz branco</li>
-      <li><span class="check" style="color:#E74C3C">✗</span> Açúcar, refrigerante, suco</li>
-      <li><span class="check" style="color:#E74C3C">✗</span> Batata, mandioca, milho</li>
-      <li><span class="check" style="color:#E74C3C">✗</span> Farinhas refinadas, biscoitos</li>
-    </ul>
-  </div>
-
-  <!-- CATEGORIA 1: CAFÉ DA MANHÃ -->
-  <div class="category-header">
-    <div class="category-icon">🌅</div>
-    <div class="category-title">Café da Manhã</div>
-    <div class="category-count">6 Receitas</div>
-  </div>
-
-  <div class="recipe-grid">
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 01</div>
-        <div class="recipe-name">Omelete de Espinafre com Queijo Feta</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 10 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 1 porção</span>
-          <span class="recipe-meta-item"><span>🔥</span> 320 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 4g</span>
-          <span class="macro-pill prot">Proteína: 22g</span>
-          <span class="macro-pill fat">Gordura: 24g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>3 ovos inteiros</li>
-            <li>1 xíc. espinafre fresco</li>
-            <li>50g queijo feta esfarelado</li>
-            <li>1 col. sopa manteiga</li>
-            <li>Sal, pimenta-do-reino</li>
-            <li>Noz-moscada a gosto</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Bata os ovos com sal, pimenta e noz-moscada.</li>
-            <li>Derreta a manteiga em fogo médio-alto na frigideira antiaderente.</li>
-            <li>Refogue o espinafre por 1 min até murchar levemente.</li>
-            <li>Despeje os ovos e incline a frigideira para espalhar uniformemente.</li>
-            <li>Quando as bordas estiverem firmes, adicione o feta no centro.</li>
-            <li>Dobre o omelete ao meio e sirva imediatamente.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Adicione tomate seco picado para um toque de umami sem elevar muito os carboidratos.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 02</div>
-        <div class="recipe-name">Panqueca de Banana com Whey</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 15 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 280 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 18g</span>
-          <span class="macro-pill prot">Proteína: 28g</span>
-          <span class="macro-pill fat">Gordura: 8g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>1 banana pequena madura</li>
-            <li>2 ovos inteiros</li>
-            <li>30g whey protein (baunilha)</li>
-            <li>1 col. chá fermento em pó</li>
-            <li>Canela a gosto</li>
-            <li>Óleo de coco para untar</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Amasse a banana com um garfo até virar uma pasta homogênea.</li>
-            <li>Misture os ovos, o whey, o fermento e a canela até obter uma massa lisa.</li>
-            <li>Aqueça a frigideira com óleo de coco em fogo médio.</li>
-            <li>Despeje 2 col. sopa de massa por panqueca.</li>
-            <li>Cozinhe ~2 min de cada lado até dourar.</li>
-            <li>Sirva com pasta de amendoim sem açúcar ou frutas vermelhas.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Use banana bem madura para adoçar naturalmente sem precisar de açúcar ou adoçante.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 03</div>
-        <div class="recipe-name">Iogurte Grego com Granola de Nozes</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 5 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 1 porção</span>
-          <span class="recipe-meta-item"><span>🔥</span> 380 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 12g</span>
-          <span class="macro-pill prot">Proteína: 24g</span>
-          <span class="macro-pill fat">Gordura: 26g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>200g iogurte grego integral</li>
-            <li>30g nozes picadas</li>
-            <li>20g amêndoas laminadas</li>
-            <li>10g sementes de chia</li>
-            <li>½ col. chá canela</li>
-            <li>Gotas de extrato de baunilha</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Coloque o iogurte grego em uma tigela funda.</li>
-            <li>Misture nozes, amêndoas e sementes de chia em uma tigela pequena.</li>
-            <li>Adicione canela ao mix de oleaginosas e misture bem.</li>
-            <li>Disponha a granola de nozes sobre o iogurte.</li>
-            <li>Adicione algumas gotas de extrato de baunilha.</li>
-            <li>Sirva imediatamente ou deixe na geladeira por até 1h para intensificar sabores.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Adicione uma col. sopa de cacau em pó 100% para uma versão "chocolate" que ainda é low carb.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 04</div>
-        <div class="recipe-name">Ovos Mexidos com Salmão Defumado</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 12 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 1 porção</span>
-          <span class="recipe-meta-item"><span>🔥</span> 360 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 2g</span>
-          <span class="macro-pill prot">Proteína: 34g</span>
-          <span class="macro-pill fat">Gordura: 24g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>3 ovos inteiros</li>
-            <li>80g salmão defumado</li>
-            <li>1 col. sopa cream cheese</li>
-            <li>Cebolinha picada a gosto</li>
-            <li>1 col. chá manteiga</li>
-            <li>Sal e pimenta branca</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Bata os ovos com cream cheese, sal e pimenta branca.</li>
-            <li>Derreta a manteiga em fogo baixo na frigideira.</li>
-            <li>Despeje os ovos e mexa lentamente com espátula de silicone.</li>
-            <li>Retire do fogo enquanto ainda cremoso (não totalmente seco).</li>
-            <li>Adicione o salmão defumado por cima e cebolinha.</li>
-            <li>O calor residual dos ovos aquece o salmão perfeitamente.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> O segredo é retirar do fogo cedo — os ovos continuam cozinhando pelo calor residual.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 05</div>
-        <div class="recipe-name">Muffin de Ovo no Microondas</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 5 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 1 porção</span>
-          <span class="recipe-meta-item"><span>🔥</span> 220 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 3g</span>
-          <span class="macro-pill prot">Proteína: 18g</span>
-          <span class="macro-pill fat">Gordura: 15g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 ovos inteiros</li>
-            <li>30g presunto picado</li>
-            <li>20g muçarela ralada</li>
-            <li>2 col. sopa pimentão picado</li>
-            <li>Sal, pimenta, orégano</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Unte uma caneca grande com manteiga ou spray de coco.</li>
-            <li>Bata os ovos na caneca com sal, pimenta e orégano.</li>
-            <li>Adicione presunto, queijo e pimentão e misture levemente.</li>
-            <li>Microondas em potência alta por 1 min 30 seg.</li>
-            <li>Verifique o centro — se ainda líquido, mais 30 seg.</li>
-            <li>Desenforme na caneca e sirva com salsa fresca.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Prepare na véspera sem o queijo — na hora, adicione o queijo e micro por 30 seg. Café da manhã em 1 minuto.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 06</div>
-        <div class="recipe-name">Smoothie Verde com Abacate</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 5 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 1 porção</span>
-          <span class="recipe-meta-item"><span>🔥</span> 310 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 10g</span>
-          <span class="macro-pill prot">Proteína: 16g</span>
-          <span class="macro-pill fat">Gordura: 22g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>½ abacate maduro</li>
-            <li>1 xíc. espinafre baby</li>
-            <li>200ml leite de amêndoas sem açúcar</li>
-            <li>1 dose whey protein (baunilha)</li>
-            <li>Gelo a gosto</li>
-            <li>Suco de ½ limão</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Coloque todos os ingredientes no liquidificador.</li>
-            <li>Bata por 45-60 segundos em velocidade alta.</li>
-            <li>Experimente e ajuste limão se necessário.</li>
-            <li>Adicione gelo e bata por mais 15 segundos.</li>
-            <li>Sirva imediatamente em copo alto.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Congele o abacate em cubos antecipadamente para um smoothie mais cremoso e gelado sem precisar de muito gelo.</div>
-    </div>
-
-  </div>
-
-  <!-- CATEGORIA 2: ALMOÇO -->
-  <div class="category-header">
-    <div class="category-icon">☀️</div>
-    <div class="category-title">Almoço</div>
-    <div class="category-count">7 Receitas</div>
-  </div>
-
-  <div class="recipe-grid">
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 07</div>
-        <div class="recipe-name">Bowl de Frango com Arroz de Couve-flor</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 25 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 420 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 12g</span>
-          <span class="macro-pill prot">Proteína: 48g</span>
-          <span class="macro-pill fat">Gordura: 18g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>400g peito de frango</li>
-            <li>½ couve-flor média</li>
-            <li>1 abacate em cubos</li>
-            <li>Mix de folhas verdes</li>
-            <li>Azeite, limão, sal</li>
-            <li>Páprica defumada, alho em pó</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Tempere o frango com páprica, alho, sal e pimenta.</li>
-            <li>Grelhe em frigideira com azeite por 6-7 min de cada lado.</li>
-            <li>Processe a couve-flor no processador até virar "arroz".</li>
-            <li>Refogue o arroz de couve-flor com azeite, sal e alho por 3-4 min.</li>
-            <li>Monte o bowl: folhas, arroz de couve, frango fatiado e abacate.</li>
-            <li>Regue com azeite e limão fresco.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> O "arroz" de couve-flor pode ser preparado em lote e conservado na geladeira por 3 dias.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 08</div>
-        <div class="recipe-name">Salmão ao Forno com Aspargos</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 20 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 480 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 6g</span>
-          <span class="macro-pill prot">Proteína: 44g</span>
-          <span class="macro-pill fat">Gordura: 30g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 filés de salmão (180g cada)</li>
-            <li>1 maço de aspargos</li>
-            <li>3 col. sopa azeite extra virgem</li>
-            <li>4 dentes de alho</li>
-            <li>Limão siciliano (suco e raspas)</li>
-            <li>Sal, pimenta, endro (dill)</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Pré-aqueça o forno a 200°C. Forre assadeira com papel manteiga.</li>
-            <li>Misture azeite, alho amassado, raspas e suco de limão.</li>
-            <li>Coloque salmão e aspargos na assadeira.</li>
-            <li>Despeje o molho sobre tudo e tempere com sal, pimenta e endro.</li>
-            <li>Asse por 15-18 min até o salmão lascar facilmente com o garfo.</li>
-            <li>Sirva com fatias de limão por cima.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Invista em salmão fresco — a diferença no sabor é enorme comparado ao congelado.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 09</div>
-        <div class="recipe-name">Salada de Atum com Abacate</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 10 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 1 porção</span>
-          <span class="recipe-meta-item"><span>🔥</span> 390 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 8g</span>
-          <span class="macro-pill prot">Proteína: 36g</span>
-          <span class="macro-pill fat">Gordura: 24g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>1 lata atum em azeite (170g)</li>
-            <li>1 abacate maduro</li>
-            <li>½ pepino em cubos</li>
-            <li>10 azeitonas pretas</li>
-            <li>Azeite, limão, sal</li>
-            <li>Coentro ou salsinha</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Escorra o atum e solte levemente com o garfo.</li>
-            <li>Amasse o abacate com sal e limão até virar um creme grosso.</li>
-            <li>Misture atum, abacate, pepino e azeitonas.</li>
-            <li>Tempere com azeite, mais limão e sal a gosto.</li>
-            <li>Finalize com coentro ou salsinha picada.</li>
-            <li>Sirva gelado sobre folhas ou dentro de metades de abacate.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Sirva dentro de metades de abacate para um visual bonito e uma refeição zero louças.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 10</div>
-        <div class="recipe-name">Frango Xadrez Low Carb</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 25 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 400 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 10g</span>
-          <span class="macro-pill prot">Proteína: 46g</span>
-          <span class="macro-pill fat">Gordura: 18g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>400g frango em cubos</li>
-            <li>1 pimentão vermelho e 1 verde</li>
-            <li>100g castanha de caju (sem sal)</li>
-            <li>3 col. sopa shoyu sem glúten</li>
-            <li>1 col. sopa óleo de gergelim</li>
-            <li>Gengibre, alho, pimenta dedo-de-moça</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Marine o frango com shoyu, gengibre e alho por 15 min.</li>
-            <li>Seque o frango marinado com papel e sele em wok bem quente.</li>
-            <li>Reserve o frango e refogue os pimentões no mesmo wok por 2 min.</li>
-            <li>Volte o frango, adicione a castanha e a pimenta.</li>
-            <li>Finalize com óleo de gergelim e shoyu extra se necessário.</li>
-            <li>Sirva com arroz de couve-flor ou brócolis no vapor.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> O wok bem quente (quase fumegando) é o segredo do sabor chinês — não tenha medo do calor.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 11</div>
-        <div class="recipe-name">Carne Moída com Brócolis Gratinado</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 30 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 3 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 450 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 10g</span>
-          <span class="macro-pill prot">Proteína: 42g</span>
-          <span class="macro-pill fat">Gordura: 26g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>500g carne moída (patinho)</li>
-            <li>1 brócolis grande</li>
-            <li>1 cebola média</li>
-            <li>3 dentes de alho</li>
-            <li>150g cream cheese</li>
-            <li>100g muçarela ralada</li>
-            <li>Sal, pimenta, orégano</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Refogue cebola e alho em azeite até dourar.</li>
-            <li>Adicione a carne moída e cozinhe até secar bem, temperando com sal e pimenta.</li>
-            <li>Cozinhe o brócolis no vapor até ficar al dente (4 min).</li>
-            <li>Misture o cream cheese à carne fora do fogo.</li>
-            <li>Monte em refratário: carne, brócolis e finalize com muçarela e orégano.</li>
-            <li>Gratine no forno a 220°C por 10 min até dourar.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Rende ótimo para preparo em lote (meal prep) — dura 4 dias na geladeira.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 12</div>
-        <div class="recipe-name">Hambúrguer na Alface (Sem Pão)</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 15 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 1 porção</span>
-          <span class="recipe-meta-item"><span>🔥</span> 480 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 5g</span>
-          <span class="macro-pill prot">Proteína: 38g</span>
-          <span class="macro-pill fat">Gordura: 34g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>200g patinho moído (na hora)</li>
-            <li>Folhas grandes de alface americana</li>
-            <li>1 ovo frito (opcional)</li>
-            <li>Queijo cheddar fatia</li>
-            <li>Tomate, cebola roxa</li>
-            <li>Mostarda, maionese de azeite</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Molde o hambúrguer com sal e pimenta — não exagere na manipulação.</li>
-            <li>Grelhe em frigideira bem quente por 3-4 min de cada lado.</li>
-            <li>Adicione o cheddar no último minuto e tampe para derreter.</li>
-            <li>Lave e seque as folhas de alface — elas serão o "pão".</li>
-            <li>Monte: alface base, mostarda, hambúrguer com queijo, tomate, cebola, maionese.</li>
-            <li>Envolva com mais alface e segure firme. Bom apetite.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Patinho moído na hora tem 15% de gordura — o ponto certo para hambúrguer suculento sem ser gorduroso.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 13</div>
-        <div class="recipe-name">Sopa Creme de Abóbora com Gengibre</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 30 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 4 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 200 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 16g</span>
-          <span class="macro-pill prot">Proteína: 6g</span>
-          <span class="macro-pill fat">Gordura: 10g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>600g abóbora cabotiá</li>
-            <li>400ml leite de coco integral</li>
-            <li>1 col. sopa gengibre ralado</li>
-            <li>1 cebola, 3 dentes alho</li>
-            <li>500ml caldo de legumes</li>
-            <li>Azeite, sal, pimenta-caiena</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Asse a abóbora com casca no forno a 200°C por 25 min.</li>
-            <li>Refogue cebola, alho e gengibre em azeite até dourar.</li>
-            <li>Retire a polpa da abóbora assada e adicione à panela.</li>
-            <li>Adicione o caldo de legumes e cozinhe por 10 min.</li>
-            <li>Bata tudo no liquidificador até ficar completamente liso.</li>
-            <li>Volte ao fogo, adicione leite de coco e ajuste sal e pimenta-caiena.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Sirva com sementes de abóbora tostadas e um fio de creme de leite para um visual de restaurante.</div>
-    </div>
-
-  </div>
-
-  <!-- CATEGORIA 3: JANTAR -->
-  <div class="category-header">
-    <div class="category-icon">🌙</div>
-    <div class="category-title">Jantar</div>
-    <div class="category-count">6 Receitas</div>
-  </div>
-
-  <div class="recipe-grid">
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 14</div>
-        <div class="recipe-name">Frango Grelhado com Molho Pesto de Rúcula</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 20 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 440 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 4g</span>
-          <span class="macro-pill prot">Proteína: 50g</span>
-          <span class="macro-pill fat">Gordura: 24g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 peitos de frango (180g cada)</li>
-            <li>2 xíc. rúcula fresca</li>
-            <li>50g parmesão ralado</li>
-            <li>30g pinhão ou nozes</li>
-            <li>4 col. sopa azeite extra virgem</li>
-            <li>1 dente alho, sal, pimenta</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Prepare o pesto: processe rúcula, parmesão, pinhão, alho e azeite até cremoso.</li>
-            <li>Tempere o pesto com sal e pimenta — reserve.</li>
-            <li>Abra o peito de frango ao meio como um livro (borboleta) para cozimento uniforme.</li>
-            <li>Tempere com sal, pimenta e azeite. Grelhe por 5-6 min de cada lado.</li>
-            <li>Deixe descansar 3 min antes de cortar.</li>
-            <li>Sirva com pesto generoso por cima e salada de folhas.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Congele o pesto em formas de gelo — cubinhos prontos para usar a qualquer momento.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 15</div>
-        <div class="recipe-name">Filé de Tilápia com Manteiga de Ervas</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 15 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 350 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 1g</span>
-          <span class="macro-pill prot">Proteína: 40g</span>
-          <span class="macro-pill fat">Gordura: 20g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 filés tilápia (200g cada)</li>
-            <li>3 col. sopa manteiga</li>
-            <li>2 dentes alho picados</li>
-            <li>Tomilho, alecrim, salsinha</li>
-            <li>Suco de 1 limão</li>
-            <li>Sal e pimenta branca</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Seque bem os filés com papel absorvente. Tempere com sal e pimenta.</li>
-            <li>Aqueça frigideira em fogo alto — bem quente antes de colocar o peixe.</li>
-            <li>Adicione 1 col. manteiga e sele os filés por 3 min sem mexer.</li>
-            <li>Vire delicadamente e adicione o restante da manteiga com alho e ervas.</li>
-            <li>Baste (regue) os filés com a manteiga derretida continuamente.</li>
-            <li>Finalize com suco de limão e sirva imediatamente.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Basear o peixe na própria manteiga dourada (beurre noisette) adiciona sabor de avelã sem nenhum carboidrato.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 16</div>
-        <div class="recipe-name">Curry de Coco com Camarão</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 25 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 430 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 10g</span>
-          <span class="macro-pill prot">Proteína: 36g</span>
-          <span class="macro-pill fat">Gordura: 28g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>400g camarão limpo</li>
-            <li>400ml leite de coco integral</li>
-            <li>2 col. sopa curry em pó</li>
-            <li>1 cebola, 4 dentes alho</li>
-            <li>1 col. sopa gengibre ralado</li>
-            <li>Coentro fresco, limão</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Refogue cebola até caramelizar (5-6 min) — paciência aqui é fundamental.</li>
-            <li>Adicione alho, gengibre e curry. Refogue mais 2 min até perfumar.</li>
-            <li>Despeje o leite de coco e deixe ferver por 5 min para engrossar levemente.</li>
-            <li>Adicione os camarões — cozinham em apenas 2-3 min (até rosa e curvado).</li>
-            <li>Não deixe passar o ponto: camarão borrachudo estraga o prato.</li>
-            <li>Finalize com coentro fresco e suco de limão. Sirva com arroz de couve-flor.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Use leite de coco da lata (integral), não a versão caixinha — a gordura é o que dá cremosidade real.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 17</div>
-        <div class="recipe-name">Bife Ancho com Manteiga de Alho Negro</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 20 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 560 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 2g</span>
-          <span class="macro-pill prot">Proteína: 52g</span>
-          <span class="macro-pill fat">Gordura: 38g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 bifes ancho (220g cada)</li>
-            <li>4 col. sopa manteiga</li>
-            <li>4 dentes alho negro (ou alho comum)</li>
-            <li>Tomilho fresco</li>
-            <li>Sal grosso, pimenta preta grossa</li>
-            <li>Azeite para selar</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Retire a carne da geladeira 30 min antes. Sal grosso e pimenta generosos.</li>
-            <li>Frigideira de ferro bem quente com um fio de azeite.</li>
-            <li>Sele por 3 min de cada lado sem mexer para crosta perfeita.</li>
-            <li>Adicione manteiga, alho amassado e tomilho. Incline e baste constantemente.</li>
-            <li>Para mal passado: 55°C interno. Ao ponto: 62°C. Bem passado: 70°C.</li>
-            <li>Descanse 5 min antes de cortar — nunca corte imediatamente.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Termômetro culinário é o investimento mais barato para nunca mais estragar um corte nobre.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 18</div>
-        <div class="recipe-name">Zoodles (Espaguete de Abobrinha) com Bolonhesa</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 30 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 410 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 12g</span>
-          <span class="macro-pill prot">Proteína: 38g</span>
-          <span class="macro-pill fat">Gordura: 22g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 abobrinhas grandes</li>
-            <li>400g carne moída</li>
-            <li>1 lata tomate pelado</li>
-            <li>1 cebola, 4 dentes alho</li>
-            <li>Vinho tinto seco (50ml)</li>
-            <li>Parmesão, manjericão, azeite</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Bolonhesa: refogue cebola e alho. Adicione carne e sele bem.</li>
-            <li>Adicione vinho e deixe evaporar. Junte tomate pelado amassado.</li>
-            <li>Cozinhe em fogo baixo por 20 min mexendo ocasionalmente.</li>
-            <li>Zoodles: use espiralizador ou descascador em julienne nas abobrinhas.</li>
-            <li>Sal nas tiras e deixe em peneira por 5 min para perder água.</li>
-            <li>Sirva os zoodles crus com a bolonhesa quente por cima — o calor do molho é suficiente.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Não cozinhe os zoodles — servir crus com molho quente mantém a textura e evita que virem uma papinha aquosa.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 19</div>
-        <div class="recipe-name">Frango Assado com Limão Siciliano</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 50 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 4 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 380 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 3g</span>
-          <span class="macro-pill prot">Proteína: 44g</span>
-          <span class="macro-pill fat">Gordura: 20g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>1 frango inteiro (1,5kg)</li>
-            <li>2 limões sicilianos</li>
-            <li>6 dentes alho</li>
-            <li>Ervas: alecrim, tomilho, orégano</li>
-            <li>3 col. sopa manteiga</li>
-            <li>Sal grosso e pimenta preta</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Misture manteiga amolecida com raspas de limão, alho amassado e ervas.</li>
-            <li>Coloque a manteiga de ervas embaixo da pele do frango com as mãos.</li>
-            <li>Tempere o exterior com sal grosso e pimenta.</li>
-            <li>Coloque os limões espremidos dentro do frango.</li>
-            <li>Asse em forno a 200°C por 45-50 min (25 min/kg).</li>
-            <li>Deixe descansar 10 min antes de cortar para os sucos redistribuírem.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> A manteiga embaixo da pele é o segredo para peito de frango suculento — derrete durante o assado e tempera por dentro.</div>
-    </div>
-
-  </div>
-
-  <!-- CATEGORIA 4: LANCHES -->
-  <div class="category-header">
-    <div class="category-icon">🥑</div>
-    <div class="category-title">Lanches e Snacks</div>
-    <div class="category-count">4 Receitas</div>
-  </div>
-
-  <div class="recipe-grid">
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 20</div>
-        <div class="recipe-name">Guacamole com Chips de Pepino</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 8 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 200 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 8g</span>
-          <span class="macro-pill prot">Proteína: 3g</span>
-          <span class="macro-pill fat">Gordura: 16g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 abacates maduros</li>
-            <li>1 tomate picado sem sementes</li>
-            <li>½ cebola roxa picada</li>
-            <li>Suco de 1 limão</li>
-            <li>Coentro, sal, pimenta</li>
-            <li>1 pepino grande fatiado</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Amasse os abacates com garfo — não deixe virar creme liso, textura rústica é melhor.</li>
-            <li>Misture tomate, cebola, coentro e limão.</li>
-            <li>Tempere com sal e pimenta a gosto.</li>
-            <li>Fatie o pepino em rodelas de 1cm — os "chips" para mergulhar.</li>
-            <li>Sirva o guacamole em tigela com pepino ao redor.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> O caroço do abacate dentro do guacamole (mito ou não) — a cobertura com plástico direto na superfície funciona mesmo para evitar oxidação.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 21</div>
-        <div class="recipe-name">Wrap de Alface com Peru e Cream Cheese</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 5 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 1 porção</span>
-          <span class="recipe-meta-item"><span>🔥</span> 260 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 4g</span>
-          <span class="macro-pill prot">Proteína: 28g</span>
-          <span class="macro-pill fat">Gordura: 14g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>4 fatias peito de peru</li>
-            <li>2 col. sopa cream cheese</li>
-            <li>Folhas grandes de alface</li>
-            <li>Tomate cereja cortado ao meio</li>
-            <li>Mostarda dijon</li>
-            <li>Pimenta-do-reino</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Espalhe cream cheese em cada fatia de peru.</li>
-            <li>Adicione uma gotinha de mostarda dijon sobre o cream cheese.</li>
-            <li>Coloque tomate cereja e tempere com pimenta.</li>
-            <li>Enrole cada fatia de peru como um charuto.</li>
-            <li>Sirva sobre folhas de alface ou use a alface para enrolar tudo.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Prepare 8-10 rolls de uma vez, guarde em pote fechado na geladeira. Snack pronto para 2 dias.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 22</div>
-        <div class="recipe-name">Ovo Cozido com Pasta de Abacate</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 12 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 1 porção</span>
-          <span class="recipe-meta-item"><span>🔥</span> 310 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 6g</span>
-          <span class="macro-pill prot">Proteína: 16g</span>
-          <span class="macro-pill fat">Gordura: 24g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 ovos</li>
-            <li>½ abacate maduro</li>
-            <li>Suco de ½ limão</li>
-            <li>Sal, pimenta, páprica</li>
-            <li>Gergelim para decorar</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Cozinhe os ovos por 7 min em água fervente (gema molinha).</li>
-            <li>Transfira para água gelada por 2 min. Descasque com cuidado.</li>
-            <li>Amasse o abacate com limão, sal e pimenta até pasta.</li>
-            <li>Corte os ovos ao meio no sentido do comprimento.</li>
-            <li>Coloque uma colher de pasta de abacate onde estava a gema.</li>
-            <li>Finalize com páprica defumada e gergelim.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Versão sofisticada do ovo deviled clássico — zero culpa e muito mais nutrição.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 23</div>
-        <div class="recipe-name">Mix de Oleaginosas Temperadas</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 10 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 4 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 200 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 5g</span>
-          <span class="macro-pill prot">Proteína: 6g</span>
-          <span class="macro-pill fat">Gordura: 17g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>50g amêndoas cruas</li>
-            <li>50g nozes</li>
-            <li>50g castanha-do-pará</li>
-            <li>30g sementes de abóbora</li>
-            <li>1 col. sopa azeite</li>
-            <li>Sal, alecrim, páprica defumada</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Pré-aqueça o forno a 170°C.</li>
-            <li>Misture todas as oleaginosas com azeite e temperos em uma tigela.</li>
-            <li>Espalhe em assadeira forrada com papel manteiga em camada única.</li>
-            <li>Torre por 8-10 min, mexendo uma vez na metade do tempo.</li>
-            <li>Retire quando cheirar a amendoim torrado — cuidado para não queimar.</li>
-            <li>Deixe esfriar completamente antes de guardar em pote hermético.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Porções de 30g em saquinhos individuais evitam o "uma mão puxa a outra" — o maior inimigo das oleaginosas.</div>
-    </div>
-
-  </div>
-
-  <!-- CATEGORIA 5: SOBREMESAS -->
-  <div class="category-header">
-    <div class="category-icon">🍫</div>
-    <div class="category-title">Sobremesas Low Carb</div>
-    <div class="category-count">4 Receitas</div>
-  </div>
-
-  <div class="recipe-grid">
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 24</div>
-        <div class="recipe-name">Mousse de Chocolate 70%</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 15 min + 2h geladeira</span>
-          <span class="recipe-meta-item"><span>🍽</span> 4 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 240 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 10g</span>
-          <span class="macro-pill prot">Proteína: 8g</span>
-          <span class="macro-pill fat">Gordura: 20g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>150g chocolate 70% cacau</li>
-            <li>4 ovos (claras separadas)</li>
-            <li>2 col. sopa eritritol (opcional)</li>
-            <li>1 pitada de sal</li>
-            <li>Essência de baunilha</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Derreta o chocolate em banho-maria ou microondas (30 em 30 seg).</li>
-            <li>Misture as gemas ao chocolate derretido ainda morno com o eritritol.</li>
-            <li>Bata as claras em neve com pitada de sal até pico firme.</li>
-            <li>Incorpore as claras ao chocolate em 3 adições, com movimentos delicados de baixo para cima.</li>
-            <li>Distribua em taças e leve à geladeira por mínimo 2 horas.</li>
-            <li>Sirva com raspas de chocolate 70% por cima.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> O chocolate 70% já tem doçura suficiente — experimente sem eritritol antes de adoçar.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 25</div>
-        <div class="recipe-name">Sorvete de Banana Congelada</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 5 min + 4h congelador</span>
-          <span class="recipe-meta-item"><span>🍽</span> 2 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 180 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 22g</span>
-          <span class="macro-pill prot">Proteína: 10g</span>
-          <span class="macro-pill fat">Gordura: 4g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>2 bananas maduras congeladas</li>
-            <li>2 col. sopa pasta de amendoim</li>
-            <li>1 col. sopa cacau em pó 100%</li>
-            <li>Canela a gosto</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Congele bananas cortadas em rodelas por no mínimo 4 horas.</li>
-            <li>Coloque as bananas congeladas no processador.</li>
-            <li>Processe até começar a virar creme — vai parecer que não funciona, continue.</li>
-            <li>Adicione pasta de amendoim, cacau e canela.</li>
-            <li>Processe até textura de sorvete cremoso.</li>
-            <li>Sirva imediatamente ou congele por mais 30 min para textura mais firme.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Quanto mais madura a banana, mais doce e cremoso o resultado — banana com pintinhas pretas é ideal.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 26</div>
-        <div class="recipe-name">Panna Cotta de Coco</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 15 min + 3h geladeira</span>
-          <span class="recipe-meta-item"><span>🍽</span> 4 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 220 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 5g</span>
-          <span class="macro-pill prot">Proteína: 4g</span>
-          <span class="macro-pill fat">Gordura: 20g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>400ml leite de coco integral</li>
-            <li>200ml creme de leite</li>
-            <li>2 col. chá gelatina em pó</li>
-            <li>3 col. sopa eritritol</li>
-            <li>Baunilha, pitada de sal</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Hidrate a gelatina em 3 col. sopa de água fria por 5 min.</li>
-            <li>Aqueça leite de coco e creme de leite com eritritol e baunilha — não ferva.</li>
-            <li>Derreta a gelatina hidratada no microondas por 10 seg.</li>
-            <li>Misture a gelatina à mistura de coco ainda quente e mexa bem.</li>
-            <li>Distribua em formas ou taças. Deixe esfriar e leve à geladeira por 3h.</li>
-            <li>Desenforme e sirva com frutas vermelhas frescas.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Unte levemente as formas com óleo de coco para desenformar perfeitamente.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 27</div>
-        <div class="recipe-name">Brownie de Amendoim (Sem Farinha)</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 25 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 8 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 190 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 8g</span>
-          <span class="macro-pill prot">Proteína: 9g</span>
-          <span class="macro-pill fat">Gordura: 14g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>1 xíc. pasta de amendoim</li>
-            <li>1 ovo inteiro</li>
-            <li>4 col. sopa eritritol ou mel</li>
-            <li>3 col. sopa cacau em pó 100%</li>
-            <li>1 col. chá fermento em pó</li>
-            <li>Gotas de chocolate 70% (opcional)</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Pré-aqueça o forno a 180°C. Forre forma quadrada pequena com papel manteiga.</li>
-            <li>Misture pasta de amendoim com ovo e eritritol até homogêneo.</li>
-            <li>Adicione cacau e fermento — a massa fica bem densa, é normal.</li>
-            <li>Espalhee na forma e adicione gotas de chocolate por cima.</li>
-            <li>Asse por 12-14 min — o centro deve estar levemente mole ao retirar.</li>
-            <li>Deixe esfriar completamente antes de cortar (endurece ao resfriar).</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Não asse demais — brownie low carb seca mais rápido que o tradicional. Prefira levemente underbaked.</div>
-    </div>
-
-  </div>
-
-  <!-- CATEGORIA 6: MEAL PREP -->
-  <div class="category-header">
-    <div class="category-icon">📦</div>
-    <div class="category-title">Meal Prep — Preparo em Lote</div>
-    <div class="category-count">3 Receitas</div>
-  </div>
-
-  <div class="recipe-grid">
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 28</div>
-        <div class="recipe-name">Frango Desfiado Temperado para a Semana</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 40 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 6 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 220 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 2g</span>
-          <span class="macro-pill prot">Proteína: 38g</span>
-          <span class="macro-pill fat">Gordura: 7g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>1kg peito de frango</li>
-            <li>1 cebola, 4 dentes alho</li>
-            <li>1 folha louro</li>
-            <li>Páprica, cominho, cúrcuma</li>
-            <li>Sal grosso, pimenta</li>
-            <li>Caldo de galinha natural</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Cubra o frango com água, cebola, alho, louro e sal em panela de pressão.</li>
-            <li>Cozinhe por 20 min após pegar pressão.</li>
-            <li>Retire o frango e desfie com 2 garfos ainda quente.</li>
-            <li>Reserve 200ml do caldo do cozimento.</li>
-            <li>Refogue o frango desfiado com azeite, páprica, cominho e cúrcuma por 5 min.</li>
-            <li>Adicione um pouco do caldo se necessário para hidratar. Resfrie e armazene.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Dura 5 dias na geladeira ou 3 meses no congelador. Use em bowls, ovos, saladas e wraps instantaneamente.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 29</div>
-        <div class="recipe-name">Ovos Cozidos Pré-temperados</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 15 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 6 unidades</span>
-          <span class="recipe-meta-item"><span>🔥</span> 90 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 0g</span>
-          <span class="macro-pill prot">Proteína: 8g</span>
-          <span class="macro-pill fat">Gordura: 6g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>6 ovos</li>
-            <li>400ml shoyu sem glúten</li>
-            <li>200ml mirin (ou sake)</li>
-            <li>100ml água</li>
-            <li>1 col. sopa eritritol</li>
-            <li>Cebolinha para servir</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Cozinhe os ovos por 6 min e 30 seg em água fervente (gema cremosa).</li>
-            <li>Leve para banho de gelo por 5 min. Descasque com cuidado.</li>
-            <li>Ferva shoyu, mirin, água e eritritol por 2 min. Deixe esfriar.</li>
-            <li>Coloque os ovos em saco ziplock com a marinada fria.</li>
-            <li>Marine na geladeira por mínimo 4 horas (ideal: 12-24 horas).</li>
-            <li>Sirva cortado ao meio — terá coloração marrom caramelizada por fora.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> Ovo marinado japonês (ajitsuke tamago) — lanche instantâneo de alto valor proteico com sabor extraordinário.</div>
-    </div>
-
-    <div class="recipe-card">
-      <div class="recipe-header">
-        <div class="recipe-number">Receita 30</div>
-        <div class="recipe-name">Molho Vinagrete de Ervas para a Semana</div>
-        <div class="recipe-meta">
-          <span class="recipe-meta-item"><span>⏱</span> 10 min</span>
-          <span class="recipe-meta-item"><span>🍽</span> 8 porções</span>
-          <span class="recipe-meta-item"><span>🔥</span> 120 kcal</span>
-        </div>
-        <div class="macro-pills">
-          <span class="macro-pill carb">Carbs: 1g</span>
-          <span class="macro-pill prot">Proteína: 0g</span>
-          <span class="macro-pill fat">Gordura: 14g</span>
-        </div>
-      </div>
-      <div class="recipe-body">
-        <div>
-          <div class="ingredients-title">Ingredientes</div>
-          <ul class="ingredients-list">
-            <li>120ml azeite extra virgem</li>
-            <li>40ml vinagre de maçã</li>
-            <li>1 col. sopa mostarda dijon</li>
-            <li>1 dente alho ralado</li>
-            <li>Ervas frescas: tomilho, salsinha</li>
-            <li>Sal, pimenta, mel (uma gota)</li>
-          </ul>
-        </div>
-        <div>
-          <div class="steps-title">Modo de Preparo</div>
-          <ol class="steps-list">
-            <li>Coloque mostarda, vinagre, alho, sal e mel em pote de vidro com tampa.</li>
-            <li>Adicione o azeite e as ervas picadas finamente.</li>
-            <li>Feche o pote e agite vigorosamente por 30 segundos.</li>
-            <li>Experimente e ajuste acidez, sal e doçura.</li>
-            <li>Guarde na geladeira — agite antes de usar pois vai separar.</li>
-            <li>Válido por 2 semanas refrigerado.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="recipe-tip"><strong>Dica</strong> A mostarda é o emulsificante natural — ela ajuda azeite e vinagre a misturarem melhor do que sem ela.</div>
-    </div>
-
-  </div>
-
-  <!-- FINAL GUIDE -->
-  <div class="section-header">
-    <div class="section-label">Guia Rápido</div>
-    <h2 class="section-title">Como montar sua semana low carb</h2>
-    <p class="section-desc">Um plano semanal simples para começar sem complicar.</p>
-  </div>
-
-  <div class="guide-block">
-    <h3>Domingo: Prep day (2 horas)</h3>
-    <ul class="guide-list">
-      <li><span class="check">①</span> Faça o frango desfiado (receita 28)</li>
-      <li><span class="check">②</span> Marine os ovos (receita 29)</li>
-      <li><span class="check">③</span> Prepare o vinagrete (receita 30)</li>
-      <li><span class="check">④</span> Torre o mix de oleaginosas (receita 23)</li>
-      <li><span class="check">⑤</span> Processe "arroz" de couve-flor em lote</li>
-      <li><span class="check">⑥</span> Separe porções em potes para os dias</li>
-    </ul>
-  </div>
-
-  <div class="info-grid">
-    <div class="info-card">
-      <span class="info-card-icon">🌅</span>
-      <div class="info-card-title">Café da manhã</div>
-      <div class="info-card-text">Priorize proteína + gordura. Evite frutas açucaradas. Omelete ou iogurte grego são os pilares.</div>
-    </div>
-    <div class="info-card">
-      <span class="info-card-icon">☀️</span>
-      <div class="info-card-title">Almoço</div>
-      <div class="info-card-text">Proteína + vegetais fibrosos. Use o frango desfiado pré-preparado para montar bowls em 5 min.</div>
-    </div>
-    <div class="info-card">
-      <span class="info-card-icon">🌙</span>
-      <div class="info-card-title">Jantar</div>
-      <div class="info-card-text">Refeição mais elaborada e prazerosa do dia. Pode incluir cortes de carne mais nobres.</div>
-    </div>
-    <div class="info-card">
-      <span class="info-card-icon">🥑</span>
-      <div class="info-card-title">Lanches</div>
-      <div class="info-card-text">Oleaginosas, ovos marinados, wraps de alface. Portabilidade é tudo — prepare com antecedência.</div>
-    </div>
-  </div>
-
-</div>
-
-<footer>
-  <div class="brand">Life OS</div>
-  <p>Receitas Low Carb · Material exclusivo para membros</p>
-  <p style="margin-top: 8px;"><a href="https://agenciacriativa.shop">agenciacriativa.shop</a></p>
-</footer>
-
-<button id="btn-install-pwa" onclick="installPWA()" class="pwa-install-fab" style="display:none">
-  <span style="font-size:16px">📲</span> Instalar app
+<button id="btn-install-pwa" onclick="installPWA()" class="pwa-install-fab">
+  <span>◆</span> Instalar app
 </button>
-<style>
-  .pwa-install-fab {
-    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark, var(--accent)));
-    color: #fff; border: none; padding: 12px 20px; border-radius: 50px;
-    font-weight: 700; font-size: 13px; font-family: 'Inter', sans-serif;
-    cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-    display: flex; align-items: center; gap: 6px; letter-spacing: 0.3px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .pwa-install-fab:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
-  @media print { .pwa-install-fab { display: none !important; } }
-</style>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
-  }
-  let __pwaPrompt = null;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault(); __pwaPrompt = e;
-    const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
-  });
-  function installPWA() {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-    if (isStandalone) { alert('App já instalado!'); return; }
-    if (isIOS) {
-      alert('Para instalar no iPhone:\n\n1. Toque no botão Compartilhar (quadrado com seta para cima)\n2. Role e toque em "Adicionar à Tela de Início"\n3. Toque em "Adicionar"');
-      return;
-    }
-    if (__pwaPrompt) { __pwaPrompt.prompt(); __pwaPrompt.userChoice.then(() => __pwaPrompt = null); }
-    else { alert('Para instalar no Android: menu (3 pontos) → "Instalar app"'); }
-  }
-  document.addEventListener('DOMContentLoaded', () => {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-    if (isIOS && !isStandalone) {
-      const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
-    }
-  });
-</script>
 
+<script>
+// ============ DATA: 30 RECIPES ============
+const RECIPES = [
+  {n:1,name:"Omelete de Espinafre com Queijo Feta",cat:"cafe",time:10,serv:1,kcal:320,c:4,p:22,f:24,
+   ing:["3 ovos inteiros","1 xíc. espinafre fresco","50g queijo feta esfarelado","1 col. sopa manteiga","Sal, pimenta-do-reino","Noz-moscada a gosto"],
+   steps:["Bata os ovos com sal, pimenta e noz-moscada.","Derreta a manteiga em fogo médio-alto na frigideira antiaderente.","Refogue o espinafre por 1 min até murchar levemente.","Despeje os ovos e incline a frigideira para espalhar uniformemente.","Quando as bordas estiverem firmes, adicione o feta no centro.","Dobre o omelete ao meio e sirva imediatamente."],
+   tip:"Adicione tomate seco picado para um toque de umami sem elevar muito os carboidratos."},
+  {n:2,name:"Panqueca de Banana com Whey",cat:"cafe",time:15,serv:2,kcal:280,c:18,p:28,f:8,
+   ing:["1 banana pequena madura","2 ovos inteiros","30g whey protein (baunilha)","1 col. chá fermento em pó","Canela a gosto","Óleo de coco para untar"],
+   steps:["Amasse a banana com um garfo até virar uma pasta homogênea.","Misture os ovos, o whey, o fermento e a canela até obter uma massa lisa.","Aqueça a frigideira com óleo de coco em fogo médio.","Despeje 2 col. sopa de massa por panqueca.","Cozinhe ~2 min de cada lado até dourar.","Sirva com pasta de amendoim sem açúcar ou frutas vermelhas."],
+   tip:"Use banana bem madura para adoçar naturalmente sem precisar de açúcar ou adoçante."},
+  {n:3,name:"Iogurte Grego com Granola de Nozes",cat:"cafe",time:5,serv:1,kcal:380,c:12,p:24,f:26,
+   ing:["200g iogurte grego integral","30g nozes picadas","20g amêndoas laminadas","10g sementes de chia","½ col. chá canela","Gotas de extrato de baunilha"],
+   steps:["Coloque o iogurte grego em uma tigela funda.","Misture nozes, amêndoas e sementes de chia em uma tigela pequena.","Adicione canela ao mix de oleaginosas e misture bem.","Disponha a granola de nozes sobre o iogurte.","Adicione algumas gotas de extrato de baunilha.","Sirva imediatamente ou deixe na geladeira por até 1h para intensificar sabores."],
+   tip:"Adicione uma col. sopa de cacau em pó 100% para uma versão chocolate que ainda é low carb."},
+  {n:4,name:"Ovos Mexidos com Salmão Defumado",cat:"cafe",time:12,serv:1,kcal:360,c:2,p:34,f:24,
+   ing:["3 ovos inteiros","80g salmão defumado","1 col. sopa cream cheese","Cebolinha picada a gosto","1 col. chá manteiga","Sal e pimenta branca"],
+   steps:["Bata os ovos com cream cheese, sal e pimenta branca.","Derreta a manteiga em fogo baixo na frigideira.","Despeje os ovos e mexa lentamente com espátula de silicone.","Retire do fogo enquanto ainda cremoso (não totalmente seco).","Adicione o salmão defumado por cima e cebolinha.","O calor residual dos ovos aquece o salmão perfeitamente."],
+   tip:"O segredo é retirar do fogo cedo — os ovos continuam cozinhando pelo calor residual."},
+  {n:5,name:"Muffin de Ovo no Microondas",cat:"cafe",time:5,serv:1,kcal:220,c:3,p:18,f:15,
+   ing:["2 ovos inteiros","30g presunto picado","20g muçarela ralada","2 col. sopa pimentão picado","Sal, pimenta, orégano"],
+   steps:["Unte uma caneca grande com manteiga ou spray de coco.","Bata os ovos na caneca com sal, pimenta e orégano.","Adicione presunto, queijo e pimentão e misture levemente.","Microondas em potência alta por 1 min 30 seg.","Verifique o centro — se ainda líquido, mais 30 seg.","Desenforme na caneca e sirva com salsa fresca."],
+   tip:"Prepare na véspera sem o queijo — na hora, adicione o queijo e micro por 30 seg."},
+  {n:6,name:"Smoothie Verde com Abacate",cat:"cafe",time:5,serv:1,kcal:310,c:10,p:16,f:22,
+   ing:["½ abacate maduro","1 xíc. espinafre baby","200ml leite de amêndoas sem açúcar","1 dose whey protein (baunilha)","Gelo a gosto","Suco de ½ limão"],
+   steps:["Coloque todos os ingredientes no liquidificador.","Bata por 45-60 segundos em velocidade alta.","Experimente e ajuste limão se necessário.","Adicione gelo e bata por mais 15 segundos.","Sirva imediatamente em copo alto."],
+   tip:"Congele o abacate em cubos para um smoothie mais cremoso e gelado."},
+  {n:7,name:"Bowl de Frango com Arroz de Couve-flor",cat:"almoco",time:25,serv:2,kcal:420,c:12,p:48,f:18,
+   ing:["400g peito de frango","½ couve-flor média","1 abacate em cubos","Mix de folhas verdes","Azeite, limão, sal","Páprica defumada, alho em pó"],
+   steps:["Tempere o frango com páprica, alho, sal e pimenta.","Grelhe em frigideira com azeite por 6-7 min de cada lado.","Processe a couve-flor no processador até virar arroz.","Refogue o arroz de couve-flor com azeite, sal e alho por 3-4 min.","Monte o bowl: folhas, arroz de couve, frango fatiado e abacate.","Regue com azeite e limão fresco."],
+   tip:"O arroz de couve-flor pode ser preparado em lote e conservado na geladeira por 3 dias."},
+  {n:8,name:"Salmão ao Forno com Aspargos",cat:"almoco",time:20,serv:2,kcal:480,c:6,p:44,f:30,
+   ing:["2 filés de salmão (180g cada)","1 maço de aspargos","3 col. sopa azeite extra virgem","4 dentes de alho","Limão siciliano (suco e raspas)","Sal, pimenta, endro (dill)"],
+   steps:["Pré-aqueça o forno a 200°C. Forre assadeira com papel manteiga.","Misture azeite, alho amassado, raspas e suco de limão.","Coloque salmão e aspargos na assadeira.","Despeje o molho sobre tudo e tempere com sal, pimenta e endro.","Asse por 15-18 min até o salmão lascar facilmente com o garfo.","Sirva com fatias de limão por cima."],
+   tip:"Invista em salmão fresco — a diferença no sabor é enorme comparado ao congelado."},
+  {n:9,name:"Salada de Atum com Abacate",cat:"almoco",time:10,serv:1,kcal:390,c:8,p:36,f:24,
+   ing:["1 lata atum em azeite (170g)","1 abacate maduro","½ pepino em cubos","10 azeitonas pretas","Azeite, limão, sal","Coentro ou salsinha"],
+   steps:["Escorra o atum e solte levemente com o garfo.","Amasse o abacate com sal e limão até virar um creme grosso.","Misture atum, abacate, pepino e azeitonas.","Tempere com azeite, mais limão e sal a gosto.","Finalize com coentro ou salsinha picada.","Sirva gelado sobre folhas ou dentro de metades de abacate."],
+   tip:"Sirva dentro de metades de abacate para um visual bonito e uma refeição zero louças."},
+  {n:10,name:"Frango Xadrez Low Carb",cat:"almoco",time:25,serv:2,kcal:400,c:10,p:46,f:18,
+   ing:["400g frango em cubos","1 pimentão vermelho e 1 verde","100g castanha de caju (sem sal)","3 col. sopa shoyu sem glúten","1 col. sopa óleo de gergelim","Gengibre, alho, pimenta dedo-de-moça"],
+   steps:["Marine o frango com shoyu, gengibre e alho por 15 min.","Seque o frango marinado com papel e sele em wok bem quente.","Reserve o frango e refogue os pimentões no mesmo wok por 2 min.","Volte o frango, adicione a castanha e a pimenta.","Finalize com óleo de gergelim e shoyu extra se necessário.","Sirva com arroz de couve-flor ou brócolis no vapor."],
+   tip:"O wok bem quente é o segredo do sabor chinês — não tenha medo do calor."},
+  {n:11,name:"Carne Moída com Brócolis Gratinado",cat:"almoco",time:30,serv:3,kcal:450,c:10,p:42,f:26,
+   ing:["500g carne moída (patinho)","1 brócolis grande","1 cebola média","3 dentes de alho","150g cream cheese","100g muçarela ralada","Sal, pimenta, orégano"],
+   steps:["Refogue cebola e alho em azeite até dourar.","Adicione a carne moída e cozinhe até secar bem, temperando com sal e pimenta.","Cozinhe o brócolis no vapor até ficar al dente (4 min).","Misture o cream cheese à carne fora do fogo.","Monte em refratário: carne, brócolis e finalize com muçarela e orégano.","Gratine no forno a 220°C por 10 min até dourar."],
+   tip:"Rende ótimo para preparo em lote — dura 4 dias na geladeira."},
+  {n:12,name:"Hambúrguer na Alface (Sem Pão)",cat:"almoco",time:15,serv:1,kcal:480,c:5,p:38,f:34,
+   ing:["200g patinho moído (na hora)","Folhas grandes de alface americana","1 ovo frito (opcional)","Queijo cheddar fatia","Tomate, cebola roxa","Mostarda, maionese de azeite"],
+   steps:["Molde o hambúrguer com sal e pimenta — não exagere na manipulação.","Grelhe em frigideira bem quente por 3-4 min de cada lado.","Adicione o cheddar no último minuto e tampe para derreter.","Lave e seque as folhas de alface — elas serão o pão.","Monte: alface base, mostarda, hambúrguer com queijo, tomate, cebola, maionese.","Envolva com mais alface e segure firme."],
+   tip:"Patinho moído na hora tem 15% de gordura — o ponto certo para hambúrguer suculento."},
+  {n:13,name:"Sopa Creme de Abóbora com Gengibre",cat:"almoco",time:30,serv:4,kcal:200,c:16,p:6,f:10,
+   ing:["600g abóbora cabotiá","400ml leite de coco integral","1 col. sopa gengibre ralado","1 cebola, 3 dentes alho","500ml caldo de legumes","Azeite, sal, pimenta-caiena"],
+   steps:["Asse a abóbora com casca no forno a 200°C por 25 min.","Refogue cebola, alho e gengibre em azeite até dourar.","Retire a polpa da abóbora assada e adicione à panela.","Adicione o caldo de legumes e cozinhe por 10 min.","Bata tudo no liquidificador até ficar completamente liso.","Volte ao fogo, adicione leite de coco e ajuste sal e pimenta-caiena."],
+   tip:"Sirva com sementes de abóbora tostadas e um fio de creme de leite."},
+  {n:14,name:"Frango Grelhado com Pesto de Rúcula",cat:"jantar",time:20,serv:2,kcal:440,c:4,p:50,f:24,
+   ing:["2 peitos de frango (180g cada)","2 xíc. rúcula fresca","50g parmesão ralado","30g pinhão ou nozes","4 col. sopa azeite extra virgem","1 dente alho, sal, pimenta"],
+   steps:["Prepare o pesto: processe rúcula, parmesão, pinhão, alho e azeite até cremoso.","Tempere o pesto com sal e pimenta — reserve.","Abra o peito de frango ao meio como um livro (borboleta) para cozimento uniforme.","Tempere com sal, pimenta e azeite. Grelhe por 5-6 min de cada lado.","Deixe descansar 3 min antes de cortar.","Sirva com pesto generoso por cima e salada de folhas."],
+   tip:"Congele o pesto em formas de gelo — cubinhos prontos para usar a qualquer momento."},
+  {n:15,name:"Filé de Tilápia com Manteiga de Ervas",cat:"jantar",time:15,serv:2,kcal:350,c:1,p:40,f:20,
+   ing:["2 filés tilápia (200g cada)","3 col. sopa manteiga","2 dentes alho picados","Tomilho, alecrim, salsinha","Suco de 1 limão","Sal e pimenta branca"],
+   steps:["Seque bem os filés com papel absorvente. Tempere com sal e pimenta.","Aqueça frigideira em fogo alto — bem quente antes de colocar o peixe.","Adicione 1 col. manteiga e sele os filés por 3 min sem mexer.","Vire delicadamente e adicione o restante da manteiga com alho e ervas.","Baste (regue) os filés com a manteiga derretida continuamente.","Finalize com suco de limão e sirva imediatamente."],
+   tip:"Basear o peixe na própria manteiga dourada (beurre noisette) adiciona sabor de avelã."},
+  {n:16,name:"Curry de Coco com Camarão",cat:"jantar",time:25,serv:2,kcal:430,c:10,p:36,f:28,
+   ing:["400g camarão limpo","400ml leite de coco integral","2 col. sopa curry em pó","1 cebola, 4 dentes alho","1 col. sopa gengibre ralado","Coentro fresco, limão"],
+   steps:["Refogue cebola até caramelizar (5-6 min) — paciência aqui é fundamental.","Adicione alho, gengibre e curry. Refogue mais 2 min até perfumar.","Despeje o leite de coco e deixe ferver por 5 min para engrossar levemente.","Adicione os camarões — cozinham em apenas 2-3 min (até rosa e curvado).","Não deixe passar o ponto: camarão borrachudo estraga o prato.","Finalize com coentro fresco e suco de limão. Sirva com arroz de couve-flor."],
+   tip:"Use leite de coco da lata (integral), não a versão caixinha."},
+  {n:17,name:"Bife Ancho com Manteiga de Alho",cat:"jantar",time:20,serv:2,kcal:560,c:2,p:52,f:38,
+   ing:["2 bifes ancho (220g cada)","4 col. sopa manteiga","4 dentes alho","Tomilho fresco","Sal grosso, pimenta preta grossa","Azeite para selar"],
+   steps:["Retire a carne da geladeira 30 min antes. Sal grosso e pimenta generosos.","Frigideira de ferro bem quente com um fio de azeite.","Sele por 3 min de cada lado sem mexer para crosta perfeita.","Adicione manteiga, alho amassado e tomilho. Incline e baste constantemente.","Para mal passado: 55°C interno. Ao ponto: 62°C. Bem passado: 70°C.","Descanse 5 min antes de cortar — nunca corte imediatamente."],
+   tip:"Termômetro culinário é o investimento mais barato para nunca mais estragar um corte nobre."},
+  {n:18,name:"Zoodles com Bolonhesa",cat:"jantar",time:30,serv:2,kcal:410,c:12,p:38,f:22,
+   ing:["2 abobrinhas grandes","400g carne moída","1 lata tomate pelado","1 cebola, 4 dentes alho","Vinho tinto seco (50ml)","Parmesão, manjericão, azeite"],
+   steps:["Bolonhesa: refogue cebola e alho. Adicione carne e sele bem.","Adicione vinho e deixe evaporar. Junte tomate pelado amassado.","Cozinhe em fogo baixo por 20 min mexendo ocasionalmente.","Zoodles: use espiralizador ou descascador em julienne nas abobrinhas.","Sal nas tiras e deixe em peneira por 5 min para perder água.","Sirva os zoodles crus com a bolonhesa quente por cima."],
+   tip:"Não cozinhe os zoodles — servir crus com molho quente mantém a textura."},
+  {n:19,name:"Frango Assado com Limão Siciliano",cat:"jantar",time:50,serv:4,kcal:380,c:3,p:44,f:20,
+   ing:["1 frango inteiro (1,5kg)","2 limões sicilianos","6 dentes alho","Ervas: alecrim, tomilho, orégano","3 col. sopa manteiga","Sal grosso e pimenta preta"],
+   steps:["Misture manteiga amolecida com raspas de limão, alho amassado e ervas.","Coloque a manteiga de ervas embaixo da pele do frango com as mãos.","Tempere o exterior com sal grosso e pimenta.","Coloque os limões espremidos dentro do frango.","Asse em forno a 200°C por 45-50 min (25 min/kg).","Deixe descansar 10 min antes de cortar."],
+   tip:"A manteiga embaixo da pele é o segredo para peito de frango suculento."},
+  {n:20,name:"Guacamole com Chips de Pepino",cat:"lanche",time:8,serv:2,kcal:200,c:8,p:3,f:16,
+   ing:["2 abacates maduros","1 tomate picado sem sementes","½ cebola roxa picada","Suco de 1 limão","Coentro, sal, pimenta","1 pepino grande fatiado"],
+   steps:["Amasse os abacates com garfo — textura rústica é melhor.","Misture tomate, cebola, coentro e limão.","Tempere com sal e pimenta a gosto.","Fatie o pepino em rodelas de 1cm — os chips para mergulhar.","Sirva o guacamole em tigela com pepino ao redor."],
+   tip:"Plástico filme direto na superfície funciona para evitar oxidação."},
+  {n:21,name:"Wrap de Alface com Peru",cat:"lanche",time:5,serv:1,kcal:260,c:4,p:28,f:14,
+   ing:["4 fatias peito de peru","2 col. sopa cream cheese","Folhas grandes de alface","Tomate cereja cortado ao meio","Mostarda dijon","Pimenta-do-reino"],
+   steps:["Espalhe cream cheese em cada fatia de peru.","Adicione uma gotinha de mostarda dijon sobre o cream cheese.","Coloque tomate cereja e tempere com pimenta.","Enrole cada fatia de peru como um charuto.","Sirva sobre folhas de alface ou use a alface para enrolar tudo."],
+   tip:"Prepare 8-10 rolls de uma vez, guarde em pote fechado por 2 dias."},
+  {n:22,name:"Ovo Cozido com Pasta de Abacate",cat:"lanche",time:12,serv:1,kcal:310,c:6,p:16,f:24,
+   ing:["2 ovos","½ abacate maduro","Suco de ½ limão","Sal, pimenta, páprica","Gergelim para decorar"],
+   steps:["Cozinhe os ovos por 7 min em água fervente (gema molinha).","Transfira para água gelada por 2 min. Descasque com cuidado.","Amasse o abacate com limão, sal e pimenta até pasta.","Corte os ovos ao meio no sentido do comprimento.","Coloque uma colher de pasta de abacate onde estava a gema.","Finalize com páprica defumada e gergelim."],
+   tip:"Versão sofisticada do ovo deviled clássico — zero culpa e mais nutrição."},
+  {n:23,name:"Mix de Oleaginosas Temperadas",cat:"lanche",time:10,serv:4,kcal:200,c:5,p:6,f:17,
+   ing:["50g amêndoas cruas","50g nozes","50g castanha-do-pará","30g sementes de abóbora","1 col. sopa azeite","Sal, alecrim, páprica defumada"],
+   steps:["Pré-aqueça o forno a 170°C.","Misture todas as oleaginosas com azeite e temperos.","Espalhe em assadeira forrada com papel manteiga em camada única.","Torre por 8-10 min, mexendo uma vez na metade do tempo.","Retire quando cheirar a amendoim torrado.","Deixe esfriar completamente antes de guardar."],
+   tip:"Porções de 30g em saquinhos individuais evitam exagero."},
+  {n:24,name:"Mousse de Chocolate 70%",cat:"lanche",time:15,serv:4,kcal:240,c:10,p:8,f:20,
+   ing:["150g chocolate 70% cacau","4 ovos (claras separadas)","2 col. sopa eritritol (opcional)","1 pitada de sal","Essência de baunilha"],
+   steps:["Derreta o chocolate em banho-maria ou microondas (30 em 30 seg).","Misture as gemas ao chocolate derretido ainda morno.","Bata as claras em neve com pitada de sal até pico firme.","Incorpore as claras ao chocolate em 3 adições, com movimentos delicados.","Distribua em taças e leve à geladeira por mínimo 2 horas.","Sirva com raspas de chocolate por cima."],
+   tip:"O chocolate 70% já tem doçura suficiente — experimente sem eritritol."},
+  {n:25,name:"Sorvete de Banana Congelada",cat:"lanche",time:5,serv:2,kcal:180,c:22,p:10,f:4,
+   ing:["2 bananas maduras congeladas","2 col. sopa pasta de amendoim","1 col. sopa cacau em pó 100%","Canela a gosto"],
+   steps:["Congele bananas cortadas em rodelas por no mínimo 4 horas.","Coloque as bananas congeladas no processador.","Processe até começar a virar creme — vai parecer que não funciona, continue.","Adicione pasta de amendoim, cacau e canela.","Processe até textura de sorvete cremoso.","Sirva imediatamente ou congele por mais 30 min."],
+   tip:"Quanto mais madura a banana, mais doce e cremoso o resultado."},
+  {n:26,name:"Panna Cotta de Coco",cat:"lanche",time:15,serv:4,kcal:220,c:5,p:4,f:20,
+   ing:["400ml leite de coco integral","200ml creme de leite","2 col. chá gelatina em pó","3 col. sopa eritritol","Baunilha, pitada de sal"],
+   steps:["Hidrate a gelatina em 3 col. sopa de água fria por 5 min.","Aqueça leite de coco e creme de leite com eritritol e baunilha — não ferva.","Derreta a gelatina hidratada no microondas por 10 seg.","Misture a gelatina à mistura de coco ainda quente e mexa bem.","Distribua em formas ou taças. Deixe esfriar e leve à geladeira por 3h.","Desenforme e sirva com frutas vermelhas frescas."],
+   tip:"Unte levemente as formas com óleo de coco para desenformar perfeitamente."},
+  {n:27,name:"Brownie de Amendoim",cat:"lanche",time:25,serv:8,kcal:190,c:8,p:9,f:14,
+   ing:["1 xíc. pasta de amendoim","1 ovo inteiro","4 col. sopa eritritol","3 col. sopa cacau em pó 100%","1 col. chá fermento em pó","Gotas de chocolate 70% (opcional)"],
+   steps:["Pré-aqueça o forno a 180°C. Forre forma quadrada com papel manteiga.","Misture pasta de amendoim com ovo e eritritol até homogêneo.","Adicione cacau e fermento — a massa fica bem densa, é normal.","Espalhe na forma e adicione gotas de chocolate por cima.","Asse por 12-14 min — o centro deve estar levemente mole ao retirar.","Deixe esfriar completamente antes de cortar (endurece ao resfriar)."],
+   tip:"Não asse demais — brownie low carb seca mais rápido que o tradicional."},
+  {n:28,name:"Frango Desfiado para a Semana",cat:"almoco",time:40,serv:6,kcal:220,c:2,p:38,f:7,
+   ing:["1kg peito de frango","1 cebola, 4 dentes alho","1 folha louro","Páprica, cominho, cúrcuma","Sal grosso, pimenta","Caldo de galinha natural"],
+   steps:["Cubra o frango com água, cebola, alho, louro e sal em panela de pressão.","Cozinhe por 20 min após pegar pressão.","Retire o frango e desfie com 2 garfos ainda quente.","Reserve 200ml do caldo do cozimento.","Refogue o frango desfiado com azeite, páprica, cominho e cúrcuma por 5 min.","Adicione um pouco do caldo se necessário. Resfrie e armazene."],
+   tip:"Dura 5 dias na geladeira ou 3 meses no congelador."},
+  {n:29,name:"Ovos Cozidos Pré-temperados",cat:"lanche",time:15,serv:6,kcal:90,c:0,p:8,f:6,
+   ing:["6 ovos","400ml shoyu sem glúten","200ml mirin (ou sake)","100ml água","1 col. sopa eritritol","Cebolinha para servir"],
+   steps:["Cozinhe os ovos por 6 min e 30 seg em água fervente (gema cremosa).","Leve para banho de gelo por 5 min. Descasque com cuidado.","Ferva shoyu, mirin, água e eritritol por 2 min. Deixe esfriar.","Coloque os ovos em saco ziplock com a marinada fria.","Marine na geladeira por mínimo 4 horas (ideal: 12-24 horas).","Sirva cortado ao meio."],
+   tip:"Ovo marinado japonês (ajitsuke tamago) — lanche instantâneo de alto valor proteico."},
+  {n:30,name:"Vinagrete de Ervas",cat:"lanche",time:10,serv:8,kcal:120,c:1,p:0,f:14,
+   ing:["120ml azeite extra virgem","40ml vinagre de maçã","1 col. sopa mostarda dijon","1 dente alho ralado","Ervas frescas: tomilho, salsinha","Sal, pimenta, mel (uma gota)"],
+   steps:["Coloque mostarda, vinagre, alho, sal e mel em pote de vidro com tampa.","Adicione o azeite e as ervas picadas finamente.","Feche o pote e agite vigorosamente por 30 segundos.","Experimente e ajuste acidez, sal e doçura.","Guarde na geladeira — agite antes de usar pois vai separar.","Válido por 2 semanas refrigerado."],
+   tip:"A mostarda é o emulsificante natural — ajuda azeite e vinagre a misturarem."}
+];
+
+const CAT_LABEL = { cafe: 'Café', almoco: 'Almoço', jantar: 'Jantar', lanche: 'Lanche' };
+
+// ============ NUTRITION TABLE ============
+const NUTRITION = [
+  ["Ovo inteiro", 1.1, 13, 11, 155, 0],
+  ["Frango (peito)", 0, 31, 3.6, 165, 0],
+  ["Salmão", 0, 20, 13, 208, 0],
+  ["Tilápia", 0, 26, 2.7, 128, 0],
+  ["Atum em água", 0, 26, 1, 116, 0],
+  ["Carne bovina (patinho)", 0, 26, 8, 180, 0],
+  ["Camarão", 0.2, 24, 1.7, 99, 0],
+  ["Peito de peru", 1.5, 22, 3.5, 135, 0],
+  ["Brócolis", 7, 2.8, 0.4, 34, 2.6],
+  ["Couve-flor", 5, 1.9, 0.3, 25, 2],
+  ["Espinafre", 3.6, 2.9, 0.4, 23, 2.2],
+  ["Alface americana", 2.9, 0.9, 0.1, 14, 1.2],
+  ["Rúcula", 3.7, 2.6, 0.7, 25, 1.6],
+  ["Abobrinha", 3.1, 1.2, 0.3, 17, 1],
+  ["Pepino", 3.6, 0.7, 0.1, 16, 0.5],
+  ["Tomate", 3.9, 0.9, 0.2, 18, 1.2],
+  ["Aspargos", 3.9, 2.2, 0.1, 20, 2.1],
+  ["Pimentão vermelho", 6, 1, 0.3, 31, 2.1],
+  ["Abacate", 9, 2, 15, 160, 6.7],
+  ["Azeitona preta", 6, 0.8, 11, 115, 3.2],
+  ["Limão", 9, 1.1, 0.3, 29, 2.8],
+  ["Morango", 7.7, 0.7, 0.3, 32, 2],
+  ["Mirtilo", 14, 0.7, 0.3, 57, 2.4],
+  ["Queijo muçarela", 2.2, 22, 22, 300, 0],
+  ["Queijo feta", 4, 14, 21, 264, 0],
+  ["Cream cheese", 4.1, 6, 34, 342, 0],
+  ["Iogurte grego integral", 3.6, 9, 5, 97, 0],
+  ["Manteiga", 0.1, 0.9, 81, 717, 0],
+  ["Azeite de oliva", 0, 0, 100, 884, 0],
+  ["Óleo de coco", 0, 0, 100, 862, 0],
+  ["Amêndoa", 22, 21, 50, 579, 12.5],
+  ["Nozes", 14, 15, 65, 654, 6.7],
+  ["Castanha-do-pará", 12, 14, 67, 656, 7.5],
+  ["Castanha de caju", 30, 18, 44, 553, 3.3],
+  ["Pasta de amendoim (s/açúcar)", 20, 25, 50, 588, 8],
+  ["Sementes de chia", 42, 17, 31, 486, 34],
+  ["Sementes de abóbora", 11, 30, 49, 559, 6],
+  ["Leite de coco integral", 6, 2.3, 24, 230, 2.2],
+  ["Chocolate 70% cacau", 46, 8, 43, 598, 11],
+  ["Cacau em pó 100%", 58, 20, 14, 228, 33]
+];
+
+// ============ STORAGE ============
+const LS = {
+  TAB: 'lowcarb:tab:v1',
+  PLAN: 'lowcarb:planning:v1',
+  CHECKED: 'lowcarb:shopping_checked:v1'
+};
+const store = {
+  get(k, fb){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch { return fb; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+
+// ============ STATE ============
+const DAYS = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+const MEALS = [
+  { key: 'cafe', label: 'Café' },
+  { key: 'almoco', label: 'Almoço' },
+  { key: 'lanche', label: 'Lanche' },
+  { key: 'jantar', label: 'Jantar' }
+];
+
+let state = {
+  filterCat: 'all',
+  filterTime: 'all',
+  search: '',
+  plan: store.get(LS.PLAN, {}),
+  checked: store.get(LS.CHECKED, {}),
+  nutSearch: '',
+  nutLowOnly: false,
+  pickerCtx: null
+};
+
+// ============ TABS ============
+function activateTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === name);
+    b.setAttribute('aria-selected', b.dataset.tab === name);
+  });
+  document.querySelectorAll('.panel').forEach(p => {
+    p.classList.toggle('active', p.id === 'panel-' + name);
+  });
+  store.set(LS.TAB, name);
+  if (name === 'compras') renderShopping();
+  if (name === 'planejamento') renderPlan();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('.tab-btn').forEach(b => {
+  b.addEventListener('click', () => activateTab(b.dataset.tab));
+});
+
+// ============ RECIPES TAB ============
+function recipeMatches(r) {
+  if (state.filterCat !== 'all' && r.cat !== state.filterCat) return false;
+  if (state.filterTime === '15' && r.time > 15) return false;
+  if (state.filterTime === '30' && (r.time <= 15 || r.time > 30)) return false;
+  if (state.filterTime === '31' && r.time <= 30) return false;
+  if (state.search) {
+    const q = state.search.toLowerCase();
+    const hay = (r.name + ' ' + r.ing.join(' ')).toLowerCase();
+    if (!hay.includes(q)) return false;
+  }
+  return true;
+}
+function renderRecipes() {
+  const grid = document.getElementById('recipe-grid');
+  const list = RECIPES.filter(recipeMatches);
+  if (!list.length) {
+    grid.innerHTML = '<div class="empty">Nenhuma receita encontrada com esses filtros.</div>';
+    return;
+  }
+  grid.innerHTML = list.map(r => `
+    <article class="recipe-card" data-n="${r.n}">
+      <div class="recipe-cat">${CAT_LABEL[r.cat]} · #${String(r.n).padStart(2,'0')}</div>
+      <h3 class="recipe-title">${r.name}</h3>
+      <div class="recipe-meta">
+        <span>◷ ${r.time} min</span>
+        <span>◆ ${r.serv} porç.</span>
+        <span>● ${r.kcal} kcal</span>
+      </div>
+      <div class="macros">
+        <span class="macro"><b>${r.c}g</b>carbs</span>
+        <span class="macro"><b>${r.p}g</b>prot.</span>
+        <span class="macro"><b>${r.f}g</b>gord.</span>
+      </div>
+      <div class="recipe-card-actions">
+        <button class="btn btn-primary" data-action="open" data-n="${r.n}">Ver receita</button>
+        <button class="btn" data-action="plan" data-n="${r.n}">+ Planejar</button>
+      </div>
+    </article>
+  `).join('');
+}
+document.getElementById('recipe-grid').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-action]');
+  if (btn) {
+    e.stopPropagation();
+    const n = +btn.dataset.n;
+    if (btn.dataset.action === 'open') openRecipe(n);
+    if (btn.dataset.action === 'plan') openPlanFromRecipe(n);
+    return;
+  }
+  const card = e.target.closest('.recipe-card');
+  if (card) openRecipe(+card.dataset.n);
+});
+document.getElementById('search').addEventListener('input', (e) => {
+  state.search = e.target.value.trim();
+  renderRecipes();
+});
+document.querySelectorAll('[data-filter-cat]').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter-cat]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.filterCat = b.dataset.filterCat;
+    renderRecipes();
+  });
+});
+document.querySelectorAll('[data-filter-time]').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter-time]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.filterTime = b.dataset.filterTime;
+    renderRecipes();
+  });
+});
+
+// ============ RECIPE MODAL ============
+function openRecipe(n) {
+  const r = RECIPES.find(x => x.n === n);
+  if (!r) return;
+  document.getElementById('modal-recipe-content').innerHTML = `
+    <div class="recipe-cat">${CAT_LABEL[r.cat]} · Receita #${String(r.n).padStart(2,'0')}</div>
+    <h2>${r.name}</h2>
+    <div class="recipe-meta" style="margin-top:6px">
+      <span>◷ ${r.time} min</span>
+      <span>◆ ${r.serv} porções</span>
+      <span>● ${r.kcal} kcal</span>
+    </div>
+    <div class="macros">
+      <span class="macro"><b>${r.c}g</b>carbs</span>
+      <span class="macro"><b>${r.p}g</b>proteína</span>
+      <span class="macro"><b>${r.f}g</b>gordura</span>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>Ingredientes</h4>
+        <ul>${r.ing.map(i => `<li>${i}</li>`).join('')}</ul>
+      </div>
+      <div class="modal-section">
+        <h4>Modo de Preparo</h4>
+        <ol>${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      </div>
+      <div class="modal-tip"><b>Dica:</b> ${r.tip}</div>
+      <div style="margin-top:14px; display:flex; gap:8px;">
+        <button class="btn btn-primary" onclick="openPlanFromRecipe(${r.n})">Adicionar ao Planejamento</button>
+      </div>
+    </div>
+  `;
+  openModal('modal-recipe');
+}
+function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = ''; }
+document.querySelectorAll('.modal-bg').forEach(m => {
+  m.addEventListener('click', (e) => { if (e.target === m) closeModal(m.id); });
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-bg.open').forEach(m => closeModal(m.id));
+});
+
+// ============ PLANNING ============
+function planKey(d, m) { return `${d}|${m}`; }
+function renderPlan() {
+  const grid = document.getElementById('plan-grid');
+  let html = '<div class="plan-day-h"></div>';
+  MEALS.forEach(m => { html += `<div class="plan-cell-h">${m.label}</div>`; });
+  DAYS.forEach((d, di) => {
+    html += `<div class="plan-day-h">${d}</div>`;
+    MEALS.forEach(m => {
+      const k = planKey(di, m.key);
+      const recipeN = state.plan[k];
+      const r = recipeN ? RECIPES.find(x => x.n === recipeN) : null;
+      if (r) {
+        html += `<button class="plan-slot filled" data-pk="${k}"><div><div class="ps-name">${r.name}</div><div style="margin-top:3px;color:var(--text-muted)">${r.kcal}kcal · ${r.c}g</div></div></button>`;
+      } else {
+        html += `<button class="plan-slot" data-pk="${k}" data-meal="${m.key}">+ adicionar</button>`;
+      }
+    });
+  });
+  grid.innerHTML = html;
+  grid.querySelectorAll('.plan-slot').forEach(slot => {
+    slot.addEventListener('click', () => {
+      const k = slot.dataset.pk;
+      if (state.plan[k]) {
+        if (confirm('Remover esta receita do planejamento?')) {
+          delete state.plan[k];
+          store.set(LS.PLAN, state.plan);
+          renderPlan();
+        }
+      } else {
+        openPicker(k, slot.dataset.meal);
+      }
+    });
+  });
+}
+document.getElementById('btn-clear-plan').addEventListener('click', () => {
+  if (confirm('Limpar todo o planejamento da semana?')) {
+    state.plan = {};
+    store.set(LS.PLAN, state.plan);
+    renderPlan();
+    toast('Semana limpa');
+  }
+});
+
+// ============ PICKER MODAL ============
+function openPicker(planKeyStr, mealHint) {
+  state.pickerCtx = { planKey: planKeyStr, fromRecipe: null, mealHint };
+  const [d, m] = planKeyStr.split('|');
+  const meal = MEALS.find(x => x.key === m);
+  document.getElementById('picker-context').textContent = `${DAYS[+d]} · ${meal.label}`;
+  renderPicker('');
+  document.getElementById('picker-search').value = '';
+  openModal('modal-picker');
+}
+function openPlanFromRecipe(n) {
+  state.pickerCtx = { planKey: null, fromRecipe: n };
+  document.getElementById('picker-context').textContent = 'Escolha o dia/refeição';
+  renderPlanPicker(n);
+  openModal('modal-picker');
+}
+function renderPicker(filter) {
+  const ctx = state.pickerCtx;
+  const mealHint = ctx && ctx.mealHint;
+  const f = filter.toLowerCase();
+  let list = RECIPES.filter(r => !f || r.name.toLowerCase().includes(f));
+  if (mealHint && !f) {
+    list.sort((a, b) => (a.cat === mealHint ? -1 : 0) - (b.cat === mealHint ? -1 : 0));
+  }
+  document.getElementById('recipe-picker').innerHTML = list.map(r => `
+    <button class="picker-item" data-n="${r.n}">
+      <div class="pi-cat">${CAT_LABEL[r.cat]} · ${r.time}min · ${r.kcal}kcal · ${r.c}g carbs</div>
+      <div class="pi-name">${r.name}</div>
+    </button>
+  `).join('');
+  document.getElementById('recipe-picker').querySelectorAll('.picker-item').forEach(b => {
+    b.addEventListener('click', () => {
+      const n = +b.dataset.n;
+      state.plan[ctx.planKey] = n;
+      store.set(LS.PLAN, state.plan);
+      closeModal('modal-picker');
+      toast('Adicionado ao planejamento');
+      renderPlan();
+    });
+  });
+}
+function renderPlanPicker(recipeN) {
+  let html = '<div class="recipe-picker">';
+  DAYS.forEach((d, di) => {
+    MEALS.forEach(m => {
+      const k = planKey(di, m.key);
+      const taken = state.plan[k];
+      const r = taken ? RECIPES.find(x => x.n === taken) : null;
+      html += `<button class="picker-item" data-pk="${k}">
+        <div class="pi-cat">${d} · ${m.label}</div>
+        <div class="pi-name">${r ? 'Substituir: ' + r.name : 'Vazio — adicionar aqui'}</div>
+      </button>`;
+    });
+  });
+  html += '</div>';
+  document.getElementById('recipe-picker').outerHTML = '<div id="recipe-picker">' + html + '</div>';
+  document.querySelectorAll('#recipe-picker .picker-item').forEach(b => {
+    b.addEventListener('click', () => {
+      state.plan[b.dataset.pk] = recipeN;
+      store.set(LS.PLAN, state.plan);
+      closeModal('modal-picker');
+      toast('Adicionado ao planejamento');
+      activateTab('planejamento');
+    });
+  });
+}
+document.getElementById('picker-search').addEventListener('input', (e) => {
+  if (state.pickerCtx && state.pickerCtx.planKey) renderPicker(e.target.value);
+});
+
+// ============ SHOPPING LIST ============
+const ING_CAT_RULES = [
+  { cat: 'Hortifruti', words: ['espinafre','rúcula','alface','tomate','pepino','cebola','alho','limão','abobrinha','brócolis','couve','aspargo','pimentão','abacate','banana','morango','mirtilo','coentro','salsa','salsinha','tomilho','alecrim','manjericão','gengibre','folha','rúcola','abóbora','azeitona','cebolinha','folhas','louro','endro','hortelã','ervas'] },
+  { cat: 'Carnes', words: ['frango','peito','salmão','tilápia','atum','carne','patinho','bife','ancho','peru','presunto','camarão','peixe','filé'] },
+  { cat: 'Laticínios', words: ['ovo','ovos','queijo','feta','muçarela','cheddar','parmesão','iogurte','cream cheese','manteiga','creme de leite','leite'] },
+  { cat: 'Mercearia', words: ['azeite','óleo','vinagre','shoyu','mostarda','chocolate','cacau','whey','amêndoa','noz','castanha','semente','chia','pasta de amendoim','eritritol','mel','gelatina','fermento','baunilha','canela','páprica','cominho','cúrcuma','sal','pimenta','curry','noz-moscada','orégano','caldo','vinho','mirin','sake','tomate pelado','leite de coco','leite de amêndoas','gergelim'] }
+];
+function classify(ing) {
+  const low = ing.toLowerCase();
+  for (const r of ING_CAT_RULES) {
+    for (const w of r.words) if (low.includes(w)) return r.cat;
+  }
+  return 'Outros';
+}
+function buildShopping() {
+  const used = Object.values(state.plan).map(n => RECIPES.find(r => r.n === n)).filter(Boolean);
+  const map = new Map();
+  used.forEach(r => {
+    r.ing.forEach(ing => {
+      const key = ing.trim();
+      if (!map.has(key)) map.set(key, { ing: key, cat: classify(key), times: 0, recipes: [] });
+      const item = map.get(key);
+      item.times++;
+      if (!item.recipes.includes(r.name)) item.recipes.push(r.name);
+    });
+  });
+  const grouped = {};
+  for (const v of map.values()) {
+    grouped[v.cat] = grouped[v.cat] || [];
+    grouped[v.cat].push(v);
+  }
+  return grouped;
+}
+function renderShopping() {
+  const grouped = buildShopping();
+  const wrap = document.getElementById('shop-list');
+  const order = ['Hortifruti','Carnes','Laticínios','Mercearia','Outros'];
+  const sections = order.filter(c => grouped[c]);
+  if (!sections.length) {
+    wrap.innerHTML = '<div class="empty">Adicione receitas no Planejamento para gerar sua lista de compras automaticamente.</div>';
+    return;
+  }
+  wrap.innerHTML = sections.map(c => `
+    <div class="shop-section">
+      <h3>${c}</h3>
+      ${grouped[c].sort((a,b)=>a.ing.localeCompare(b.ing)).map(it => {
+        const id = 'chk_' + btoa(unescape(encodeURIComponent(it.ing))).replace(/[^a-z0-9]/gi,'').slice(0,20);
+        const isChecked = !!state.checked[it.ing];
+        return `<div class="shop-item ${isChecked?'checked':''}">
+          <input type="checkbox" id="${id}" ${isChecked?'checked':''} data-ing="${encodeURIComponent(it.ing)}">
+          <label for="${id}">${it.ing}</label>
+          ${it.times > 1 ? `<span class="qty">×${it.times}</span>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+  `).join('');
+  wrap.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const ing = decodeURIComponent(cb.dataset.ing);
+      if (cb.checked) state.checked[ing] = true; else delete state.checked[ing];
+      store.set(LS.CHECKED, state.checked);
+      cb.closest('.shop-item').classList.toggle('checked', cb.checked);
+    });
+  });
+}
+document.getElementById('btn-clear-checks').addEventListener('click', () => {
+  state.checked = {};
+  store.set(LS.CHECKED, state.checked);
+  renderShopping();
+  toast('Marcações resetadas');
+});
+document.getElementById('btn-share-wa').addEventListener('click', () => {
+  const grouped = buildShopping();
+  const order = ['Hortifruti','Carnes','Laticínios','Mercearia','Outros'];
+  let text = '*Lista de Compras Low Carb*\n\n';
+  order.forEach(c => {
+    if (!grouped[c]) return;
+    text += `*${c}*\n`;
+    grouped[c].forEach(it => {
+      text += `- ${it.ing}${it.times>1?' (×'+it.times+')':''}\n`;
+    });
+    text += '\n';
+  });
+  if (text.length < 30) { toast('Lista vazia — planeje sua semana primeiro'); return; }
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+});
+
+// ============ NUTRITION ============
+function renderNutrition() {
+  const tbody = document.getElementById('nut-tbody');
+  const q = state.nutSearch.toLowerCase();
+  let list = NUTRITION.filter(row => {
+    if (state.nutLowOnly && row[1] >= 5) return false;
+    if (q && !row[0].toLowerCase().includes(q)) return false;
+    return true;
+  });
+  list.sort((a,b) => a[1] - b[1]);
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty">Nenhum alimento.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(r => `
+    <tr>
+      <td>${r[0]}</td>
+      <td>${r[1]}g</td>
+      <td>${r[2]}g</td>
+      <td>${r[3]}g</td>
+      <td>${r[4]}</td>
+      <td>${r[5]}g</td>
+    </tr>
+  `).join('');
+}
+document.getElementById('nut-search').addEventListener('input', (e) => {
+  state.nutSearch = e.target.value.trim();
+  renderNutrition();
+});
+document.getElementById('nut-low').addEventListener('click', (e) => {
+  state.nutLowOnly = !state.nutLowOnly;
+  e.target.classList.toggle('active', state.nutLowOnly);
+  renderNutrition();
+});
+
+// ============ TOAST ============
+let toastT;
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ============ INIT ============
+const savedTab = store.get(LS.TAB, 'receitas');
+activateTab(savedTab);
+renderRecipes();
+renderPlan();
+renderNutrition();
+
+// ============ PWA ============
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+let __pwaPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); __pwaPrompt = e;
+  const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
+});
+function installPWA() {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (isStandalone) { alert('App já instalado!'); return; }
+  if (isIOS) {
+    alert('Para instalar no iPhone:\n\n1. Toque no botão Compartilhar\n2. Toque em "Adicionar à Tela de Início"\n3. Toque em "Adicionar"');
+    return;
+  }
+  if (__pwaPrompt) { __pwaPrompt.prompt(); __pwaPrompt.userChoice.then(() => __pwaPrompt = null); }
+  else { alert('Para instalar no Android: menu (3 pontos) → "Instalar app"'); }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (isIOS && !isStandalone) {
+    const b = document.getElementById('btn-install-pwa'); if (b) b.style.display = 'flex';
+  }
+});
+</script>
 </body>
 </html>
