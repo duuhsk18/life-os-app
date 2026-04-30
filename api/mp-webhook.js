@@ -14,7 +14,7 @@
 
 import crypto from 'crypto'
 import { createClient } from '@supabase/supabase-js'
-import { sendMagicLinkEmail } from './_email.js'
+import { sendMagicLinkEmail, scheduleFollowUpSequence } from './_email.js'
 import { sendPurchaseEvent } from './_meta-capi.js'
 
 const supabase = createClient(
@@ -197,6 +197,10 @@ export default async function handler(req, res) {
         error: emailResult?.error,
       })
     }
+
+    // 4.5. Agenda email sequence pós-compra (D+3, D+7, D+30) via Resend scheduled_at
+    scheduleFollowUpSequence({ email, name, slugs: expandedSlugs, logPrefix: '[mp:seq]' })
+      .catch((e) => console.warn('[mp-webhook] erro agendando follow-up:', e.message))
 
     // 5. Meta CAPI Purchase event
     await sendPurchaseEvent({

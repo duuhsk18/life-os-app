@@ -22,7 +22,7 @@ import {
   extractStripeEmail,
   extractStripeName,
 } from './_stripe-products.js'
-import { sendMagicLinkEmail } from './_email.js'
+import { sendMagicLinkEmail, scheduleFollowUpSequence } from './_email.js'
 import { sendPurchaseEvent } from './_meta-capi.js'
 
 // Stripe webhook precisa de raw body pra validar assinatura
@@ -171,6 +171,10 @@ async function handleCheckoutCompleted(session, res) {
       error: emailResult?.error,
     })
   }
+
+  // Agenda email sequence pós-compra (D+3, D+7, D+30) via Resend scheduled_at
+  scheduleFollowUpSequence({ email, name, slugs, logPrefix: '[stripe:seq]' })
+    .catch((e) => console.warn('[stripe-webhook] erro agendando follow-up:', e.message))
 
   // Meta Conversion API — envia Purchase server-side (no-op se env vars faltando)
   const valueInBRL = (session.amount_total || 0) / 100

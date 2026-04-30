@@ -28,6 +28,7 @@ import LifeOSGoals      from '@/pages/lifeos/LifeOSGoals'
 import LifeOSStats      from '@/pages/lifeos/LifeOSStats'
 import LifeOSProfile    from '@/pages/lifeos/LifeOSProfile'
 import LifeOSBiblioteca from '@/pages/lifeos/LifeOSBiblioteca'
+import AdminDashboard   from '@/pages/AdminDashboard'
 
 function Protected({ children }) {
   return <ProtectedRoute>{children}</ProtectedRoute>
@@ -63,6 +64,7 @@ export default function App() {
           <Route path="/membros/estatisticas" element={<Protected><LifeOSStats /></Protected>} />
           <Route path="/membros/perfil"       element={<Protected><LifeOSProfile /></Protected>} />
           <Route path="/membros/biblioteca"   element={<Protected><LifeOSBiblioteca /></Protected>} />
+          <Route path="/admin"                element={<Protected><AdminDashboard /></Protected>} />
           <Route path="*" element={<div style={{ background: '#000', color: '#555', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>Página não encontrada.</div>} />
         </Routes>
       </BrowserRouter>
