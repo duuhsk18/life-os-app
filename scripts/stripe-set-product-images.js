@@ -20,11 +20,20 @@ if (!process.env.STRIPE_SECRET_KEY) {
   process.exit(1)
 }
 
+const isLive = process.env.STRIPE_SECRET_KEY.startsWith('sk_live_')
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2024-12-18.acacia',
 })
 
 const SITE = 'https://www.agenciacriativa.shop'
+
+if (!isLive) {
+  console.error('❌ Você está usando uma chave de TESTE (sk_test_...).')
+  console.error('   Os Price IDs do projeto são de PRODUÇÃO — vai dar "No such price" em todos.')
+  console.error('   Troca pra chave Live (sk_live_...) e roda de novo.')
+  console.error('   Pega em: https://dashboard.stripe.com/apikeys (com Test mode DESLIGADO)')
+  process.exit(1)
+}
 
 // Mapeamento: slug → Price ID (espelhado em sales-data.js)
 const PRICE_TO_SLUG = {
