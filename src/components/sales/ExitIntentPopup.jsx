@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getRelatedProducts } from '@/lib/sales-data'
 
+// Chave da sessão pra evitar abrir popup em toda página
+const SESSION_KEY = 'exit_intent_shown_v2'
+
 export default function ExitIntentPopup({ product }) {
   const [show, setShow] = useState(false)
   const triggered = useRef(false)
@@ -9,39 +12,37 @@ export default function ExitIntentPopup({ product }) {
   const related = getRelatedProducts(product.slug).slice(0, 2)
 
   useEffect(() => {
-    let lastY = window.scrollY
-
-    const onScroll = () => {
-      const currentY = window.scrollY
-      if (!triggered.current && currentY < lastY - 80 && currentY < 300) {
+    // Já mostrou nessa sessão? Não mostra de novo
+    try {
+      if (sessionStorage.getItem(SESSION_KEY)) {
         triggered.current = true
+        return
+      }
+    } catch (e) {}
+
+    // Aguarda 8s antes de armar o exit intent — evita disparar enquanto a
+    // pessoa ainda tá explorando a página inicial
+    const armTimeout = setTimeout(() => {
+      // Só dispara em mouseleave REAL (pessoa indo pra fechar/sair),
+      // não em mudança de aba ou outras situações ambíguas
+      const onMouseLeave = (e) => {
+        // Ignora se mouse saiu pelo lado/baixo (pode ser scroll natural ou movimento normal)
+        // Só dispara quando sai pra cima (área da barra do navegador)
+        if (triggered.current) return
+        if (e.clientY > 10) return
+        // E só se não tiver elemento de destino (saiu da janela mesmo)
+        if (e.relatedTarget !== null) return
+
+        triggered.current = true
+        try { sessionStorage.setItem(SESSION_KEY, '1') } catch (e) {}
         setShow(true)
       }
-      lastY = currentY
-    }
 
-    const onVisibility = () => {
-      if (document.visibilityState === 'hidden' && !triggered.current) {
-        triggered.current = true
-        setShow(true)
-      }
-    }
+      document.addEventListener('mouseleave', onMouseLeave)
+      return () => document.removeEventListener('mouseleave', onMouseLeave)
+    }, 8000)
 
-    const onMouseLeave = (e) => {
-      if (!triggered.current && e.clientY < 10) {
-        triggered.current = true
-        setShow(true)
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    document.addEventListener('visibilitychange', onVisibility)
-    document.addEventListener('mouseleave', onMouseLeave)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      document.removeEventListener('visibilitychange', onVisibility)
-      document.removeEventListener('mouseleave', onMouseLeave)
-    }
+    return () => clearTimeout(armTimeout)
   }, [])
 
   if (!show) return null

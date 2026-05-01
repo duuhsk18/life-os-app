@@ -1,9 +1,10 @@
 export const BIBLIOTECA_CONFIG = {
   title: 'Biblioteca',
-  subtitle: 'Todos os seus materiais em um só lugar.',
+  subtitle: 'Todos os seus sistemas e materiais em um só lugar.',
 }
 
 export const CATEGORIES = [
+  { id: 'sistemas',    label: 'Meus Sistemas',          icon: '⚡', color: '#F4C430' },
   { id: 'treinos',     label: 'Planilhas de Treino',    icon: '💪', color: '#10b981' },
   { id: 'alimentacao', label: 'Alimentação & Receitas', icon: '🥗', color: '#f59e0b' },
   { id: 'indigenas',   label: 'Receitas Indígenas',     icon: '🌿', color: '#22c55e' },
@@ -13,58 +14,99 @@ export const CATEGORIES = [
 ]
 
 export const BIBLIOTECA = {
-  treinos: {
-    description: 'Treinos personalizados para seus objetivos — em casa ou na academia.',
+  sistemas: {
+    description: 'Seus 6 sistemas funcionais — apps completos, não PDFs. Acesse direto:',
     items: [
-      { id: 'hipertrofia-full-body', title: 'Hipertrofia Full Body 3x — Iniciante',           description: '3 dias por semana, corpo inteiro, focado em ganho de massa.',         image: null, download_url: null, badge: null },
-      { id: 'hipertrofia-ppl',       title: 'Hipertrofia Push Pull Legs 6x — Intermediário',  description: 'Divisão PPL clássica para máximo volume semanal.',                    image: null, download_url: null, badge: null },
-      { id: 'emagrecimento-hiit',    title: 'Emagrecimento HIIT 20min — Iniciante',            description: 'Treino intervalado de alta intensidade para queimar gordura rápido.',  image: null, download_url: null, badge: 'Popular' },
-      { id: 'emagrecimento-circuito',title: 'Emagrecimento Circuito Funcional — Avançado',    description: 'Circuito intenso com foco em gasto calórico e condicionamento.',       image: null, download_url: null, badge: null },
-      { id: 'definicao-alta-rep',    title: 'Definição Alta Repetição — Intermediário',       description: 'Volume elevado para definição muscular e resistência.',                 image: null, download_url: null, badge: null },
-      { id: 'funcional-bodyweight',  title: 'Funcional Bodyweight — Iniciante',               description: 'Sem equipamentos. Funciona em qualquer lugar.',                        image: null, download_url: null, badge: null },
-      { id: 'funcional-core',        title: 'Funcional Core — Intermediário',                 description: 'Foco em core forte, postura e equilíbrio.',                           image: null, download_url: null, badge: null },
-      { id: 'treino-academia-inter', title: 'Treino Academia — Intermediário',                description: 'Planilha completa para academia com progressão semanal.',              image: null, download_url: null, badge: null },
-      { id: 'treino-casa-iniciante', title: 'Treino em Casa — Iniciante',                     description: 'Começa do zero, sem equipamentos, em casa mesmo.',                    image: null, download_url: null, badge: null },
-      { id: 'ficha-pro',             title: 'Ficha de Treino PRO',                            description: 'Template premium para montar sua própria ficha personalizada.',        image: null, download_url: null, badge: 'PRO' },
-      { id: 'bonus-guia-ali',        title: 'Bônus — Guia de Alimentação',                   description: 'Cardápio prático para potencializar resultados com receitas simples.', image: null, download_url: null, badge: 'Bônus' },
-      { id: 'bonus-medidas',         title: 'Bônus — Planilha de Medidas',                   description: 'Acompanhe a evolução do corpo com gráficos automáticos.',              image: null, download_url: null, badge: 'Bônus' },
-      { id: 'bonus-recuperacao',     title: 'Bônus — Protocolo de Recuperação',              description: 'Técnicas de descanso ativo, alongamento e mobilidade.',                image: null, download_url: null, badge: 'Bônus' },
+      {
+        id: 'sis-low-carb',
+        title: 'App Low Carb',
+        description: '30 receitas + planejador semanal + lista de compras automática + tabela nutricional + guia. App completo no celular.',
+        image: '/assets/products/receitas-low-carb.png',
+        download_url: '/entregaveis/receitas-low-carb/receitas-low-carb.html',
+        badge: 'Sistema',
+      },
+      {
+        id: 'sis-treino',
+        title: 'App Treino',
+        description: '12 semanas periodizadas · 49 exercícios com vídeo · tracker de evolução · calendário interativo. Substitui personal.',
+        image: '/assets/products/planilhas-treino.png',
+        download_url: '/entregaveis/planilhas-treino/planilhas-treino.html',
+        badge: 'Sistema',
+      },
+      {
+        id: 'sis-financeiras',
+        title: 'App Financeiro',
+        description: 'Controle mensal · método bola-de-neve pra dívidas · reserva · metas · dashboard anual · calculadora MEI.',
+        image: '/assets/products/planilhas-financeiras.png',
+        download_url: '/entregaveis/planilhas-financeiras/planilhas-financeiras.html',
+        badge: 'Sistema',
+      },
+      {
+        id: 'sis-indigenas',
+        title: 'App Indígena',
+        description: '30 receitas ancestrais · 35 plantas medicinais · cultura · plano semanal · lista de compras com buy-links.',
+        image: '/assets/products/receitas-indigenas.png',
+        download_url: '/entregaveis/receitas-indigenas/receitas-indigenas.html',
+        badge: 'Sistema',
+      },
+      {
+        id: 'sis-notion',
+        title: 'Galeria Notion',
+        description: '20 templates curados · tutorial passo-a-passo · meus templates com notas · dashboard de vida.',
+        image: '/assets/products/templates-notion.png',
+        download_url: '/entregaveis/templates-notion/templates-notion.html',
+        badge: 'Sistema',
+      },
+      {
+        id: 'sis-ebooks',
+        title: 'Biblioteca Ebooks',
+        description: '5 ebooks · heatmap de leitura · notas · 10 conquistas gamificadas · áudio-versão.',
+        image: '/assets/products/ebooks-autoajuda.png',
+        download_url: '/entregaveis/ebooks-autoajuda/index.html',
+        badge: 'Sistema',
+      },
+    ],
+  },
+  treinos: {
+    description: 'Sistema de treino completo — 12 semanas periodizadas no app.',
+    items: [
+      { id: 'app-treino',            title: 'App Treino Completo',                            description: '12 semanas periodizadas · 49 exercícios · tracker · calendário · biblioteca completa.', image: '/assets/products/planilhas-treino.png', download_url: '/entregaveis/planilhas-treino/planilhas-treino.html', badge: 'Sistema' },
     ],
   },
   alimentacao: {
     description: 'Receitas saudáveis, práticas e saborosas para o seu dia a dia.',
     items: [
-      { id: 'receitas-lowcarb', title: 'Receitas Low Carb', description: 'Mais de 50 receitas com baixo carboidrato para emagrecer sem sofrimento.', image: null, download_url: null, badge: 'Popular' },
-      { id: 'receitas-fitness', title: 'Receitas Fitness',  description: 'Refeições balanceadas para quem treina e quer manter a dieta.',            image: null, download_url: null, badge: null },
+      { id: 'app-low-carb',       title: 'App Receitas Low Carb',     description: '30 receitas com macros, planejador semanal, lista de compras automática.', image: '/assets/products/receitas-low-carb.png', download_url: '/entregaveis/receitas-low-carb/receitas-low-carb.html', badge: 'Popular' },
+      { id: 'receitas-fitness',   title: 'Receitas Fitness',           description: 'Em breve — refeições balanceadas pra quem treina.', image: null, download_url: null, badge: 'Em breve' },
     ],
   },
   indigenas: {
     description: 'Saberes naturais ancestrais que curam e fortalecem o corpo.',
     items: [
-      { id: 'receitas-indigenas-v1', title: 'Receitas Indígenas — Volume 1', description: 'Plantas medicinais, chás e preparos da medicina tradicional.', image: null, download_url: null, badge: null },
+      { id: 'app-indigenas',      title: 'App Receitas Indígenas',     description: '30 receitas ancestrais + 35 plantas medicinais + cultura + plano semanal.', image: '/assets/products/receitas-indigenas.png', download_url: '/entregaveis/receitas-indigenas/receitas-indigenas.html', badge: 'Sistema' },
     ],
   },
   notion: {
     description: 'Templates prontos para organizar sua vida, trabalho e estudos no Notion.',
     items: [
-      { id: 'notion-rotina',     title: 'Template Rotina Diária',        description: 'Organize o seu dia com blocos de tempo, prioridades e revisão noturna.',    image: null, download_url: null, badge: 'Novo' },
-      { id: 'notion-projetos',   title: 'Template Gestão de Projetos',   description: 'Kanban completo para gerenciar projetos pessoais e profissionais.',         image: null, download_url: null, badge: null },
-      { id: 'notion-financeiro', title: 'Template Financeiro no Notion', description: 'Controle de gastos, metas e investimentos em um workspace único.',          image: null, download_url: null, badge: null },
+      { id: 'app-notion',         title: 'Galeria 20 Templates Notion',  description: 'Galeria curada · tutorial passo-a-passo · meus templates com notas pessoais.', image: '/assets/products/templates-notion.png', download_url: '/entregaveis/templates-notion/templates-notion.html', badge: 'Sistema' },
     ],
   },
   autoajuda: {
     description: 'Ebooks para transformar sua mentalidade e alcançar seus objetivos.',
     items: [
-      { id: 'ebook-disciplina',  title: 'Disciplina Inabalável',      description: 'O método para criar hábitos que duram e eliminar a procrastinação.',            image: null, download_url: null, badge: 'Popular' },
-      { id: 'ebook-mentalidade', title: 'Mentalidade de Crescimento', description: 'Como reprogramar crenças limitantes e desenvolver o mindset de sucesso.',       image: null, download_url: null, badge: null },
+      { id: 'app-ebooks',         title: 'App Biblioteca de Ebooks',     description: '5 ebooks · heatmap de leitura · notas · 10 conquistas gamificadas.',           image: '/assets/products/ebooks-autoajuda.png', download_url: '/entregaveis/ebooks-autoajuda/index.html', badge: 'Sistema' },
+      { id: 'ebook-disciplina',   title: 'A Arte da Disciplina',         description: 'O método pra criar hábitos que duram e eliminar a procrastinação.',            image: null, download_url: '/entregaveis/ebooks-autoajuda/01-a-arte-da-disciplina.html', badge: 'Popular' },
+      { id: 'ebook-mentalidade',  title: 'Mentalidade de Crescimento',   description: 'Como reprogramar crenças limitantes e desenvolver o mindset de sucesso.',       image: null, download_url: '/entregaveis/ebooks-autoajuda/02-mentalidade-de-crescimento.html', badge: null },
+      { id: 'ebook-foco',         title: 'Foco Total',                   description: 'Sistema de produção profunda em era de notificações e distrações.',             image: null, download_url: '/entregaveis/ebooks-autoajuda/03-foco-total.html', badge: null },
+      { id: 'ebook-poder-nao',    title: 'O Poder do Não',               description: 'Limites que liberam — diga não com clareza e proteja seu tempo.',                image: null, download_url: '/entregaveis/ebooks-autoajuda/04-o-poder-do-nao.html', badge: null },
+      { id: 'ebook-90-dias',      title: 'Realização em 90 dias',        description: 'Método prático de metas trimestrais — quebre objetivos em sprints.',             image: null, download_url: '/entregaveis/ebooks-autoajuda/05-realizacao-em-90-dias.html', badge: null },
     ],
   },
   financas: {
-    description: 'Planilhas para controlar, planejar e conquistar sua independência financeira.',
+    description: 'Sistema completo pra controlar, planejar e conquistar sua independência financeira.',
     items: [
-      { id: 'fin-gastos',       title: 'Planilha Controle de Gastos',   description: 'Registre receitas, despesas e veja para onde vai cada real.',                image: null, download_url: null, badge: null },
-      { id: 'fin-reserva',      title: 'Planilha Reserva de Emergência',description: 'Calcule e acompanhe a construção da sua reserva de segurança.',               image: null, download_url: null, badge: null },
-      { id: 'fin-investimentos', title: 'Planilha de Investimentos',    description: 'Comparativo de aportes, rentabilidade e projeção de patrimônio.',             image: null, download_url: null, badge: 'Novo' },
+      { id: 'app-financas',      title: 'App Financeiro Completo',      description: 'Controle mensal · dívidas · reserva · metas · dashboard anual · MEI. 6 abas.', image: '/assets/products/planilhas-financeiras.png', download_url: '/entregaveis/planilhas-financeiras/planilhas-financeiras.html', badge: 'Sistema' },
     ],
   },
 }

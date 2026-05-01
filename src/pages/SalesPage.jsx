@@ -159,13 +159,42 @@ export default function SalesPage() {
         </div>
       </section>
 
-      {/* 4 Pilares de Benefícios — copy positivo logo após o hero */}
+      {/* === DOR PRIMEIRO === Pain points — conexão emocional logo após o hero */}
+      <section className="bg-gray-900 text-white px-4 py-12">
+        <div className="max-w-lg mx-auto">
+          <p className="text-center text-xs uppercase tracking-widest font-black mb-3" style={{ color: '#f87171' }}>Você se identifica?</p>
+          <h2 className="text-2xl md:text-3xl font-black mb-8 text-center leading-tight">
+            Algumas dessas situações <span style={{ color: '#f87171' }}>são você</span> hoje?
+          </h2>
+          <ul className="space-y-4">
+            {product.painPoints.map((pain, i) => (
+              <li key={i} className="flex items-start gap-3 bg-white/5 rounded-xl p-4 border border-white/5">
+                <span className="text-red-400 text-2xl flex-shrink-0 leading-none">✗</span>
+                <p className="text-gray-200 text-base leading-snug">{pain}</p>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8 bg-yellow-400/10 border border-yellow-400/30 rounded-xl p-5 text-center">
+            <p className="text-white font-bold text-base leading-relaxed">
+              Se respondeu sim pra <span className="text-yellow-400">qualquer uma</span> dessas...
+              <br />
+              <span className="text-yellow-400 font-black text-lg block mt-1">a gente preparou a saída.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* === SOLUÇÃO === 4 Pilares — apresentação da solução depois da dor */}
       {Array.isArray(product.benefits) && product.benefits.length > 0 && (
-        <section className="bg-white px-4 py-10">
+        <section className="bg-white px-4 py-12">
           <div className="max-w-lg mx-auto">
-            <h2 className="text-xl font-black mb-6 text-center text-gray-900">
-              O que você ganha com este guia
+            <p className="text-center text-xs uppercase tracking-widest font-black text-green-600 mb-3">A solução</p>
+            <h2 className="text-2xl md:text-3xl font-black mb-2 text-center text-gray-900 leading-tight">
+              Não é mais um ebook.
             </h2>
+            <p className="text-center text-base text-gray-600 mb-8 leading-relaxed">
+              É um <strong className="text-gray-900">sistema funcional</strong> que faz o trabalho por você.
+            </p>
             <div className="grid grid-cols-2 gap-3">
               {product.benefits.map((b, i) => (
                 <div key={i} className="rounded-2xl p-4 border-2 border-gray-100 bg-gray-50">
@@ -179,34 +208,14 @@ export default function SalesPage() {
         </section>
       )}
 
-      {/* Pain points */}
-      <section className="bg-gray-900 text-white px-4 py-10">
-        <div className="max-w-lg mx-auto">
-          <h2 className="text-xl font-black mb-6 text-center">Você se identifica com alguma dessas situações?</h2>
-          <ul className="space-y-4">
-            {product.painPoints.map((pain, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <span className="text-red-400 text-xl flex-shrink-0">✗</span>
-                <p className="text-gray-200">{pain}</p>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-8 bg-white/10 rounded-xl p-4 text-center">
-            <p className="text-white font-semibold text-base">
-              Se respondeu sim para alguma dessas... <br />
-              <span className="text-yellow-400 font-black">esse produto foi feito para você.</span>
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* What you get + value stack — com imagem do produto lado-a-lado (estilo concorrente validado) */}
       <section className="bg-white px-4 py-10">
         <div className="max-w-5xl mx-auto">
-          <p className="text-xs uppercase tracking-widest font-black text-green-600 mb-2 text-center md:text-left">CONTEÚDO DO EBOOK</p>
-          <h2 className="text-3xl md:text-4xl font-black text-gray-900 text-center md:text-left mb-8 leading-tight">
-            Tudo que você vai receber hoje
+          <p className="text-xs uppercase tracking-widest font-black text-green-600 mb-2 text-center md:text-left">DENTRO DO SISTEMA</p>
+          <h2 className="text-3xl md:text-4xl font-black text-gray-900 text-center md:text-left mb-2 leading-tight">
+            Tudo que você acessa hoje
           </h2>
+          <p className="text-sm text-gray-600 mb-8 text-center md:text-left">Acesso vitalício · pelo celular, tablet ou pc · funciona offline</p>
           <div className="grid md:grid-cols-2 gap-8 md:items-start">
             <div className="space-y-4 md:pt-2">
               {product.whatYouGet.map((item, i) => (
