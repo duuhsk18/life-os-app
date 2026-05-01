@@ -18,7 +18,7 @@ const CONTEXTUAL_MESSAGES = [
   { pattern: /^\/p\/receitas-low-carb/,     msg: 'Oi! Tô na página das Receitas Low Carb e tenho uma dúvida.' },
   { pattern: /^\/p\/planilhas-treino/,      msg: 'Oi! Tô vendo as Planilhas de Treino e queria tirar uma dúvida.' },
   { pattern: /^\/p\/receitas-indigenas/,    msg: 'Oi! Tô na página das Receitas Indígenas e queria saber mais.' },
-  { pattern: /^\/p\/templates-notion/,      msg: 'Oi! Tô vendo os Templates Notion e tenho uma dúvida.' },
+  { pattern: /^\/p\/templates-notion/,      msg: 'Oi! Tô vendo as 7 Ferramentas Interativas e tenho uma dúvida.' },
   { pattern: /^\/p\/ebooks-autoajuda/,      msg: 'Oi! Tô vendo a Coleção de Ebooks e queria saber mais.' },
   { pattern: /^\/p\/planilhas-financeiras/, msg: 'Oi! Tô vendo as Planilhas Financeiras e tenho uma dúvida.' },
   { pattern: /^\/p\/life-os/,               msg: 'Oi! Quero saber mais sobre o Life OS antes de assinar.' },

@@ -44,7 +44,7 @@ export const PRODUCTS = {
     bonuses: [
       { title: '+120 Planilhas de Treino',        description: 'Emagrecimento, hipertrofia, definição, funcional — para casa e academia.', value: 'R$ 97,00' },
       { title: 'Receitas Low Carb & Indígenas',  description: 'Mais saúde e sabor no dia a dia com receitas práticas e naturais.',         value: 'R$ 47,00' },
-      { title: 'Templates Notion',               description: 'Organize vida, trabalho e estudos com templates prontos para usar.',         value: 'R$ 57,00' },
+      { title: '7 Ferramentas Interativas',      description: 'Wheel of Life · Planejador 90d · GTD · CRM · Tracker de leitura · FIRE · Hábitos.', value: 'R$ 57,00' },
       { title: 'Ebooks de Autoajuda',            description: 'Mentalidade, disciplina e produtividade para transformar quem você é.',     value: 'R$ 67,00' },
       { title: 'Planilhas Financeiras',          description: 'Controle de gastos, reserva de emergência e projeção de investimentos.',    value: 'R$ 77,00' },
     ],

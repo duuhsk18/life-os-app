@@ -1,7 +1,7 @@
 {
-  "name": "Templates Notion — Galeria Curada",
-  "short_name": "Templates Notion",
-  "description": "Galeria curada com 20 templates Notion para vida, trabalho, estudos, finanças e negócios — com tutorial integrado e tracker de uso.",
+  "name": "7 Ferramentas Interativas",
+  "short_name": "7 Ferramentas",
+  "description": "Sete ferramentas interativas e funcionais para vida, finanças, hábitos e produtividade. Tudo num lugar, sem mensalidade.",
   "start_url": "./templates-notion.html",
   "scope": "./",
   "display": "standalone",

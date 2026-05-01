@@ -103,59 +103,88 @@ export default function SalesPage() {
       {/* Top countdown */}
       <CountdownTimer minutes={15} />
 
-      {/* Hero */}
-      <section className={`bg-gradient-to-br ${product.color} text-white px-4 pt-10 pb-12`}>
-        <div className="max-w-lg mx-auto text-center">
+      {/* === HERO RICO === badge + stats inline + mockup + price + dual CTA */}
+      <section className={`bg-gradient-to-br ${product.color} text-white px-4 pt-8 pb-12 relative overflow-hidden`}>
+        {/* Decorative blobs */}
+        <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-20 blur-3xl" style={{ background: 'rgba(255,255,255,0.4)', transform: 'translate(30%, -30%)' }} />
+        <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full opacity-15 blur-3xl" style={{ background: 'rgba(0,0,0,0.5)', transform: 'translate(-30%, 30%)' }} />
+
+        <div className="max-w-lg mx-auto text-center relative">
+          {/* Top bar — social proof inline */}
+          <div className="flex items-center justify-center gap-2 text-xs mb-4 flex-wrap">
+            <span className="inline-flex items-center gap-1 bg-white/15 backdrop-blur px-2.5 py-1 rounded-full border border-white/20">
+              <span className="text-yellow-300">★★★★★</span>
+              <span className="font-bold">4.9/5</span>
+            </span>
+            <span className="inline-flex items-center gap-1 bg-white/15 backdrop-blur px-2.5 py-1 rounded-full border border-white/20">
+              <span>👥</span>
+              <span className="font-bold">+1.200 clientes</span>
+            </span>
+            <span className="inline-flex items-center gap-1 bg-white/15 backdrop-blur px-2.5 py-1 rounded-full border border-white/20">
+              <span>🛡</span>
+              <span className="font-bold">Garantia 7 dias</span>
+            </span>
+          </div>
+
           {product.badge && (
-            <span className="inline-block bg-white/20 border border-white/40 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4">
+            <span className="inline-block bg-white/25 border border-white/50 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest mb-3 backdrop-blur">
               {product.badge}
             </span>
           )}
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black leading-[1.05] mb-4 tracking-tight">
+            {product.title}
+          </h1>
+          <p className="text-base sm:text-lg text-white/90 mb-7 leading-relaxed max-w-md mx-auto">{product.subtitle}</p>
+
+          {/* Mockup do produto */}
           {product.image ? (
-            <div className="mx-auto mb-5 max-w-xs rounded-2xl overflow-hidden shadow-2xl">
+            <div className="mx-auto mb-7 max-w-xs rounded-3xl overflow-hidden shadow-2xl ring-4 ring-white/20" style={{ boxShadow: '0 32px 64px rgba(0,0,0,0.4)' }}>
               <img src={product.image} alt={product.title} className="w-full h-auto block" loading="eager" fetchPriority="high" />
             </div>
           ) : (
-            <div className="text-6xl mb-4">{product.emoji}</div>
+            <div className="text-6xl mb-7">{product.emoji}</div>
           )}
-          <h1 className="text-2xl sm:text-3xl font-black leading-tight mb-3">
-            {product.title}
-          </h1>
-          <p className="text-base text-white/90 mb-6 leading-relaxed">{product.subtitle}</p>
 
-          {/* Price */}
-          <div className="bg-white/15 backdrop-blur rounded-2xl p-5 mb-6 text-center">
-            <p className="text-white/70 text-sm line-through mb-1">
+          {/* Price card */}
+          <div className="bg-white/15 backdrop-blur rounded-2xl p-5 mb-5 text-center border border-white/20">
+            <p className="text-white/70 text-xs mb-1 line-through">
               De R$ {product.originalPrice.toFixed(2).replace('.', ',')}
             </p>
-            <p className="text-white/80 text-sm mb-1">ou à vista por</p>
-            <p className="text-5xl font-black text-white">
+            <p className="text-white/80 text-xs uppercase tracking-widest font-black mb-1">Hoje você paga</p>
+            <p className="text-5xl font-black text-white tracking-tight">
               R$ {product.price.toFixed(2).replace('.', ',')}
             </p>
             {product.installment && (
-              <p className="text-yellow-300 font-black text-lg mt-1">
-                ou {product.installment.times}x de R$ {product.installment.value.toFixed(2).replace('.', ',')}
+              <p className="text-yellow-300 font-black text-base mt-1">
+                ou {product.installment.times}× R$ {product.installment.value.toFixed(2).replace('.', ',')}
               </p>
             )}
-            <p className="text-white/70 text-xs mt-1">sem juros · acesso vitalício</p>
+            <p className="text-white/70 text-[11px] mt-2">acesso vitalício · sem mensalidade</p>
           </div>
 
+          {/* CTA primário grande */}
           <a
             href={checkoutUrl}
-            className="block w-full bg-white text-gray-900 font-black py-4 rounded-2xl text-lg shadow-lg active:scale-95 transition-transform"
+            onClick={() => trackPixel('AddToCart', { content_ids: [product.slug], value: product.price, currency: 'BRL' })}
+            className="block w-full bg-white text-gray-900 font-black py-5 rounded-2xl text-lg shadow-2xl active:scale-95 transition-transform mb-2"
+            style={{ boxShadow: '0 16px 40px rgba(0,0,0,0.3)' }}
           >
-            Comprar agora →
+            QUERO ACESSAR AGORA →
           </a>
-          <button
-            onClick={() => addItem(product)}
-            disabled={inCart || cartFull}
-            className={`mt-3 w-full border-2 border-white/40 text-white font-bold py-3 rounded-2xl text-sm active:scale-95 transition-all ${
-              inCart ? 'opacity-60 cursor-default' : cartFull ? 'opacity-40 cursor-not-allowed' : 'hover:bg-white/10'
-            }`}
-          >
-            {inCart ? '✓ Adicionado ao carrinho' : cartFull ? 'Carrinho cheio (máx. 3)' : '🛒 Adicionar ao carrinho'}
-          </button>
-          <p className="text-xs text-white/70 mt-3">🔒 Compra 100% segura · Acesso imediato por e-mail</p>
+
+          {/* CTA secundário — descer pra ver mais */}
+          <a href="#detalhes" className="block w-full text-white/80 text-sm py-2 underline-offset-4 hover:text-white">
+            Ver tudo que tá incluído ↓
+          </a>
+
+          <p className="text-[11px] text-white/70 mt-4 flex items-center justify-center gap-3 flex-wrap">
+            <span className="inline-flex items-center gap-1">🔒 Compra segura</span>
+            <span>·</span>
+            <span>Acesso em 2min</span>
+            <span>·</span>
+            <span>7d garantia</span>
+          </p>
         </div>
       </section>
 
@@ -209,7 +238,7 @@ export default function SalesPage() {
       )}
 
       {/* What you get + value stack — com imagem do produto lado-a-lado (estilo concorrente validado) */}
-      <section className="bg-white px-4 py-10">
+      <section id="detalhes" className="bg-white px-4 py-10 scroll-mt-4">
         <div className="max-w-5xl mx-auto">
           <p className="text-xs uppercase tracking-widest font-black text-green-600 mb-2 text-center md:text-left">DENTRO DO SISTEMA</p>
           <h2 className="text-3xl md:text-4xl font-black text-gray-900 text-center md:text-left mb-2 leading-tight">
@@ -251,6 +280,77 @@ export default function SalesPage() {
             <p className="text-sm text-gray-400 line-through">R$ {totalValue.toFixed(2).replace('.', ',')}</p>
             <p className="text-4xl font-black text-green-700 my-1">R$ {product.price.toFixed(2).replace('.', ',')}</p>
             <p className="text-xs text-green-700 font-bold">Você economiza R$ {(totalValue - product.price).toFixed(2).replace('.', ',')} hoje</p>
+          </div>
+        </div>
+      </section>
+
+      {/* === COMPARAÇÃO === Mata posicionamento de concorrentes (PDF comum vs sistema) */}
+      <section className="bg-gray-900 text-white px-4 py-12">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-center text-xs uppercase tracking-widest font-black text-yellow-400 mb-3">A diferença</p>
+          <h2 className="text-2xl md:text-3xl font-black mb-2 text-center leading-tight">
+            Por que outros <span style={{ color: '#f87171' }}>nunca funcionaram</span> pra você?
+          </h2>
+          <p className="text-center text-sm text-gray-400 mb-8 max-w-xl mx-auto">
+            A maioria vende PDF. A gente entrega um sistema que funciona no seu celular.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {/* Coluna ESQUERDA — concorrentes */}
+            <div className="rounded-2xl p-5 bg-red-950/30 border border-red-900/40">
+              <p className="text-xs uppercase tracking-widest font-black text-red-400 mb-3">Comum no mercado</p>
+              <h3 className="text-lg font-black mb-4 text-white/80">Ebook genérico</h3>
+              <ul className="space-y-3 text-sm text-gray-300">
+                <li className="flex items-start gap-2"><span className="text-red-400 flex-shrink-0">✗</span>PDF estático que cai na pasta de downloads</li>
+                <li className="flex items-start gap-2"><span className="text-red-400 flex-shrink-0">✗</span>Você lê uma vez, esquece pra sempre</li>
+                <li className="flex items-start gap-2"><span className="text-red-400 flex-shrink-0">✗</span>Sem ferramenta interativa</li>
+                <li className="flex items-start gap-2"><span className="text-red-400 flex-shrink-0">✗</span>Nada de planejamento ou tracker</li>
+                <li className="flex items-start gap-2"><span className="text-red-400 flex-shrink-0">✗</span>Suporte nenhum</li>
+                <li className="flex items-start gap-2"><span className="text-red-400 flex-shrink-0">✗</span>"Conteúdo" mas zero sistema</li>
+              </ul>
+            </div>
+
+            {/* Coluna DIREITA — nós */}
+            <div className="rounded-2xl p-5 bg-yellow-500/10 border-2 border-yellow-400/50 relative">
+              <span className="absolute -top-3 right-4 bg-yellow-400 text-gray-900 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Você aqui</span>
+              <p className="text-xs uppercase tracking-widest font-black text-yellow-400 mb-3">Agência Criativa</p>
+              <h3 className="text-lg font-black mb-4 text-white">{product.title.split('—')[0].trim()}</h3>
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-start gap-2"><span className="text-green-400 flex-shrink-0">✓</span><span><strong className="text-white">Sistema</strong> que funciona no celular, tablet e pc</span></li>
+                <li className="flex items-start gap-2"><span className="text-green-400 flex-shrink-0">✓</span><span><strong className="text-white">Funciona offline</strong> depois de abrir uma vez</span></li>
+                <li className="flex items-start gap-2"><span className="text-green-400 flex-shrink-0">✓</span><span><strong className="text-white">Ferramentas interativas</strong> (planejador, calculadoras, tracker)</span></li>
+                <li className="flex items-start gap-2"><span className="text-green-400 flex-shrink-0">✓</span><span><strong className="text-white">Persistência</strong> — você marca e fica salvo</span></li>
+                <li className="flex items-start gap-2"><span className="text-green-400 flex-shrink-0">✓</span><span><strong className="text-white">Suporte WhatsApp</strong> direto comigo</span></li>
+                <li className="flex items-start gap-2"><span className="text-green-400 flex-shrink-0">✓</span><span><strong className="text-white">Atualizações grátis</strong> pra sempre</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <p className="text-center text-xs text-gray-500 mt-8 italic">
+            Por isso a gente cobra R$ {product.price.toFixed(0)} em vez de R$ 9,90 com 10 bônus inúteis.
+          </p>
+        </div>
+      </section>
+
+      {/* === GARANTIA VISUAL === selo grande pra reduzir risco percebido */}
+      <section className="bg-white px-4 py-12">
+        <div className="max-w-2xl mx-auto">
+          <div className="rounded-3xl p-7 md:p-10 text-center" style={{ background: 'linear-gradient(135deg, #fef3c7, #fff)', border: '2px dashed #F4C430' }}>
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-5" style={{ background: 'rgba(244,196,48,0.2)', border: '3px solid #F4C430' }}>
+              <span className="text-4xl">🛡</span>
+            </div>
+            <p className="text-xs uppercase tracking-widest font-black text-yellow-700 mb-2">Garantia incondicional</p>
+            <h2 className="text-2xl md:text-3xl font-black mb-3 text-gray-900 leading-tight">
+              7 dias pra testar. <span className="text-yellow-700">Sem pegadinha.</span>
+            </h2>
+            <p className="text-base text-gray-700 mb-5 leading-relaxed max-w-xl mx-auto">
+              Acessa, usa, testa. Não gostou em 7 dias?
+              <br /><strong>Manda 1 email e devolvemos 100%</strong> — sem pergunta, sem burocracia.
+            </p>
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-gray-600 bg-white border border-gray-200 px-4 py-2 rounded-full">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              Risco zero pra você
+            </div>
           </div>
         </div>
       </section>
@@ -436,46 +536,37 @@ export default function SalesPage() {
         </section>
       )}
 
-      {/* Sticky bottom CTA */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 shadow-xl z-40">
-        <div className="max-w-lg mx-auto flex items-center gap-2">
+      {/* Sticky bottom CTA — versão melhorada com gradient + animação */}
+      <div className="fixed bottom-0 left-0 right-0 z-40">
+        {/* Backdrop blur subtle */}
+        <div className="absolute inset-0 bg-white/95 backdrop-blur border-t border-gray-200" />
+        <div className="relative max-w-lg mx-auto p-3 flex items-center gap-3">
           <div className="flex-shrink-0">
-            <p className="text-xs text-gray-500 line-through">R$ {product.originalPrice.toFixed(2).replace('.', ',')}</p>
-            <p className="font-black text-gray-900 text-sm leading-tight">
+            <p className="text-[10px] text-gray-400 line-through leading-tight">De R$ {product.originalPrice.toFixed(2).replace('.', ',')}</p>
+            <p className="font-black text-gray-900 text-base leading-tight">
               R$ {bumpChecked
                 ? (product.price + KIT_COMPLETO.bumpPrice).toFixed(2).replace('.', ',')
                 : product.price.toFixed(2).replace('.', ',')}
             </p>
             {product.installment && (
-              <p className="text-green-600 text-xs font-bold leading-tight">
-                {product.installment.times}x R$ {product.installment.value.toFixed(2).replace('.', ',')}
+              <p className="text-green-600 text-[10px] font-bold leading-tight">
+                ou {product.installment.times}× R$ {product.installment.value.toFixed(2).replace('.', ',')}
               </p>
             )}
           </div>
-          <button
-            onClick={() => addItem(product)}
-            disabled={inCart || cartFull}
-            className={`flex-1 border-2 font-bold py-3 rounded-xl text-center text-xs transition-all ${
-              inCart
-                ? 'border-green-400 text-green-600 bg-green-50'
-                : cartFull
-                ? 'border-gray-200 text-gray-400'
-                : 'border-gray-300 text-gray-700 active:scale-95'
-            }`}
-          >
-            {inCart ? '✓ No carrinho' : '🛒 Carrinho'}
-          </button>
           <a
             href={checkoutUrl}
-            className={`flex-1 bg-gradient-to-r ${product.color} text-white font-black py-3 rounded-xl text-center text-sm active:scale-95 transition-transform`}
+            onClick={() => trackPixel('AddToCart', { content_ids: [product.slug], value: product.price, currency: 'BRL' })}
+            className={`flex-1 bg-gradient-to-r ${product.color} text-white font-black py-3.5 rounded-xl text-center text-sm active:scale-95 transition-transform shadow-lg`}
+            style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.15)' }}
           >
-            Comprar →
+            QUERO ACESSAR →
           </a>
         </div>
       </div>
 
       {/* Bottom padding for sticky bar */}
-      <div className="h-20" />
+      <div className="h-24" />
     </div>
   )
 }

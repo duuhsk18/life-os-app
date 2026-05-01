@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Templates Notion — Galeria Curada</title>
+<title>7 Ferramentas Interativas — Tudo num lugar</title>
 <script src="../_shared/auth-gate.js"></script>
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#EC4899">
-<meta name="application-name" content="Templates Notion">
+<meta name="application-name" content="7 Ferramentas">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Templates Notion">
+<meta name="apple-mobile-web-app-title" content="7 Ferramentas">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
@@ -20,6 +20,7 @@
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap');
 
@@ -31,7 +32,9 @@
     --bg: #0D0809;
     --bg-card: #150B0E;
     --bg-card2: #1C1015;
+    --bg-card3: #241218;
     --border: rgba(236,72,153,0.18);
+    --border-strong: rgba(236,72,153,0.32);
     --text: #F5E8EF;
     --text-muted: #9E7A8A;
     --text-dim: #5E4550;
@@ -41,6 +44,7 @@
     --blue: #3B82F6;
     --purple: #8B5CF6;
     --red: #EF4444;
+    --orange: #F97316;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,13 +55,14 @@
     color: var(--text);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+    padding-bottom: 80px;
   }
 
   /* ===== TOP NAV ===== */
   .topbar {
     background: var(--bg-card);
     border-bottom: 1px solid var(--border);
-    padding: 0 20px;
+    padding: 0 16px;
     display: flex;
     align-items: center;
     gap: 0;
@@ -75,7 +80,7 @@
     font-weight: 700;
     color: var(--accent);
     white-space: nowrap;
-    padding-right: 20px;
+    padding-right: 16px;
     border-right: 1px solid var(--border);
     margin-right: 6px;
     flex-shrink: 0;
@@ -88,7 +93,7 @@
     font-size: 13px;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    padding: 16px 14px;
+    padding: 16px 12px;
     cursor: pointer;
     white-space: nowrap;
     border-bottom: 2px solid transparent;
@@ -98,1638 +103,2041 @@
   }
   .nav-btn:hover { color: var(--text-muted); }
   .nav-btn.active { color: var(--accent-light); border-bottom-color: var(--accent); }
-  .nav-btn svg { width: 14px; height: 14px; }
-  .nav-btn .pill {
-    background: var(--accent-muted);
-    color: var(--accent-light);
-    font-size: 10px; font-weight: 700;
-    padding: 2px 6px; border-radius: 10px;
-    margin-left: 2px;
-  }
+  .nav-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 4px; }
+  .nav-btn .ico { width: 14px; height: 14px; flex-shrink: 0; }
 
-  /* ===== MAIN ===== */
-  .main { max-width: 1280px; margin: 0 auto; padding: 28px 20px 80px; }
-
-  .page-head {
-    margin-bottom: 24px;
-    padding-bottom: 18px;
+  /* ===== HEADER ===== */
+  .hero {
+    padding: 28px 16px 18px;
+    text-align: center;
     border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(236,72,153,0.04) 0%, transparent 100%);
   }
-  .page-label {
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 3px; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 6px;
-  }
-  .page-title {
+  .hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(26px, 4vw, 38px);
-    font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 8px;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 6px;
   }
-  .page-desc { color: var(--text-muted); font-size: 14px; line-height: 1.6; max-width: 640px; }
+  .hero h1 .accent { color: var(--accent); }
+  .hero p { color: var(--text-muted); font-size: 13px; max-width: 480px; margin: 0 auto; line-height: 1.5; }
 
-  /* ===== TAB SECTIONS ===== */
+  /* ===== SECTIONS / CONTAINER ===== */
+  .container { max-width: 920px; margin: 0 auto; padding: 24px 16px; }
   .section { display: none; }
   .section.active { display: block; }
 
-  /* ===== FILTERS BAR ===== */
-  .filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 24px;
-    padding: 14px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-  }
-
-  .search-wrap {
-    flex: 1; min-width: 220px;
-    position: relative;
-  }
-  .search-input {
-    width: 100%;
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 14px 10px 38px;
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    transition: border-color 0.2s;
-  }
-  .search-input:focus { outline: none; border-color: var(--accent); }
-  .search-input::placeholder { color: var(--text-dim); }
-  .search-icon {
-    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-    width: 16px; height: 16px; color: var(--text-dim);
-  }
-
-  .filter-select {
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 32px 10px 14px;
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239E7A8A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    min-width: 130px;
-  }
-  .filter-select:focus { outline: none; border-color: var(--accent); }
-  .filter-select option { background: #1C1015; }
-
-  .results-count {
-    font-size: 12px; color: var(--text-dim);
-    padding: 6px 10px;
-    background: var(--bg-card2);
-    border-radius: 8px;
-  }
-  .results-count strong { color: var(--accent-light); }
-
-  /* ===== CATEGORY HEADER ===== */
-  .cat-section { margin-bottom: 36px; }
-  .cat-header {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 16px;
-  }
-  .cat-icon {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .cat-icon svg { width: 18px; height: 18px; color: #fff; }
-  .cat-title {
+  .sec-head { margin-bottom: 22px; }
+  .sec-head h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 22px; font-weight: 700; color: var(--white);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
   }
-  .cat-count {
-    font-size: 11px; color: var(--text-dim);
-    margin-left: 6px;
-    padding: 3px 9px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-  }
+  .sec-head p { color: var(--text-muted); font-size: 13px; line-height: 1.5; }
 
-  /* ===== TEMPLATE GRID ===== */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px;
-  }
-
-  .card-template {
+  /* ===== CARDS ===== */
+  .card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 14px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-    display: flex; flex-direction: column;
-  }
-  .card-template:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent);
-    box-shadow: 0 10px 28px rgba(236,72,153,0.18);
-  }
-
-  .card-mockup {
-    aspect-ratio: 16 / 10;
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column;
     padding: 18px;
-    color: #fff;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .card-mockup::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      linear-gradient(135deg, rgba(255,255,255,0.10), transparent 50%),
-      radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.18), transparent 60%);
-    pointer-events: none;
-  }
-  .card-mockup-icon {
-    width: 38px; height: 38px;
-    background: rgba(255,255,255,0.18);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 10px;
-    backdrop-filter: blur(10px);
-    z-index: 1;
-  }
-  .card-mockup-icon svg { width: 22px; height: 22px; }
-  .card-mockup-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px; font-weight: 700;
-    line-height: 1.2;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.3);
-    z-index: 1;
-  }
-  .card-mockup-sub {
-    font-size: 10px; font-weight: 600;
-    letter-spacing: 2px; text-transform: uppercase;
-    margin-top: 6px; opacity: 0.85;
-    z-index: 1;
-  }
-
-  .card-body {
-    padding: 14px 16px 16px;
-    display: flex; flex-direction: column; gap: 8px; flex: 1;
-  }
-  .card-meta {
-    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
-  }
-  .tag {
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.6px; text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 8px;
-  }
-  .tag-cat {
-    background: var(--accent-muted);
-    color: var(--accent-light);
-  }
-  .tag-diff-1 { background: rgba(16,185,129,0.12); color: var(--green); }
-  .tag-diff-2 { background: rgba(245,158,11,0.12); color: var(--yellow); }
-  .tag-diff-3 { background: rgba(239,68,68,0.12); color: var(--red); }
-  .tag-dup {
-    background: rgba(16,185,129,0.18);
-    color: var(--green);
-    display: inline-flex; align-items: center; gap: 4px;
-  }
-  .tag-dup svg { width: 10px; height: 10px; }
-
-  .card-name {
-    font-size: 15px; font-weight: 700; color: var(--white);
-    line-height: 1.3;
-  }
-  .card-desc {
-    font-size: 12px; color: var(--text-muted);
-    line-height: 1.5;
-  }
-
-  .btn-detail {
-    margin-top: 8px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--border);
-    color: var(--accent-light);
-    font-size: 12px; font-weight: 700;
-    padding: 9px 12px; border-radius: 8px;
-    cursor: pointer; font-family: 'Inter', sans-serif;
-    transition: background 0.2s, color 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-  }
-  .btn-detail:hover { background: var(--accent-muted); color: var(--white); }
-  .btn-detail svg { width: 12px; height: 12px; }
-
-  /* ===== MODAL ===== */
-  .modal-backdrop {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(8,4,5,0.85);
-    backdrop-filter: blur(6px);
-    z-index: 200;
-    align-items: flex-start; justify-content: center;
-    padding: 32px 16px;
-    overflow-y: auto;
-  }
-  .modal-backdrop.show { display: flex; }
-
-  .modal {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    max-width: 720px;
-    width: 100%;
-    overflow: hidden;
-    margin: auto;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-    animation: modalIn 0.25s ease;
-  }
-  @keyframes modalIn {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-
-  .modal-mockup {
-    aspect-ratio: 16 / 8;
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column;
-    padding: 36px;
-    color: #fff;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .modal-mockup::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.10), transparent 50%);
-  }
-  .modal-mockup-icon {
-    width: 64px; height: 64px;
-    background: rgba(255,255,255,0.20);
-    border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
     margin-bottom: 14px;
-    backdrop-filter: blur(10px);
-    z-index: 1;
   }
-  .modal-mockup-icon svg { width: 36px; height: 36px; }
-  .modal-mockup-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 30px; font-weight: 700;
-    line-height: 1.15;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.35);
-    z-index: 1;
-  }
-  .modal-close {
-    position: absolute; top: 14px; right: 14px;
-    width: 34px; height: 34px;
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 50%;
-    color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 5;
-    transition: background 0.2s;
-  }
-  .modal-close:hover { background: rgba(0,0,0,0.7); }
-
-  .modal-body { padding: 24px; }
-  .modal-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-  .modal-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px; font-weight: 700; color: var(--white);
-    margin-bottom: 8px; line-height: 1.2;
-  }
-  .modal-desc {
-    color: var(--text-muted); font-size: 14px; line-height: 1.7;
-    margin-bottom: 22px;
-  }
-
-  .modal-section {
-    margin-bottom: 22px;
-  }
-  .modal-section-title {
-    font-size: 11px; font-weight: 700; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--accent);
-    margin-bottom: 10px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .modal-section-title svg { width: 14px; height: 14px; }
-
-  .step-list { counter-reset: step; display: flex; flex-direction: column; gap: 8px; }
-  .step-list li {
-    counter-increment: step;
-    list-style: none;
-    padding: 10px 14px 10px 42px;
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--text-muted); font-size: 13px; line-height: 1.6;
-    position: relative;
-  }
-  .step-list li::before {
-    content: counter(step);
-    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-    width: 22px; height: 22px;
-    background: var(--accent-muted);
-    color: var(--accent-light);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 800;
-  }
-
-  .feat-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
     gap: 8px;
   }
-  @media (max-width: 520px) { .feat-list { grid-template-columns: 1fr; } }
-  .feat-list li {
-    list-style: none;
-    padding: 8px 12px 8px 28px;
-    background: var(--bg-card2);
-    border-radius: 8px;
-    color: var(--text-muted); font-size: 12px; line-height: 1.5;
-    position: relative;
-  }
-  .feat-list li::before {
-    content: '';
-    position: absolute; left: 10px; top: 14px;
-    width: 6px; height: 6px;
+  .card-title .ico { width: 16px; height: 16px; color: var(--accent); }
+
+  .card-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+
+  /* ===== BUTTONS ===== */
+  .btn {
     background: var(--accent);
-    border-radius: 50%;
-  }
-
-  .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .tag-related {
-    background: rgba(255,255,255,0.05);
-    color: var(--text-muted);
-    font-size: 11px; font-weight: 600;
-    padding: 4px 10px; border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .modal-actions {
-    display: flex; gap: 10px; flex-wrap: wrap;
-    padding-top: 18px; border-top: 1px solid var(--border);
-    margin-top: 18px;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: var(--white);
     border: none;
-    color: #fff;
-    font-size: 13px; font-weight: 700;
-    padding: 12px 18px; border-radius: 10px;
-    cursor: pointer; font-family: 'Inter', sans-serif;
-    flex: 1; min-width: 180px;
-    box-shadow: 0 3px 12px rgba(236,72,153,0.32);
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    text-decoration: none;
-  }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(236,72,153,0.45); }
-  .btn-primary svg { width: 14px; height: 14px; }
-
-  .btn-secondary {
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    color: var(--accent-light);
-    font-size: 13px; font-weight: 700;
-    padding: 12px 18px; border-radius: 10px;
-    cursor: pointer; font-family: 'Inter', sans-serif;
-    flex: 1; min-width: 160px;
-    transition: background 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .btn-secondary:hover { background: var(--accent-muted); }
-  .btn-secondary.is-dup { background: rgba(16,185,129,0.12); color: var(--green); border-color: rgba(16,185,129,0.3); }
-  .btn-secondary svg { width: 14px; height: 14px; }
-
-  /* ===== TUTORIAL ===== */
-  .tut-progress {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 18px;
-    margin-bottom: 22px;
-    display: flex; align-items: center; gap: 14px;
-    flex-wrap: wrap;
-  }
-  .tut-progress-text { flex: 1; min-width: 200px; }
-  .tut-progress-label { font-size: 11px; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; }
-  .tut-progress-num { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--white); font-weight: 700; margin-top: 2px; }
-  .tut-progress-num span { color: var(--accent); }
-  .tut-progress-bar {
-    flex: 2; min-width: 200px;
-    height: 8px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 6px; overflow: hidden;
-  }
-  .tut-progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent-light));
-    border-radius: 6px;
-    transition: width 0.4s;
-  }
-
-  .tut-grid { display: flex; flex-direction: column; gap: 14px; }
-
-  .tut-step {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 22px;
-    display: flex; gap: 18px;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .tut-step.done {
-    border-color: rgba(16,185,129,0.4);
-    background: rgba(16,185,129,0.04);
-  }
-
-  .tut-num {
-    width: 44px; height: 44px;
-    background: var(--accent-muted);
-    color: var(--accent-light);
-    font-family: 'Playfair Display', serif;
-    font-size: 22px; font-weight: 700;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .tut-step.done .tut-num {
-    background: var(--green); color: #000;
-  }
-
-  .tut-content { flex: 1; min-width: 0; }
-  .tut-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px; font-weight: 700; color: var(--white);
-    margin-bottom: 8px;
-  }
-  .tut-text {
-    color: var(--text-muted); font-size: 13px; line-height: 1.7;
-    margin-bottom: 14px;
-  }
-  .tut-text strong { color: var(--accent-light); font-weight: 600; }
-  .tut-text code {
-    background: var(--bg-card2);
-    color: var(--accent-light);
-    padding: 2px 6px; border-radius: 4px;
-    font-size: 12px;
-    border: 1px solid var(--border);
-  }
-
-  .tut-screenshot {
-    background: var(--bg-card2);
-    border: 1px dashed var(--border);
     border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 14px;
-    font-size: 12px;
-    color: var(--text-dim);
-    line-height: 1.6;
-    font-style: italic;
+    padding: 11px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
-  .tut-screenshot strong { color: var(--text-muted); font-style: normal; display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
-
-  .shortcut-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 8px;
-  }
-  .shortcut {
-    display: flex; align-items: center; gap: 10px;
-    padding: 8px 12px;
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-  }
-  .shortcut-key {
-    font-family: monospace;
-    background: var(--bg-card);
+  .btn:hover { background: var(--accent-dark); }
+  .btn:active { transform: scale(0.97); }
+  .btn:focus-visible { outline: 2px solid var(--accent-light); outline-offset: 2px; }
+  .btn-ghost {
+    background: transparent;
     color: var(--accent-light);
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-size: 12px; font-weight: 700;
-    border: 1px solid var(--border);
-    flex-shrink: 0;
+    border: 1px solid var(--border-strong);
   }
-  .shortcut-text { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+  .btn-ghost:hover { background: var(--accent-muted); }
+  .btn-mini {
+    padding: 6px 10px;
+    font-size: 11px;
+    border-radius: 7px;
+  }
+  .btn-danger {
+    background: transparent;
+    color: var(--red);
+    border: 1px solid rgba(239,68,68,0.32);
+  }
+  .btn-danger:hover { background: rgba(239,68,68,0.1); }
 
-  .tut-check-btn {
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 12px; font-weight: 700;
-    padding: 10px 16px; border-radius: 10px;
-    cursor: pointer; font-family: 'Inter', sans-serif;
-    transition: all 0.2s;
-    display: inline-flex; align-items: center; gap: 8px;
-  }
-  .tut-check-btn:hover { border-color: var(--green); color: var(--green); }
-  .tut-step.done .tut-check-btn {
-    background: rgba(16,185,129,0.12);
-    border-color: rgba(16,185,129,0.4);
-    color: var(--green);
-  }
-  .tut-check-btn svg { width: 14px; height: 14px; }
-
-  /* ===== MEUS TEMPLATES ===== */
-  .my-empty {
-    background: var(--bg-card);
-    border: 1px dashed var(--border);
-    border-radius: 14px;
-    padding: 50px 24px;
-    text-align: center;
-  }
-  .my-empty-icon {
-    width: 56px; height: 56px;
-    background: var(--accent-muted);
-    border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 16px;
-  }
-  .my-empty-icon svg { width: 28px; height: 28px; color: var(--accent); }
-  .my-empty-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px; font-weight: 700; color: var(--white);
-    margin-bottom: 8px;
-  }
-  .my-empty-text {
-    color: var(--text-muted); font-size: 14px;
-    max-width: 360px; margin: 0 auto 18px; line-height: 1.6;
-  }
-  .my-empty-btn {
-    background: var(--accent-muted);
-    border: 1px solid var(--border);
-    color: var(--accent-light);
-    font-size: 13px; font-weight: 700;
-    padding: 10px 20px; border-radius: 10px;
-    cursor: pointer; font-family: 'Inter', sans-serif;
-    transition: background 0.2s;
-  }
-  .my-empty-btn:hover { background: rgba(236,72,153,0.2); }
-
-  .my-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-  }
-
-  .my-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-    display: flex; flex-direction: column;
-  }
-  .my-card-mockup {
-    aspect-ratio: 16 / 6;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff;
-    padding: 16px;
-    position: relative;
-    overflow: hidden;
-  }
-  .my-card-mockup::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.10), transparent 60%);
-  }
-  .my-card-mockup-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px; font-weight: 700;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.35);
-    z-index: 1;
-  }
-  .my-card-body { padding: 14px 16px 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
-  .my-card-name { font-size: 14px; font-weight: 700; color: var(--white); line-height: 1.3; }
-
-  .status-row { display: flex; gap: 6px; }
-  .status-btn {
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.5px; text-transform: uppercase;
-    padding: 5px 9px; border-radius: 6px;
-    cursor: pointer; font-family: 'Inter', sans-serif;
-    transition: all 0.2s; flex: 1;
-  }
-  .status-btn:hover { color: var(--text-muted); }
-  .status-btn.active.ativo { background: rgba(59,130,246,0.15); color: var(--blue); border-color: rgba(59,130,246,0.4); }
-  .status-btn.active.uso { background: rgba(16,185,129,0.15); color: var(--green); border-color: rgba(16,185,129,0.4); }
-  .status-btn.active.aband { background: rgba(239,68,68,0.10); color: var(--red); border-color: rgba(239,68,68,0.3); }
-
-  .my-textarea {
+  /* ===== INPUTS ===== */
+  .input, .select, textarea.input {
     width: 100%;
     background: var(--bg-card2);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 9px;
     padding: 10px 12px;
     color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 12px; line-height: 1.5;
-    resize: vertical;
-    min-height: 60px;
-    transition: border-color 0.2s;
+    font-size: 13px;
+    font-family: inherit;
+    transition: border-color 0.15s, background 0.15s;
   }
-  .my-textarea:focus { outline: none; border-color: var(--accent); }
-  .my-textarea::placeholder { color: var(--text-dim); }
+  .input:focus, .select:focus, textarea.input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--bg-card3);
+  }
+  textarea.input { resize: vertical; min-height: 60px; line-height: 1.5; }
+  .label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 5px;
+  }
+  .field { margin-bottom: 12px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .row > * { flex: 1; min-width: 0; }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  @media (max-width: 480px) {
+    .row-3 { grid-template-columns: 1fr 1fr; }
+  }
 
-  .my-actions { display: flex; gap: 6px; }
-  .my-action {
-    flex: 1;
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    color: var(--accent-light);
-    font-size: 11px; font-weight: 700;
-    padding: 8px; border-radius: 8px;
-    cursor: pointer; font-family: 'Inter', sans-serif;
-    transition: background 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 5px;
-    text-decoration: none;
+  /* ===== STATS ===== */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
   }
-  .my-action:hover { background: var(--accent-muted); }
-  .my-action.danger { color: var(--red); }
-  .my-action.danger:hover { background: rgba(239,68,68,0.10); }
-  .my-action svg { width: 11px; height: 11px; }
+  .stat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 4px;
+  }
+  .stat-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
 
   /* ===== TOAST ===== */
   .toast {
     position: fixed;
-    bottom: 24px; left: 50%;
-    transform: translate(-50%, 10px);
-    background: var(--green);
-    color: #000;
-    font-size: 13px; font-weight: 700;
-    padding: 12px 20px; border-radius: 10px;
-    z-index: 999; opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--bg-card3);
+    border: 1px solid var(--border-strong);
+    color: var(--white);
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
     pointer-events: none;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 9999;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
   }
-  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ===== EMPTY (filtered no results) ===== */
-  .empty-results {
-    grid-column: 1 / -1;
+  /* =========================================================
+     1) WHEEL OF LIFE
+     ========================================================= */
+  .wheel-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .wheel-wrap { grid-template-columns: 1fr; }
+  }
+  .wheel-svg {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1;
+    display: block;
+  }
+  .wheel-areas { display: flex; flex-direction: column; gap: 10px; }
+  .wheel-area {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 10px 12px;
+  }
+  .wheel-area-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .wheel-area-name { font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; }
+  .wheel-area-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .wheel-area-score {
+    font-size: 14px; font-weight: 800; color: var(--accent);
+    background: var(--accent-muted);
+    padding: 2px 8px; border-radius: 6px;
+  }
+  .wheel-area input[type=range] {
+    width: 100%;
+    accent-color: var(--accent);
+    height: 4px;
+  }
+  .wheel-area-note {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-family: inherit;
+    margin-top: 6px;
+    padding: 0;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 4px;
+  }
+  .wheel-area-note:focus { outline: none; border-bottom-color: var(--accent); }
+  .wheel-summary {
+    background: var(--accent-muted);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .wheel-history { margin-top: 18px; }
+  .wheel-history-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 12px;
+    background: var(--bg-card2);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+  .wheel-history-date { color: var(--text-muted); }
+  .wheel-history-score { font-weight: 700; color: var(--accent-light); }
+
+  /* =========================================================
+     2) PLANEJADOR 90 DIAS
+     ========================================================= */
+  .plan-goal {
+    background: linear-gradient(135deg, rgba(236,72,153,0.12), rgba(190,24,93,0.06));
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .plan-progress-wrap {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 12px;
+  }
+  .plan-progress-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--bg-card3);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .plan-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    transition: width 0.3s;
+  }
+  .plan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .plan-week {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    transition: border-color 0.15s;
+  }
+  .plan-week.done {
+    border-color: var(--green);
+    background: rgba(16,185,129,0.04);
+  }
+  .plan-week-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px;
+  }
+  .plan-week-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .plan-checkbox {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border-strong);
+    background: var(--bg-card2);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .plan-checkbox.checked {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .plan-checkbox.checked svg { display: block; }
+  .plan-checkbox svg { display: none; width: 14px; height: 14px; color: white; }
+  .plan-week input, .plan-week textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 12px;
+    font-family: inherit;
+    padding: 4px 0;
+    border-bottom: 1px dashed var(--border);
+    margin-bottom: 6px;
+    resize: none;
+  }
+  .plan-week input:focus, .plan-week textarea:focus { outline: none; border-bottom-color: var(--accent); }
+  .plan-week-focus { font-weight: 600; font-size: 13px !important; color: var(--white) !important; }
+
+  /* =========================================================
+     3) GTD INBOX
+     ========================================================= */
+  .gtd-capture {
+    display: flex; gap: 8px;
+    margin-bottom: 18px;
+  }
+  .gtd-capture .input { flex: 1; }
+  .gtd-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    margin-bottom: 14px;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .gtd-tabs::-webkit-scrollbar { display: none; }
+  .gtd-tab {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: inherit;
+  }
+  .gtd-tab.active { background: var(--accent); color: var(--white); border-color: var(--accent); }
+  .gtd-tab .count {
+    background: rgba(255,255,255,0.18);
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-left: 6px;
+    font-size: 10px;
+  }
+  .gtd-list {}
+  .gtd-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    transition: border-color 0.15s;
+  }
+  .gtd-item-text { font-size: 13px; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
+  .gtd-item-meta { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .gtd-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+  .gtd-empty {
     text-align: center;
-    padding: 50px 20px;
+    padding: 30px 16px;
     color: var(--text-dim);
-    font-size: 14px;
+    font-size: 13px;
   }
-  .empty-results strong { color: var(--text-muted); display: block; margin-bottom: 4px; }
 
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 640px) {
-    .topbar { padding: 0 14px; }
-    .topbar-brand { padding-right: 14px; }
-    .nav-btn { padding: 14px 10px; font-size: 12px; }
-    .main { padding: 20px 14px 60px; }
-    .grid { grid-template-columns: 1fr; }
-    .modal-mockup { aspect-ratio: 16 / 9; padding: 24px; }
-    .modal-mockup-title { font-size: 22px; }
-    .modal-body { padding: 18px; }
-    .tut-step { flex-direction: column; padding: 18px; gap: 14px; }
-    .tut-num { width: 38px; height: 38px; font-size: 18px; }
+  /* =========================================================
+     4) CRM
+     ========================================================= */
+  .crm-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
   }
+  .crm-filter {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .crm-list {}
+  .crm-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .crm-card-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 6px;
+    gap: 10px;
+  }
+  .crm-name { font-size: 14px; font-weight: 700; color: var(--white); }
+  .crm-status {
+    font-size: 10px; font-weight: 700;
+    padding: 3px 8px; border-radius: 6px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .crm-status.lead { background: rgba(59,130,246,0.16); color: #93C5FD; }
+  .crm-status.ativo { background: rgba(16,185,129,0.16); color: #6EE7B7; }
+  .crm-status.concluido { background: rgba(139,92,246,0.16); color: #C4B5FD; }
+  .crm-status.arquivado { background: rgba(110,110,110,0.18); color: #999; }
+  .crm-info { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; line-height: 1.5; }
+  .crm-money { display: flex; gap: 12px; margin: 6px 0; font-size: 12px; }
+  .crm-money strong { color: var(--accent-light); }
+  .crm-followup {
+    font-size: 11px;
+    color: var(--yellow);
+    background: rgba(245,158,11,0.08);
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 4px;
+  }
+  .crm-followup.overdue { color: var(--red); background: rgba(239,68,68,0.1); }
+  .crm-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+
+  /* =========================================================
+     5) BOOKS
+     ========================================================= */
+  .books-form { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  @media (max-width: 600px) { .books-form { grid-template-columns: 1fr; } }
+  .book-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .book-head {
+    display: flex; justify-content: space-between; gap: 10px;
+    margin-bottom: 6px;
+  }
+  .book-title { font-size: 14px; font-weight: 700; color: var(--white); }
+  .book-author { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+  .book-stars { display: flex; gap: 2px; margin-top: 4px; }
+  .book-star {
+    cursor: pointer; padding: 2px;
+    color: var(--text-dim);
+  }
+  .book-star.filled { color: var(--yellow); }
+  .book-status-pill {
+    font-size: 10px; font-weight: 700;
+    padding: 3px 8px; border-radius: 6px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    display: inline-block;
+  }
+  .book-status-pill.lendo { background: rgba(59,130,246,0.16); color: #93C5FD; }
+  .book-status-pill.concluido { background: rgba(16,185,129,0.16); color: #6EE7B7; }
+  .book-status-pill.abandonado { background: rgba(110,110,110,0.18); color: #999; }
+  .book-status-pill.wishlist { background: rgba(245,158,11,0.16); color: #FCD34D; }
+
+  /* =========================================================
+     6) FIRE
+     ========================================================= */
+  .fire-output {
+    background: linear-gradient(135deg, rgba(236,72,153,0.10), rgba(190,24,93,0.04));
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  .fire-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .fire-big small { font-size: 14px; color: var(--accent-light); font-family: 'Inter'; font-weight: 500; }
+  .fire-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .fire-stat-card {
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .fire-stat-card .stat-value { font-size: 18px; }
+  .fire-chart {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 16px;
+  }
+  .fire-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 160px;
+    margin-top: 12px;
+    padding: 8px 0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .fire-bar-wrap {
+    flex: 1;
+    min-width: 12px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+  }
+  .fire-bar {
+    width: 100%;
+    background: linear-gradient(180deg, var(--accent-light), var(--accent));
+    border-radius: 3px 3px 0 0;
+    min-height: 2px;
+    transition: height 0.4s ease-out;
+  }
+  .fire-bar-wrap.reached .fire-bar {
+    background: linear-gradient(180deg, var(--green), #059669);
+  }
+  .fire-bar-label {
+    font-size: 9px;
+    color: var(--text-dim);
+    transform: rotate(-90deg) translateX(8px);
+    transform-origin: center;
+    white-space: nowrap;
+  }
+
+  /* =========================================================
+     7) HABITS
+     ========================================================= */
+  .habits-mgr {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 8px;
+    margin-bottom: 14px;
+    align-items: end;
+  }
+  @media (max-width: 600px) {
+    .habits-mgr { grid-template-columns: 1fr 1fr; }
+  }
+  .color-input { width: 100%; height: 36px; padding: 2px; background: var(--bg-card2); border: 1px solid var(--border); border-radius: 9px; cursor: pointer; }
+  .habits-list-mgr { margin-bottom: 18px; }
+  .habit-mgr-row {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+  }
+  .habit-mgr-dot { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
+  .habit-mgr-name { flex: 1; font-size: 13px; font-weight: 600; color: var(--text); }
+
+  .habits-tracker {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .habit-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .habit-block-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .habit-block-name {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; font-weight: 700; color: var(--white);
+  }
+  .habit-stats {
+    display: flex; gap: 12px;
+    font-size: 11px; color: var(--text-muted);
+    flex-wrap: wrap;
+  }
+  .habit-stats strong { color: var(--accent-light); font-size: 13px; font-weight: 800; }
+  .habit-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+  }
+  .habit-cell {
+    aspect-ratio: 1;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    color: var(--text-dim);
+    transition: all 0.12s;
+    position: relative;
+  }
+  .habit-cell.today { border-color: var(--accent); }
+  .habit-cell.done {
+    background: var(--habit-color, var(--accent));
+    border-color: var(--habit-color, var(--accent));
+    color: var(--white);
+  }
+  .habit-cell:hover { transform: scale(1.05); }
+  .habit-cell .day { font-size: 10px; font-weight: 600; }
+
+  /* =========================================================
+     EMPTY STATES
+     ========================================================= */
+  .empty {
+    text-align: center;
+    padding: 40px 16px;
+    color: var(--text-dim);
+  }
+  .empty-icon {
+    width: 48px; height: 48px;
+    margin: 0 auto 12px;
+    opacity: 0.4;
+  }
+  .empty-title { font-size: 14px; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+  .empty-sub { font-size: 12px; color: var(--text-dim); }
+
+  /* =========================================================
+     PRINT
+     ========================================================= */
+  @media print {
+    body { background: white !important; color: black !important; padding: 0; }
+    .topbar, .nav-btn, .btn, .gtd-tabs, .crm-filter { display: none !important; }
+    .hero { background: none; border: none; }
+    .hero h1, .hero p, .stat-value, .stat-label, .card-title, .card-sub,
+    .wheel-area-name, .crm-name, .book-title, .fire-big, .habit-block-name {
+      color: black !important;
+    }
+    .card, .stat, .wheel-area, .crm-card, .book-card, .gtd-item, .plan-week, .habit-block {
+      background: white !important;
+      border: 1px solid #ddd !important;
+      page-break-inside: avoid;
+    }
+    .section { display: block !important; page-break-after: always; }
+  }
+
+  /* Helpers */
+  .hidden { display: none !important; }
+  .text-muted { color: var(--text-muted); }
+  .text-dim { color: var(--text-dim); }
+  .text-center { text-align: center; }
+  .mb-12 { margin-bottom: 12px; }
+  .mb-18 { margin-bottom: 18px; }
+  .mt-12 { margin-top: 12px; }
+  .flex-between { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .flex-gap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 </style>
 </head>
 <body>
 
-<!-- ===== TOP NAV ===== -->
-<nav class="topbar">
-  <div class="topbar-brand">Templates Notion</div>
-  <button class="nav-btn active" data-tab="galeria">
-    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-    Galeria
+<!-- ============================================================
+     TOPBAR (TABS)
+     ============================================================ -->
+<nav class="topbar" role="tablist" aria-label="Ferramentas">
+  <div class="topbar-brand">7 Ferramentas</div>
+  <button class="nav-btn active" data-tab="wheel" role="tab" aria-selected="true" aria-label="Wheel of Life">
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/></svg>
+    Wheel of Life
   </button>
-  <button class="nav-btn" data-tab="tutorial">
-    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-    Tutorial
-    <span class="pill" id="tut-pill">0/6</span>
+  <button class="nav-btn" data-tab="plan90" role="tab" aria-selected="false" aria-label="90 Dias">
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    90 Dias
   </button>
-  <button class="nav-btn" data-tab="meus">
-    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
-    Meus Templates
-    <span class="pill" id="my-pill">0</span>
+  <button class="nav-btn" data-tab="gtd" role="tab" aria-selected="false" aria-label="GTD Inbox">
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+    GTD
+  </button>
+  <button class="nav-btn" data-tab="crm" role="tab" aria-selected="false" aria-label="CRM Pessoal">
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    CRM
+  </button>
+  <button class="nav-btn" data-tab="books" role="tab" aria-selected="false" aria-label="Tracker de Leituras">
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    Leituras
+  </button>
+  <button class="nav-btn" data-tab="fire" role="tab" aria-selected="false" aria-label="Calculadora FIRE">
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+    FIRE
+  </button>
+  <button class="nav-btn" data-tab="habits" role="tab" aria-selected="false" aria-label="Diário de Hábitos">
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    Hábitos
   </button>
 </nav>
 
-<main class="main">
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<header class="hero">
+  <h1>7 <span class="accent">Ferramentas Interativas</span></h1>
+  <p>Tudo num lugar. Sem Notion. Sem mensalidade.</p>
+</header>
 
-  <!-- ====== GALERIA ====== -->
-  <section class="section active" id="sec-galeria">
-    <div class="page-head">
-      <div class="page-label">Galeria Curada</div>
-      <h1 class="page-title">20 Templates Notion prontos pra duplicar</h1>
-      <p class="page-desc">Coleção curada de templates Notion para vida pessoal, trabalho, estudos, finanças e negócios. Click em qualquer card pra ver detalhes, instruções de uso e duplicar pro seu Notion.</p>
+<!-- ============================================================
+     CONTAINER
+     ============================================================ -->
+<main class="container">
+
+  <!-- ============================================================
+       SECTION 1 — WHEEL OF LIFE
+       ============================================================ -->
+  <section class="section active" id="sec-wheel" role="tabpanel" aria-label="Wheel of Life">
+    <div class="sec-head">
+      <h2>Wheel of Life</h2>
+      <p>Avalia 10 áreas da sua vida (1-10). Visualiza o equilíbrio. Identifica onde focar.</p>
     </div>
 
-    <div class="filters">
-      <div class="search-wrap">
-        <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        <input type="text" class="search-input" id="search" placeholder="Buscar template por nome...">
+    <div id="wheel-summary" class="wheel-summary"></div>
+
+    <div class="wheel-wrap">
+      <div>
+        <svg class="wheel-svg" id="wheel-svg" viewBox="0 0 200 200" aria-label="Gráfico Wheel of Life"></svg>
+        <div class="text-center mt-12">
+          <button class="btn btn-ghost" id="wheel-save-snapshot">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+            Salvar avaliação no histórico
+          </button>
+        </div>
       </div>
-      <select class="filter-select" id="filter-cat">
-        <option value="">Todas categorias</option>
-        <option value="vida">Vida Pessoal</option>
-        <option value="trabalho">Trabalho/Produtividade</option>
-        <option value="estudos">Estudos</option>
-        <option value="financas">Finanças</option>
-        <option value="negocios">Negócios</option>
-      </select>
-      <select class="filter-select" id="filter-diff">
-        <option value="">Toda dificuldade</option>
-        <option value="1">Iniciante</option>
-        <option value="2">Intermediário</option>
-        <option value="3">Avançado</option>
-      </select>
-      <div class="results-count" id="results-count"><strong>20</strong> templates</div>
+      <div class="wheel-areas" id="wheel-areas"></div>
     </div>
 
-    <div id="gallery-content"></div>
+    <div class="wheel-history">
+      <h3 class="card-title">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9M3 4v5h5"/></svg>
+        Histórico
+      </h3>
+      <div id="wheel-history-list"></div>
+    </div>
   </section>
 
-  <!-- ====== TUTORIAL ====== -->
-  <section class="section" id="sec-tutorial">
-    <div class="page-head">
-      <div class="page-label">Notion para Iniciantes</div>
-      <h1 class="page-title">Aprenda Notion em 6 passos</h1>
-      <p class="page-desc">Não conhece Notion ainda? Sem problema. Este guia rápido cobre desde criar conta até atalhos de produtividade. Marque cada passo conforme avançar.</p>
+  <!-- ============================================================
+       SECTION 2 — 90 DIAS
+       ============================================================ -->
+  <section class="section" id="sec-plan90" role="tabpanel" aria-label="Planejador 90 Dias">
+    <div class="sec-head">
+      <h2>Planejador 90 Dias</h2>
+      <p>Quebra uma meta grande em 12 sprints semanais. Foco. Ação. Métrica.</p>
     </div>
 
-    <div class="tut-progress">
-      <div class="tut-progress-text">
-        <div class="tut-progress-label">Seu progresso</div>
-        <div class="tut-progress-num"><span id="tut-done">0</span>/6 passos concluídos</div>
+    <div class="plan-goal">
+      <div class="field">
+        <label class="label" for="plan-goal-input">Meta principal de 90 dias</label>
+        <input type="text" id="plan-goal-input" class="input" placeholder="Ex: Lançar produto X com 100 clientes pagantes">
       </div>
-      <div class="tut-progress-bar">
-        <div class="tut-progress-fill" id="tut-fill" style="width: 0%"></div>
+      <div class="field">
+        <label class="label" for="plan-goal-desc">Descrição (porquê isso importa?)</label>
+        <textarea id="plan-goal-desc" class="input" placeholder="O que muda na sua vida quando você atingir essa meta?"></textarea>
+      </div>
+      <div class="plan-progress-wrap">
+        <span style="font-size:12px; color:var(--text-muted); font-weight:600;" id="plan-progress-text">0/12 semanas</span>
+        <div class="plan-progress-bar">
+          <div class="plan-progress-fill" id="plan-progress-fill" style="width:0%"></div>
+        </div>
       </div>
     </div>
 
-    <div class="tut-grid" id="tut-grid"></div>
+    <div class="plan-grid" id="plan-grid"></div>
   </section>
 
-  <!-- ====== MEUS TEMPLATES ====== -->
-  <section class="section" id="sec-meus">
-    <div class="page-head">
-      <div class="page-label">Sua Coleção</div>
-      <h1 class="page-title">Meus Templates duplicados</h1>
-      <p class="page-desc">Templates que você marcou como duplicados. Acompanhe status, deixe notas pessoais e abra rápido no Notion. Tudo salvo localmente no seu navegador.</p>
+  <!-- ============================================================
+       SECTION 3 — GTD INBOX
+       ============================================================ -->
+  <section class="section" id="sec-gtd" role="tabpanel" aria-label="GTD Inbox">
+    <div class="sec-head">
+      <h2>Caixa de Entrada GTD</h2>
+      <p>Captura tudo que passa pela cabeça. Processa depois. Mente livre.</p>
     </div>
 
-    <div id="my-content"></div>
+    <div class="gtd-capture">
+      <input type="text" id="gtd-input" class="input" placeholder="O que tá na sua cabeça agora?" aria-label="Capturar novo item">
+      <button class="btn" id="gtd-add">Capturar</button>
+    </div>
+
+    <div class="gtd-tabs" role="tablist">
+      <button class="gtd-tab active" data-list="inbox">Inbox <span class="count" id="gtd-count-inbox">0</span></button>
+      <button class="gtd-tab" data-list="next">Próximas <span class="count" id="gtd-count-next">0</span></button>
+      <button class="gtd-tab" data-list="waiting">Aguardando <span class="count" id="gtd-count-waiting">0</span></button>
+      <button class="gtd-tab" data-list="someday">Algum dia <span class="count" id="gtd-count-someday">0</span></button>
+      <button class="gtd-tab" data-list="reference">Referência <span class="count" id="gtd-count-reference">0</span></button>
+    </div>
+
+    <div id="gtd-list" class="gtd-list"></div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4 — CRM
+       ============================================================ -->
+  <section class="section" id="sec-crm" role="tabpanel" aria-label="CRM Pessoal">
+    <div class="sec-head">
+      <h2>CRM Pessoal</h2>
+      <p>Pipeline de clientes. Quem deve, quando dar follow-up, quanto entra esse mês.</p>
+    </div>
+
+    <div class="crm-summary" id="crm-summary"></div>
+
+    <div class="crm-filter">
+      <select id="crm-filter-status" class="select" style="max-width:160px;" aria-label="Filtrar por status">
+        <option value="all">Todos status</option>
+        <option value="lead">Leads</option>
+        <option value="ativo">Ativos</option>
+        <option value="concluido">Concluídos</option>
+        <option value="arquivado">Arquivados</option>
+      </select>
+      <button class="btn" id="crm-add-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        Adicionar cliente
+      </button>
+    </div>
+
+    <div id="crm-form-wrap" class="hidden">
+      <div class="card">
+        <div class="card-title" id="crm-form-title">Novo cliente</div>
+        <div class="row-2">
+          <div class="field">
+            <label class="label" for="crm-name">Nome</label>
+            <input type="text" id="crm-name" class="input">
+          </div>
+          <div class="field">
+            <label class="label" for="crm-contact">Contato (email/telefone)</label>
+            <input type="text" id="crm-contact" class="input">
+          </div>
+        </div>
+        <div class="row-3">
+          <div class="field">
+            <label class="label" for="crm-status-input">Status</label>
+            <select id="crm-status-input" class="select">
+              <option value="lead">Lead</option>
+              <option value="ativo">Ativo</option>
+              <option value="concluido">Concluído</option>
+              <option value="arquivado">Arquivado</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="label" for="crm-proposal">Valor proposta (R$)</label>
+            <input type="number" id="crm-proposal" class="input" min="0" step="0.01">
+          </div>
+          <div class="field">
+            <label class="label" for="crm-paid">Valor pago (R$)</label>
+            <input type="number" id="crm-paid" class="input" min="0" step="0.01">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label" for="crm-followup">Próximo follow-up</label>
+          <input type="date" id="crm-followup" class="input">
+        </div>
+        <div class="field">
+          <label class="label" for="crm-notes">Notas</label>
+          <textarea id="crm-notes" class="input" placeholder="Detalhes da negociação, preferências, histórico…"></textarea>
+        </div>
+        <div class="flex-gap">
+          <button class="btn" id="crm-save">Salvar</button>
+          <button class="btn btn-ghost" id="crm-cancel">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="crm-list" class="crm-list"></div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5 — BOOKS
+       ============================================================ -->
+  <section class="section" id="sec-books" role="tabpanel" aria-label="Tracker de Leituras">
+    <div class="sec-head">
+      <h2>Tracker de Leituras</h2>
+      <p>Rastreia livros que tá lendo, terminou, abandonou ou quer ler. Avalia. Anota.</p>
+    </div>
+
+    <div class="stat-grid" id="books-stats"></div>
+
+    <div class="card">
+      <div class="card-title">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Adicionar livro
+      </div>
+      <div class="books-form">
+        <input type="text" id="book-title-input" class="input" placeholder="Título" aria-label="Título do livro">
+        <input type="text" id="book-author-input" class="input" placeholder="Autor" aria-label="Autor">
+        <select id="book-status-input" class="select" aria-label="Status do livro">
+          <option value="lendo">Lendo</option>
+          <option value="concluido">Concluído</option>
+          <option value="abandonado">Abandonado</option>
+          <option value="wishlist">Wishlist</option>
+        </select>
+      </div>
+      <button class="btn" id="book-add-btn">Adicionar livro</button>
+    </div>
+
+    <div class="crm-filter mt-12">
+      <select id="books-filter" class="select" style="max-width:160px;" aria-label="Filtrar livros">
+        <option value="all">Todos</option>
+        <option value="lendo">Lendo</option>
+        <option value="concluido">Concluído</option>
+        <option value="abandonado">Abandonado</option>
+        <option value="wishlist">Wishlist</option>
+      </select>
+    </div>
+
+    <div id="books-list"></div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 6 — FIRE
+       ============================================================ -->
+  <section class="section" id="sec-fire" role="tabpanel" aria-label="Calculadora FIRE">
+    <div class="sec-head">
+      <h2>Calculadora FIRE</h2>
+      <p>Independência financeira: quando você pode parar de trabalhar pelo dinheiro. Regra dos 4%.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Seus dados
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label class="label" for="fire-age">Idade atual</label>
+          <input type="number" id="fire-age" class="input" min="14" max="100" placeholder="30">
+        </div>
+        <div class="field">
+          <label class="label" for="fire-rate">Juros real anual (%)</label>
+          <input type="number" id="fire-rate" class="input" min="0" max="20" step="0.1" placeholder="4">
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label class="label" for="fire-income">Renda mensal (R$)</label>
+          <input type="number" id="fire-income" class="input" min="0" step="100" placeholder="8000">
+        </div>
+        <div class="field">
+          <label class="label" for="fire-expenses">Gastos mensais (R$)</label>
+          <input type="number" id="fire-expenses" class="input" min="0" step="100" placeholder="4000">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label" for="fire-wealth">Patrimônio atual (R$)</label>
+        <input type="number" id="fire-wealth" class="input" min="0" step="100" placeholder="20000">
+      </div>
+      <button class="btn" id="fire-calc">Calcular FIRE</button>
+    </div>
+
+    <div id="fire-result" class="hidden">
+      <div class="fire-output">
+        <div class="text-muted" style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.6px; margin-bottom:6px;">
+          Você atinge FIRE em
+        </div>
+        <div class="fire-big" id="fire-years">— <small>anos</small></div>
+        <div class="text-muted" style="font-size:13px;" id="fire-when">—</div>
+
+        <div class="fire-grid">
+          <div class="fire-stat-card">
+            <div class="stat-label">Sobra/mês</div>
+            <div class="stat-value" id="fire-saving">—</div>
+          </div>
+          <div class="fire-stat-card">
+            <div class="stat-label">Patrimônio FIRE</div>
+            <div class="stat-value" id="fire-target">—</div>
+          </div>
+          <div class="fire-stat-card">
+            <div class="stat-label">Idade no FIRE</div>
+            <div class="stat-value" id="fire-final-age">—</div>
+          </div>
+          <div class="fire-stat-card">
+            <div class="stat-label">Taxa de poupança</div>
+            <div class="stat-value" id="fire-saving-rate">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fire-chart">
+        <div class="card-title">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></svg>
+          Evolução do patrimônio (ano a ano)
+        </div>
+        <div class="card-sub" id="fire-chart-sub">—</div>
+        <div class="fire-bars" id="fire-bars"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 7 — HABITS
+       ============================================================ -->
+  <section class="section" id="sec-habits" role="tabpanel" aria-label="Diário de Hábitos">
+    <div class="sec-head">
+      <h2>Diário de Hábitos</h2>
+      <p>Até 5 hábitos. Marca cada dia. Acompanha streak. Constrói consistência.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Cadastrar hábito
+      </div>
+      <div class="habits-mgr">
+        <div>
+          <label class="label" for="habit-name-input">Nome</label>
+          <input type="text" id="habit-name-input" class="input" placeholder="Ex: Meditar 10min">
+        </div>
+        <div>
+          <label class="label" for="habit-icon-input">Ícone (emoji)</label>
+          <input type="text" id="habit-icon-input" class="input" maxlength="2" placeholder="*">
+        </div>
+        <div>
+          <label class="label" for="habit-color-input">Cor</label>
+          <input type="color" id="habit-color-input" class="color-input" value="#EC4899">
+        </div>
+        <div>
+          <button class="btn" id="habit-add-btn" style="height:38px;">Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="habits-list-mgr" id="habits-list-mgr"></div>
+
+    <div class="habits-tracker" id="habits-tracker"></div>
   </section>
 
 </main>
 
-<!-- ===== MODAL ===== -->
-<div class="modal-backdrop" id="modal">
-  <div class="modal" id="modal-inner">
-    <div class="modal-mockup" id="modal-mockup">
-      <button class="modal-close" id="modal-close">x</button>
-      <div class="modal-mockup-icon" id="modal-mock-icon"></div>
-      <div class="modal-mockup-title" id="modal-mock-title"></div>
-    </div>
-    <div class="modal-body" id="modal-body"></div>
-  </div>
-</div>
+<!-- ============================================================
+     TOAST
+     ============================================================ -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<div class="toast" id="toast"></div>
-
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
 <script>
-/* ============================================================
-   TEMPLATES NOTION — DATABASE
-   ============================================================ */
-
-const CATEGORIES = {
-  vida:      { name: 'Vida Pessoal',         color: '#EC4899', dark: '#9D174D' },
-  trabalho:  { name: 'Trabalho/Produtividade', color: '#8B5CF6', dark: '#5B21B6' },
-  estudos:   { name: 'Estudos',              color: '#3B82F6', dark: '#1E40AF' },
-  financas:  { name: 'Finanças',             color: '#10B981', dark: '#065F46' },
-  negocios:  { name: 'Negócios',             color: '#F59E0B', dark: '#92400E' }
-};
-
-const DIFFICULTY = { 1: 'Iniciante', 2: 'Intermediário', 3: 'Avançado' };
-
-const ICONS = {
-  dashboard:  '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>',
-  habits:     '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>',
-  diary:      '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V2.5H6.5A2.5 2.5 0 004 5v14.5z"/><path d="M4 19.5A2.5 2.5 0 016.5 22H20v-5"/></svg>',
-  book:       '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',
-  film:       '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M7 3v18M17 3v18M2 9h5M2 15h5M17 9h5M17 15h5"/></svg>',
-  project:    '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>',
-  okr:        '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
-  gtd:        '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
-  calendar:   '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
-  knowledge:  '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
-  pomodoro:   '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M5 3l3-1M19 3l-3-1"/></svg>',
-  notes:      '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>',
-  questions:  '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>',
-  money:      '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
-  invest:     '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
-  goal:       '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><circle cx="12" cy="12" r="4"/></svg>',
-  crm:        '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>',
-  lead:       '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>',
-  edit:       '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h8M8 18h5"/></svg>',
-  sales:      '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>'
-};
-
-const TEMPLATES = [
-  /* ===== VIDA PESSOAL (5) ===== */
-  {
-    id: 'dashboard-vida', cat: 'vida', diff: 2, icon: 'dashboard',
-    name: 'Dashboard de Vida',
-    desc: 'Painel central com áreas, metas e calendário num lugar só',
-    full: 'Um Dashboard de Vida é seu centro de comando pessoal — todas as áreas que importam (saúde, relacionamentos, carreira, finanças, lazer) reunidas numa única página. Ideal pra quem quer parar de pular entre 10 apps diferentes e ter visão única do que está acontecendo.',
-    steps: [
-      'Duplique o template e abra no seu workspace Notion',
-      'Personalize as áreas da vida que fazem sentido pra você',
-      'Conecte com suas databases existentes (metas, projetos, hábitos)',
-      'Defina widgets na home: hoje, esta semana, próximo mês',
-      'Marque pra acessar diariamente e iterar conforme uso'
-    ],
-    feats: ['Visão por áreas da vida', 'Widget de hoje/semana', 'Links pra databases conectadas', 'Dashboard de metas anuais', 'Quote do dia rotativo', 'Mood tracker integrado'],
-    tags: ['produtividade', 'vida', 'dashboard', 'metas', 'home']
-  },
-  {
-    id: 'tracker-habitos', cat: 'vida', diff: 1, icon: 'habits',
-    name: 'Tracker de Hábitos',
-    desc: 'Acompanhe rotinas diárias com checkbox e streaks',
-    full: 'Sistema simples e poderoso para construir hábitos. Visualize sequências (streaks), tendências semanais e o impacto cumulativo das suas escolhas diárias. Funciona melhor com 3 a 5 hábitos por vez.',
-    steps: [
-      'Duplique o template no seu Notion',
-      'Liste de 3 a 5 hábitos prioritários (não mais que isso!)',
-      'Marque os checkboxes diariamente — funciona tipo App Streaks',
-      'Revise a tabela semanal aos domingos',
-      'Ajuste hábitos a cada 30 dias com base no que funcionou'
-    ],
-    feats: ['Vista mensal com checkboxes', 'Cálculo de streak automático', 'Gráfico de consistência', 'Notas diárias por hábito', 'Categorias por área da vida'],
-    tags: ['hábitos', 'rotina', 'tracker', 'consistência', 'disciplina']
-  },
-  {
-    id: 'diario-pessoal', cat: 'vida', diff: 1, icon: 'diary',
-    name: 'Diário Pessoal',
-    desc: 'Journaling diário com prompts e tags emocionais',
-    full: 'Estrutura simples para journaling consistente. Vem com prompts diários (gratidão, aprendizado, desafios) e sistema de tags emocionais para identificar padrões ao longo do tempo. Ideal pra quem quer começar mas trava na página em branco.',
-    steps: [
-      'Duplique o template e renomeie pro seu nome',
-      'Crie a primeira entrada usando o template diário',
-      'Use os prompts pré-definidos quando travar',
-      'Tag cada entrada com emoção predominante',
-      'Faça revisão mensal pra identificar padrões'
-    ],
-    feats: ['Template de entrada diária', 'Prompts de journaling', 'Tags emocionais', 'Visão mensal/anual', 'Busca por palavra-chave', 'Reflexão semanal'],
-    tags: ['journaling', 'reflexão', 'autoconhecimento', 'mental', 'escrita']
-  },
-  {
-    id: 'lista-livros', cat: 'vida', diff: 1, icon: 'book',
-    name: 'Lista de Livros',
-    desc: 'Biblioteca pessoal com status, notas e quotes',
-    full: 'Catalogue tudo que você lê. Status (quero ler / lendo / lido / abandonado), avaliação por estrelas, notas pessoais, quotes favoritas e estatísticas anuais. Mais organizado que Goodreads, mais rápido que planilha.',
-    steps: [
-      'Duplique o template no seu workspace',
-      'Adicione livros que está lendo agora — comece pequeno',
-      'Marque status conforme avança',
-      'Salve quotes favoritas dentro da página de cada livro',
-      'Veja stats no fim do ano: total lido, gênero, autor favorito'
-    ],
-    feats: ['Galeria com capas', 'Status de leitura', 'Avaliação 1-5 estrelas', 'Quotes destacadas', 'Estatísticas anuais', 'Filtro por gênero/autor'],
-    tags: ['livros', 'leitura', 'biblioteca', 'cultura', 'aprendizado']
-  },
-  {
-    id: 'tracker-filmes', cat: 'vida', diff: 1, icon: 'film',
-    name: 'Tracker de Filmes/Séries',
-    desc: 'Watchlist organizada com avaliações e episódios',
-    full: 'Watchlist completa pra cinema e séries. Organize o que quer assistir, está assistindo (com episódio atual) e já assistiu. Avalie, deixe reviews curtos e descubra padrões de gosto pessoal.',
-    steps: [
-      'Duplique o template',
-      'Importe sua watchlist atual (ou comece do zero)',
-      'Pra séries: marque episódio atual e temporada',
-      'Avalie depois de assistir e deixe review curto',
-      'Use filtros por gênero quando estiver indeciso'
-    ],
-    feats: ['Galeria com posters', 'Status assistindo/visto/queue', 'Episódios para séries', 'Reviews curtos', 'Filtro por plataforma streaming', 'Top 10 do ano automático'],
-    tags: ['filmes', 'séries', 'watchlist', 'streaming', 'reviews']
-  },
-
-  /* ===== TRABALHO / PRODUTIVIDADE (5) ===== */
-  {
-    id: 'project-manager', cat: 'trabalho', diff: 3, icon: 'project',
-    name: 'Project Manager',
-    desc: 'Gestão completa de projetos com timeline e tarefas',
-    full: 'Sistema robusto pra gerenciar múltiplos projetos simultâneos. Inclui database de projetos, tarefas vinculadas, timeline visual, status pipeline e métricas de progresso. Perfeito pra freelancers, líderes de equipe ou consultores.',
-    steps: [
-      'Duplique o template e remova projetos exemplo',
-      'Crie seu primeiro projeto preenchendo todos os campos',
-      'Quebre em tarefas pequenas (1-4h cada)',
-      'Defina datas em todas as tarefas',
-      'Acompanhe semanalmente em uma reunião de revisão'
-    ],
-    feats: ['Database de projetos com status pipeline', 'Tarefas vinculadas com timeline', 'Vista Kanban e Calendário', 'Métricas de progresso', 'Histórico de projetos finalizados', 'Templates de tarefas recorrentes'],
-    tags: ['projetos', 'gestão', 'kanban', 'freelancer', 'workflow']
-  },
-  {
-    id: 'okrs-pessoais', cat: 'trabalho', diff: 3, icon: 'okr',
-    name: 'OKRs Pessoais',
-    desc: 'Objetivos e Key Results trimestrais com tracking',
-    full: 'Framework OKR (Objectives and Key Results) adaptado pra uso pessoal. Defina 3-5 objetivos por trimestre com 2-4 key results mensuráveis cada. Sistema usado por Google, Intel e várias empresas top — agora pra você.',
-    steps: [
-      'Duplique o template no início do trimestre',
-      'Defina 3-5 Objetivos qualitativos pro trimestre',
-      'Pra cada objetivo, crie 2-4 Key Results numéricos',
-      'Atualize progresso semanalmente (toda sexta)',
-      'No fim do trimestre faça retrospectiva e crie próximo ciclo'
-    ],
-    feats: ['Estrutura OKR trimestral', 'Tracking de progresso 0-100%', 'Vista por objetivo e por KR', 'Histórico de trimestres anteriores', 'Score automático de fim de ciclo', 'Reflexão e learnings'],
-    tags: ['okrs', 'metas', 'trimestre', 'performance', 'execução']
-  },
-  {
-    id: 'sistema-gtd', cat: 'trabalho', diff: 3, icon: 'gtd',
-    name: 'Sistema GTD',
-    desc: 'Getting Things Done completo com inbox e contextos',
-    full: 'Implementação completa do método GTD (David Allen) no Notion. Inclui inbox, processamento, listas de próximas ações por contexto, projetos ativos, alguma-dia/talvez, agenda e revisão semanal. Para quem leva produtividade a sério.',
-    steps: [
-      'Leia o livro GTD (ou resumo) antes de implementar',
-      'Duplique o template e capture TUDO no inbox',
-      'Processe inbox até zerar — 2 minutos? Faça agora',
-      'Organize próximas ações por contexto (@casa, @rua, @computador)',
-      'Faça revisão semanal religiosamente — toda sexta'
-    ],
-    feats: ['Inbox de captura rápida', 'Processamento via prompts', 'Listas por contexto', 'Projetos ativos vinculados', 'Lista alguma-dia/talvez', 'Template de revisão semanal', 'Calendário de eventos'],
-    tags: ['gtd', 'produtividade', 'sistema', 'workflow', 'david-allen']
-  },
-  {
-    id: 'planejador-semanal', cat: 'trabalho', diff: 1, icon: 'calendar',
-    name: 'Planejador Semanal',
-    desc: 'Time blocking e prioridades da semana',
-    full: 'Visão semanal limpa pra planejar com intenção. Defina prioridades da semana (top 3), time blocks por dia e revise o que rolou no domingo. Mais simples que GTD, mais estruturado que TODO list.',
-    steps: [
-      'Duplique o template todo domingo de manhã',
-      'Defina 3 prioridades MÁXIMAS pra semana',
-      'Bloqueie tempo no calendário pra cada uma',
-      'Revise no fim de cada dia (5 min)',
-      'Faça retrospectiva no domingo seguinte e replanejе'
-    ],
-    feats: ['Vista semanal de 7 dias', 'Top 3 prioridades destacadas', 'Time blocking por dia', 'Notas e reflexões diárias', 'Retrospectiva semanal', 'Histórico de semanas anteriores'],
-    tags: ['planejamento', 'semanal', 'time-blocking', 'prioridades', 'revisão']
-  },
-  {
-    id: 'knowledge-base', cat: 'trabalho', diff: 2, icon: 'knowledge',
-    name: 'Knowledge Base',
-    desc: 'Wiki pessoal com tags e backlinks',
-    full: 'Sua segunda mente. Sistema de notas conectadas estilo Zettelkasten — tudo que você aprende vai pra cá, organizado por tags, conectado por backlinks e pesquisável instantaneamente. Use por anos e o valor cresce exponencialmente.',
-    steps: [
-      'Duplique o template — esse vai ser seu cérebro digital',
-      'Comece capturando 1 nota por dia (não importa o tema)',
-      'Use tags consistentes (não invente novas a cada nota)',
-      'Conecte notas relacionadas usando @mentions',
-      'Revise tags e estrutura a cada 3 meses'
-    ],
-    feats: ['Database de notas por tópico', 'Sistema de tags hierárquicas', 'Backlinks automáticos', 'Vista por área de conhecimento', 'Busca full-text', 'Template de nova nota com prompts', 'Map of content (MOC)'],
-    tags: ['knowledge', 'wiki', 'zettelkasten', 'segunda-mente', 'notas']
-  },
-
-  /* ===== ESTUDOS (3) ===== */
-  {
-    id: 'estudos-pomodoro', cat: 'estudos', diff: 1, icon: 'pomodoro',
-    name: 'Estudos Pomodoro',
-    desc: 'Tracker de sessões pomodoro com matérias',
-    full: 'Combine método Pomodoro (25 min foco / 5 min pausa) com Notion pra acompanhar produtividade real de estudo. Veja quantos pomodoros você fez por matéria, identifique horário mais produtivo e quebre meta diária.',
-    steps: [
-      'Duplique o template no início do semestre',
-      'Cadastre todas suas matérias na database',
-      'Use timer externo (Forest, Pomofocus) pra cronometrar',
-      'Registre cada pomodoro completo na timeline',
-      'Revise stats semanais — descubra padrões pessoais'
-    ],
-    feats: ['Database de matérias', 'Log de sessões pomodoro', 'Stats por matéria', 'Vista de tempo total estudado', 'Meta diária de pomodoros', 'Comparação semana a semana'],
-    tags: ['pomodoro', 'estudos', 'foco', 'tempo', 'produtividade']
-  },
-  {
-    id: 'resumos-materia', cat: 'estudos', diff: 2, icon: 'notes',
-    name: 'Resumos por Matéria',
-    desc: 'Banco de resumos organizados por disciplina',
-    full: 'Estrutura pra criar e organizar resumos de qualquer matéria. Cada resumo vira uma página separada com tópicos, tags, dificuldade e link com aulas/livros. Ideal pra concursos, faculdade, vestibular ou aprendizado contínuo.',
-    steps: [
-      'Duplique o template e cadastre matérias',
-      'Crie um resumo por aula/capítulo estudado',
-      'Use template de resumo (com tópicos, conceitos, exemplos)',
-      'Marque tópicos difíceis pra revisar depois',
-      'Revise resumos antigos antes de prova/avaliação'
-    ],
-    feats: ['Database por matéria', 'Template de resumo padronizado', 'Tags de dificuldade', 'Vista de tópicos pra revisar', 'Link com fontes (livros, vídeos)', 'Histórico de revisões'],
-    tags: ['resumos', 'estudos', 'matéria', 'concurso', 'faculdade']
-  },
-  {
-    id: 'banco-questoes', cat: 'estudos', diff: 2, icon: 'questions',
-    name: 'Banco de Questões',
-    desc: 'Repositório de questões com gabarito e revisão',
-    full: 'Centralize questões de provas, simulados e exercícios. Cada questão tem enunciado, alternativas, gabarito, comentário e tags por tópico. Perfeito pra concursos, ENEM, vestibular ou OAB. Filtre por tópico antes de prova.',
-    steps: [
-      'Duplique o template no Notion',
-      'Adicione questões erradas em provas/simulados',
-      'Categorize por matéria e tópico',
-      'Escreva comentário explicativo de cada gabarito',
-      'Filtre por tópico fraco antes de cada prova'
-    ],
-    feats: ['Database por tópico', 'Enunciado + alternativas + gabarito', 'Comentário explicativo', 'Tags de dificuldade', 'Histórico de tentativas', 'Filtro inteligente por tópico fraco'],
-    tags: ['questões', 'concurso', 'enem', 'oab', 'simulado']
-  },
-
-  /* ===== FINANÇAS (3) ===== */
-  {
-    id: 'controle-gastos', cat: 'financas', diff: 2, icon: 'money',
-    name: 'Controle de Gastos',
-    desc: 'Lançamentos de receitas e despesas com categorias',
-    full: 'Sistema de controle financeiro pessoal completo. Cadastre toda movimentação (receita/despesa), categorize, defina orçamento por categoria e acompanhe quanto sobra no fim do mês. Substitui apps tipo Mobills/Organizze.',
-    steps: [
-      'Duplique o template no início do mês',
-      'Cadastre todas categorias relevantes pra você',
-      'Defina orçamento mensal por categoria',
-      'Lance toda movimentação (mesmo R$ 5)',
-      'Revise dia 1 do mês seguinte e ajuste orçamentos'
-    ],
-    feats: ['Database de transações', 'Categorias customizáveis', 'Vista mensal/anual', 'Orçamento vs realizado', 'Gráfico de gastos por categoria', 'Alertas de estouro de categoria'],
-    tags: ['finanças', 'gastos', 'orçamento', 'controle', 'pessoal']
-  },
-  {
-    id: 'investimentos', cat: 'financas', diff: 3, icon: 'invest',
-    name: 'Investimentos',
-    desc: 'Portfolio de ativos com rentabilidade',
-    full: 'Acompanhe sua carteira de investimentos sem depender de app de corretora. Cadastre ativos (ações, FIIs, renda fixa, cripto), valor investido, valor atual e veja rentabilidade total do portfolio. Atualização manual semanal.',
-    steps: [
-      'Duplique o template e crie 1 página por classe de ativo',
-      'Cadastre todas suas posições atuais',
-      'Atualize preços manualmente toda sexta',
-      'Calcule rentabilidade no fim do mês',
-      'Revise alocação trimestralmente e rebalanceie'
-    ],
-    feats: ['Database de ativos por classe', 'Valor investido vs atual', 'Rentabilidade percentual', 'Alocação por classe (gráfico)', 'Histórico de aportes', 'Notas de tese de investimento'],
-    tags: ['investimentos', 'portfolio', 'ações', 'fiis', 'renda-fixa']
-  },
-  {
-    id: 'metas-financeiras', cat: 'financas', diff: 1, icon: 'goal',
-    name: 'Metas Financeiras',
-    desc: 'Objetivos de poupança com progresso visual',
-    full: 'Defina metas financeiras (reserva, viagem, casa própria, FIRE) e acompanhe progresso visualmente. Cada meta tem valor alvo, prazo, valor atual e quanto falta. Simples mas extremamente motivador.',
-    steps: [
-      'Duplique o template e liste todas suas metas',
-      'Defina valor alvo realista e prazo pra cada uma',
-      'Atualize valor atual mensalmente',
-      'Veja barra de progresso visual',
-      'Celebre cada milestone pequeno (25%, 50%, 75%)'
-    ],
-    feats: ['Database de metas com prazo', 'Barra de progresso visual', 'Cálculo de aporte mensal necessário', 'Histórico de aportes', 'Notas de motivação por meta', 'Vista de metas atingidas'],
-    tags: ['metas', 'poupança', 'objetivos', 'reserva', 'fire']
-  },
-
-  /* ===== NEGÓCIOS (4) ===== */
-  {
-    id: 'crm-pessoal', cat: 'negocios', diff: 2, icon: 'crm',
-    name: 'CRM Pessoal',
-    desc: 'Database de contatos profissionais com follow-ups',
-    full: 'CRM pessoal pra freelancers, consultores ou networkers. Centralize contatos profissionais, registre cada interação, agende follow-ups e nunca mais esqueça de retornar uma mensagem importante. Mais barato que HubSpot, mais flexível que planilha.',
-    steps: [
-      'Duplique o template e importe contatos relevantes',
-      'Pra cada contato, registre origem e contexto',
-      'Defina próximo follow-up (30, 60, 90 dias)',
-      'Anote toda interação na linha do tempo do contato',
-      'Revise semanalmente quem precisa de follow-up'
-    ],
-    feats: ['Database de contatos', 'Linha do tempo de interações', 'Sistema de follow-up automatizado', 'Tags por origem (linkedin, evento, indicação)', 'Score de relacionamento', 'Lembretes de aniversário'],
-    tags: ['crm', 'networking', 'contatos', 'follow-up', 'freelancer']
-  },
-  {
-    id: 'lead-tracker', cat: 'negocios', diff: 2, icon: 'lead',
-    name: 'Lead Tracker',
-    desc: 'Pipeline de leads com status e conversão',
-    full: 'Pipeline visual pra acompanhar leads do primeiro contato até venda fechada. Vista Kanban com colunas (novo, qualificando, proposta, negociação, fechado). Tracking de origem, valor potencial e taxa de conversão.',
-    steps: [
-      'Duplique o template e customize estágios do pipeline',
-      'Cadastre leads atuais nos estágios corretos',
-      'Mova cards conforme avança a conversa',
-      'Anote cada interação dentro do card',
-      'Calcule taxa de conversão no fim do mês'
-    ],
-    feats: ['Vista Kanban por estágio', 'Tracking de origem do lead', 'Valor potencial do deal', 'Taxa de conversão automática', 'Histórico de leads perdidos com motivo', 'Forecast mensal'],
-    tags: ['leads', 'pipeline', 'vendas', 'crm', 'conversão']
-  },
-  {
-    id: 'calendario-editorial', cat: 'negocios', diff: 2, icon: 'edit',
-    name: 'Calendário Editorial',
-    desc: 'Planejamento de conteúdo com status e canais',
-    full: 'Pra criadores de conteúdo, social media e copywriters. Planeje posts/artigos/vídeos com antecedência, acompanhe status (ideia → produção → revisão → publicado) e organize por canal (Instagram, YouTube, blog, newsletter).',
-    steps: [
-      'Duplique o template e cadastre seus canais',
-      'Defina frequência ideal por canal',
-      'Capture ideias na coluna "Banco de Ideias"',
-      'Mova pra produção quando bater data',
-      'Acompanhe métricas pós-publicação'
-    ],
-    feats: ['Vista calendário e Kanban', 'Status pipeline (ideia → publicado)', 'Database de ideias separada', 'Por canal/plataforma', 'Métricas pós-publicação', 'Templates de briefing'],
-    tags: ['conteúdo', 'editorial', 'social-media', 'creator', 'marketing']
-  },
-  {
-    id: 'vendas-receita', cat: 'negocios', diff: 3, icon: 'sales',
-    name: 'Vendas e Receita',
-    desc: 'Tracker de vendas com MRR e LTV',
-    full: 'Pra empresas SaaS, infoprodutores ou serviços recorrentes. Acompanhe vendas, MRR (Monthly Recurring Revenue), churn, LTV (Lifetime Value) e métricas SaaS principais. Substitui parte de Stripe Dashboard / ChartMogul.',
-    steps: [
-      'Duplique o template (esse é avançado!)',
-      'Cadastre todas vendas históricas',
-      'Atualize semanalmente novas vendas e cancelamentos',
-      'Acompanhe MRR e churn mensal',
-      'Calcule LTV e ROI de aquisição trimestralmente'
-    ],
-    feats: ['Database de vendas', 'Cálculo automático MRR', 'Tracking de churn', 'LTV por cohort', 'Vista de receita por canal', 'Dashboard executivo de SaaS'],
-    tags: ['vendas', 'mrr', 'saas', 'receita', 'ltv', 'churn']
-  }
-];
+'use strict';
 
 /* ============================================================
-   STATE & STORAGE
+   STORAGE
    ============================================================ */
 const KEYS = {
-  duplicated: 'notion:duplicated:v1',
-  tutorial:   'notion:tutorial:v1',
-  myTemplates:'notion:my_templates:v1'
+  wheel: 'notion:wheel:v1',
+  wheelHist: 'notion:wheel_history:v1',
+  plan90: 'notion:plan90:v1',
+  gtd: 'notion:gtd:v1',
+  crm: 'notion:crm:v1',
+  books: 'notion:books:v1',
+  fire: 'notion:fire:v1',
+  habits: 'notion:habits:v1',
+  habitsLog: 'notion:habits_log:v1',
 };
 
 const store = {
-  get(key, fallback) {
+  get(k, def) {
     try {
-      const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : fallback;
-    } catch { return fallback; }
+      const v = localStorage.getItem(k);
+      return v == null ? def : JSON.parse(v);
+    } catch (e) { return def; }
   },
-  set(key, val) {
-    try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+  set(k, v) {
+    try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {}
   }
 };
 
-let state = {
-  duplicated: store.get(KEYS.duplicated, []),
-  tutorial:   store.get(KEYS.tutorial, []),
-  myTemplates:store.get(KEYS.myTemplates, {}),
-  filter: { cat: '', diff: '', q: '' }
-};
+function uid() { return Math.random().toString(36).slice(2, 10); }
+function todayISO() { return new Date().toISOString().slice(0, 10); }
+function fmtDate(iso) {
+  if (!iso) return '';
+  const [y, m, d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+function fmtBRL(n) {
+  if (typeof n !== 'number' || isNaN(n)) return 'R$ 0';
+  return 'R$ ' + n.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
 
-/* ============================================================
-   TUTORIAL DATA
-   ============================================================ */
-const TUT_STEPS = [
-  {
-    id: 1,
-    title: 'O que é Notion',
-    body: `<p><strong>Notion</strong> é um app que combina notas, databases, tarefas e wikis num só lugar. Funciona como um Lego digital — você monta exatamente o sistema que precisa.</p>
-           <p style="margin-top:10px"><strong>Quando usar:</strong> organizar projetos, criar wikis pessoais, gerenciar bases de conhecimento, rodar OKRs, planejar conteúdo. Em resumo: qualquer coisa que envolva texto + dados estruturados.</p>
-           <p style="margin-top:10px"><strong>Quando NÃO usar:</strong> cálculos pesados de planilha (use Excel/Sheets), edição colaborativa em tempo real super fluida (Google Docs ainda ganha), apps mobile-first (Notion mobile melhorou mas não é o foco).</p>`
-  },
-  {
-    id: 2,
-    title: 'Criar conta gratuita',
-    body: `<p>Notion é grátis pra uso pessoal. Sem cartão de crédito, sem trial — o plano free serve eternamente pra individuais.</p>
-           <div class="tut-screenshot"><strong>Passo a passo</strong>
-             1. Acesse <code>notion.so</code> no navegador<br>
-             2. Click em "Try Notion free" (botão grande no topo direito)<br>
-             3. Use Google, Apple ou email pra criar conta<br>
-             4. Confirme email se pediu<br>
-             5. Na pergunta "Like personal use ou for work?", escolha <strong>Personal</strong><br>
-             6. Pula tutorial inicial — vamos aprender com templates reais
-           </div>
-           <p style="margin-top:10px">Pronto. Você já tem workspace Notion vazio esperando.</p>`
-  },
-  {
-    id: 3,
-    title: 'Como duplicar template',
-    body: `<p>Templates Notion são páginas que você copia pro seu workspace. Funciona assim:</p>
-           <div class="tut-screenshot"><strong>Passo a passo</strong>
-             1. Click no botão <strong>"Duplicar para meu Notion"</strong> (verde) na galeria<br>
-             2. Vai abrir <code>notion.so</code> com a tela "Duplicate"<br>
-             3. Faça login se ainda não estiver<br>
-             4. Escolha em qual workspace duplicar (se tiver mais de um)<br>
-             5. Click em <strong>"Duplicate page"</strong><br>
-             6. Página é copiada pro seu sidebar — agora é SUA cópia
-           </div>
-           <p style="margin-top:10px">Pode editar livremente. Mudanças não afetam o template original. Marque como duplicado aqui pra acompanhar.</p>`
-  },
-  {
-    id: 4,
-    title: 'Personalizar pra você',
-    body: `<p>Template duplicado é só um <strong>ponto de partida</strong>. Personalize pra que faça sentido pro seu contexto.</p>
-           <p style="margin-top:10px"><strong>O que dá pra personalizar:</strong></p>
-           <ul style="margin-left:20px; color:var(--text-muted); font-size:13px; line-height:1.8; margin-top:6px">
-             <li><strong>Emoji da página:</strong> click no emoji no topo, escolha outro</li>
-             <li><strong>Cor de capa:</strong> hover no topo da página, "Add cover" → "Change cover"</li>
-             <li><strong>Propriedades de database:</strong> click em "+" no header da tabela pra adicionar coluna</li>
-             <li><strong>Excluir o que não serve:</strong> hover no bloco, click nos 6 pontinhos, "Delete"</li>
-             <li><strong>Renomear tudo:</strong> click no título, edite</li>
-           </ul>
-           <p style="margin-top:10px"><strong>Dica:</strong> não tente personalizar tudo de uma vez. Use 1 semana, depois ajuste o que incomodou.</p>`
-  },
-  {
-    id: 5,
-    title: 'Sincronizar mobile/desktop',
-    body: `<p>Notion sincroniza automaticamente entre todos seus devices via cloud. Mas pra acessar offline e ter notificações, instale o app.</p>
-           <div class="tut-screenshot"><strong>Apps oficiais</strong>
-             <strong>Desktop:</strong> baixa em <code>notion.so/desktop</code> — versão Mac, Windows, Linux<br>
-             <strong>iOS:</strong> App Store, busca "Notion"<br>
-             <strong>Android:</strong> Google Play, busca "Notion"<br>
-             <strong>Web:</strong> sempre disponível em <code>notion.so</code>
-           </div>
-           <p style="margin-top:10px">Faça login com a mesma conta em todos os devices. Mudanças aparecem em segundos.</p>
-           <p style="margin-top:10px"><strong>Dica:</strong> use desktop pra criar conteúdo (mais rápido), mobile pra consultar e check-ins rápidos. Não tente fazer tudo no celular.</p>`
-  },
-  {
-    id: 6,
-    title: 'Atalhos de produtividade',
-    body: `<p>10 atalhos essenciais que vão acelerar seu uso de Notion <strong>tipo 5x</strong>. Decore esses primeiro:</p>
-           <div class="shortcut-grid" style="margin-top:12px">
-             <div class="shortcut"><span class="shortcut-key">/</span><span class="shortcut-text">Menu de comandos (TUDO começa aqui)</span></div>
-             <div class="shortcut"><span class="shortcut-key">@</span><span class="shortcut-text">Mencionar pessoa, página ou data</span></div>
-             <div class="shortcut"><span class="shortcut-key">[[</span><span class="shortcut-text">Linkar pra outra página</span></div>
-             <div class="shortcut"><span class="shortcut-key">Ctrl+P</span><span class="shortcut-text">Quick find — busca global</span></div>
-             <div class="shortcut"><span class="shortcut-key">Ctrl+N</span><span class="shortcut-text">Nova página rápida</span></div>
-             <div class="shortcut"><span class="shortcut-key">Ctrl+Shift+L</span><span class="shortcut-text">Toggle dark/light mode</span></div>
-             <div class="shortcut"><span class="shortcut-key">Ctrl+/</span><span class="shortcut-text">Editar bloco selecionado</span></div>
-             <div class="shortcut"><span class="shortcut-key">Tab</span><span class="shortcut-text">Indentar bloco (criar sub-item)</span></div>
-             <div class="shortcut"><span class="shortcut-key">Ctrl+D</span><span class="shortcut-text">Duplicar bloco/página</span></div>
-             <div class="shortcut"><span class="shortcut-key">Ctrl+\\</span><span class="shortcut-text">Toggle sidebar</span></div>
-           </div>
-           <p style="margin-top:14px"><strong>Dica final:</strong> os atalhos são case-sensitive. <code>Ctrl</code> no Windows/Linux equivale a <code>Cmd</code> no Mac.</p>`
-  }
-];
-
-/* ============================================================
-   RENDERS
-   ============================================================ */
-function showToast(msg) {
+let toastTimer;
+function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
-
-function renderGallery() {
-  const root = document.getElementById('gallery-content');
-  const { cat, diff, q } = state.filter;
-
-  let filtered = TEMPLATES.filter(t => {
-    if (cat && t.cat !== cat) return false;
-    if (diff && String(t.diff) !== diff) return false;
-    if (q) {
-      const needle = q.toLowerCase();
-      const hay = (t.name + ' ' + t.desc + ' ' + (t.tags || []).join(' ')).toLowerCase();
-      if (!hay.includes(needle)) return false;
-    }
-    return true;
-  });
-
-  document.getElementById('results-count').innerHTML = `<strong>${filtered.length}</strong> templates`;
-
-  if (filtered.length === 0) {
-    root.innerHTML = `<div class="empty-results"><strong>Nenhum template encontrado</strong>Tenta ajustar os filtros ou buscar outro termo.</div>`;
-    return;
-  }
-
-  // Group by category, but only show category headers when no specific cat filter is on
-  const groups = {};
-  filtered.forEach(t => {
-    if (!groups[t.cat]) groups[t.cat] = [];
-    groups[t.cat].push(t);
-  });
-
-  const order = ['vida', 'trabalho', 'estudos', 'financas', 'negocios'];
-  let html = '';
-
-  for (const k of order) {
-    if (!groups[k]) continue;
-    const cInfo = CATEGORIES[k];
-    html += `
-      <div class="cat-section">
-        <div class="cat-header">
-          <div class="cat-icon" style="background: linear-gradient(135deg, ${cInfo.color}, ${cInfo.dark});">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l9 4.5v9L12 20l-9-4.5v-9z"/><path d="M12 11l9-4.5M12 11v9M12 11L3 6.5"/></svg>
-          </div>
-          <h3 class="cat-title">${cInfo.name}</h3>
-          <span class="cat-count">${groups[k].length}</span>
-        </div>
-        <div class="grid">
-          ${groups[k].map(renderCard).join('')}
-        </div>
-      </div>
-    `;
-  }
-
-  root.innerHTML = html;
-
-  // Bind clicks
-  root.querySelectorAll('[data-tpl]').forEach(el => {
-    el.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openModal(el.dataset.tpl);
-    });
-  });
-}
-
-function renderCard(t) {
-  const c = CATEGORIES[t.cat];
-  const dup = state.duplicated.includes(t.id);
-  return `
-    <div class="card-template" data-tpl="${t.id}">
-      <div class="card-mockup" style="background: linear-gradient(135deg, ${c.color}, ${c.dark});">
-        <div class="card-mockup-icon">${ICONS[t.icon] || ICONS.dashboard}</div>
-        <div class="card-mockup-title">${t.name}</div>
-        <div class="card-mockup-sub">${c.name}</div>
-      </div>
-      <div class="card-body">
-        <div class="card-meta">
-          <span class="tag tag-cat">${c.name}</span>
-          <span class="tag tag-diff-${t.diff}">${DIFFICULTY[t.diff]}</span>
-          ${dup ? '<span class="tag tag-dup"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Duplicado</span>' : ''}
-        </div>
-        <div class="card-name">${t.name}</div>
-        <div class="card-desc">${t.desc}</div>
-        <button class="btn-detail">
-          Ver detalhes
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-      </div>
-    </div>
-  `;
-}
-
-function openModal(id) {
-  const t = TEMPLATES.find(x => x.id === id);
-  if (!t) return;
-  const c = CATEGORIES[t.cat];
-  const dup = state.duplicated.includes(t.id);
-
-  document.getElementById('modal-mockup').style.background =
-    `linear-gradient(135deg, ${c.color}, ${c.dark})`;
-  document.getElementById('modal-mock-icon').innerHTML = ICONS[t.icon] || ICONS.dashboard;
-  document.getElementById('modal-mock-title').textContent = t.name;
-
-  document.getElementById('modal-body').innerHTML = `
-    <div class="modal-meta">
-      <span class="tag tag-cat">${c.name}</span>
-      <span class="tag tag-diff-${t.diff}">${DIFFICULTY[t.diff]}</span>
-      ${dup ? '<span class="tag tag-dup"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já duplicado</span>' : ''}
-    </div>
-    <h2 class="modal-name">${t.name}</h2>
-    <p class="modal-desc">${t.full}</p>
-
-    <div class="modal-section">
-      <div class="modal-section-title">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-        Como usar
-      </div>
-      <ol class="step-list">
-        ${t.steps.map(s => `<li>${s}</li>`).join('')}
-      </ol>
-    </div>
-
-    <div class="modal-section">
-      <div class="modal-section-title">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        Funcionalidades-chave
-      </div>
-      <ul class="feat-list">
-        ${t.feats.map(f => `<li>${f}</li>`).join('')}
-      </ul>
-    </div>
-
-    <div class="modal-section">
-      <div class="modal-section-title">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-        Tags relacionadas
-      </div>
-      <div class="modal-tags">
-        ${t.tags.map(tag => `<span class="tag-related">#${tag}</span>`).join('')}
-      </div>
-    </div>
-
-    <div class="modal-actions">
-      <!-- TODO: trocar URL pelo template real do Notion quando disponível -->
-      <a class="btn-primary" href="https://www.notion.so/templates" target="_blank" rel="noopener">
-        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 3h7v7M10 14L21 3M21 14v7h-7M10 10L3 17"/></svg>
-        Duplicar para meu Notion
-      </a>
-      <button class="btn-secondary ${dup ? 'is-dup' : ''}" id="btn-dup">
-        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">${dup ? '<polyline points="20 6 9 17 4 12"/>' : '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>'}</svg>
-        ${dup ? 'Marcado como duplicado' : 'Marcar como duplicado'}
-      </button>
-    </div>
-  `;
-
-  document.getElementById('btn-dup').addEventListener('click', () => toggleDuplicated(t.id));
-
-  document.getElementById('modal').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  document.getElementById('modal').classList.remove('show');
-  document.body.style.overflow = '';
-}
-
-function toggleDuplicated(id) {
-  const idx = state.duplicated.indexOf(id);
-  if (idx === -1) {
-    state.duplicated.push(id);
-    if (!state.myTemplates[id]) {
-      state.myTemplates[id] = { status: 'ativo', notes: '', addedAt: Date.now() };
-    }
-    showToast('Adicionado aos seus templates');
-  } else {
-    state.duplicated.splice(idx, 1);
-    delete state.myTemplates[id];
-    showToast('Removido dos seus templates');
-  }
-  store.set(KEYS.duplicated, state.duplicated);
-  store.set(KEYS.myTemplates, state.myTemplates);
-  renderGallery();
-  renderMy();
-  updatePills();
-  // Re-open modal to refresh the button state
-  openModal(id);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
 }
 
 /* ============================================================
-   TUTORIAL RENDER
+   TAB SWITCHING
    ============================================================ */
-function renderTutorial() {
-  const root = document.getElementById('tut-grid');
-  root.innerHTML = TUT_STEPS.map(s => {
-    const done = state.tutorial.includes(s.id);
-    return `
-      <div class="tut-step ${done ? 'done' : ''}" data-step="${s.id}">
-        <div class="tut-num">${s.id}</div>
-        <div class="tut-content">
-          <h4 class="tut-title">${s.title}</h4>
-          <div class="tut-text">${s.body}</div>
-          <button class="tut-check-btn" data-toggle="${s.id}">
-            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">${done ? '<polyline points="20 6 9 17 4 12"/>' : '<rect x="3" y="3" width="18" height="18" rx="2"/>'}</svg>
-            ${done ? 'Concluído' : 'Marcar como concluído'}
-          </button>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  root.querySelectorAll('[data-toggle]').forEach(btn => {
-    btn.addEventListener('click', () => toggleTutStep(parseInt(btn.dataset.toggle)));
-  });
-
-  const done = state.tutorial.length;
-  document.getElementById('tut-done').textContent = done;
-  document.getElementById('tut-fill').style.width = (done / TUT_STEPS.length * 100) + '%';
-}
-
-function toggleTutStep(id) {
-  const idx = state.tutorial.indexOf(id);
-  if (idx === -1) state.tutorial.push(id);
-  else state.tutorial.splice(idx, 1);
-  store.set(KEYS.tutorial, state.tutorial);
-  renderTutorial();
-  updatePills();
-}
-
-/* ============================================================
-   MEUS TEMPLATES RENDER
-   ============================================================ */
-function renderMy() {
-  const root = document.getElementById('my-content');
-  const ids = Object.keys(state.myTemplates);
-
-  if (ids.length === 0) {
-    root.innerHTML = `
-      <div class="my-empty">
-        <div class="my-empty-icon">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
-        </div>
-        <div class="my-empty-title">Nenhum template ainda</div>
-        <p class="my-empty-text">Vá pra galeria, encontre um template que faz sentido pra você e marque como duplicado. Vai aparecer aqui pra você acompanhar o uso.</p>
-        <button class="my-empty-btn" data-jump="galeria">Ir para galeria</button>
-      </div>
-    `;
-    root.querySelector('[data-jump]').addEventListener('click', () => switchTab('galeria'));
-    return;
-  }
-
-  // Sort: most recently added first
-  ids.sort((a, b) => (state.myTemplates[b].addedAt || 0) - (state.myTemplates[a].addedAt || 0));
-
-  const cards = ids.map(id => {
-    const t = TEMPLATES.find(x => x.id === id);
-    if (!t) return '';
-    const my = state.myTemplates[id];
-    const c = CATEGORIES[t.cat];
-    return `
-      <div class="my-card">
-        <div class="my-card-mockup" style="background: linear-gradient(135deg, ${c.color}, ${c.dark});">
-          <div class="my-card-mockup-text">${t.name}</div>
-        </div>
-        <div class="my-card-body">
-          <div class="my-card-name">${t.name}</div>
-          <div class="status-row">
-            <button class="status-btn ativo ${my.status==='ativo'?'active':''}" data-status="${id}|ativo">Ativo</button>
-            <button class="status-btn uso ${my.status==='uso'?'active':''}" data-status="${id}|uso">Em uso</button>
-            <button class="status-btn aband ${my.status==='aband'?'active':''}" data-status="${id}|aband">Abandonado</button>
-          </div>
-          <textarea class="my-textarea" data-notes="${id}" placeholder="Notas pessoais — o que está funcionando, o que ajustar...">${(my.notes||'').replace(/</g,'&lt;')}</textarea>
-          <div class="my-actions">
-            <a class="my-action" href="https://www.notion.so/" target="_blank" rel="noopener">
-              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 3h7v7M10 14L21 3"/></svg>
-              Abrir Notion
-            </a>
-            <button class="my-action" data-edit="${id}">
-              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-              Detalhes
-            </button>
-            <button class="my-action danger" data-remove="${id}">
-              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 01-2 2H9a2 2 0 01-2-2L5 6"/></svg>
-              Remover
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  root.innerHTML = `<div class="my-grid">${cards}</div>`;
-
-  root.querySelectorAll('[data-status]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const [id, status] = btn.dataset.status.split('|');
-      state.myTemplates[id].status = status;
-      store.set(KEYS.myTemplates, state.myTemplates);
-      renderMy();
-    });
-  });
-
-  root.querySelectorAll('[data-notes]').forEach(ta => {
-    ta.addEventListener('input', (e) => {
-      const id = ta.dataset.notes;
-      state.myTemplates[id].notes = e.target.value;
-      store.set(KEYS.myTemplates, state.myTemplates);
-    });
-  });
-
-  root.querySelectorAll('[data-edit]').forEach(btn => {
-    btn.addEventListener('click', () => openModal(btn.dataset.edit));
-  });
-
-  root.querySelectorAll('[data-remove]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.remove;
-      if (!confirm(`Remover ${TEMPLATES.find(t => t.id === id).name} da sua lista?`)) return;
-      delete state.myTemplates[id];
-      const dIdx = state.duplicated.indexOf(id);
-      if (dIdx !== -1) state.duplicated.splice(dIdx, 1);
-      store.set(KEYS.duplicated, state.duplicated);
-      store.set(KEYS.myTemplates, state.myTemplates);
-      renderMy();
-      renderGallery();
-      updatePills();
-      showToast('Template removido');
-    });
-  });
-}
-
-/* ============================================================
-   PILLS / TAB SWITCHING
-   ============================================================ */
-function updatePills() {
-  document.getElementById('tut-pill').textContent = `${state.tutorial.length}/6`;
-  document.getElementById('my-pill').textContent = Object.keys(state.myTemplates).length;
-}
-
 function switchTab(name) {
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
-  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === 'sec-' + name));
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    const active = b.dataset.tab === name;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+  document.querySelectorAll('.section').forEach(s => {
+    s.classList.toggle('active', s.id === 'sec-' + name);
+  });
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+/* ============================================================
+   1) WHEEL OF LIFE
+   ============================================================ */
+const WHEEL_AREAS = [
+  { id: 'saude_fisica',  name: 'Saúde Física',       color: '#EF4444' },
+  { id: 'saude_mental',  name: 'Saúde Mental',       color: '#8B5CF6' },
+  { id: 'carreira',      name: 'Carreira',           color: '#3B82F6' },
+  { id: 'financas',      name: 'Finanças',           color: '#10B981' },
+  { id: 'relacionamentos', name: 'Relacionamentos',  color: '#F59E0B' },
+  { id: 'familia',       name: 'Família',            color: '#EC4899' },
+  { id: 'lazer',         name: 'Lazer / Hobbies',    color: '#F97316' },
+  { id: 'crescimento',   name: 'Crescimento Pessoal', color: '#06B6D4' },
+  { id: 'espiritualidade', name: 'Espiritualidade',  color: '#A855F7' },
+  { id: 'ambiente',      name: 'Ambiente',           color: '#84CC16' },
+];
+
+let wheelData = store.get(KEYS.wheel, {});
+WHEEL_AREAS.forEach(a => {
+  if (!wheelData[a.id]) wheelData[a.id] = { score: 5, note: '' };
+});
+
+function renderWheelAreas() {
+  const wrap = document.getElementById('wheel-areas');
+  wrap.innerHTML = WHEEL_AREAS.map(a => {
+    const d = wheelData[a.id];
+    return `
+      <div class="wheel-area">
+        <div class="wheel-area-head">
+          <div class="wheel-area-name">
+            <span class="wheel-area-dot" style="background:${a.color}"></span>
+            ${a.name}
+          </div>
+          <span class="wheel-area-score" id="score-${a.id}">${d.score}</span>
+        </div>
+        <input type="range" min="1" max="10" value="${d.score}" data-area="${a.id}" aria-label="Score de ${a.name}">
+        <input type="text" class="wheel-area-note" data-note="${a.id}" value="${escapeAttr(d.note)}" placeholder="O que fazer pra subir 1 ponto?">
+      </div>
+    `;
+  }).join('');
+
+  wrap.querySelectorAll('input[type=range]').forEach(input => {
+    input.addEventListener('input', e => {
+      const id = e.target.dataset.area;
+      wheelData[id].score = +e.target.value;
+      document.getElementById('score-' + id).textContent = e.target.value;
+      store.set(KEYS.wheel, wheelData);
+      renderWheelChart();
+      renderWheelSummary();
+    });
+  });
+  wrap.querySelectorAll('.wheel-area-note').forEach(input => {
+    input.addEventListener('input', e => {
+      const id = e.target.dataset.note;
+      wheelData[id].note = e.target.value;
+      store.set(KEYS.wheel, wheelData);
+    });
+  });
+}
+
+function renderWheelChart() {
+  const svg = document.getElementById('wheel-svg');
+  const cx = 100, cy = 100, max = 90;
+  let html = '';
+
+  // Background rings
+  for (let r = 1; r <= 10; r++) {
+    html += `<circle cx="${cx}" cy="${cy}" r="${(r/10)*max}" fill="none" stroke="rgba(236,72,153,0.06)" stroke-width="0.6"/>`;
+  }
+
+  // Sector slices
+  const total = WHEEL_AREAS.length;
+  const angleStep = (Math.PI * 2) / total;
+  WHEEL_AREAS.forEach((a, i) => {
+    const score = wheelData[a.id].score;
+    const r = (score / 10) * max;
+    const a1 = -Math.PI / 2 + i * angleStep;
+    const a2 = a1 + angleStep;
+    const x1 = cx + r * Math.cos(a1);
+    const y1 = cy + r * Math.sin(a1);
+    const x2 = cx + r * Math.cos(a2);
+    const y2 = cy + r * Math.sin(a2);
+    html += `<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 0 1 ${x2},${y2} Z" fill="${a.color}" fill-opacity="0.55" stroke="${a.color}" stroke-width="0.8"/>`;
+
+    // Label
+    const labelR = max + 8;
+    const lx = cx + labelR * Math.cos(a1 + angleStep / 2);
+    const ly = cy + labelR * Math.sin(a1 + angleStep / 2);
+    const anchor = lx < cx - 5 ? 'end' : (lx > cx + 5 ? 'start' : 'middle');
+    html += `<text x="${lx}" y="${ly}" font-family="Inter" font-size="6" font-weight="600" fill="#9E7A8A" text-anchor="${anchor}" dominant-baseline="middle">${a.name.split(' ')[0]}</text>`;
+  });
+
+  // Outer ring
+  html += `<circle cx="${cx}" cy="${cy}" r="${max}" fill="none" stroke="rgba(236,72,153,0.32)" stroke-width="1"/>`;
+
+  svg.innerHTML = html;
+}
+
+function renderWheelSummary() {
+  const scores = WHEEL_AREAS.map(a => wheelData[a.id].score);
+  const avg = scores.reduce((s, n) => s + n, 0) / scores.length;
+  let weakest = WHEEL_AREAS[0];
+  WHEEL_AREAS.forEach(a => {
+    if (wheelData[a.id].score < wheelData[weakest.id].score) weakest = a;
+  });
+  document.getElementById('wheel-summary').innerHTML = `
+    <div class="flex-between" style="flex-wrap:wrap; gap:14px;">
+      <div>
+        <div class="text-muted" style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.6px;">Score médio</div>
+        <div style="font-size:28px; font-weight:900; color:var(--white); line-height:1;">${avg.toFixed(1)} <span style="font-size:14px; color:var(--text-muted);">/ 10</span></div>
+      </div>
+      <div style="text-align:right;">
+        <div class="text-muted" style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.6px;">Área mais fraca</div>
+        <div style="font-size:14px; font-weight:700; color:${weakest.color};">${weakest.name}</div>
+        <div style="font-size:12px; color:var(--text-muted);">Score ${wheelData[weakest.id].score}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderWheelHistory() {
+  const list = document.getElementById('wheel-history-list');
+  const hist = store.get(KEYS.wheelHist, []);
+  if (!hist.length) {
+    list.innerHTML = '<div class="empty-sub">Nenhuma avaliação salva ainda. Clique em "Salvar avaliação" pra começar a comparar.</div>';
+    return;
+  }
+  list.innerHTML = hist.slice().reverse().map(h => `
+    <div class="wheel-history-item">
+      <span class="wheel-history-date">${fmtDate(h.date)}</span>
+      <span class="wheel-history-score">${h.avg.toFixed(1)} / 10</span>
+    </div>
+  `).join('');
+}
+
+document.getElementById('wheel-save-snapshot').addEventListener('click', () => {
+  const scores = WHEEL_AREAS.map(a => wheelData[a.id].score);
+  const avg = scores.reduce((s, n) => s + n, 0) / scores.length;
+  const hist = store.get(KEYS.wheelHist, []);
+  hist.push({ date: todayISO(), avg, scores: { ...wheelData } });
+  store.set(KEYS.wheelHist, hist);
+  renderWheelHistory();
+  toast('Avaliação salva no histórico');
+});
+
+/* ============================================================
+   2) PLAN 90
+   ============================================================ */
+let plan90 = store.get(KEYS.plan90, { goal: '', desc: '', weeks: [] });
+if (!plan90.weeks || plan90.weeks.length !== 12) {
+  plan90.weeks = Array.from({ length: 12 }, (_, i) => ({
+    n: i + 1, focus: '', actions: '', metric: '', done: false
+  }));
+}
+
+function renderPlan() {
+  document.getElementById('plan-goal-input').value = plan90.goal || '';
+  document.getElementById('plan-goal-desc').value = plan90.desc || '';
+
+  const grid = document.getElementById('plan-grid');
+  grid.innerHTML = plan90.weeks.map((w, i) => `
+    <div class="plan-week ${w.done ? 'done' : ''}" data-week="${i}">
+      <div class="plan-week-head">
+        <span class="plan-week-num">Semana ${w.n}</span>
+        <button class="plan-checkbox ${w.done ? 'checked' : ''}" data-toggle="${i}" aria-label="Marcar semana ${w.n} como concluída">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+      </div>
+      <input type="text" class="plan-week-focus" data-field="focus" data-i="${i}" value="${escapeAttr(w.focus)}" placeholder="Foco da semana">
+      <textarea data-field="actions" data-i="${i}" placeholder="3 ações concretas" rows="3">${escapeText(w.actions)}</textarea>
+      <input type="text" data-field="metric" data-i="${i}" value="${escapeAttr(w.metric)}" placeholder="Métrica de sucesso">
+    </div>
+  `).join('');
+
+  grid.querySelectorAll('[data-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = +btn.dataset.toggle;
+      plan90.weeks[i].done = !plan90.weeks[i].done;
+      store.set(KEYS.plan90, plan90);
+      renderPlan();
+    });
+  });
+  grid.querySelectorAll('input[data-field], textarea[data-field]').forEach(el => {
+    el.addEventListener('input', () => {
+      const i = +el.dataset.i;
+      plan90.weeks[i][el.dataset.field] = el.value;
+      store.set(KEYS.plan90, plan90);
+      const completed = plan90.weeks.filter(w => w.done).length;
+      document.getElementById('plan-progress-text').textContent = `${completed}/12 semanas`;
+      document.getElementById('plan-progress-fill').style.width = `${(completed / 12) * 100}%`;
+    });
+  });
+
+  const completed = plan90.weeks.filter(w => w.done).length;
+  document.getElementById('plan-progress-text').textContent = `${completed}/12 semanas`;
+  document.getElementById('plan-progress-fill').style.width = `${(completed / 12) * 100}%`;
+}
+
+document.getElementById('plan-goal-input').addEventListener('input', e => {
+  plan90.goal = e.target.value;
+  store.set(KEYS.plan90, plan90);
+});
+document.getElementById('plan-goal-desc').addEventListener('input', e => {
+  plan90.desc = e.target.value;
+  store.set(KEYS.plan90, plan90);
+});
+
+/* ============================================================
+   3) GTD
+   ============================================================ */
+let gtdData = store.get(KEYS.gtd, { inbox: [], next: [], waiting: [], someday: [], reference: [] });
+['inbox','next','waiting','someday','reference'].forEach(k => { if (!Array.isArray(gtdData[k])) gtdData[k] = []; });
+let gtdActiveList = 'inbox';
+
+function gtdSave() { store.set(KEYS.gtd, gtdData); }
+
+function gtdRenderCounts() {
+  ['inbox','next','waiting','someday','reference'].forEach(k => {
+    const el = document.getElementById('gtd-count-' + k);
+    if (el) el.textContent = gtdData[k].length;
+  });
+}
+
+function gtdRenderList() {
+  const list = document.getElementById('gtd-list');
+  const items = gtdData[gtdActiveList];
+  if (!items.length) {
+    list.innerHTML = `<div class="gtd-empty">Nada aqui ainda. ${gtdActiveList === 'inbox' ? 'Captura tudo que tá na sua cabeça acima.' : 'Processa items da inbox pra cá.'}</div>`;
+    return;
+  }
+  list.innerHTML = items.map(item => {
+    const meta = [];
+    if (item.delegate) meta.push(`Delegado pra: <strong>${escapeHtml(item.delegate)}</strong>`);
+    if (item.scheduled) meta.push(`Para: ${fmtDate(item.scheduled)}`);
+    if (item.category) meta.push(`Categoria: ${escapeHtml(item.category)}`);
+
+    let actions = '';
+    if (gtdActiveList === 'inbox') {
+      actions = `
+        <button class="btn btn-mini" data-action="now" data-id="${item.id}">Fazer (&lt;2min)</button>
+        <button class="btn btn-mini btn-ghost" data-action="schedule" data-id="${item.id}">Agendar</button>
+        <button class="btn btn-mini btn-ghost" data-action="delegate" data-id="${item.id}">Delegar</button>
+        <button class="btn btn-mini btn-ghost" data-action="reference" data-id="${item.id}">Referência</button>
+        <button class="btn btn-mini btn-ghost" data-action="someday" data-id="${item.id}">Algum dia</button>
+        <button class="btn btn-mini btn-danger" data-action="trash" data-id="${item.id}">Lixo</button>
+      `;
+    } else {
+      actions = `
+        <button class="btn btn-mini" data-action="done" data-id="${item.id}">Concluir</button>
+        <button class="btn btn-mini btn-ghost" data-action="back" data-id="${item.id}">Voltar p/ Inbox</button>
+        <button class="btn btn-mini btn-danger" data-action="trash" data-id="${item.id}">Remover</button>
+      `;
+    }
+
+    return `
+      <div class="gtd-item">
+        <div class="gtd-item-text">${escapeHtml(item.text)}</div>
+        ${meta.length ? `<div class="gtd-item-meta">${meta.join(' · ')}</div>` : ''}
+        <div class="gtd-actions">${actions}</div>
+      </div>
+    `;
+  }).join('');
+
+  list.querySelectorAll('[data-action]').forEach(btn => {
+    btn.addEventListener('click', () => gtdHandleAction(btn.dataset.action, btn.dataset.id));
+  });
+}
+
+function gtdFindItem(id) {
+  for (const k of ['inbox','next','waiting','someday','reference']) {
+    const i = gtdData[k].findIndex(it => it.id === id);
+    if (i !== -1) return { list: k, idx: i, item: gtdData[k][i] };
+  }
+  return null;
+}
+
+function gtdHandleAction(action, id) {
+  const found = gtdFindItem(id);
+  if (!found) return;
+  const item = found.item;
+
+  if (action === 'now' || action === 'done') {
+    gtdData[found.list].splice(found.idx, 1);
+    toast(action === 'now' ? 'Concluído (regra dos 2 minutos)' : 'Concluído');
+  } else if (action === 'schedule') {
+    const date = prompt('Data (YYYY-MM-DD):', todayISO());
+    if (!date) return;
+    item.scheduled = date;
+    gtdData[found.list].splice(found.idx, 1);
+    gtdData.next.push(item);
+    toast('Agendado para Próximas Ações');
+  } else if (action === 'delegate') {
+    const who = prompt('Delegar para quem?');
+    if (!who) return;
+    item.delegate = who;
+    gtdData[found.list].splice(found.idx, 1);
+    gtdData.waiting.push(item);
+    toast('Delegado e movido para Aguardando');
+  } else if (action === 'reference') {
+    const cat = prompt('Categoria (opcional):') || '';
+    item.category = cat;
+    gtdData[found.list].splice(found.idx, 1);
+    gtdData.reference.push(item);
+    toast('Movido para Referência');
+  } else if (action === 'someday') {
+    gtdData[found.list].splice(found.idx, 1);
+    gtdData.someday.push(item);
+    toast('Movido para Algum dia');
+  } else if (action === 'back') {
+    gtdData[found.list].splice(found.idx, 1);
+    item.delegate = null; item.scheduled = null; item.category = null;
+    gtdData.inbox.push(item);
+    toast('Voltou pra Inbox');
+  } else if (action === 'trash') {
+    gtdData[found.list].splice(found.idx, 1);
+    toast('Removido');
+  }
+  gtdSave();
+  gtdRenderCounts();
+  gtdRenderList();
+}
+
+document.getElementById('gtd-add').addEventListener('click', () => {
+  const input = document.getElementById('gtd-input');
+  const text = input.value.trim();
+  if (!text) return;
+  gtdData.inbox.push({ id: uid(), text, created: todayISO() });
+  input.value = '';
+  gtdSave();
+  gtdRenderCounts();
+  if (gtdActiveList === 'inbox') gtdRenderList();
+  toast('Capturado na inbox');
+});
+document.getElementById('gtd-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('gtd-add').click();
+});
+document.querySelectorAll('.gtd-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.gtd-tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    gtdActiveList = t.dataset.list;
+    gtdRenderList();
+  });
+});
+
+/* ============================================================
+   4) CRM
+   ============================================================ */
+let crmData = store.get(KEYS.crm, []);
+let crmEditing = null;
+
+function crmSave() { store.set(KEYS.crm, crmData); }
+
+function crmRenderSummary() {
+  const ativos = crmData.filter(c => c.status === 'ativo' || c.status === 'concluido');
+  const leads = crmData.filter(c => c.status === 'lead');
+  const totalReceber = crmData.reduce((s, c) => s + Math.max(0, (+c.proposal || 0) - (+c.paid || 0)), 0);
+  const totalConvertidos = ativos.length;
+  const totalLeads = leads.length + totalConvertidos;
+  const conv = totalLeads > 0 ? Math.round((totalConvertidos / totalLeads) * 100) : 0;
+
+  // Próximo follow-up
+  const today = todayISO();
+  const upcoming = crmData
+    .filter(c => c.followup && c.status !== 'arquivado' && c.status !== 'concluido')
+    .sort((a, b) => a.followup.localeCompare(b.followup));
+  const nextFu = upcoming[0];
+
+  let nextFuText = '—', nextFuSub = 'Nenhum agendado';
+  if (nextFu) {
+    nextFuText = fmtDate(nextFu.followup);
+    nextFuSub = nextFu.name;
+  }
+
+  document.getElementById('crm-summary').innerHTML = `
+    <div class="stat">
+      <div class="stat-label">A receber</div>
+      <div class="stat-value">${fmtBRL(totalReceber)}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Próximo follow-up</div>
+      <div class="stat-value" style="font-size:16px;">${nextFuText}</div>
+      <div class="stat-sub">${escapeHtml(nextFuSub)}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Conversão</div>
+      <div class="stat-value">${conv}%</div>
+      <div class="stat-sub">${totalConvertidos} de ${totalLeads}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Total de clientes</div>
+      <div class="stat-value">${crmData.length}</div>
+    </div>
+  `;
+}
+
+function crmRenderList() {
+  const filter = document.getElementById('crm-filter-status').value;
+  const list = document.getElementById('crm-list');
+  let items = crmData.slice();
+  if (filter !== 'all') items = items.filter(c => c.status === filter);
+
+  if (!items.length) {
+    list.innerHTML = `<div class="empty">
+      <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      <div class="empty-title">Nenhum cliente</div>
+      <div class="empty-sub">Clica em "Adicionar cliente" pra começar</div>
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = items.map(c => {
+    const restante = Math.max(0, (+c.proposal || 0) - (+c.paid || 0));
+    const overdue = c.followup && c.followup < todayISO();
+    return `
+      <div class="crm-card">
+        <div class="crm-card-head">
+          <div class="crm-name">${escapeHtml(c.name)}</div>
+          <span class="crm-status ${c.status}">${c.status}</span>
+        </div>
+        ${c.contact ? `<div class="crm-info">${escapeHtml(c.contact)}</div>` : ''}
+        ${(c.proposal || c.paid) ? `<div class="crm-money">
+          <span>Proposta: <strong>${fmtBRL(+c.proposal || 0)}</strong></span>
+          <span>Pago: <strong>${fmtBRL(+c.paid || 0)}</strong></span>
+          ${restante > 0 ? `<span>Falta: <strong>${fmtBRL(restante)}</strong></span>` : ''}
+        </div>` : ''}
+        ${c.followup ? `<div class="crm-followup ${overdue ? 'overdue' : ''}">Follow-up: ${fmtDate(c.followup)}${overdue ? ' (atrasado)' : ''}</div>` : ''}
+        ${c.notes ? `<div class="crm-info" style="margin-top:8px;">${escapeHtml(c.notes)}</div>` : ''}
+        <div class="crm-actions">
+          <button class="btn btn-mini btn-ghost" data-edit="${c.id}">Editar</button>
+          ${c.status !== 'arquivado' ? `<button class="btn btn-mini btn-ghost" data-archive="${c.id}">Arquivar</button>` : `<button class="btn btn-mini btn-ghost" data-unarchive="${c.id}">Reativar</button>`}
+          <button class="btn btn-mini btn-danger" data-delete="${c.id}">Excluir</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  list.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => crmStartEdit(b.dataset.edit)));
+  list.querySelectorAll('[data-archive]').forEach(b => b.addEventListener('click', () => crmArchive(b.dataset.archive)));
+  list.querySelectorAll('[data-unarchive]').forEach(b => b.addEventListener('click', () => crmUnarchive(b.dataset.unarchive)));
+  list.querySelectorAll('[data-delete]').forEach(b => b.addEventListener('click', () => crmDelete(b.dataset.delete)));
+}
+
+function crmShowForm(client) {
+  crmEditing = client;
+  document.getElementById('crm-form-wrap').classList.remove('hidden');
+  document.getElementById('crm-form-title').textContent = client ? 'Editar cliente' : 'Novo cliente';
+  document.getElementById('crm-name').value = client ? client.name : '';
+  document.getElementById('crm-contact').value = client ? (client.contact || '') : '';
+  document.getElementById('crm-status-input').value = client ? client.status : 'lead';
+  document.getElementById('crm-proposal').value = client ? (client.proposal || '') : '';
+  document.getElementById('crm-paid').value = client ? (client.paid || '') : '';
+  document.getElementById('crm-followup').value = client ? (client.followup || '') : '';
+  document.getElementById('crm-notes').value = client ? (client.notes || '') : '';
+  document.getElementById('crm-form-wrap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function crmHideForm() {
+  crmEditing = null;
+  document.getElementById('crm-form-wrap').classList.add('hidden');
+}
+function crmStartEdit(id) {
+  const c = crmData.find(x => x.id === id);
+  if (c) crmShowForm(c);
+}
+function crmArchive(id) {
+  const c = crmData.find(x => x.id === id);
+  if (c) { c.status = 'arquivado'; crmSave(); crmRenderSummary(); crmRenderList(); toast('Arquivado'); }
+}
+function crmUnarchive(id) {
+  const c = crmData.find(x => x.id === id);
+  if (c) { c.status = 'lead'; crmSave(); crmRenderSummary(); crmRenderList(); toast('Reativado como lead'); }
+}
+function crmDelete(id) {
+  if (!confirm('Excluir cliente permanentemente?')) return;
+  const i = crmData.findIndex(x => x.id === id);
+  if (i !== -1) {
+    crmData.splice(i, 1);
+    crmSave(); crmRenderSummary(); crmRenderList(); toast('Excluído');
+  }
+}
+
+document.getElementById('crm-add-btn').addEventListener('click', () => crmShowForm(null));
+document.getElementById('crm-cancel').addEventListener('click', crmHideForm);
+document.getElementById('crm-save').addEventListener('click', () => {
+  const name = document.getElementById('crm-name').value.trim();
+  if (!name) { toast('Nome é obrigatório'); return; }
+  const data = {
+    name,
+    contact: document.getElementById('crm-contact').value.trim(),
+    status: document.getElementById('crm-status-input').value,
+    proposal: parseFloat(document.getElementById('crm-proposal').value) || 0,
+    paid: parseFloat(document.getElementById('crm-paid').value) || 0,
+    followup: document.getElementById('crm-followup').value || '',
+    notes: document.getElementById('crm-notes').value.trim(),
+  };
+  if (crmEditing) {
+    Object.assign(crmEditing, data);
+    toast('Cliente atualizado');
+  } else {
+    crmData.push({ id: uid(), ...data });
+    toast('Cliente adicionado');
+  }
+  crmSave();
+  crmRenderSummary();
+  crmRenderList();
+  crmHideForm();
+});
+document.getElementById('crm-filter-status').addEventListener('change', crmRenderList);
+
+/* ============================================================
+   5) BOOKS
+   ============================================================ */
+let booksData = store.get(KEYS.books, []);
+function booksSave() { store.set(KEYS.books, booksData); }
+
+function booksRenderStats() {
+  const year = new Date().getFullYear();
+  const concluidos = booksData.filter(b => b.status === 'concluido');
+  const concluidosYear = concluidos.filter(b => b.completed && b.completed.startsWith(String(year)));
+  const lendo = booksData.filter(b => b.status === 'lendo').length;
+  const ratings = concluidos.filter(b => b.rating > 0).map(b => b.rating);
+  const avgRating = ratings.length ? (ratings.reduce((s, n) => s + n, 0) / ratings.length).toFixed(1) : '—';
+
+  document.getElementById('books-stats').innerHTML = `
+    <div class="stat">
+      <div class="stat-label">Lidos em ${year}</div>
+      <div class="stat-value">${concluidosYear.length}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Total concluídos</div>
+      <div class="stat-value">${concluidos.length}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Lendo agora</div>
+      <div class="stat-value">${lendo}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Rating médio</div>
+      <div class="stat-value">${avgRating}</div>
+    </div>
+  `;
+}
+
+function booksRenderList() {
+  const filter = document.getElementById('books-filter').value;
+  const list = document.getElementById('books-list');
+  let items = booksData.slice().reverse();
+  if (filter !== 'all') items = items.filter(b => b.status === filter);
+
+  if (!items.length) {
+    list.innerHTML = `<div class="empty">
+      <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      <div class="empty-title">Nenhum livro</div>
+      <div class="empty-sub">Adiciona o primeiro acima</div>
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = items.map(b => `
+    <div class="book-card">
+      <div class="book-head">
+        <div>
+          <div class="book-title">${escapeHtml(b.title)}</div>
+          <div class="book-author">${escapeHtml(b.author || 'Autor desconhecido')}</div>
+        </div>
+        <span class="book-status-pill ${b.status}">${b.status}</span>
+      </div>
+      <div class="book-stars" data-id="${b.id}">
+        ${[1,2,3,4,5].map(n => `
+          <svg class="book-star ${b.rating >= n ? 'filled' : ''}" data-rate="${n}" data-id="${b.id}" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        `).join('')}
+      </div>
+      <textarea class="input mt-12" placeholder="Notas pessoais sobre o livro" data-note="${b.id}" rows="2">${escapeText(b.notes || '')}</textarea>
+      <div class="crm-actions mt-12">
+        <select class="select" data-status="${b.id}" style="max-width:140px;">
+          <option value="lendo" ${b.status==='lendo'?'selected':''}>Lendo</option>
+          <option value="concluido" ${b.status==='concluido'?'selected':''}>Concluído</option>
+          <option value="abandonado" ${b.status==='abandonado'?'selected':''}>Abandonado</option>
+          <option value="wishlist" ${b.status==='wishlist'?'selected':''}>Wishlist</option>
+        </select>
+        <button class="btn btn-mini btn-danger" data-del="${b.id}">Excluir</button>
+      </div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('.book-star').forEach(s => {
+    s.addEventListener('click', () => {
+      const b = booksData.find(x => x.id === s.dataset.id);
+      if (b) {
+        const n = +s.dataset.rate;
+        b.rating = b.rating === n ? 0 : n;
+        booksSave(); booksRenderList(); booksRenderStats();
+      }
+    });
+  });
+  list.querySelectorAll('[data-status]').forEach(sel => {
+    sel.addEventListener('change', () => {
+      const b = booksData.find(x => x.id === sel.dataset.status);
+      if (b) {
+        const wasNotConcluded = b.status !== 'concluido';
+        b.status = sel.value;
+        if (sel.value === 'concluido' && wasNotConcluded) b.completed = todayISO();
+        booksSave(); booksRenderList(); booksRenderStats();
+        toast('Status atualizado');
+      }
+    });
+  });
+  list.querySelectorAll('[data-note]').forEach(t => {
+    t.addEventListener('input', () => {
+      const b = booksData.find(x => x.id === t.dataset.note);
+      if (b) { b.notes = t.value; booksSave(); }
+    });
+  });
+  list.querySelectorAll('[data-del]').forEach(b => {
+    b.addEventListener('click', () => {
+      if (!confirm('Excluir livro?')) return;
+      const i = booksData.findIndex(x => x.id === b.dataset.del);
+      if (i !== -1) { booksData.splice(i, 1); booksSave(); booksRenderList(); booksRenderStats(); toast('Removido'); }
+    });
+  });
+}
+
+document.getElementById('book-add-btn').addEventListener('click', () => {
+  const title = document.getElementById('book-title-input').value.trim();
+  if (!title) { toast('Título é obrigatório'); return; }
+  const author = document.getElementById('book-author-input').value.trim();
+  const status = document.getElementById('book-status-input').value;
+  const newBook = { id: uid(), title, author, status, rating: 0, notes: '', created: todayISO() };
+  if (status === 'concluido') newBook.completed = todayISO();
+  booksData.push(newBook);
+  booksSave();
+  document.getElementById('book-title-input').value = '';
+  document.getElementById('book-author-input').value = '';
+  booksRenderList();
+  booksRenderStats();
+  toast('Livro adicionado');
+});
+document.getElementById('books-filter').addEventListener('change', booksRenderList);
+
+/* ============================================================
+   6) FIRE
+   ============================================================ */
+let fireData = store.get(KEYS.fire, {});
+
+function fireRender() {
+  if (fireData.age) document.getElementById('fire-age').value = fireData.age;
+  if (fireData.income) document.getElementById('fire-income').value = fireData.income;
+  if (fireData.expenses) document.getElementById('fire-expenses').value = fireData.expenses;
+  if (fireData.wealth != null) document.getElementById('fire-wealth').value = fireData.wealth;
+  document.getElementById('fire-rate').value = fireData.rate || 4;
+
+  if (fireData.computed) fireRenderResult(fireData.computed);
+}
+
+function fireCalc() {
+  const age = +document.getElementById('fire-age').value;
+  const income = +document.getElementById('fire-income').value;
+  const expenses = +document.getElementById('fire-expenses').value;
+  const wealth = +document.getElementById('fire-wealth').value || 0;
+  const rate = (+document.getElementById('fire-rate').value || 4) / 100;
+
+  if (!age || !income || !expenses) {
+    toast('Preencha idade, renda e gastos');
+    return;
+  }
+  if (expenses >= income) {
+    toast('Gastos ≥ renda — sem sobra pra investir');
+    return;
+  }
+
+  const monthlySaving = income - expenses;
+  const annualExpenses = expenses * 12;
+  const target = annualExpenses * 25; // 4% rule
+  const savingRate = (monthlySaving / income) * 100;
+
+  // Simulate year by year (compound monthly)
+  let years = 0;
+  let w = wealth;
+  const series = [{ year: 0, age, w }];
+  const monthlyRate = Math.pow(1 + rate, 1/12) - 1;
+
+  while (w < target && years < 80) {
+    for (let m = 0; m < 12; m++) {
+      w = w * (1 + monthlyRate) + monthlySaving;
+    }
+    years++;
+    series.push({ year: years, age: age + years, w });
+  }
+
+  const computed = { monthlySaving, target, years, finalAge: age + years, savingRate, series, rate, expenses };
+  fireData = { age, income, expenses, wealth, rate: rate * 100, computed };
+  store.set(KEYS.fire, fireData);
+  fireRenderResult(computed);
+}
+
+function fireRenderResult(c) {
+  document.getElementById('fire-result').classList.remove('hidden');
+  document.getElementById('fire-years').innerHTML = `${c.years} <small>anos</small>`;
+
+  const finalDate = new Date();
+  finalDate.setFullYear(finalDate.getFullYear() + c.years);
+  document.getElementById('fire-when').textContent =
+    c.years >= 80 ? `Acima de 80 anos (revisa parâmetros)` : `Aos ${c.finalAge} anos · em ${finalDate.getFullYear()}`;
+
+  document.getElementById('fire-saving').textContent = fmtBRL(c.monthlySaving);
+  document.getElementById('fire-target').textContent = fmtBRL(c.target);
+  document.getElementById('fire-final-age').textContent = c.finalAge;
+  document.getElementById('fire-saving-rate').textContent = c.savingRate.toFixed(0) + '%';
+
+  document.getElementById('fire-chart-sub').textContent =
+    `De ${fmtBRL(c.series[0].w)} a ${fmtBRL(c.series[c.series.length-1].w)}, com ${(c.rate*100).toFixed(1)}% real ao ano`;
+
+  // Bars
+  const bars = document.getElementById('fire-bars');
+  const max = Math.max(...c.series.map(s => s.w), c.target);
+  bars.innerHTML = c.series.map((s, i) => {
+    const pct = (s.w / max) * 100;
+    const reached = s.w >= c.target;
+    const showLabel = c.series.length <= 12 || i % Math.ceil(c.series.length / 12) === 0 || i === c.series.length - 1;
+    return `
+      <div class="fire-bar-wrap ${reached ? 'reached' : ''}" title="Ano ${s.year} (idade ${s.age}): ${fmtBRL(s.w)}">
+        <div class="fire-bar" style="height:${pct}%"></div>
+        ${showLabel ? `<div class="fire-bar-label">${s.age}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+document.getElementById('fire-calc').addEventListener('click', fireCalc);
+
+/* ============================================================
+   7) HABITS
+   ============================================================ */
+let habits = store.get(KEYS.habits, []);
+let habitsLog = store.get(KEYS.habitsLog, {});
+function habitsSave() { store.set(KEYS.habits, habits); }
+function habitsLogSave() { store.set(KEYS.habitsLog, habitsLog); }
+
+function getLast30Days() {
+  const days = [];
+  const now = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(now.getDate() - i);
+    days.push(d.toISOString().slice(0, 10));
+  }
+  return days;
+}
+
+function calcStreak(habitId) {
+  const log = habitsLog[habitId] || {};
+  let streak = 0, best = 0, current = 0;
+  const allDates = Object.keys(log).filter(k => log[k]).sort();
+  if (!allDates.length) return { current: 0, best: 0 };
+
+  // best streak
+  let prev = null;
+  for (const d of allDates) {
+    if (prev) {
+      const diff = (new Date(d) - new Date(prev)) / 86400000;
+      if (diff === 1) current++;
+      else current = 1;
+    } else current = 1;
+    best = Math.max(best, current);
+    prev = d;
+  }
+
+  // current streak (from today backwards)
+  let s = 0;
+  const today = new Date();
+  for (let i = 0; i < 365; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const iso = d.toISOString().slice(0, 10);
+    if (log[iso]) s++;
+    else if (i === 0) continue; // allow skipping today
+    else break;
+  }
+  return { current: s, best };
+}
+
+function habitsRenderMgr() {
+  const list = document.getElementById('habits-list-mgr');
+  if (!habits.length) {
+    list.innerHTML = '';
+    return;
+  }
+  list.innerHTML = habits.map(h => `
+    <div class="habit-mgr-row">
+      <span class="habit-mgr-dot" style="background:${h.color}"></span>
+      <span style="font-size:18px;">${escapeHtml(h.icon || '*')}</span>
+      <span class="habit-mgr-name">${escapeHtml(h.name)}</span>
+      <button class="btn btn-mini btn-danger" data-del-habit="${h.id}">Remover</button>
+    </div>
+  `).join('');
+  list.querySelectorAll('[data-del-habit]').forEach(b => {
+    b.addEventListener('click', () => {
+      if (!confirm('Remover hábito? O histórico será apagado.')) return;
+      const i = habits.findIndex(h => h.id === b.dataset.delHabit);
+      if (i !== -1) {
+        delete habitsLog[habits[i].id];
+        habits.splice(i, 1);
+        habitsSave(); habitsLogSave();
+        habitsRenderMgr(); habitsRenderTracker();
+        toast('Hábito removido');
+      }
+    });
+  });
+}
+
+function habitsRenderTracker() {
+  const wrap = document.getElementById('habits-tracker');
+  if (!habits.length) {
+    wrap.innerHTML = `<div class="empty">
+      <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <div class="empty-title">Nenhum hábito cadastrado</div>
+      <div class="empty-sub">Cadastra acima (até 5 hábitos)</div>
+    </div>`;
+    return;
+  }
+  const days = getLast30Days();
+  const today = todayISO();
+
+  wrap.innerHTML = habits.map(h => {
+    const log = habitsLog[h.id] || {};
+    const done = days.filter(d => log[d]).length;
+    const pct = Math.round((done / 30) * 100);
+    const { current, best } = calcStreak(h.id);
+
+    const cells = days.map(d => {
+      const isToday = d === today;
+      const isDone = !!log[d];
+      const dayN = +d.slice(8, 10);
+      return `<button class="habit-cell ${isDone ? 'done' : ''} ${isToday ? 'today' : ''}"
+                style="${isDone ? `--habit-color:${h.color};` : ''}"
+                data-habit="${h.id}" data-date="${d}"
+                aria-label="${h.name} ${fmtDate(d)}">
+                <span class="day">${dayN}</span>
+              </button>`;
+    }).join('');
+
+    return `
+      <div class="habit-block">
+        <div class="habit-block-head">
+          <div class="habit-block-name">
+            <span style="font-size:22px;">${escapeHtml(h.icon || '*')}</span>
+            <span style="color:${h.color};">${escapeHtml(h.name)}</span>
+          </div>
+          <div class="habit-stats">
+            <span>Streak: <strong>${current}d</strong></span>
+            <span>Melhor: <strong>${best}d</strong></span>
+            <span>Mês: <strong>${pct}%</strong></span>
+          </div>
+        </div>
+        <div class="habit-grid">${cells}</div>
+      </div>
+    `;
+  }).join('');
+
+  wrap.querySelectorAll('.habit-cell').forEach(c => {
+    c.addEventListener('click', () => {
+      const id = c.dataset.habit;
+      const date = c.dataset.date;
+      if (!habitsLog[id]) habitsLog[id] = {};
+      if (habitsLog[id][date]) delete habitsLog[id][date];
+      else habitsLog[id][date] = true;
+      habitsLogSave();
+      habitsRenderTracker();
+    });
+  });
+}
+
+document.getElementById('habit-add-btn').addEventListener('click', () => {
+  if (habits.length >= 5) { toast('Máximo 5 hábitos'); return; }
+  const name = document.getElementById('habit-name-input').value.trim();
+  if (!name) { toast('Nome do hábito é obrigatório'); return; }
+  const icon = document.getElementById('habit-icon-input').value.trim() || '*';
+  const color = document.getElementById('habit-color-input').value;
+  habits.push({ id: uid(), name, icon, color });
+  habitsSave();
+  document.getElementById('habit-name-input').value = '';
+  document.getElementById('habit-icon-input').value = '';
+  habitsRenderMgr();
+  habitsRenderTracker();
+  toast('Hábito adicionado');
+});
+
+/* ============================================================
+   ESCAPE HELPERS
+   ============================================================ */
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function escapeAttr(s) { return escapeHtml(s); }
+function escapeText(s) { return escapeHtml(s); }
 
 /* ============================================================
    INIT
@@ -1740,34 +2148,33 @@ document.addEventListener('DOMContentLoaded', () => {
     b.addEventListener('click', () => switchTab(b.dataset.tab));
   });
 
-  // Filters
-  document.getElementById('search').addEventListener('input', (e) => {
-    state.filter.q = e.target.value;
-    renderGallery();
-  });
-  document.getElementById('filter-cat').addEventListener('change', (e) => {
-    state.filter.cat = e.target.value;
-    renderGallery();
-  });
-  document.getElementById('filter-diff').addEventListener('change', (e) => {
-    state.filter.diff = e.target.value;
-    renderGallery();
-  });
+  // Wheel
+  renderWheelAreas();
+  renderWheelChart();
+  renderWheelSummary();
+  renderWheelHistory();
 
-  // Modal close
-  document.getElementById('modal-close').addEventListener('click', closeModal);
-  document.getElementById('modal').addEventListener('click', (e) => {
-    if (e.target.id === 'modal') closeModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
+  // Plan90
+  renderPlan();
 
-  // Initial renders
-  renderGallery();
-  renderTutorial();
-  renderMy();
-  updatePills();
+  // GTD
+  gtdRenderCounts();
+  gtdRenderList();
+
+  // CRM
+  crmRenderSummary();
+  crmRenderList();
+
+  // Books
+  booksRenderStats();
+  booksRenderList();
+
+  // Fire
+  fireRender();
+
+  // Habits
+  habitsRenderMgr();
+  habitsRenderTracker();
 });
 
 /* ============================================================
@@ -1785,8 +2192,14 @@ if ('serviceWorker' in navigator) {
   document.addEventListener('DOMContentLoaded', function () {
     if (window.OnboardingTour) {
       window.OnboardingTour.start({
-        app: 'notion',
-        steps: [{"icon":"📋","title":"Bem-vindo à galeria Notion","body":"20 templates Notion prontos pra duplicar. Sem precisar configurar nada do zero."},{"icon":"🎯","title":"Faz o Tutorial primeiro","body":"Se nunca usou Notion, vai na aba Tutorial. 6 passos rápidos te deixam pronto pra duplicar qualquer template."},{"icon":"🚀","title":"Galeria de Templates","body":"Clica num template, lê os detalhes, clica \"Duplicar para meu Notion\". Em 1 minuto tá funcionando na sua conta."},{"icon":"📂","title":"Meus Templates","body":"Marcou como duplicado? Aba \"Meus Templates\" rastreia status (ativo/abandonado) e deixa você criar notas pessoais por template."}]
+        app: 'tools7',
+        steps: [
+          {"icon":"*","title":"Bem-vindo às 7 Ferramentas","body":"Sete ferramentas funcionais num lugar só. Tudo salva no seu navegador, tudo seu. Sem mensalidade."},
+          {"icon":"*","title":"Comece pelo Wheel of Life","body":"Avalia 10 áreas da sua vida em 2 minutos. Descobre onde focar primeiro."},
+          {"icon":"*","title":"Quebra a meta em sprints","body":"Tem uma meta grande? Vai na aba 90 Dias. 12 sprints semanais te tiram do parado."},
+          {"icon":"*","title":"Mente livre com GTD","body":"Joga tudo na inbox. Processa depois. Pra cada item: faz, agenda, delega ou descarta."},
+          {"icon":"*","title":"Tudo salva localmente","body":"Cada aba persiste no seu navegador. Pode fechar e voltar — nada se perde."}
+        ]
       });
     }
   });

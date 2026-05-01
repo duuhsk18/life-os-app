@@ -8,7 +8,7 @@ export const CATEGORIES = [
   { id: 'treinos',     label: 'Planilhas de Treino',    icon: '💪', color: '#10b981' },
   { id: 'alimentacao', label: 'Alimentação & Receitas', icon: '🥗', color: '#f59e0b' },
   { id: 'indigenas',   label: 'Receitas Indígenas',     icon: '🌿', color: '#22c55e' },
-  { id: 'notion',      label: 'Templates Notion',       icon: '📋', color: '#3b82f6' },
+  { id: 'notion',      label: 'Ferramentas Interativas', icon: '🛠️', color: '#3b82f6' },
   { id: 'autoajuda',   label: 'Ebooks de Autoajuda',    icon: '📚', color: '#a855f7' },
   { id: 'financas',    label: 'Planilhas Financeiras',  icon: '💰', color: '#d4af37' },
 ]
@@ -87,9 +87,9 @@ export const BIBLIOTECA = {
     ],
   },
   notion: {
-    description: 'Templates prontos para organizar sua vida, trabalho e estudos no Notion.',
+    description: '7 ferramentas interativas pra organizar sua vida — tudo no nosso app, sem Notion.',
     items: [
-      { id: 'app-notion',         title: 'Galeria 20 Templates Notion',  description: 'Galeria curada · tutorial passo-a-passo · meus templates com notas pessoais.', image: '/assets/products/templates-notion.png', download_url: '/entregaveis/templates-notion/templates-notion.html', badge: 'Sistema' },
+      { id: 'app-notion',         title: '7 Ferramentas Interativas',    description: 'Wheel of Life · Planejador 90 dias · GTD · CRM Pessoal · Tracker de Leituras · Calculadora FIRE · Diário de Hábitos.', image: '/assets/products/templates-notion.png', download_url: '/entregaveis/templates-notion/templates-notion.html', badge: 'Sistema' },
     ],
   },
   autoajuda: {
