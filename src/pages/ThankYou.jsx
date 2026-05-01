@@ -53,7 +53,7 @@ export default function ThankYou() {
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   return (
-    <div className="min-h-screen px-4 py-10" style={{ background: '#000', color: '#fff' }}>
+    <div className="min-h-screen px-4 py-10 bg-gradient-to-br from-green-50 via-white to-yellow-50 text-gray-900">
       <div className="max-w-md mx-auto">
 
         {/* Confirmation hero */}
@@ -64,12 +64,11 @@ export default function ThankYou() {
           <motion.div
             initial={{ scale: 0 }} animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center"
-            style={{ background: 'rgba(34,197,94,0.15)' }}>
-            <CheckCircle2 className="w-10 h-10" style={{ color: '#22c55e' }} />
+            className="w-24 h-24 mx-auto mb-5 rounded-full flex items-center justify-center bg-green-100 border-4 border-green-500 shadow-lg">
+            <CheckCircle2 className="w-12 h-12 text-green-600" />
           </motion.div>
-          <h1 className="text-3xl md:text-4xl font-black mb-3 leading-tight">Compra confirmada!</h1>
-          <p className="text-base" style={{ color: '#aaa' }}>
+          <h1 className="text-3xl md:text-4xl font-black mb-3 leading-tight text-gray-900">Compra confirmada!</h1>
+          <p className="text-base text-gray-600">
             Seu acesso vai chegar no email em até 2 minutos.
           </p>
         </motion.div>
@@ -78,9 +77,8 @@ export default function ThankYou() {
         {products.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.4 }}
-            className="rounded-2xl p-5 mb-4"
-            style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}>
-            <p className="text-xs uppercase tracking-widest font-bold mb-3" style={{ color: GOLD }}>
+            className="rounded-2xl p-5 mb-4 bg-white border border-gray-200 shadow-sm">
+            <p className="text-xs uppercase tracking-widest font-bold mb-3 text-yellow-700">
               ✓ Você comprou
             </p>
             <div className="space-y-3">
@@ -88,24 +86,23 @@ export default function ThankYou() {
                 <div key={p.slug} className="flex items-center gap-3">
                   {p.image ? (
                     <img src={p.image} alt={p.title}
-                      className="w-12 h-15 object-cover rounded-lg flex-shrink-0" style={{ aspectRatio: '4/5' }} />
+                      className="w-12 h-15 object-cover rounded-lg flex-shrink-0 shadow-sm" style={{ aspectRatio: '4/5' }} />
                   ) : (
                     <span className="text-3xl flex-shrink-0">{p.emoji}</span>
                   )}
                   <div className="flex-1">
-                    <p className="font-bold text-sm leading-tight">{p.title}</p>
+                    <p className="font-bold text-sm leading-tight text-gray-900">{p.title}</p>
                   </div>
                 </div>
               ))}
               {hasLifeOS && (
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'rgba(244,196,48,0.15)' }}>
-                    <Zap className="w-5 h-5" style={{ color: GOLD }} />
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 bg-yellow-50 border border-yellow-200">
+                    <Zap className="w-5 h-5 text-yellow-600" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-bold text-sm leading-tight">Life OS — Clube de Membros</p>
-                    <p className="text-xs" style={{ color: '#888' }}>R$ 59,90 · primeira mensalidade</p>
+                    <p className="font-bold text-sm leading-tight text-gray-900">Life OS — Clube de Membros</p>
+                    <p className="text-xs text-gray-500">R$ 59,90 · primeira mensalidade</p>
                   </div>
                 </div>
               )}
@@ -116,29 +113,26 @@ export default function ThankYou() {
         {/* Como acessar */}
         <motion.div
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.4 }}
-          className="rounded-2xl p-5 mb-4"
-          style={{ background: 'rgba(244,196,48,0.04)', border: '1px solid rgba(244,196,48,0.2)' }}>
+          className="rounded-2xl p-5 mb-4 bg-yellow-50 border border-yellow-200">
           <div className="flex items-start gap-3 mb-3">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ background: 'rgba(244,196,48,0.12)' }}>
-              <Mail className="w-4 h-4" style={{ color: GOLD }} />
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-yellow-100 border border-yellow-300">
+              <Mail className="w-4 h-4 text-yellow-700" />
             </div>
             <div>
-              <h3 className="font-black text-sm">Cheque seu email</h3>
-              <p className="text-xs" style={{ color: '#aaa' }}>
+              <h3 className="font-black text-sm text-gray-900">Cheque seu email</h3>
+              <p className="text-xs text-gray-600">
                 Vem do <strong>noreply@agenciacriativa.shop</strong>
               </p>
             </div>
           </div>
-          <ol className="text-xs space-y-1.5 leading-relaxed pl-3" style={{ color: '#ccc' }}>
-            <li><strong>1.</strong> Procura também em Spam e Promoções (Gmail)</li>
-            <li><strong>2.</strong> Clica no botão "Acessar minha área"</li>
-            <li><strong>3.</strong> Você cai logado em /minha-conta</li>
-            <li><strong>4.</strong> Defina uma senha pra próximos logins serem instantâneos</li>
+          <ol className="text-xs space-y-1.5 leading-relaxed pl-3 text-gray-700">
+            <li><strong className="text-gray-900">1.</strong> Procura também em Spam e Promoções (Gmail)</li>
+            <li><strong className="text-gray-900">2.</strong> Clica no botão "Acessar minha área"</li>
+            <li><strong className="text-gray-900">3.</strong> Você cai logado em /minha-conta</li>
+            <li><strong className="text-gray-900">4.</strong> Defina uma senha pra próximos logins serem instantâneos</li>
           </ol>
           <Link to="/minha-conta"
-            className="block mt-4 text-center w-full py-2.5 rounded-xl text-xs font-bold transition active:scale-95"
-            style={{ background: 'rgba(255,255,255,0.06)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}>
+            className="block mt-4 text-center w-full py-2.5 rounded-xl text-xs font-bold transition active:scale-95 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50">
             Já clicou? Acessa direto →
           </Link>
         </motion.div>

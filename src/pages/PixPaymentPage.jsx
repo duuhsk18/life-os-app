@@ -102,14 +102,14 @@ export default function PixPaymentPage() {
   // Tela de aprovado
   if (status === 'approved') {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#000', color: '#fff' }}>
+      <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-green-50 to-white">
         <div className="text-center max-w-md">
-          <div className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center" style={{ background: 'rgba(34,197,94,0.15)' }}>
-            <CheckCircle2 className="w-12 h-12" style={{ color: '#22c55e' }} />
+          <div className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-green-100 border-4 border-green-500">
+            <CheckCircle2 className="w-12 h-12 text-green-600" />
           </div>
-          <h1 className="text-3xl font-black mb-3">Pagamento aprovado!</h1>
-          <p className="text-gray-400 mb-6">Estamos preparando seu acesso...</p>
-          <Loader2 className="w-6 h-6 mx-auto animate-spin" style={{ color: '#F4C430' }} />
+          <h1 className="text-3xl font-black mb-3 text-gray-900">Pagamento aprovado!</h1>
+          <p className="text-gray-600 mb-6">Estamos preparando seu acesso...</p>
+          <Loader2 className="w-6 h-6 mx-auto animate-spin text-yellow-600" />
         </div>
       </div>
     )
@@ -118,16 +118,16 @@ export default function PixPaymentPage() {
   // Tela de rejeitado/cancelado
   if (status === 'rejected' || status === 'cancelled') {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#000', color: '#fff' }}>
+      <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
         <div className="text-center max-w-md">
-          <h1 className="text-2xl font-black mb-3">Pagamento {status === 'cancelled' ? 'expirou' : 'recusado'}</h1>
-          <p className="text-gray-400 mb-6">
+          <h1 className="text-2xl font-black mb-3 text-gray-900">Pagamento {status === 'cancelled' ? 'expirou' : 'recusado'}</h1>
+          <p className="text-gray-600 mb-6">
             {status === 'cancelled'
               ? 'O Pix expirou. Você pode tentar de novo a qualquer momento.'
               : 'Algo deu errado com o pagamento. Tenta de novo ou usa cartão.'}
           </p>
           <button onClick={() => window.history.back()}
-            className="px-6 py-3 rounded-xl font-bold" style={{ background: '#F4C430', color: '#000' }}>
+            className="px-6 py-3 rounded-xl font-bold shadow-lg" style={{ background: '#F4C430', color: '#000' }}>
             Tentar de novo
           </button>
         </div>
@@ -137,34 +137,34 @@ export default function PixPaymentPage() {
 
   // Tela principal: aguardando pagamento
   return (
-    <div className="min-h-screen px-4 py-8" style={{ background: '#000', color: '#fff' }}>
+    <div className="min-h-screen px-4 py-8 bg-gray-50 text-gray-900">
       <div className="max-w-md mx-auto">
 
         {/* Header */}
         <button onClick={() => window.history.back()}
-          className="flex items-center gap-2 text-sm mb-6" style={{ color: '#888' }}>
+          className="flex items-center gap-2 text-sm mb-6 text-gray-500 hover:text-gray-900 transition">
           <ArrowLeft className="w-4 h-4" /> Voltar
         </button>
 
-        <h1 className="text-2xl font-black mb-2">Pague com Pix</h1>
-        <p className="text-sm mb-6" style={{ color: '#aaa' }}>
+        <h1 className="text-2xl font-black mb-2 text-gray-900">Pague com Pix</h1>
+        <p className="text-sm mb-6 text-gray-600">
           Acesso liberado automaticamente após o pagamento
         </p>
 
         {/* Card principal */}
-        <div className="rounded-3xl p-6 mb-4" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className="rounded-3xl p-6 mb-4 bg-white border border-gray-200 shadow-sm">
 
           {/* Valor */}
           <div className="text-center mb-5">
-            <p className="text-xs uppercase tracking-widest font-bold mb-1" style={{ color: '#888' }}>Valor</p>
-            <p className="text-4xl font-black" style={{ color: '#F4C430' }}>
+            <p className="text-xs uppercase tracking-widest font-bold mb-1 text-gray-500">Valor</p>
+            <p className="text-4xl font-black text-gray-900">
               R$ {Number(data.amount || 0).toFixed(2).replace('.', ',')}
             </p>
           </div>
 
           {/* QR Code */}
           {data.qrCodeBase64 && (
-            <div className="bg-white p-4 rounded-2xl mb-5 flex justify-center">
+            <div className="bg-white p-4 rounded-2xl mb-5 flex justify-center border-2 border-gray-100">
               <img
                 src={`data:image/png;base64,${data.qrCodeBase64}`}
                 alt="QR Code Pix"
@@ -174,16 +174,15 @@ export default function PixPaymentPage() {
           )}
 
           {/* Código copia-e-cola */}
-          <p className="text-xs uppercase tracking-widest font-bold mb-2" style={{ color: '#888' }}>
+          <p className="text-xs uppercase tracking-widest font-bold mb-2 text-gray-500">
             Pix copia-e-cola
           </p>
-          <div className="rounded-xl p-3 mb-3 break-all text-xs leading-relaxed font-mono"
-            style={{ background: '#000', border: '1px solid rgba(255,255,255,0.1)', color: '#aaa' }}>
+          <div className="rounded-xl p-3 mb-3 break-all text-xs leading-relaxed font-mono bg-gray-50 border border-gray-200 text-gray-700">
             {data.qrCode}
           </div>
           <button onClick={handleCopy}
-            className="w-full py-3 rounded-xl font-black text-sm flex items-center justify-center gap-2 active:scale-95 transition"
-            style={{ background: copied ? '#22c55e' : '#F4C430', color: '#000' }}>
+            className="w-full py-3 rounded-xl font-black text-sm flex items-center justify-center gap-2 active:scale-95 transition shadow-md"
+            style={{ background: copied ? '#22c55e' : '#F4C430', color: copied ? '#fff' : '#000' }}>
             {copied ? (
               <>
                 <Check className="w-4 h-4" /> Copiado!
@@ -197,39 +196,38 @@ export default function PixPaymentPage() {
         </div>
 
         {/* Status: aguardando */}
-        <div className="rounded-2xl p-4 mb-4 flex items-center gap-3"
-          style={{ background: 'rgba(244,196,48,0.05)', border: '1px solid rgba(244,196,48,0.25)' }}>
-          <Loader2 className="w-5 h-5 animate-spin flex-shrink-0" style={{ color: '#F4C430' }} />
+        <div className="rounded-2xl p-4 mb-4 flex items-center gap-3 bg-yellow-50 border border-yellow-200">
+          <Loader2 className="w-5 h-5 animate-spin flex-shrink-0 text-yellow-600" />
           <div className="flex-1">
-            <p className="text-sm font-bold">Aguardando pagamento...</p>
-            <p className="text-xs" style={{ color: '#888' }}>
+            <p className="text-sm font-bold text-gray-900">Aguardando pagamento...</p>
+            <p className="text-xs text-gray-600">
               Esta página atualiza automaticamente após você pagar.
             </p>
           </div>
         </div>
 
         {/* Instruções */}
-        <div className="rounded-2xl p-4 mb-4" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}>
-          <p className="text-xs uppercase tracking-widest font-bold mb-3" style={{ color: '#aaa' }}>
+        <div className="rounded-2xl p-4 mb-4 bg-white border border-gray-200">
+          <p className="text-xs uppercase tracking-widest font-bold mb-3 text-gray-500">
             Como pagar em 30 segundos
           </p>
-          <ol className="text-sm space-y-2 leading-relaxed" style={{ color: '#ccc' }}>
-            <li><strong className="text-white">1.</strong> Abre o app do seu banco</li>
-            <li><strong className="text-white">2.</strong> Vai em Pix → Pagar com QR Code OU Pix Copia-e-Cola</li>
-            <li><strong className="text-white">3.</strong> Escaneia o QR ou cola o código aí em cima</li>
-            <li><strong className="text-white">4.</strong> Confirma o pagamento</li>
-            <li><strong className="text-white">5.</strong> Pronto! Seu acesso é liberado em segundos.</li>
+          <ol className="text-sm space-y-2 leading-relaxed text-gray-700">
+            <li><strong className="text-gray-900">1.</strong> Abre o app do seu banco</li>
+            <li><strong className="text-gray-900">2.</strong> Vai em Pix → Pagar com QR Code OU Pix Copia-e-Cola</li>
+            <li><strong className="text-gray-900">3.</strong> Escaneia o QR ou cola o código aí em cima</li>
+            <li><strong className="text-gray-900">4.</strong> Confirma o pagamento</li>
+            <li><strong className="text-gray-900">5.</strong> Pronto! Seu acesso é liberado em segundos.</li>
           </ol>
         </div>
 
         {/* Timer */}
-        <div className="text-center text-xs mb-6" style={{ color: '#666' }}>
+        <div className="text-center text-xs mb-6 text-gray-500">
           <Clock className="w-3 h-3 inline mr-1" />
-          QR Code válido por <strong style={{ color: '#aaa' }}>{formatTime(timeLeft)}</strong>
+          QR Code válido por <strong className="text-gray-700">{formatTime(timeLeft)}</strong>
         </div>
 
         {/* Trust */}
-        <div className="flex items-center justify-center gap-2 text-xs" style={{ color: '#666' }}>
+        <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
           <ShieldCheck className="w-4 h-4" />
           Pagamento processado com segurança via Mercado Pago
         </div>
@@ -238,14 +236,14 @@ export default function PixPaymentPage() {
         {data.ticketUrl && (
           <p className="text-center mt-6 text-xs">
             <a href={data.ticketUrl} target="_blank" rel="noopener noreferrer"
-              style={{ color: '#666', textDecoration: 'underline' }}>
+              className="text-gray-500 underline hover:text-gray-900">
               Problemas? Abrir no Mercado Pago
             </a>
           </p>
         )}
 
         {pollError && (
-          <p className="text-center mt-4 text-xs" style={{ color: '#ef4444' }}>
+          <p className="text-center mt-4 text-xs text-red-600">
             Erro de conexão. Tentando reconectar...
           </p>
         )}
