@@ -1859,5 +1859,16 @@ document.addEventListener('keydown', (e) => {
 checkAchievements();
 renderLibrary();
 </script>
+<script src="../_shared/onboarding-tour.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.OnboardingTour) {
+      window.OnboardingTour.start({
+        app: 'ebooks',
+        steps: [{"icon":"📚","title":"Bem-vinda à Biblioteca","body":"5 ebooks brasileiros sobre disciplina, mentalidade, foco, limites e metas. Curtos, diretos, acionáveis."},{"icon":"📖","title":"Comece pelo primeiro","body":"\"A Arte da Disciplina\" — 60 páginas, 3 horas. Cada capítulo termina com exercício prático. Você lê e aplica."},{"icon":"⏱️","title":"Marca seu tempo de leitura","body":"Aba Progresso tem botões 5/15/30/60min. Marcar te dá streak diário e desbloqueia conquistas."},{"icon":"🏆","title":"Conquistas","body":"Tem 10 conquistas pra desbloquear. Maratonista, Bibliófilo, Anotador, Semana de leitura. Pequenos goals que mantêm motivação."}]
+      });
+    }
+  });
+</script>
 </body>
 </html>

@@ -1780,5 +1780,16 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
+<script src="../_shared/onboarding-tour.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.OnboardingTour) {
+      window.OnboardingTour.start({
+        app: 'notion',
+        steps: [{"icon":"📋","title":"Bem-vindo à galeria Notion","body":"20 templates Notion prontos pra duplicar. Sem precisar configurar nada do zero."},{"icon":"🎯","title":"Faz o Tutorial primeiro","body":"Se nunca usou Notion, vai na aba Tutorial. 6 passos rápidos te deixam pronto pra duplicar qualquer template."},{"icon":"🚀","title":"Galeria de Templates","body":"Clica num template, lê os detalhes, clica \"Duplicar para meu Notion\". Em 1 minuto tá funcionando na sua conta."},{"icon":"📂","title":"Meus Templates","body":"Marcou como duplicado? Aba \"Meus Templates\" rastreia status (ativo/abandonado) e deixa você criar notas pessoais por template."}]
+      });
+    }
+  });
+</script>
 </body>
 </html>

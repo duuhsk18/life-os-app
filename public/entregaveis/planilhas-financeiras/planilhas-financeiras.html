@@ -1172,5 +1172,16 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
 }
 </script>
+<script src="../_shared/onboarding-tour.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.OnboardingTour) {
+      window.OnboardingTour.start({
+        app: 'financeiras',
+        steps: [{"icon":"💰","title":"Bem-vindo ao app Financeiro","body":"Sai do vermelho de vez. Sistema com cálculo automático — você digita os números, ele te mostra exatamente o que fazer."},{"icon":"📊","title":"Controle Mensal","body":"Comece preenchendo o mês atual. 18 categorias de gastos. Em 30 dias você descobre pra onde seu dinheiro VAI."},{"icon":"❄️","title":"Sair das Dívidas","body":"Tem dívidas? Adiciona elas e o sistema mostra qual pagar primeiro (bola-de-neve ou avalanche) e quanto economiza em juros."},{"icon":"🎯","title":"Reserva + Metas","body":"Calcula sua reserva ideal e quanto guardar/mês. Define metas com prazo — o sistema diz se tá no caminho."}]
+      });
+    }
+  });
+</script>
 </body>
 </html>

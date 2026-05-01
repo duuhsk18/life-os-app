@@ -1176,5 +1176,16 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
 }
 </script>
+<script src="../_shared/onboarding-tour.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.OnboardingTour) {
+      window.OnboardingTour.start({
+        app: 'treino',
+        steps: [{"icon":"💪","title":"Bem-vindo ao app de Treino","body":"12 semanas periodizadas pra você executar. Sem precisar de personal — o sistema te guia."},{"icon":"📅","title":"Treino do Dia","body":"Vê os exercícios de hoje, anota peso e reps em cada série, marca como concluído. O sistema calcula seu volume total."},{"icon":"📈","title":"Aba Evolução","body":"Em 2-3 semanas você vê gráficos da sua progressão de carga. Mede cintura/braço pra rastrear visualmente."},{"icon":"🏋️","title":"Biblioteca de Exercícios","body":"49 exercícios com descrição, erro comum e link de vídeo. Não tem barra? A tabela de substituição te salva."}]
+      });
+    }
+  });
+</script>
 </body>
 </html>

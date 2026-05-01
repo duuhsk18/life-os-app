@@ -10,6 +10,7 @@ import CartDrawer from '@/components/sales/CartDrawer'
 import EscassezBanner from '@/components/sales/EscassezBanner'
 import PageMeta from '@/components/PageMeta'
 import { useCart } from '@/contexts/CartContext'
+import { trackPixel } from '@/components/MetaPixel'
 
 const SITE = 'https://www.agenciacriativa.shop'
 
@@ -28,6 +29,18 @@ export default function SalesPage() {
   const cartFull = items.length >= 3
 
   useEffect(() => { window.scrollTo(0, 0) }, [slug])
+
+  // Meta Pixel: ViewContent quando entra na página do produto
+  useEffect(() => {
+    if (!product) return
+    trackPixel('ViewContent', {
+      content_ids:  [product.slug],
+      content_name: product.title,
+      content_type: 'product',
+      value:        product.price,
+      currency:     'BRL',
+    })
+  }, [product?.slug])
 
   if (!product) {
     return (

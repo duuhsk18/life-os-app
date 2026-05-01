@@ -1736,5 +1736,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+<script src="../_shared/onboarding-tour.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.OnboardingTour) {
+      window.OnboardingTour.start({
+        app: 'indigenas',
+        steps: [{"icon":"🌿","title":"Bem-vinda ao app Indígena","body":"Reconecte com sabores ancestrais brasileiros. 30 receitas autênticas + 35 plantas medicinais."},{"icon":"📋","title":"Filtra por Região","body":"Receitas de 5 regiões: Amazônia, Cerrado, Mata Atlântica, Pantanal, Caatinga. Filtra também por restrição (vegano, sem glúten)."},{"icon":"🌱","title":"Plantas Medicinais","body":"Tabela com 35 plantas brasileiras: indicação tradicional, parte usada, modo de preparo. Filtros por benefício (digestivo, calmante, etc)."},{"icon":"📚","title":"Cultura & Guia","body":"5 cards educativos: princípios da culinária ancestral, mandioca (8 transformações), frutas nativas, pesca artesanal, calendário ancestral."}]
+      });
+    }
+  });
+</script>
 </body>
 </html>

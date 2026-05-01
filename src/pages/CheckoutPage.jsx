@@ -7,6 +7,7 @@ import GarantiaBadge from '@/components/sales/GarantiaBadge'
 import CountdownTimer from '@/components/sales/CountdownTimer'
 import SocialProofToast from '@/components/sales/SocialProofToast'
 import PageMeta from '@/components/PageMeta'
+import { trackPixel } from '@/components/MetaPixel'
 
 const GOLD = '#F4C430'
 const SITE = 'https://www.agenciacriativa.shop'
@@ -30,6 +31,18 @@ export default function CheckoutPage() {
   const isLifeOS = slug === 'life-os'
 
   useEffect(() => { window.scrollTo(0, 0) }, [slug])
+
+  // Meta Pixel: InitiateCheckout quando carrega página
+  useEffect(() => {
+    trackPixel('InitiateCheckout', {
+      content_ids:  [slug],
+      content_name: product?.title || slug,
+      value:        product?.price || (slug === 'kit-completo' ? 47 : 79.90),
+      currency:     'BRL',
+      num_items:    1,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug])
 
   if (!product && slug !== 'kit-completo' && slug !== 'life-os') {
     return (
@@ -72,6 +85,14 @@ export default function CheckoutPage() {
 
     // Monta items: produto principal (substituído por kit-completo se bump)
     const items = withBump ? ['kit-completo'] : [slug]
+
+    // Meta Pixel: AddPaymentInfo quando clica pra pagar
+    trackPixel('AddPaymentInfo', {
+      content_ids:  items,
+      value:        total,
+      currency:     'BRL',
+      payment_type: paymentMethod, // 'card' ou 'pix'
+    })
 
     try {
       // Pix: novo fluxo embedado — gera QR + redireciona pra /pagamento/pix

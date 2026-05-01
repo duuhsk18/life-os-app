@@ -1,4 +1,4 @@
-const CACHE = 'lifeos-tools-v7';
+const CACHE = 'lifeos-tools-v8';
 const ASSETS = [
   './',
   './templates-notion.html',

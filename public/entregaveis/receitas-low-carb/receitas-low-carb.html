@@ -1402,5 +1402,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+<script src="../_shared/onboarding-tour.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.OnboardingTour) {
+      window.OnboardingTour.start({
+        app: 'lowcarb',
+        steps: [{"icon":"🥗","title":"Bem-vinda ao app Low Carb","body":"Você não comprou um PDF — é um sistema funcional. Navega entre receitas, monta sua semana e gera lista de compras automaticamente."},{"icon":"📋","title":"Aba Planejamento","body":"Clica num slot de dia/refeição e escolhe uma receita. Em 2 minutos sua semana inteira tá montada."},{"icon":"🛒","title":"Lista de Compras","body":"Ela é gerada automaticamente do que você planejou. Marca os itens conforme compra. Compartilha no WhatsApp num clique."},{"icon":"📊","title":"Tabela Nutricional + Guia","body":"40 alimentos low carb com macros. Guia completo da dieta. Tudo offline depois do primeiro acesso."}]
+      });
+    }
+  });
+</script>
 </body>
 </html>
