@@ -1,4 +1,4 @@
-﻿const CACHE = 'lifeos-financ-v8';
+﻿const CACHE = 'lifeos-financ-v9';
 const ASSETS = ['./','./planilhas-financeiras.html','./manifest.json','./icon.svg','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install', (e) => {

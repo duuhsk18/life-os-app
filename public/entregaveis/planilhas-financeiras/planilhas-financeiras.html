@@ -775,15 +775,72 @@ function renderMes() {
   } else { alertEl.innerHTML = ''; }
 }
 
+// Função leve: atualiza só totais e alertas (não recria inputs — preserva foco)
+function updateMesSummary() {
+  const ym = mesInput.value;
+  const data = loadMes(ym);
+  let totalGasto = 0, totalOrcado = 0;
+  CATEGORIAS.forEach(c => {
+    const cat = data.cats[c.id];
+    totalGasto += Number(cat.gasto)||0;
+    totalOrcado += Number(cat.orcado)||0;
+  });
+  const renda = Number(data.renda)||0;
+  const sobra = renda - totalGasto;
+  const pctPoup = renda > 0 ? (sobra / renda) * 100 : 0;
+  $('#sumRenda').textContent = fmtShort(renda);
+  $('#sumGasto').textContent = fmtShort(totalGasto);
+  $('#sumSobra').textContent = fmtShort(sobra);
+  $('#sumSobra').className = 'stat-value ' + (sobra >= 0 ? 'green' : 'red');
+  $('#sumPct').textContent = pctPoup.toFixed(1) + '%';
+  // Atualiza barras dos cards (sem recriar inputs)
+  CATEGORIAS.forEach(c => {
+    const cat = data.cats[c.id];
+    const pct = cat.orcado > 0 ? Math.min(200, (cat.gasto / cat.orcado) * 100) : 0;
+    const over = cat.orcado > 0 && cat.gasto > cat.orcado;
+    const warn = pct >= 80 && pct < 100;
+    const row = $(`.cat-row [data-cat="${c.id}"][data-field="orcado"]`)?.closest('.cat-row');
+    if (row) {
+      row.classList.toggle('over', over);
+      const pctEl = row.querySelector('.mono.right');
+      if (pctEl) {
+        pctEl.textContent = Math.round(pct) + '%';
+        pctEl.style.color = over ? 'var(--red)' : (warn ? 'var(--yellow)' : 'var(--text-muted)');
+      }
+      const bar = row.querySelector('.cat-bar > div');
+      if (bar) {
+        bar.className = over ? 'over' : (warn ? 'warn' : '');
+        bar.style.width = Math.min(100, pct) + '%';
+      }
+    }
+  });
+  // Alerta global
+  const overs = CATEGORIAS.filter(c => { const x = data.cats[c.id]; return x.orcado > 0 && x.gasto > x.orcado; });
+  const alertEl = $('#overAlert');
+  if (overs.length) {
+    const totalEstouro = overs.reduce((s,c)=> s + (data.cats[c.id].gasto - data.cats[c.id].orcado), 0);
+    alertEl.innerHTML = `<div class="alert danger">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Você passou ${fmt(totalEstouro)} do orçado em ${overs.length} ${overs.length===1?'categoria':'categorias'}: ${overs.map(c=>c.nome).join(', ')}.
+    </div>`;
+  } else if (renda > 0) {
+    alertEl.innerHTML = `<div class="alert success">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      Tudo dentro do orçamento.
+    </div>`;
+  } else { alertEl.innerHTML = ''; }
+}
+
 mesInput.addEventListener('change', renderMes);
 $('#renda').addEventListener('input', e => {
-  const ym = mesInput.value; const d = loadMes(ym); d.renda = Number(e.target.value)||0; saveMes(ym, d); renderMes();
+  // Atualiza só state + summary — preserva foco no input
+  const ym = mesInput.value; const d = loadMes(ym); d.renda = Number(e.target.value)||0; saveMes(ym, d); updateMesSummary();
 });
 $('#catList').addEventListener('input', e => {
   const t = e.target; if (!t.dataset.cat) return;
   const ym = mesInput.value; const d = loadMes(ym);
   d.cats[t.dataset.cat][t.dataset.field] = Number(t.value)||0;
-  saveMes(ym, d); renderMes();
+  saveMes(ym, d); updateMesSummary();
 });
 
 /* ============================================================
@@ -946,10 +1003,25 @@ function renderReserva() {
     </tr>
   `).join('') || `<tr><td colspan="4" class="muted" style="text-align:center; padding:20px">Sem aportes ainda. Clique em "Novo aporte".</td></tr>`;
 }
+// Update leve: atualiza só os números derivados, NÃO recria inputs
+function updateReservaSummary() {
+  const meta = (Number(reserva.gasto)||0) * (Number(reserva.meses)||0);
+  const atual = (reserva.aportes||[]).reduce((s,a) => s + (Number(a.valor)||0), 0);
+  const falta = Math.max(0, meta - atual);
+  const tempo = (reserva.aporte > 0 && falta > 0) ? Math.ceil(falta / reserva.aporte) : (falta === 0 && meta > 0 ? 0 : null);
+  $('#resMeta').textContent = fmtShort(meta);
+  $('#resAtual').textContent = fmtShort(atual);
+  $('#resFalta').textContent = fmtShort(falta);
+  $('#resTempo').textContent = tempo === null ? '—' : (tempo === 0 ? 'Atingida!' : tempo + ' ' + (tempo===1?'mês':'meses'));
+  const pct = meta > 0 ? Math.min(100, (atual/meta)*100) : 0;
+  $('#resBar').style.width = pct + '%';
+  $('#resPct').textContent = pct.toFixed(1) + '% completo';
+}
+
 ['resGasto','resMeses','resAporte'].forEach(id => {
   $('#'+id).addEventListener('input', e => {
     const k = id === 'resGasto' ? 'gasto' : (id === 'resMeses' ? 'meses' : 'aporte');
-    reserva[k] = Number(e.target.value)||0; saveRes(); renderReserva();
+    reserva[k] = Number(e.target.value)||0; saveRes(); updateReservaSummary();
   });
 });
 $('#addAporte').addEventListener('click', () => {
@@ -961,7 +1033,7 @@ $('#aporteList').addEventListener('input', e => {
   const t = e.target; if (t.dataset.ai === undefined) return;
   const i = +t.dataset.ai; const f = t.dataset.af;
   reserva.aportes[i][f] = (f === 'valor') ? (Number(t.value)||0) : t.value;
-  saveRes(); renderReserva();
+  saveRes(); updateReservaSummary(); // sem re-render — preserva foco
 });
 $('#aporteList').addEventListener('click', e => {
   const b = e.target.closest('[data-arm]'); if (!b) return;
@@ -1025,7 +1097,12 @@ $('#metasList').addEventListener('input', e => {
   const t = e.target; if (t.dataset.mi === undefined) return;
   const i = +t.dataset.mi; const f = t.dataset.mf;
   metas[i][f] = (f === 'nome' || f === 'prazo') ? t.value : (Number(t.value)||0);
-  saveMetas(); renderMetas();
+  saveMetas(); // SEM renderMetas — preserva foco no input
+});
+// Re-render completo só ao sair do campo (atualiza barras de progresso, cálculos)
+$('#metasList').addEventListener('change', e => {
+  if (e.target.dataset.mi === undefined) return;
+  renderMetas();
 });
 $('#metasList').addEventListener('click', e => {
   const b = e.target.closest('[data-mrm]'); if (!b) return;
