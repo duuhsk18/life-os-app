@@ -174,12 +174,39 @@
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 16px;
+    overflow: hidden;
     transition: border-color .2s, transform .2s;
     cursor: pointer;
     position: relative;
   }
   .recipe-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+  .recipe-thumb {
+    width: 100%; height: 110px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .recipe-thumb::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.08), transparent 70%);
+  }
+  .recipe-thumb-icon {
+    font-size: 56px; opacity: 0.85;
+    z-index: 1;
+    filter: drop-shadow(0 2px 12px rgba(0,0,0,0.3));
+  }
+  .recipe-thumb-num {
+    position: absolute; top: 10px; right: 12px;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; font-weight: 700;
+    color: rgba(255,255,255,0.7);
+    z-index: 1;
+  }
+  .recipe-thumb.cafe    { background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); }
+  .recipe-thumb.almoco  { background: linear-gradient(135deg, #10b981 0%, #047857 100%); }
+  .recipe-thumb.jantar  { background: linear-gradient(135deg, #6366f1 0%, #312e81 100%); }
+  .recipe-thumb.lanche  { background: linear-gradient(135deg, #ec4899 0%, #9d174d 100%); }
+  .recipe-card-content { padding: 16px; }
   .recipe-cat {
     display: inline-block;
     font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
@@ -910,6 +937,7 @@ const RECIPES = [
 ];
 
 const CAT_LABEL = { cafe: 'Café', almoco: 'Almoço', jantar: 'Jantar', lanche: 'Lanche' };
+const CAT_ICON  = { cafe: '☀️',   almoco: '🥗',     jantar: '🌙',     lanche: '🍎' };
 
 // ============ NUTRITION TABLE ============
 const NUTRITION = [
@@ -1026,21 +1054,27 @@ function renderRecipes() {
   }
   grid.innerHTML = list.map(r => `
     <article class="recipe-card" data-n="${r.n}">
-      <div class="recipe-cat">${CAT_LABEL[r.cat]} · #${String(r.n).padStart(2,'0')}</div>
-      <h3 class="recipe-title">${r.name}</h3>
-      <div class="recipe-meta">
-        <span>◷ ${r.time} min</span>
-        <span>◆ ${r.serv} porç.</span>
-        <span>● ${r.kcal} kcal</span>
+      <div class="recipe-thumb ${r.cat}">
+        <span class="recipe-thumb-num">#${String(r.n).padStart(2,'0')}</span>
+        <span class="recipe-thumb-icon">${CAT_ICON[r.cat] || '🍽️'}</span>
       </div>
-      <div class="macros">
-        <span class="macro"><b>${r.c}g</b>carbs</span>
-        <span class="macro"><b>${r.p}g</b>prot.</span>
-        <span class="macro"><b>${r.f}g</b>gord.</span>
-      </div>
-      <div class="recipe-card-actions">
-        <button class="btn btn-primary" data-action="open" data-n="${r.n}">Ver receita</button>
-        <button class="btn" data-action="plan" data-n="${r.n}">+ Planejar</button>
+      <div class="recipe-card-content">
+        <div class="recipe-cat">${CAT_LABEL[r.cat]}</div>
+        <h3 class="recipe-title">${r.name}</h3>
+        <div class="recipe-meta">
+          <span>◷ ${r.time} min</span>
+          <span>◆ ${r.serv} porç.</span>
+          <span>● ${r.kcal} kcal</span>
+        </div>
+        <div class="macros">
+          <span class="macro"><b>${r.c}g</b>carbs</span>
+          <span class="macro"><b>${r.p}g</b>prot.</span>
+          <span class="macro"><b>${r.f}g</b>gord.</span>
+        </div>
+        <div class="recipe-card-actions">
+          <button class="btn btn-primary" data-action="open" data-n="${r.n}">Ver receita</button>
+          <button class="btn" data-action="plan" data-n="${r.n}">+ Planejar</button>
+        </div>
       </div>
     </article>
   `).join('');

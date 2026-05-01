@@ -1,4 +1,4 @@
-﻿const CACHE = 'lifeos-lowcb-v7';
+﻿const CACHE = 'lifeos-lowcb-v8';
 const ASSETS = ['./','./receitas-low-carb.html','./manifest.json','./icon.svg','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install', (e) => {
